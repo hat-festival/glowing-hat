@@ -1,0 +1,41 @@
+PROJECT = hatlights
+PIHOST = hatlights.local 
+
+default: format lint test
+
+push-code:
+	rsync --archive \
+		  --verbose \
+		  --delete \
+			--exclude node_modules \
+			--exclude .git \
+			--exclude coverage \
+		  . \
+		  pi@${PIHOST}:${PROJECT}
+
+		ssh pi@${PIHOST} "cd jlock && ./configure"
+
+test:
+	PYTHONDONTWRITEBYTECODE=1 \
+		python -m pytest \
+		--random-order \
+		--verbose \
+		--capture no \
+		--failed-first \
+		--cov \
+		--exitfirst 
+		
+lint:
+	python -m pylama
+
+clean:
+	@find . -name __pycache__ -exec rm -fr {} \;
+	@find . -name .pytest_cache -exec rm -fr {} \;
+
+format: isort black
+
+black:
+	black .
+
+isort:
+	isort .
