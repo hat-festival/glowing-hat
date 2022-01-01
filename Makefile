@@ -17,5 +17,12 @@ run:
 		${ID} \
 		bash
 
+exec:
+	docker exec \
+		--interactive \
+    	--tty \
+        ${PROJECT} \
+        bash
+
 ci:
 	docker run --rm ${ID} test
