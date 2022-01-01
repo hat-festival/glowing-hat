@@ -41,7 +41,7 @@ PyYAML==6.0
 redis==4.1.0
 snowballstemmer==2.2.0
 toml==0.10.2
-tomli==1.2.3
+tomli==2.0.0
 traitlets==5.1.1
 typed-ast==1.5.1
 typing_extensions==4.0.1
