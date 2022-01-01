@@ -19,7 +19,7 @@ class Hat:
         if "arm" in platform.platform():
             self.pixels = NeoPixel(board.D18, self.length, auto_write=False)  # nocov
         else:
-            self.pixels = FakePixel(self.length)
+            self.pixels = FakePixel(4)
 
     def light_one(self, index, colour):
         """Light up a single pixel."""
@@ -47,10 +47,15 @@ class FakePixel(list):
         for _ in range(self.length):
             self.append((0, 0, 0))
 
-    def __setitem__(self, index, value):
-        """Override [i] = foo."""
+    # def __setitem__(self, index, value):
+    #     """Override [i] = foo."""
+    #     super().__setitem__(index, value)
 
     def fill(self, colour):
         """Pretend to fill the pixels."""
         for index, _ in enumerate(self):
             self[index] = colour
+
+    def show(self):
+        """Pretend to show the lights."""
+        print(f"Showing lights: {str(self)}")
