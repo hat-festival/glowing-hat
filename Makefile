@@ -16,3 +16,6 @@ run:
 		--rm \
 		${ID} \
 		bash
+
+ci:
+	docker run --rm ${ID} test
