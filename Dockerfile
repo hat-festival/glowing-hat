@@ -1,10 +1,10 @@
-FROM python:3.7 
+FROM python:3.9 
 
 ENV PROJECT hatlights
 ENV PLATFORM docker
 WORKDIR /opt/${PROJECT}
 
-RUN apt-get update && apt-get install -y redis
+RUN apt-get update && apt-get install -y redis rsync
 
 COPY ./ /opt/${PROJECT}
 COPY docker-config/bashrc /root/.bashrc
