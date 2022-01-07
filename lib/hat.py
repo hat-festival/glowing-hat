@@ -37,6 +37,11 @@ class Hat:
             self.pixels[index] = colour
         self.pixels.show()
 
+    def off(self):
+        """Turn all the lights off."""
+        self.pixels.fill([0, 0, 0])
+        self.pixels.show()
+
 
 class FakePixel(list):
     """Fake NeoPixels for testing."""

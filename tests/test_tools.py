@@ -1,20 +1,26 @@
-from lib.tools import gamma_correct, hue_to_grb, serial_ouput_to_grb
-
-
-def test_serial_ouput_to_grb():
-    """Test it parses the string correctly."""
-    assert (serial_ouput_to_grb("(255, 19, 123)")) == [19, 255, 123]
+from lib.tools import gamma_correct, grb_to_hue, hue_to_grb
 
 
 def test_hue_to_grb():
     """Test it turns a `hue` value into a GRB triple."""
     cases = (
-        (1, [0, 255, 0]),
+        (0, [0, 255, 0]),
         (0.5, [255, 0, 255]),
     )
 
     for hue, grb in cases:
         assert hue_to_grb(hue) == grb
+
+
+def test_grb_to_hue():
+    """Test it generates a `hue` from a GRB triple."""
+    cases = (
+        ([0, 255, 0], 0),
+        ([255, 0, 255], 0.5),
+    )
+
+    for grb, hue in cases:
+        assert grb_to_hue(grb) == hue
 
 
 def test_gamma_correction():
