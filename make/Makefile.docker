@@ -1,5 +1,5 @@
 PROJECT = hatlights
-PIHOST = hatlights.local 
+PIHOST = hatlights.local
 
 default: format lint test
 
@@ -7,13 +7,10 @@ push-code:
 	rsync --archive \
 		  --verbose \
 		  --delete \
-			--exclude node_modules \
-			--exclude .git \
-			--exclude coverage \
+		  --exclude .git \
+		  --exclude coverage \
 		  . \
 		  pi@${PIHOST}:${PROJECT}
-
-		ssh pi@${PIHOST} "cd jlock && ./configure"
 
 test:
 	PYTHONDONTWRITEBYTECODE=1 \
