@@ -47,10 +47,6 @@ class FakePixel(list):
         for _ in range(self.length):
             self.append((0, 0, 0))
 
-    # def __setitem__(self, index, value):
-    #     """Override [i] = foo."""
-    #     super().__setitem__(index, value)
-
     def fill(self, colour):
         """Pretend to fill the pixels."""
         for index, _ in enumerate(self):
