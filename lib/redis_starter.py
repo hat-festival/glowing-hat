@@ -2,7 +2,7 @@ import redis
 
 from lib.tools import make_key
 
-defaults = {"hue": 0, "saturation": 1, "value": 1, "mode": "flash"}
+defaults = {"hue": 0, "saturation": 1, "value": 1, "colour": "red", "mode": "flash"}
 
 
 def initialise_redis(namespace="hat", flush=False):

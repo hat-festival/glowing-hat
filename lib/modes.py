@@ -19,6 +19,8 @@ class Modes:
         self.namespace = namespace
         self.interval = 0.1
 
+        self.register_modes(["flash", "blend", "something"])
+
     def flash(self):
         """Flash the lights on and off with a single colour."""
         self.hat.light_all(gamma_correct(hue_to_grb(self.get_hue())))
@@ -30,6 +32,20 @@ class Modes:
         """Recolour the lights every `interval` seconds."""
         self.hat.light_all(hue_to_grb(self.get_hue()))
         sleep(self.interval)
+
+    def something(self):
+        """Do something."""
+        self.hat.light_all(hue_to_grb(self.get_hue()))
+        sleep(self.interval)
+
+    ###
+
+    def register_modes(self, modes):
+        """Record our modes in Redis."""
+        key = make_key("modes", self.namespace)
+        self.redis.delete(key)
+        for mode in modes:
+            self.redis.lpush(key, mode)
 
     def get_hue(self):
         """Retrieve the current hue for this namespace."""
