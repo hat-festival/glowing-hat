@@ -3,15 +3,13 @@ import sys
 from multiprocessing import Process
 
 import redis
-
-# REMEMBER: check this as `from RPi import GPIO`
-import RPi.GPIO as GPIO  # pylint:disable=R0402
+from RPi import GPIO
 
 from lib.colour_stepper import ColourStepper
 from lib.colour_wheel import ColourWheel
 from lib.tools import make_key
 
-PINS = {"wheel": 17, "stepper": 23, "mode": 25}
+PINS = {"run_wheel": 17, "step_stepper": 23, "bump_mode": 25}
 
 
 class HatManager:
@@ -61,7 +59,13 @@ class HatManager:
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""
-        # kill the threads here?
+        # kill the processes
+        for _, process in self.processes.items():
+            if process:
+                if process.is_alive():
+                    process.terminate()
+                    process = None
+
         GPIO.cleanup()
         sys.exit(0)
 
@@ -69,19 +73,14 @@ class HatManager:
         """Do the work."""
         GPIO.setmode(GPIO.BCM)
 
-        GPIO.setup(PINS["wheel"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(PINS["stepper"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(PINS["mode"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-        GPIO.add_event_detect(
-            PINS["wheel"], GPIO.FALLING, callback=self.run_wheel, bouncetime=500
-        )
-        GPIO.add_event_detect(
-            PINS["stepper"], GPIO.FALLING, callback=self.step_stepper, bouncetime=500
-        )
-        GPIO.add_event_detect(
-            PINS["mode"], GPIO.FALLING, callback=self.bump_mode, bouncetime=500
-        )
+        for method, pin in PINS.items():
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(
+                pin,
+                GPIO.FALLING,
+                callback=getattr(self, method),
+                bouncetime=500,
+            )
 
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.pause()

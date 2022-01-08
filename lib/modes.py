@@ -57,4 +57,3 @@ class Modes:
         while True:
             getattr(self, mode)()
             mode = self.redis.get(make_key("mode", self.namespace)).decode()
-            print(mode)
