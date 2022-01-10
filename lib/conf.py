@@ -7,4 +7,5 @@ conf = {
         "colour": "red",
         "mode": "flash",
     },
+    "break-mode": "false",
 }
