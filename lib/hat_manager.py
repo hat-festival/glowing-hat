@@ -9,7 +9,11 @@ from lib.colour_stepper import ColourStepper
 from lib.colour_wheel import ColourWheel
 from lib.tools import make_key
 
-PINS = {"run_wheel": 17, "step_stepper": 23, "bump_mode": 25}
+PINS = {
+    "run_wheel": 17,  # lilac
+    "step_stepper": 23,  # blue
+    "bump_mode": 25,  # black
+}
 
 
 class HatManager:
@@ -56,6 +60,7 @@ class HatManager:
         self.redis.set(
             make_key("mode", self.namespace), modes[(index + 1) % len(modes)]
         )
+        self.redis.set("break-mode", "true")
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""

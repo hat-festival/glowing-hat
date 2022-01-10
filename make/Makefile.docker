@@ -1,4 +1,5 @@
-PROJECT = hatlights
+include make/Makefile.common
+
 PIHOST = hatlights.local
 
 default: format lint test

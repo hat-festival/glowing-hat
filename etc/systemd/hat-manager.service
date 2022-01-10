@@ -1,0 +1,16 @@
+[Unit]
+Description=Hat Manager
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/hatlights
+ExecStart=/bin/bash -lc 'python run_manager.py'
+Restart=always
+StandardInput=null
+StandardOutput=file:/var/log/hatlights/manager.log
+StandardError=file:/var/log/hatlights/manager.err
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
