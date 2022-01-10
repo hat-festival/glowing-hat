@@ -1,0 +1,16 @@
+[Unit]
+Description=Hat Modes
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/hatlights
+ExecStart=/bin/bash -lc 'sudo python run_modes.py'
+Restart=always
+StandardInput=null
+StandardOutput=file:/var/log/hatlights/modes.log
+StandardError=file:/var/log/hatlights/modes.err
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

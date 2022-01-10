@@ -21,22 +21,26 @@ class Modes:
 
         self.register_modes(["flash", "blend", "chase"])
 
+    ###
+
     def flash(self):
         """Flash the lights on and off with a single colour."""
-        self.hat.light_all(gamma_correct(hue_to_grb(self.get_hue())))
-        sleep(0.1)
-        self.hat.off()
-        sleep(0.1)
+        if self.can_continue:
+            self.hat.light_all(gamma_correct(hue_to_grb(self.get_hue())))
+            sleep(0.1)
+            self.hat.off()
+            sleep(0.1)
 
     def blend(self):
         """Recolour the lights gradually."""
-        self.hat.light_all(hue_to_grb(self.get_hue()))
-        sleep(0.1)  
+        if self.can_continue:
+            self.hat.light_all(hue_to_grb(self.get_hue()))
+            sleep(0.1)
 
     def chase(self):
         """Chase a light up the string."""
         for i in range(conf["lights"]):
-            if not self.redis.get("break-mode").decode() == "true":
+            if self.can_continue:
                 self.hat.off()
                 self.hat.light_one(i, hue_to_grb(self.get_hue()))
                 sleep(0.05)
@@ -44,6 +48,11 @@ class Modes:
                 return
 
     ###
+
+    @property
+    def can_continue(self):
+        """Determine whether we should stop."""
+        return self.redis.get("break-mode").decode() == "false"
 
     def register_modes(self, modes):
         """Record our modes in Redis."""

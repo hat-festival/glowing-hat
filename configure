@@ -1,0 +1,23 @@
+#!/bin/bash
+
+let PLATFORM=local
+
+if [ "$(which lsb_release)" != "" ]
+then
+  if [ "$(lsb_release --id --short)" == "Raspbian" ]
+  then
+    PLATFORM=pi
+  fi
+fi
+
+case ${PLATFORM} in
+pi)
+  echo "Looks like we're on a Raspberry Pi, setting appropriate Makefile"
+  ln -sf make/Makefile.pi Makefile
+  ;;
+
+*)
+  echo "Assuming we're on your laptop, setting appropriate Makefile"
+  ln -sf make/Makefile.local Makefile
+  ;;
+esac

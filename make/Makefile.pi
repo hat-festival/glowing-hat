@@ -1,0 +1,30 @@
+include make/Makefile.common
+
+default: setup
+
+setup: apt-installs install system-install 
+
+apt-installs:
+	sudo apt update
+	sudo apt install \
+		--no-install-recommends \
+		--yes \
+		python3-pip \
+		redis
+
+prepare-logs:
+	sudo mkdir -p /var/log/hatlights/
+	sudo chown pi /var/log/hatlights/
+
+system-install: systemd restart-services
+
+systemd: prepare-logs
+	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/hat-manager.service
+	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/modes.service
+
+restart-services:
+	sudo service hat-manager restart
+	sudo service modes restart
+
+install:
+	python -m pip install -r requirements.txt
