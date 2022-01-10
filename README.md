@@ -1,8 +1,19 @@
-## Set a hostname
+## Wiring
+
+| Component             | Logical Pin | Physical Pin |
+| --------------------- | ----------- | ------------ |
+| Lights Data           | GPIO 18     | 12           |
+| Lights Ground         | GND         | 6            |
+| Wheel-control button  | GPIO 17     | 11           |
+| Colour-stepper button | GPIO 23     | 16           |
+| Mode button           | GPIO 25     | 22           |
+
+## Set hostname and enable serial port
 
 ```bash
 sudo raspi-config nonint do_hostname hatlights
 sudo raspi-config nonint do_serial 1
+sudo reboot
 ```
 
 ## Install `git`
