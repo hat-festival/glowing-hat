@@ -23,3 +23,10 @@ class TestColourWheel(TestCase):
         self.redis.delete("test:hue")
         wheel = ColourWheel(namespace="test")
         self.assertEqual(wheel.start_hue, 0)
+
+    def test_rotate(self):
+        """Test it rotates."""
+        self.redis.set("test:hue", 0.3)
+        wheel = ColourWheel(namespace="test")
+        wheel.rotate(testing=True, steps=500)
+        self.assertEqual(float(self.redis.get("test:hue").decode()), 0.7989999999999999)
