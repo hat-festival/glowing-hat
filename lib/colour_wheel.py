@@ -29,9 +29,7 @@ class ColourWheel:
     def rotate(self):
         """Spin the wheel."""
         offset = self.start_hue
-        key = make_key("spin-wheel", self.namespace)
-        self.redis.set(key, "true")
-        while self.redis.get(key).decode() == "true":
+        while True:
             for i in range(1000):
                 hue = ((i / 1000) + offset) % 1
                 self.redis.set(make_key("hue", self.namespace), hue)
