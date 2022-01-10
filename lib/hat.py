@@ -1,7 +1,6 @@
 import platform
-from pathlib import Path
 
-import yaml
+from lib.conf import conf
 
 if "arm" in platform.platform():  # nocov
     import board
@@ -13,8 +12,7 @@ class Hat:
 
     def __init__(self):
         """Construct."""
-        self.conf = yaml.safe_load(Path("conf/conf.yaml").read_text(encoding="UTF-8"))
-        self.length = self.conf["lights-count"]
+        self.length = conf["lights"]
 
         if "arm" in platform.platform():
             self.pixels = NeoPixel(board.D18, self.length, auto_write=False)  # nocov

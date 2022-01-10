@@ -5,7 +5,7 @@ conf = {
         "saturation": 1,
         "value": 1,
         "colour": "red",
-        "mode": "flash",
+        "mode": "blend",
     },
     "break-mode": "false",
 }
