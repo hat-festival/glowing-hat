@@ -20,6 +20,7 @@ class Modes:
         self.interval = 0.1
 
         self.register_modes(["flash", "blend", "something"])
+        self.register_modes(["flash", "blend", "chase"])
 
     def flash(self):
         """Flash the lights on and off with a single colour."""
@@ -37,6 +38,15 @@ class Modes:
         """Do something."""
         self.hat.light_all(hue_to_grb(self.get_hue()))
         sleep(self.interval)
+    def chase(self):
+        """Chase a light up the string."""
+        for i in range(conf["lights"]):
+            if not self.redis.get("break-mode").decode() == "true":
+                self.hat.off()
+                self.hat.light_one(i, hue_to_grb(self.get_hue()))
+                sleep(0.05)
+            else:
+                return
 
     ###
 
