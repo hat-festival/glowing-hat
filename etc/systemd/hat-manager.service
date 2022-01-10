@@ -4,7 +4,7 @@ Description=Hat Manager
 [Service]
 User=pi
 WorkingDirectory=/home/pi/hatlights
-ExecStart=/bin/bash -lc 'python run_manager.py'
+ExecStart=/bin/bash -lc 'sudo python run_manager.py'
 Restart=always
 StandardInput=null
 StandardOutput=file:/var/log/hatlights/manager.log

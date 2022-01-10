@@ -27,4 +27,4 @@ restart-services:
 	sudo service modes restart
 
 install:
-	python -m pip install -r requirements.txt
+	sudo python -m pip install -r requirements.txt
