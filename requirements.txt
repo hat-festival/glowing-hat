@@ -1,3 +1,2 @@
 redis
-pyyaml
 adafruit-circuitpython-neopixel
