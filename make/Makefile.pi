@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install 
+setup: apt-installs install system-install clean
 
 apt-installs:
 	sudo apt update
@@ -28,3 +28,6 @@ restart-services:
 
 install:
 	sudo python -m pip install -r requirements.txt
+
+clean:
+	sudo find . -name __pycache__ -exec rm -fr {} \;

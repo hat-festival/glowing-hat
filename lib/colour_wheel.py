@@ -30,6 +30,9 @@ class ColourWheel:
         """Spin the wheel."""
         offset = self.start_hue
 
+        if testing:
+            self.interval = 0
+
         while True:
             for i in range(steps):
                 hue = ((i / 1000) + offset) % 1
