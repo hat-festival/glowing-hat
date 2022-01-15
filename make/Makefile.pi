@@ -31,3 +31,6 @@ install:
 
 clean:
 	sudo find . -name __pycache__ -exec rm -fr {} \;
+
+webserver:
+	sudo python webserver.py

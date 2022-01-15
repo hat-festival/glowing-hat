@@ -1,2 +1,3 @@
 redis
 adafruit-circuitpython-neopixel
+flask
