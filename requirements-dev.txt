@@ -7,7 +7,7 @@ coverage==6.2
 decorator==5.1.1
 Deprecated==1.2.13
 hiredis==2.0.0
-importlib-metadata==4.10.0
+importlib-metadata==4.10.1
 iniconfig==1.1.1
 ipdb==0.13.9
 ipython==7.31.0
