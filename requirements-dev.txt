@@ -38,7 +38,7 @@ pytest==6.2.5
 pytest-cov==3.0.0
 pytest-random-order==1.0.4
 PyYAML==6.0
-redis==4.1.0
+redis==4.1.1
 snowballstemmer==2.2.0
 toml==0.10.2
 tomli==1.2.3
