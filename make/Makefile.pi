@@ -26,11 +26,15 @@ restart-services:
 	sudo service hat-manager restart
 	sudo service modes restart
 
+stop-services:
+	sudo service hat-manager stop
+	sudo service modes stop
+
 install:
 	sudo python -m pip install -r requirements.txt
 
 clean:
 	sudo find . -name __pycache__ -exec rm -fr {} \;
 
-webserver:
+webserver: stop-services
 	sudo python webserver.py
