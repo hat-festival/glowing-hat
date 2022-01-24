@@ -1,15 +1,15 @@
-from lib.tools import gamma_correct, hue_to_grb
+from lib.tools import gamma_correct, hue_to_rgb
 
 
-def test_hue_to_grb():
-    """Test it turns a `hue` value into a GRB triple."""
+def test_hue_to_rgb():
+    """Test it turns a `hue` value into an RGB triple."""
     cases = (
-        (0, [0, 255, 0]),
-        (0.5, [255, 0, 255]),
+        (0, [255, 0, 0]),
+        (0.5, [0, 255, 255]),
     )
 
-    for hue, grb in cases:
-        assert hue_to_grb(hue) == grb
+    for hue, rgb in cases:
+        assert hue_to_rgb(hue) == rgb
 
 
 def test_gamma_correction():

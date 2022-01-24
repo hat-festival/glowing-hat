@@ -1,8 +1,6 @@
 include make/Makefile.common
 
-PIHOST = hatlights.local
-
-default: format lint test
+default: format lint test freeze
 
 push-code:
 	rsync --archive \
@@ -37,3 +35,6 @@ black:
 
 isort:
 	isort .
+
+freeze:
+	python -m pip freeze > requirements-dev.txt

@@ -5,7 +5,7 @@ import redis
 from lib.conf import conf
 from lib.hat import Hat
 from lib.redis_starter import initialise_redis
-from lib.tools import gamma_correct, hue_to_grb, make_key
+from lib.tools import gamma_correct, hue_to_rgb, make_key
 
 
 class Modes:
@@ -26,7 +26,7 @@ class Modes:
     def flash(self):
         """Flash the lights on and off with a single colour."""
         if self.can_continue:
-            self.hat.light_all(gamma_correct(hue_to_grb(self.get_hue())))
+            self.hat.light_all(gamma_correct(hue_to_rgb(self.get_hue())))
             sleep(0.1)
             self.hat.off()
             sleep(0.1)
@@ -34,7 +34,7 @@ class Modes:
     def blend(self):
         """Recolour the lights gradually."""
         if self.can_continue:
-            self.hat.light_all(hue_to_grb(self.get_hue()))
+            self.hat.light_all(hue_to_rgb(self.get_hue()))
             sleep(0.1)
 
     def chase(self):
@@ -42,7 +42,7 @@ class Modes:
         for i in range(conf["lights"]):
             if self.can_continue:
                 self.hat.off()
-                self.hat.light_one(i, hue_to_grb(self.get_hue()))
+                self.hat.light_one(i, hue_to_rgb(self.get_hue()))
                 sleep(0.05)
             else:
                 return
