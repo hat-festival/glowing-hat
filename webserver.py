@@ -4,6 +4,7 @@ from lib.hat import Hat
 
 app = Flask(__name__)
 app.hat = Hat()
+app.hat.off()
 
 
 @app.route("/light", methods=["POST"])
