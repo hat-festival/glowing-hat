@@ -69,3 +69,7 @@ make left
 ```
 
 And wait, then turn it again and run the above steps for `back` and `right`.
+
+So now you should have a whole load of images.
+
+## Analyse the images

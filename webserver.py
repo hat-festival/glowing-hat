@@ -17,5 +17,13 @@ def light():
     return {"status": "OK"}
 
 
+@app.route("/light-all", methods=["POST"])
+def light_all():
+    """Light all the lights."""
+    app.hat.light_all([255, 255, 255])
+
+    return {"status": "OK"}
+
+
 if __name__ == "__main__":  # nocov
     app.run(host="0.0.0.0", port=5001)
