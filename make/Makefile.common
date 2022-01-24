@@ -1,3 +1,4 @@
 PROJECT = $(shell basename $(shell pwd))
 
 PIHOST = hatlights.local
+PIHOST = fancycamera.local
