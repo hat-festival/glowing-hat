@@ -15,13 +15,29 @@ python -m pip install picamera
 
 ## Focus the camera
 
-First, make sure the hat is running in a fully-lit mode.
+First, put the hat in `webserver` mode; on the Hat Pi:
+
+```bash
+cd ~/hatlights
+make webserver
+```
+
+and light it up; on the Camera Pi:
+
+```bash
+cd ~/hatlights/camera
+make light-hat
+```
+
+> All of the lights on the hat should now be on
 
 Grab the script from [here](https://randomnerdtutorials.com/video-streaming-with-raspberry-pi-camera/):
 
 ```bash
 curl https://raw.githubusercontent.com/RuiSantosdotme/Random-Nerd-Tutorials/master/Projects/rpi_camera_surveillance_system.py -o /tmp/focuscam.py
 ```
+
+> This code has no visible license so I'm not directly including it here
 
 and run it:
 
@@ -40,24 +56,16 @@ Now:
 
 ## Capture the images
 
-On the Hat Pi, put it in `webserver` mode:
+Presuming the Hat is still in `webserver` mode, on the Camera Pi, start the capture:
 
 ```bash
-cd ~/hatlights
-make webserver
-```
-
-Once that's running, on the Camera Pi, start the capture:
-
-```bash
+cd ~/hatlights/camera
 make front
 ```
 
-and wait while it takes <number-of-lights> photographs. Then:
+Follow the prompts, then wait while it takes <number-of-lights> photographs. Then:
 
 - Rotate the hat 90 degress (so the camera is now facing its left-hand side)
-- Put the hat back in a fully-lit mode:
-  - `make restart-services`
 - Restart the camera streaming:
   - `python /tmp/focuscam.py`
 - And adjust things so that the hat is again filling the frame
@@ -69,3 +77,9 @@ make left
 ```
 
 And wait, then turn it again and run the above steps for `back` and `right`.
+
+So now you should have a whole load of images. Pull them onto your laptop, as a peer of this repo:
+
+```bash
+rsync -av pi@fancycamera.local:hat-analysis ../
+```

@@ -52,7 +52,9 @@ class Modes:
     @property
     def can_continue(self):
         """Determine whether we should stop."""
-        return self.redis.get("break-mode").decode() == "false"
+        return (
+            self.redis.get(make_key("break-mode", self.namespace)).decode() == "false"
+        )
 
     def register_modes(self, modes):
         """Record our modes in Redis."""
@@ -70,4 +72,4 @@ class Modes:
         while True:
             mode = self.redis.get(make_key("mode", self.namespace)).decode()
             getattr(self, mode)()
-            self.redis.set("break-mode", "false")
+            self.redis.set(make_key("break-mode", self.namespace), "false")

@@ -60,7 +60,7 @@ class HatManager:
         self.redis.set(
             make_key("mode", self.namespace), modes[(index + 1) % len(modes)]
         )
-        self.redis.set("break-mode", "true")
+        self.redis.set(make_key("break-mode", self.namespace), "true")
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""
