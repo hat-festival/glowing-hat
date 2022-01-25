@@ -1,5 +1,7 @@
 include make/Makefile.common
 
+PUSHHOST ?= ${HATHOST}
+
 default: format lint test freeze
 
 push-code:
@@ -9,7 +11,8 @@ push-code:
 		  --exclude .git \
 		  --exclude coverage \
 		  . \
-		  pi@${PIHOST}:${PROJECT}
+		  pi@${PUSHHOST}:${PROJECT}
+	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure"
 
 test:
 	PYTHONDONTWRITEBYTECODE=1 \

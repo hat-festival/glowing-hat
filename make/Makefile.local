@@ -1,7 +1,5 @@
 include make/Makefile.common
 
-PROJECT = $(shell basename $(shell pwd))
-
 ID = hatvillage/${PROJECT}
 
 build:
@@ -14,7 +12,7 @@ run:
 		--hostname ${PROJECT}-dev \
 		--volume $(shell pwd):/opt/${PROJECT} \
 		--volume ${HOME}/.ssh:/root/.ssh \
-		--publish 5001:5001 \
+		--publish ${WEBSERVERPORT}:${WEBSERVERPORT} \
 		--interactive \
 		--tty \
 		--rm \
