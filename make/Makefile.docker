@@ -41,3 +41,6 @@ isort:
 
 freeze:
 	python -m pip freeze > requirements-dev.txt
+
+analyse:
+	@python analysis/find_bright_spots.py

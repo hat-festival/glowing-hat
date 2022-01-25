@@ -4,7 +4,7 @@ ENV PROJECT hatlights
 ENV PLATFORM docker
 WORKDIR /opt/${PROJECT}
 
-RUN apt-get update && apt-get install -y redis rsync
+RUN apt-get update && apt-get install -y redis rsync libgl1
 
 COPY ./ /opt/${PROJECT}
 COPY docker-config/bashrc /root/.bashrc

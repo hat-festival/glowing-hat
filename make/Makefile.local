@@ -12,6 +12,7 @@ run:
 		--hostname ${PROJECT}-dev \
 		--volume $(shell pwd):/opt/${PROJECT} \
 		--volume ${HOME}/.ssh:/root/.ssh \
+		--volume $(shell pwd)/../hat-analysis:/opt/hat-analysis \
 		--publish ${WEBSERVERPORT}:${WEBSERVERPORT} \
 		--interactive \
 		--tty \
