@@ -47,14 +47,14 @@ pytest==6.2.5
 pytest-cov==3.0.0
 pytest-random-order==1.0.4
 PyYAML==6.0
-redis==4.1.1
+redis==4.1.2
 six==1.16.0
 snowballstemmer==2.2.0
 stack-data==0.1.4
 toml==0.10.2
 tomli==1.2.3
 traitlets==5.1.1
-typed-ast==1.5.1
+typed-ast==1.5.2
 typing_extensions==4.0.1
 wcwidth==0.2.5
 Werkzeug==2.0.2
