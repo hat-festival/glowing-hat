@@ -1,8 +1,6 @@
 from collections import OrderedDict
 
-import redis
-
-from lib.tools import make_key
+from lib.redis_manager import RedisManager
 
 COLOURS = OrderedDict(
     {
@@ -20,16 +18,13 @@ class ColourStepper:
     """Step through the single colours."""
 
     def __init__(self, namespace="hat"):
-        self.redis = redis.Redis()
-        self.namespace = namespace
+        self.redisman = RedisManager(namespace)
 
     def step(self):
         """Step to the next colour."""
-        colour_key = make_key("colour", self.namespace)
-        current_colour = self.redis.get(colour_key).decode()
         keys = list(COLOURS.keys())
-        index = keys.index(current_colour)
+        index = keys.index(self.redisman.retrieve("colour"))
         next_index = (index + 1) % len(keys)
 
-        self.redis.set(make_key("hue", self.namespace), COLOURS[keys[next_index]])
-        self.redis.set(colour_key, keys[next_index])
+        self.redisman.enter("hue", COLOURS[keys[next_index]])
+        self.redisman.enter("colour", keys[next_index])

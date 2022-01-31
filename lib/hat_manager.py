@@ -2,17 +2,16 @@ import signal
 import sys
 from multiprocessing import Process
 
-import redis
 from RPi import GPIO
 
 from lib.colour_stepper import ColourStepper
 from lib.colour_wheel import ColourWheel
-from lib.tools import make_key
+from lib.redis_manager import RedisManager
 
 PINS = {
-    "run_wheel": 17,  # lilac
-    "step_stepper": 23,  # blue
-    "bump_mode": 25,  # black
+    "run_wheel": 17,
+    "step_stepper": 23,
+    "bump_mode": 25,
 }
 
 
@@ -21,11 +20,10 @@ class HatManager:
 
     def __init__(self, namespace="hat"):
         """Construct."""
-        self.namespace = namespace
-        self.redis = redis.Redis()
+        self.redisman = RedisManager(namespace)
 
-        self.wheel = ColourWheel(namespace=self.namespace)
-        self.stepper = ColourStepper(namespace=self.namespace)
+        self.wheel = ColourWheel(namespace=namespace)
+        self.stepper = ColourStepper(namespace=namespace)
 
         self.processes = {"colour-wheel": None}
 
@@ -49,18 +47,11 @@ class HatManager:
 
     def bump_mode(self, _):
         """Step to the next mode."""
-        current_mode = self.redis.get(make_key("mode", self.namespace)).decode()
-        modes = list(
-            map(
-                lambda x: x.decode(),
-                self.redis.lrange(make_key("modes", self.namespace), 0, -1),
-            )
-        )
+        current_mode = self.redisman.retrieve("mode")
+        modes = self.redisman.range("modes")
         index = modes.index(current_mode)
-        self.redis.set(
-            make_key("mode", self.namespace), modes[(index + 1) % len(modes)]
-        )
-        self.redis.set(make_key("break-mode", self.namespace), "true")
+        self.redisman.enter("mode", modes[(index + 1) % len(modes)])
+        self.redisman.enter("break-mode", "true")
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""

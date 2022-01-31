@@ -1,8 +1,6 @@
 from time import sleep
 
-import redis
-
-from lib.tools import make_key
+from lib.redis_manager import RedisManager
 
 
 class ColourWheel:
@@ -11,20 +9,16 @@ class ColourWheel:
     def __init__(self, interval=0.01, namespace="hat"):
         """Construct."""
         self.interval = interval
-        self.namespace = namespace
-        self.redis = redis.Redis()
+        self.redisman = RedisManager(namespace)
 
     @property
     def start_hue(self):
         """Get the initial hue."""
-        key = make_key("hue", self.namespace)
-        hue = self.redis.get(key)
+        hue = self.redisman.retrieve("hue")
         if not hue:
-            self.redis.set(key, 0)
+            self.redisman.enter("hue", 0)
 
-        hue = float(self.redis.get(key).decode())
-
-        return hue
+        return float(self.redisman.retrieve("hue"))
 
     def rotate(self, testing=False, steps=1000):
         """Spin the wheel."""
@@ -36,7 +30,7 @@ class ColourWheel:
         while True:
             for i in range(steps):
                 hue = ((i / 1000) + offset) % 1
-                self.redis.set(make_key("hue", self.namespace), hue)
+                self.redisman.enter("hue", hue)
                 sleep(self.interval)
 
             if testing:

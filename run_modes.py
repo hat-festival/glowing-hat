@@ -1,6 +1,7 @@
 from lib.modes import Modes
-from lib.redis_starter import initialise_redis
+from lib.redis_manager import RedisManager
 
-initialise_redis()
+redisman = RedisManager("hat")
+redisman.populate()
 m = Modes()
 m.run()
