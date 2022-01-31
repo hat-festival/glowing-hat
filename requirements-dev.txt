@@ -47,7 +47,7 @@ pytest==6.2.5
 pytest-cov==3.0.0
 pytest-random-order==1.0.4
 PyYAML==6.0
-redis==4.1.1
+redis==4.1.2
 six==1.16.0
 snowballstemmer==2.2.0
 stack-data==0.1.4
