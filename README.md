@@ -13,6 +13,7 @@
 ```bash
 sudo raspi-config nonint do_hostname hatlights
 sudo raspi-config nonint do_serial 1
+sudo raspi-config nonint do_i2c 0 ???
 sudo reboot
 ```
 

@@ -1,11 +1,9 @@
 from time import sleep
 
-import redis
-
 from lib.conf import conf
 from lib.hat import Hat
-from lib.redis_starter import initialise_redis
-from lib.tools import gamma_correct, hue_to_rgb, make_key
+from lib.redis_manager import RedisManager
+from lib.tools import gamma_correct, hue_to_rgb
 
 
 class Modes:
@@ -13,11 +11,9 @@ class Modes:
 
     def __init__(self, namespace="hat"):
         """Construct."""
-        initialise_redis()
-
         self.hat = Hat()
-        self.redis = redis.Redis()
-        self.namespace = namespace
+        self.redisman = RedisManager(namespace)
+        self.redisman.populate()
 
         self.register_modes(["flash", "blend", "chase"])
 
@@ -52,24 +48,21 @@ class Modes:
     @property
     def can_continue(self):
         """Determine whether we should stop."""
-        return (
-            self.redis.get(make_key("break-mode", self.namespace)).decode() == "false"
-        )
+        return self.redisman.retrieve("break-mode" == "false")
 
     def register_modes(self, modes):
         """Record our modes in Redis."""
-        key = make_key("modes", self.namespace)
-        self.redis.delete(key)
+        self.redisman.unset("modes")
         for mode in modes:
-            self.redis.lpush(key, mode)
+            self.redisman.push("modes", mode)
 
     def get_hue(self):
         """Retrieve the current hue for this namespace."""
-        return float(self.redis.get(make_key("hue", self.namespace)).decode())
+        return float(self.redisman.retrieve("hue"))
 
     def run(self):
         """Run forever."""
         while True:
-            mode = self.redis.get(make_key("mode", self.namespace)).decode()
+            mode = self.redisman.retrieve("mode")
             getattr(self, mode)()
-            self.redis.set(make_key("break-mode", self.namespace), "false")
+            self.redisman.enter("break-mode", "false")
