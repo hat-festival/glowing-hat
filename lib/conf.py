@@ -1,5 +1,5 @@
 conf = {
-    "lights": 50,
+    "lights": 100,
     "redis-defaults": {
         "hue": 0,
         "saturation": 1,
