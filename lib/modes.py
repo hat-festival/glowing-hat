@@ -14,7 +14,6 @@ class Modes:
         self.hat = Hat()
         self.redisman = RedisManager(namespace)
         self.redisman.populate()
-
         self.register_modes(["flash", "blend", "chase"])
 
     ###
@@ -48,7 +47,7 @@ class Modes:
     @property
     def can_continue(self):
         """Determine whether we should stop."""
-        return self.redisman.retrieve("break-mode" == "false")
+        return self.redisman.retrieve("break-mode") == "false"
 
     def register_modes(self, modes):
         """Record our modes in Redis."""
