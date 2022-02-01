@@ -1,3 +1,5 @@
 redis
 adafruit-circuitpython-neopixel
 flask
+adafruit-circuitpython-ssd1306 
+Pillow

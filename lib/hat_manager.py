@@ -34,7 +34,7 @@ class HatManager:
 
         if not self.processes["colour-wheel"].is_alive():
             self.processes["colour-wheel"].start()
-            # TODO notify Redis
+            self.redisman.enter("wheel", "rotating")
 
     def step_stepper(self, _):
         """Step to the next Single Colour."""
@@ -43,6 +43,7 @@ class HatManager:
             if self.processes["colour-wheel"].is_alive():
                 self.processes["colour-wheel"].terminate()
                 self.processes["colour-wheel"] = None
+                self.redisman.enter("wheel", "stationary")
 
         self.stepper.step()
 

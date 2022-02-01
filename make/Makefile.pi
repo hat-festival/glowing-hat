@@ -10,7 +10,8 @@ apt-installs:
 		--no-install-recommends \
 		--yes \
 		python3-pip \
-		redis
+		redis \
+		libopenjp2-7-dev
 
 prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
