@@ -34,6 +34,7 @@ class HatManager:
 
         if not self.processes["colour-wheel"].is_alive():
             self.processes["colour-wheel"].start()
+            # TODO notify Redis
 
     def step_stepper(self, _):
         """Step to the next Single Colour."""

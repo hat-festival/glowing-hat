@@ -32,7 +32,7 @@ class RedisManager:
     def enter(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
-        # then notify the display
+        # TODO: notify the display
 
     def push(self, key, value):
         """Delegate `lpush`."""
