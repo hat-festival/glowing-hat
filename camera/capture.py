@@ -4,8 +4,9 @@ from pathlib import Path
 from time import sleep
 
 import requests
-from conf import conf
 from picamera import PiCamera
+
+from conf import conf
 
 hat = f"http://{sys.argv[1]}:{conf['webserver-port']}"
 aspect = sys.argv[2]
@@ -33,6 +34,6 @@ for i in range(conf["lights"]):
         data=json.dumps({"index": i}),
         headers={"Content-Type": "application/json"},
     )
-    sleep(1)
+    sleep(0.5)
     camera.capture(f"{outdir}/{i:0>2}.jpg")
-    sleep(1)
+    sleep(0.5)
