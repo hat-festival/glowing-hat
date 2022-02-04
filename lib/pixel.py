@@ -4,18 +4,18 @@
 class Pixel:
     """Class representing a single NeoPixel."""
 
-    def __init__(self, index, x, y, z):
+    def __init__(self, index, location):
         """Construct."""
         self.index = index
-        self.location = {"x": x, "y": y, "z": z}
+        self.location = location
 
     def greater_than(self, axis, value):
         """Is this Pixel's coord on `axis` >= `value`."""
         return self.location[axis] >= value
 
     def less_than(self, axis, value):
-        """Is this Pixel's coord on `axis` <= `value`."""
-        return self.location[axis] <= value
+        """Is this Pixel's coord on `axis` < `value`."""
+        return self.location[axis] < value
 
     # def is_inside_slice(self):
     # this is a prism with very large ends
@@ -30,3 +30,5 @@ class Pixel:
     # need face-corners, and angle?
 
     # def is_inside_tetrahedron(self):
+
+    
