@@ -1,0 +1,32 @@
+# pylint: disable=C0103
+
+
+class Pixel:
+    """Class representing a single NeoPixel."""
+
+    def __init__(self, index, x, y, z):
+        """Construct."""
+        self.index = index
+        self.location = {"x": x, "y": y, "z": z}
+
+    def greater_than(self, axis, value):
+        """Is this Pixel's coord on `axis` >= `value`."""
+        return self.location[axis] >= value
+
+    def less_than(self, axis, value):
+        """Is this Pixel's coord on `axis` <= `value`."""
+        return self.location[axis] <= value
+
+    # def is_inside_slice(self):
+    # this is a prism with very large ends
+
+    # def is_inside_cuboid(self):
+    # this is a special case of the prism
+
+    # def is_inside_sphere(self):
+
+    # def is_inside_prism(self):
+    # https://en.wikipedia.org/wiki/Prism_(geometry)
+    # need face-corners, and angle?
+
+    # def is_inside_tetrahedron(self):
