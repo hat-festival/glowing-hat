@@ -38,7 +38,7 @@ pickleshare==0.7.5
 Pillow==9.0.0
 platformdirs==2.4.1
 pluggy==1.0.0
-prompt-toolkit==3.0.26
+prompt-toolkit==3.0.27
 ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
