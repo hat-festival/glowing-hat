@@ -1,7 +1,7 @@
 Adafruit-Blinka==6.20.1
 adafruit-circuitpython-neopixel==6.2.4
 adafruit-circuitpython-pixelbuf==1.1.1
-Adafruit-PlatformDetect==3.19.4
+Adafruit-PlatformDetect==3.19.5
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
 asttokens==2.0.5
@@ -38,7 +38,7 @@ pickleshare==0.7.5
 Pillow==9.0.0
 platformdirs==2.4.1
 pluggy==1.0.0
-prompt-toolkit==3.0.26
+prompt-toolkit==3.0.27
 ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
@@ -51,7 +51,7 @@ pylama==8.3.7
 pylint==2.12.2
 pyparsing==3.0.7
 pyserial==3.5
-pytest==6.2.5
+pytest==7.0.0
 pytest-cov==3.0.0
 pytest-random-order==1.0.4
 pyusb==1.2.1
