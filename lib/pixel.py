@@ -11,12 +11,18 @@ class Pixel:
 
     def greater_than(self, axis, value):
         """Is this Pixel's coord on `axis` >= `value`."""
-        return self.location[axis] >= value
+        try:
+            return self.location[axis] >= value
+        except KeyError:
+            return None
 
     def less_than(self, axis, value):
         """Is this Pixel's coord on `axis` < `value`."""
-        return self.location[axis] < value
-
+        try:
+            return self.location[axis] < value
+        except KeyError:
+            return None
+            
     # def is_inside_slice(self):
     # this is a prism with very large ends
 
