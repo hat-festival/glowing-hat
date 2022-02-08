@@ -1,6 +1,6 @@
 Adafruit-Blinka==6.20.1
 adafruit-circuitpython-neopixel==6.2.4
-adafruit-circuitpython-pixelbuf==1.1.1
+adafruit-circuitpython-pixelbuf==1.1.2
 Adafruit-PlatformDetect==3.19.5
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
