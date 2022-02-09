@@ -1,11 +1,14 @@
-from socket import IPPROTO_FRAGMENT
-import yaml
+# pylint: skip-file
+
 from pathlib import Path
 from random import randint
-from lib.pixel import Pixel 
+
+import yaml
+
 from lib.hat import Hat
-from time import sleep
-data = yaml.safe_load(Path('conf', 'locations.yaml').read_text(encoding="UTF-8"))
+from lib.pixel import Pixel
+
+data = yaml.safe_load(Path("conf", "locations.yaml").read_text(encoding="UTF-8"))
 
 lights = []
 
@@ -25,9 +28,13 @@ while True:
     colour = [randint(0, 127), randint(0, 127), randint(0, 127)]
     # for colour in [red, green, blue]:
     for i in range(0, 1000, 10):
-        things = list(filter(lambda x: 
-            x.less_than('x', ((i / 1000) * 720)) and x.less_than('y', ((i / 1000) * 480)), 
-        lights))
+        things = list(
+            filter(
+                lambda x: x.less_than("x", ((i / 1000) * 720))
+                and x.less_than("y", ((i / 1000) * 480)),
+                lights,
+            )
+        )
         indeces = list(map(lambda x: x.index, things))
         if indeces:
             hat.colour_indeces(colour, indeces)

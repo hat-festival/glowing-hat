@@ -1,8 +1,8 @@
-import ipaddress
+# pylint: skip-file
+
 import json
 from collections import OrderedDict
 from pathlib import Path
-from socket import IP_TOS
 
 import yaml
 

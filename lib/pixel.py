@@ -22,7 +22,7 @@ class Pixel:
             return self.location[axis] < value
         except KeyError:
             return None
-            
+
     # def is_inside_slice(self):
     # this is a prism with very large ends
 
@@ -36,5 +36,3 @@ class Pixel:
     # need face-corners, and angle?
 
     # def is_inside_tetrahedron(self):
-
-    
