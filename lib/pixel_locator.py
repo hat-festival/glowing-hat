@@ -26,21 +26,6 @@ class PixelLocator:
         else:
             self.lights = lights
 
-        self.limits = {
-            "x": {
-                "max": 0,
-                "min": 100000,
-            },
-            "y": {
-                "max": 0,
-                "min": 100000,
-            },
-            "z": {
-                "max": 0,
-                "min": 100000,
-            },
-        }
-
     @property
     def parsed_json(self):
         """Collect up the raw data."""
@@ -87,15 +72,29 @@ class PixelLocator:
                     average = average_out(values)
                     ndata[key][axis] = average
 
-                    if average > self.limits[axis]["max"]:
-                        self.limits[axis]["max"] = average
-
-                    if average < self.limits[axis]["min"]:
-                        self.limits[axis]["min"] = average
-
         return ndata
 
-    # Scale (which means we need PICHEIGHT, too, I guess)
+    @property
+    def limits(self):
+        """Find the mins and maxes."""
+        ndata = self.normalised_data
+        ldata = {}
+        for axis in ["x", "y", "z"]:
+            ldata[axis] = {}
+            ldata[axis]["max"] = max(
+                filter(
+                    None, map(lambda b: b.get(axis), map(lambda a: a[1], ndata.items()))
+                )
+            )
+            ldata[axis]["min"] = min(
+                filter(
+                    None, map(lambda b: b.get(axis), map(lambda a: a[1], ndata.items()))
+                )
+            )
+
+        return ldata
+
+    # scale
     # write YAML
 
 
