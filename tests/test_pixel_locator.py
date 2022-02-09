@@ -115,6 +115,10 @@ class TestPixelLocator(TestCase):
                 "19": {"x": 414.0, "y": 21.0, "z": 241.0},
             },
         )
+
+    def test_limits(self):
+        """ "Test it finds the mins and maxes."""
+        ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis", lights=20)
         self.assertEqual(
             ploc.limits,
             {
