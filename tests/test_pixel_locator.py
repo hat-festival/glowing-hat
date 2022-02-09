@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.pixel_locator import PixelLocator
+from lib.pixel_locator import PixelLocator, average_out
 
 
 class TestPixelLocator(TestCase):
@@ -8,10 +8,9 @@ class TestPixelLocator(TestCase):
 
     def test_gather_json(self):
         """Test it collects the data."""
-        ploc = PixelLocator(720, data_root="tests/fixtures/analysis")
-        ploc.gather_json()
+        ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis")
         self.assertEqual(
-            ploc.raw_data,
+            ploc.parsed_json,
             {
                 "back": {
                     "00": {"x": 373, "y": 391},
@@ -60,9 +59,7 @@ class TestPixelLocator(TestCase):
 
     def test_consolidate(self):
         """Test it consolidates the data."""
-        ploc = PixelLocator(720, data_root="tests/fixtures/analysis", lights=20)
-        ploc.gather_json()
-        ploc.consolidate()
+        ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis", lights=20)
         self.assertEqual(
             ploc.consolidated_data,
             {
@@ -88,3 +85,48 @@ class TestPixelLocator(TestCase):
                 "19": {"x": [414], "y": [31, 11], "z": [241]},
             },
         )
+
+    def test_normalise(self):
+        """Test it averages-out the data."""
+        ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis", lights=20)
+
+        self.assertEqual(
+            ploc.normalised_data,
+            {
+                "00": {"x": 347.0, "y": 365.5, "z": 93.0},
+                "01": {"x": 544.0, "y": 198.5, "z": 59.0},
+                "02": {"y": 54.0, "z": 324.0},
+                "03": {"x": 445.0, "y": 62.0, "z": 529.0},
+                "04": {"x": 193.0, "y": 84.5, "z": 555.0},
+                "05": {"x": 93.0, "y": 150.0, "z": 287.0},
+                "06": {"x": 171.0, "y": 211.0, "z": 112.0},
+                "07": {"x": 496.0, "y": 123.5, "z": 77.0},
+                "08": {"y": 204.0, "z": 266.0},
+                "09": {"x": 615.0, "y": 282.5, "z": 565.0},
+                "10": {"x": 332.0, "y": 296.0},
+                "11": {"x": 111.0, "y": 282.0, "z": 626.0},
+                "12": {"y": 297.0, "z": 295.0},
+                "13": {"x": 175.0, "y": 112.5, "z": 162.0},
+                "14": {"x": 447.0, "y": 41.0, "z": 180.0},
+                "15": {"y": 140.0, "z": 361.0},
+                "16": {"x": 570.0, "y": 229.5, "z": 593.0},
+                "17": {"x": 252.0, "y": 126.5, "z": 658.0},
+                "18": {"y": 19.0, "z": 448.0},
+                "19": {"x": 414.0, "y": 21.0, "z": 241.0},
+            },
+        )
+        self.assertEqual(
+            ploc.limits,
+            {
+                "x": {"max": 615.0, "min": 93.0},
+                "y": {"max": 365.5, "min": 19.0},
+                "z": {"max": 658.0, "min": 59.0},
+            },
+        )
+
+
+def test_average_out():
+    """Test it averages a list."""
+    assert average_out([1]) == 1
+    assert average_out([1, 3]) == 2
+    assert average_out([1, 4]) == 2.5
