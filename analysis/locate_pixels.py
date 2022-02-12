@@ -33,7 +33,7 @@ for aspect in ["back", "front", "left", "right"]:
 # etc
 
 for i in range(conf["lights"]):
-    key = str(i).zfill(2)
+    key = str(i).zfill(3)
     lights[key] = {"x": [], "y": [], "z": []}
     for aspect, stuff in axes.items():
         if key in stuff["data"]:
@@ -45,6 +45,7 @@ for i in range(conf["lights"]):
                     v = PICWIDTH - v
 
                 lights[key][stuff["axis"]].append(v)
+
 
 # take a mean of the value lists
 final_lights = []

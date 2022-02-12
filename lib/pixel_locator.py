@@ -45,7 +45,7 @@ class PixelLocator:
         pjson = self.parsed_json
         cdata = {}
         for i in range(self.lights):
-            key = str(i).zfill(2)
+            key = str(i).zfill(3)
             cdata[key] = {"x": [], "y": [], "z": []}
 
             for aspect in ASPECTS:
@@ -79,18 +79,20 @@ class PixelLocator:
         """Find the mins and maxes."""
         ndata = self.normalised_data
         ldata = {}
+        just_points = list(map(lambda a: a[1], ndata.items()))
+
         for axis in ["x", "y", "z"]:
             ldata[axis] = {}
-            ldata[axis]["max"] = max(
+            all_values = list(
                 filter(
-                    None, map(lambda b: b.get(axis), map(lambda a: a[1], ndata.items()))
+                    # pylint: disable=W0640
+                    None,
+                    map(lambda b: b.get(axis), just_points),
                 )
             )
-            ldata[axis]["min"] = min(
-                filter(
-                    None, map(lambda b: b.get(axis), map(lambda a: a[1], ndata.items()))
-                )
-            )
+
+            ldata[axis]["max"] = max(all_values)
+            ldata[axis]["min"] = min(all_values)
 
         return ldata
 

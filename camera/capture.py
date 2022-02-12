@@ -36,6 +36,6 @@ for i in range(conf["lights"]):
         data=json.dumps({"index": i}),
         headers={"Content-Type": "application/json"},
     )
-    sleep(0.5)
-    camera.capture(f"{outdir}/{i:0>2}.jpg")
-    sleep(0.5)
+    sleep(1)
+    camera.capture(f"{outdir}/{str(i).zfill(3)}.jpg")
+    sleep(1)

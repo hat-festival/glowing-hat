@@ -6,7 +6,7 @@ rsync -av pi@fancycamera.local:hat-analysis/ /opt/hat-analysis/
 
 # Rotate the photos
 
-The camera was inverted for ease-of-positioning so first we need to rotate everything:
+If the camera was inverted, we first need to rotate everything:
 
 ```bash
 bash rotate.sh
