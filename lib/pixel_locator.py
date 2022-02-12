@@ -45,11 +45,7 @@ class PixelLocator:
         pjson = self.parsed_json
         cdata = {}
         for i in range(self.lights):
-<<<<<<< HEAD
             key = str(i).zfill(3)
-=======
-            key = str(i).zfill(2)
->>>>>>> 540f64d9bb82af8e33c99611998b287552349274
             cdata[key] = {"x": [], "y": [], "z": []}
 
             for aspect in ASPECTS:
