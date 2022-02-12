@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.pixel_locator import PixelLocator, average_out
+from lib.pixel_locator import PixelLocator, average_out, scale
 
 
 class TestPixelLocator(TestCase):
@@ -127,6 +127,31 @@ class TestPixelLocator(TestCase):
                 "z": {"max": 658.0, "min": 59.0},
             },
         )
+
+
+def test_scale():
+    """Test it scales some items."""
+    cases = (
+        ([1, 2], [-1, 1]),
+        ([0, 1, 2], [-1, 0, 1]),
+        ([0, 2, 4], [-1, 0, 1]),
+        ([1, 2, 3], [-1, 0, 1]),
+        ([0, 1, 2, 3, 4, 8], [-1.0, -0.75, -0.5, -0.25, 0.0, 1.0]),
+        ([4, 2, 3, 8, 0, 1], [0.0, -0.5, -0.25, 1.0, -1.0, -0.75]),
+    )
+
+    for items, expected in cases:
+        assert scale(items) == expected
+
+    more_cases = (
+        ([1, 2], 1, [-1, 1]),
+        ([1, 2], 2, [-2, 2]),
+        ([1, 2], 0.5, [-0.5, 0.5]),
+        ([0, 1, 2, 3, 4, 8], 2, [-2.0, -1.5, -1.0, -0.5, 0.0, 2.0]),
+        ([0, 1, 2, 3, 4, 8], 0.5, [-0.5, -0.375, -0.25, -0.125, 0.0, 0.5]),
+    )
+    for items, factor, expected in more_cases:
+        assert scale(items, factor) == expected
 
 
 def test_average_out():

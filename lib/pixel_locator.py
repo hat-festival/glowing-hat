@@ -96,8 +96,25 @@ class PixelLocator:
 
         return ldata
 
-    # scale
     # write YAML
+
+    # @property
+    # def scaled(self):
+    #     """Scale the points.
+
+    #     (-1, 1) along the shortest distance, the rest scaped accordingly
+    #     """
+    #     scale_to = 1
+
+
+def scale(items, factor=1):
+    """Scale some items."""
+    shifted = list(map(lambda x: x - min(items), items))
+    multiplier = (2 / max(shifted)) * factor
+    normalised = list(map(lambda x: x * multiplier, shifted))
+    centred = list(map(lambda x: x - factor, normalised))
+
+    return centred
 
 
 def average_out(items):
