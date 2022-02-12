@@ -46,7 +46,6 @@ for i in range(conf["lights"]):
 
                 lights[key][stuff["axis"]].append(v)
 
-
 # take a mean of the value lists
 final_lights = []
 
