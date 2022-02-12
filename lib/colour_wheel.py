@@ -30,7 +30,7 @@ class ColourWheel:
         while True:
             for i in range(steps):
                 hue = ((i / 1000) + offset) % 1
-                self.redisman.enter("hue", hue, update_oled=False)
+                self.redisman.enter("hue", hue)
                 sleep(self.interval)
 
             if testing:

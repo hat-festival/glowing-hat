@@ -11,4 +11,5 @@ conf = {
     "break-mode": "false",
     "webserver-port": 5001,
     "oled-size": {"x": 128, "y": 32},
+    "display-keys": ["mode", "wheel"],
 }

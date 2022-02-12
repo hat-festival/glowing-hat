@@ -3,14 +3,7 @@ from pathlib import Path
 
 import cv2
 
-THRESHOLD = 250
-
-axes = {
-    "front": {"axis": "x", "direction": "positive"},
-    "left": {"axis": "z", "direction": "negative"},
-    "back": {"axis": "x", "direction": "negative"},
-    "right": {"axis": "z", "direction": "positive"},
-}
+THRESHOLD = 200
 
 print("Looking for bright spots")
 for aspect in ["back", "front", "left", "right"]:
@@ -21,12 +14,7 @@ for aspect in ["back", "front", "left", "right"]:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)
             if maxVal > THRESHOLD:
-                # other_axis = axes[aspect]["axis"]
-                value = maxLoc[0]
-                if axes[aspect]["direction"] == "negative":
-                    value = 0 - value
-
-                coords = {"y": maxLoc[1], axes[aspect]["axis"]: value}
+                coords = {"x": maxLoc[0], "y": maxLoc[1]}
                 print(f"{aspect} {file.stem}: {coords}")
                 Path(directory, f"{file.stem}.json").write_text(
                     json.dumps(coords), encoding="UTF-8"

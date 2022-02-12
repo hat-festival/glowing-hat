@@ -42,7 +42,7 @@ class Oled:
         font = ImageFont.load_default()
         step = 10
 
-        for index, key in enumerate(["mode", "hue", "wheel"]):
+        for index, key in enumerate(conf["display-keys"]):
             text = f"{key}: "
             text += self.redisman.retrieve(key)
             draw.text((left, top + index * step), text, font=font, fill=255)

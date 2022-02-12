@@ -23,6 +23,8 @@ class RedisManager:
             if not self.redis.get(make_key(key, self.namespace)):
                 self.redis.set(make_key(key, self.namespace), value)
 
+        self.oled.update()
+
     def retrieve(self, key):
         """Get a value."""
         value = self.redis.get(make_key(key, self.namespace))
@@ -31,10 +33,10 @@ class RedisManager:
 
         return None
 
-    def enter(self, key, value, update_oled=True):
+    def enter(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
-        if update_oled:
+        if key in conf["display-keys"]:
             self.oled.update()
 
     def push(self, key, value):
