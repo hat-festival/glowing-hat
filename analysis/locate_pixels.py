@@ -8,7 +8,8 @@ import yaml
 
 from conf import conf
 
-PICWIDTH = 720  # GET THIS FROM THE IMAGES
+# PICWIDTH = 720  # GET THIS FROM THE IMAGES
+PICWIDTH = 674  # GET THIS FROM THE IMAGES
 
 axes = {
     "front": {"axis": "x", "direction": "positive", "data": {}},
@@ -58,3 +59,5 @@ for key, points in lights.items():
 Path("..", "conf", "locations.yaml").write_text(
     yaml.dump(final_lights), encoding="UTF-8"
 )
+
+# front / back: 337

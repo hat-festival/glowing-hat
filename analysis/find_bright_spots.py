@@ -3,7 +3,7 @@ from pathlib import Path
 
 import cv2
 
-THRESHOLD = 200
+THRESHOLD = 240
 
 print("Looking for bright spots")
 for aspect in ["back", "front", "left", "right"]:
@@ -15,7 +15,9 @@ for aspect in ["back", "front", "left", "right"]:
             (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)
             if maxVal > THRESHOLD:
                 coords = {"x": maxLoc[0], "y": maxLoc[1]}
-                print(f"{aspect} {file.stem}: {coords}")
+                # print(f"{aspect} {file.stem}: {coords}")
                 Path(directory, f"{file.stem}.json").write_text(
                     json.dumps(coords), encoding="UTF-8"
                 )
+            else:
+                print(f"{aspect} {file.stem}")

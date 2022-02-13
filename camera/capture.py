@@ -25,15 +25,17 @@ except requests.exceptions.ConnectionError:
     print(f"I don't think the webserver at {hat} is running")
     sys.exit(1)
 
-input("Align hat and press any key when ready...")
+print(f"Analysing {aspect} side of hat\n\n")
+
+input("Hit return to start...")
 
 camera.capture(f"{outdir}/reference.jpg")
 
 for i in range(conf["lights"]):
-    print(f"Capturing light {i}")
+    print(f"Capturing light {str(i).zfill(3)}")
     requests.post(
         f"{hat}/light",
-        data=json.dumps({"index": i}),
+        data=json.dumps({"index": i, "colour": [255, 255, 0]}),
         headers={"Content-Type": "application/json"},
     )
     sleep(1)
