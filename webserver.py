@@ -11,9 +11,12 @@ app.hat.off()
 @app.route("/light", methods=["POST"])
 def light():
     """Light a light."""
+    colour = [255, 255, 255]
     data = request.get_json()
+    if "colour" in data:
+        colour = data["colour"]
     app.hat.off()
-    app.hat.light_one(data["index"], [255, 255, 255])
+    app.hat.light_one(data["index"], colour)
 
     return {"status": "OK"}
 
