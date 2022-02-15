@@ -26,73 +26,59 @@ class PixelLocator:
         else:
             self.lights = lights
 
+    # @property
+    # def consolidated_data(self):
+    #     """Pull together the disparate data."""
+    #     pjson = self.parsed_json
+    #     cdata = {
+    #         "x": [None] * 20,
+    #         "y": [None] * 20,
+    #         "z": [None] * 20,
+    #     }
+    #     for i in range(self.lights):
+    #         key = str(i).zfill(3)
+    #         for aspect in ASPECTS:
+    #             if key in pjson[aspect]:
+    #                 y_val = pjson[aspect][key]["y"]
+    #                 if cdata["y"][i]:
+    #                     cdata["y"][i] = [cdata["y"][i]]
+    #                     cdata["y"][i].append(y_val)
+    #                 else:
+    #                     cdata["y"][i] = y_val
+
+    #                 other_value = pjson[aspect][key]["x"]
+    #                 if AXES[aspect]["direction"] == "negative":
+    #                     other_value = self.picwidth - other_value
+
+    #                 axis = AXES[aspect]["axis"]
+    #                 if cdata[axis][i]:
+    #                     cdata[axis][i] = [cdata[axis][i]]
+    #                     cdata[axis][i].append(other_value)
+    #                 else:
+    #                     cdata[axis][i] = other_value
+
+    #     return cdata
+
     @property
-    def parsed_json(self):
-        """Collect up the raw data."""
-        pjson = {}
-        for aspect in ASPECTS:
-            pjson[aspect] = {}
-            directory = Path(self.data_root, aspect)
-            data_files = Path(directory).glob("*[0-9]*json")
-            for file in data_files:
-                pjson[aspect][file.stem] = json.loads(file.read_text(encoding="UTF-8"))
-
-        return pjson
-
-    @property
-    def consolidated_data(self):
-        """Pull together the disparate data."""
-        pjson = self.parsed_json
-        cdata = {}
-        for i in range(self.lights):
-            key = str(i).zfill(3)
-            cdata[key] = {"x": [], "y": [], "z": []}
-
-            for aspect in ASPECTS:
-                if key in pjson[aspect]:
-                    cdata[key]["y"].append(pjson[aspect][key]["y"])
-
-                    other_value = pjson[aspect][key]["x"]
-                    if AXES[aspect]["direction"] == "negative":
-                        other_value = self.picwidth - other_value
-
-                    cdata[key][AXES[aspect]["axis"]].append(other_value)
-
-        return cdata
-
-    @property
-    def normalised_data(self):
+    def flattened_data(self):
         """Average-out the data."""
         cdata = self.consolidated_data
-        ndata = {}
-        for key, points in cdata.items():
-            ndata[key] = {}
-            for axis, values in points.items():
-                if values:
-                    average = average_out(values)
-                    ndata[key][axis] = average
+        fdata = {"x": [], "y": [], "z": []}
+        for axis, values in cdata.items():
+            for value in values:
+                fdata[axis].append(average_out(value))
 
-        return ndata
+        return fdata
 
     @property
     def limits(self):
         """Find the mins and maxes."""
-        ndata = self.normalised_data
-        ldata = {}
-        just_points = list(map(lambda a: a[1], ndata.items()))
+        fdata = self.flattened_data
+        ldata = {"x": {}, "y": {}, "z": {}}
 
         for axis in ["x", "y", "z"]:
-            ldata[axis] = {}
-            all_values = list(
-                filter(
-                    # pylint: disable=W0640
-                    None,
-                    map(lambda b: b.get(axis), just_points),
-                )
-            )
-
-            ldata[axis]["max"] = max(all_values)
-            ldata[axis]["min"] = min(all_values)
+            ldata[axis]["max"] = float(max(filter(None, fdata[axis])))
+            ldata[axis]["min"] = float(min(filter(None, fdata[axis])))
 
         return ldata
 
@@ -102,7 +88,7 @@ class PixelLocator:
     # def scaled(self):
     #     """Scale the points.
 
-    #     (-1, 1) along the shortest distance, the rest scaped accordingly
+    #     (-1, 1) along the shortest distance, the rest scaled accordingly
     #     """
     #     scale_to = 1
 
@@ -119,4 +105,64 @@ def scale(items, factor=1):
 
 def average_out(items):
     """Find the mean value of a list."""
-    return sum(items) / len(items)
+    if isinstance(items, list):
+        return float(sum(items) / len(items))
+
+    return float(items)
+
+
+def collect_json(json_path):
+    """Gather up the JSON files."""
+    data = {}
+    for aspect in ASPECTS:
+        data[aspect] = {}
+        directory = Path(json_path, aspect)
+        data_files = Path(directory).glob("*[0-9]*json")
+        for file in data_files:
+            data[aspect][file.stem] = json.loads(file.read_text(encoding="UTF-8"))
+
+    return data
+
+
+def consolidate(parsed_data, pic_width=720):
+    """Pull together the disparate data."""
+    width = find_highest_key(parsed_data) + 1
+    cdata = {
+        "x": [None] * width,
+        "y": [None] * width,
+        "z": [None] * width,
+    }
+
+    for i in range(width):
+        key = str(i).zfill(3)
+        for aspect in ASPECTS:
+            if aspect in parsed_data:
+                if key in parsed_data[aspect]:
+                    add_item(cdata["y"], i, parsed_data[aspect][key]["y"])
+        
+                    other_val = parsed_data[aspect][key]["x"]
+                    if AXES[aspect]["direction"] == "negative":
+                        other_val = pic_width - other_val
+
+                    add_item(cdata[AXES[aspect]["axis"]], i, other_val)
+      
+    return cdata
+
+def add_item(items, index, new_item):
+    """Add an item to a list _or_ create a list at that index."""
+    if items[index]:
+        items[index] = [items[index]]
+        items[index].append(new_item)
+    else:
+        items[index] = new_item
+
+def find_highest_key(data):
+    """Find the highest key."""
+    highest = 0
+    for key, values in data.items():
+        for sub_key, _ in values.items():
+            val = int(sub_key)
+            if val > highest:
+                highest = val
+
+    return highest
