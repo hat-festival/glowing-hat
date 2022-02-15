@@ -139,14 +139,15 @@ def consolidate(parsed_data, pic_width=720):
             if aspect in parsed_data:
                 if key in parsed_data[aspect]:
                     add_item(cdata["y"], i, parsed_data[aspect][key]["y"])
-        
+
                     other_val = parsed_data[aspect][key]["x"]
                     if AXES[aspect]["direction"] == "negative":
                         other_val = pic_width - other_val
 
                     add_item(cdata[AXES[aspect]["axis"]], i, other_val)
-      
+
     return cdata
+
 
 def add_item(items, index, new_item):
     """Add an item to a list _or_ create a list at that index."""
@@ -155,6 +156,7 @@ def add_item(items, index, new_item):
         items[index].append(new_item)
     else:
         items[index] = new_item
+
 
 def find_highest_key(data):
     """Find the highest key."""
@@ -166,3 +168,7 @@ def find_highest_key(data):
                 highest = val
 
     return highest
+
+def flatten_list(wonky_list):
+    """Flatten a list (averaging any possible sublists)."""
+    return list(map(lambda x: average_out(x), wonky_list))

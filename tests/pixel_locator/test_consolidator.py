@@ -17,15 +17,18 @@ def test_consolidate_simple():
     }
     assert consolidate(test_data) == {"x": [2], "y": [3], "z": [None]}
 
+
 def test_consolidate_with_two_items():
     """Test the consolidator, two simple items."""
     test_data = {"front": {"000": {"x": 2, "y": 3}, "001": {"x": 4, "y": 5}}}
     assert consolidate(test_data) == {"x": [2, 4], "y": [3, 5], "z": [None, None]}
 
+
 def test_consolidate_three_dimensions():
     """Test the consolidator, with two aspects."""
     test_data = {"front": {"000": {"x": 2, "y": 3}}, "right": {"000": {"x": 4, "y": 5}}}
     assert consolidate(test_data) == {"x": [2], "y": [[3, 5]], "z": [4]}
+
 
 def test_consolidate_inversion():
     """Test the consolidator, with an inverted aspect.."""
