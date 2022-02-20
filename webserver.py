@@ -16,6 +16,10 @@ def light():
     if "colour" in data:
         colour = data["colour"]
     app.hat.off()
+    colour = [255, 255, 255]
+    if "colour" in data:
+        colour = data["colour"]
+
     app.hat.light_one(data["index"], colour)
 
     return {"status": "OK"}
@@ -24,7 +28,12 @@ def light():
 @app.route("/light-all", methods=["POST"])
 def light_all():
     """Light all the lights."""
-    app.hat.light_all([255, 255, 255])
+    data = request.get_json()
+    colour = [255, 255, 255]
+    if "colour" in data:
+        colour = data["colour"]
+
+    app.hat.light_all(colour)
 
     return {"status": "OK"}
 

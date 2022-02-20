@@ -1,0 +1,2 @@
+- set up dark room
+- adjust colour sent to hat until it's _just_ visible

@@ -1,7 +1,7 @@
 # Pull the photos
 
 ```bash
-rsync -av pi@fancycamera.local:hat-analysis/ /opt/hat-analysis/
+rsync -av pi@fancycamera.local:analysis/ /opt/analysis/
 ```
 
 # Rotate the photos

@@ -16,7 +16,7 @@ AXES = {
 class PixelLocator:
     """Class to consolidate bright-pixel data."""
 
-    def __init__(self, picdimensions, data_root="/opt/hat-analysis", lights=None):
+    def __init__(self, picdimensions, data_root="/opt/analysis", lights=None):
         """Construct."""
         self.picwidth = picdimensions[0]
         self.picheight = picdimensions[1]
@@ -25,62 +25,6 @@ class PixelLocator:
             self.lights = conf["lights"]
         else:
             self.lights = lights
-
-    # @property
-    # def consolidated_data(self):
-    #     """Pull together the disparate data."""
-    #     pjson = self.parsed_json
-    #     cdata = {
-    #         "x": [None] * 20,
-    #         "y": [None] * 20,
-    #         "z": [None] * 20,
-    #     }
-    #     for i in range(self.lights):
-    #         key = str(i).zfill(3)
-    #         for aspect in ASPECTS:
-    #             if key in pjson[aspect]:
-    #                 y_val = pjson[aspect][key]["y"]
-    #                 if cdata["y"][i]:
-    #                     cdata["y"][i] = [cdata["y"][i]]
-    #                     cdata["y"][i].append(y_val)
-    #                 else:
-    #                     cdata["y"][i] = y_val
-
-    #                 other_value = pjson[aspect][key]["x"]
-    #                 if AXES[aspect]["direction"] == "negative":
-    #                     other_value = self.picwidth - other_value
-
-    #                 axis = AXES[aspect]["axis"]
-    #                 if cdata[axis][i]:
-    #                     cdata[axis][i] = [cdata[axis][i]]
-    #                     cdata[axis][i].append(other_value)
-    #                 else:
-    #                     cdata[axis][i] = other_value
-
-    #     return cdata
-
-    @property
-    def flattened_data(self):
-        """Average-out the data."""
-        cdata = self.consolidated_data
-        fdata = {"x": [], "y": [], "z": []}
-        for axis, values in cdata.items():
-            for value in values:
-                fdata[axis].append(average_out(value))
-
-        return fdata
-
-    @property
-    def limits(self):
-        """Find the mins and maxes."""
-        fdata = self.flattened_data
-        ldata = {"x": {}, "y": {}, "z": {}}
-
-        for axis in ["x", "y", "z"]:
-            ldata[axis]["max"] = float(max(filter(None, fdata[axis])))
-            ldata[axis]["min"] = float(min(filter(None, fdata[axis])))
-
-        return ldata
 
     # write YAML
 
@@ -169,6 +113,27 @@ def find_highest_key(data):
 
     return highest
 
+
 def flatten_list(wonky_list):
     """Flatten a list (averaging any possible sublists)."""
     return list(map(lambda x: average_out(x), wonky_list))
+
+
+def flatten(data):
+    """Average-out the data."""
+    fdata = {}
+    for axis, values in data.items():
+        fdata[axis] = flatten_list(values)
+
+    return fdata
+
+
+def limits(data):
+    """Find the mins and maxes."""
+    ldata = {"x": {}, "y": {}, "z": {}}
+
+    for axis in ["x", "y", "z"]:
+        ldata[axis]["max"] = float(max(filter(None, data[axis])))
+        ldata[axis]["min"] = float(min(filter(None, data[axis])))
+
+    return ldata

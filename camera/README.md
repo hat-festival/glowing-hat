@@ -81,5 +81,5 @@ And wait, then turn it again and run the above steps for `back` and `right`.
 So now you should have a whole load of images. Pull them onto your laptop, as a peer of this repo:
 
 ```bash
-rsync -av pi@fancycamera.local:hat-analysis ../
+rsync -av pi@fancycamera.local:analysis ../
 ```
