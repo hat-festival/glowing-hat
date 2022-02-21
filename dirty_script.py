@@ -2,7 +2,7 @@
 
 import time
 from pathlib import Path
-
+import sys
 import yaml
 
 from lib.hat import Hat
@@ -29,9 +29,8 @@ hat = Hat()
 hat.off()
 length = 0
 while True:
-    # colour = [randint(0, 127), randint(0, 127), randint(0, 127)]
     for colour in [off, red]:
-        for i in range(0, 2592, 10):
+        for i in range(0, 2592, 50):
             things = list(
                 filter(
                     # lambda x: x.less_than("x", i),
@@ -46,3 +45,5 @@ while True:
             print(indeces)
             print(i)
             # time.sleep(0.05)
+            # input("Hit key for next")
+            # if 

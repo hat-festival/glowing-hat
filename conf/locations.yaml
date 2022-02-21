@@ -209,13 +209,13 @@
 - index: 52
   x: 1318.0
   y: 764.0
-  z: 1844 # hand-crafted
+  z: 1844 # hand-located
 - index: 53
   x: 1677.0
   y: 644.0
   z: 1621.0
 - index: 54
-  x: 1443.0 # hand-crafted
+  x: 1443.0 # hand-located
   y: 412.0
   z: 1243.0
 - index: 55
@@ -285,7 +285,8 @@
 - index: 71
   x: 1031.0
   y: 808.6666666666666
-  z: 2193.0
+  # z: 2193.0
+  z: 1700.0 # hand-calibrated
 - index: 72
   x: 1563.0
   y: 662.5
@@ -307,7 +308,7 @@
   y: 431.5
   z: 1294.0
 - index: 77
-  x: 845 # hand-crafted
+  x: 845 # hand-located
   y: 771.0
   z: 1287.0
 - index: 78
@@ -363,7 +364,7 @@
   y: 432.0
   z: 1096.0
 - index: 91
-  x: 875 # hand-crafted
+  x: 875 # hand-located
   y: 649.0
   z: 1240.0
 - index: 92
@@ -383,7 +384,7 @@
   y: 1008.5
   z: 1633.0
 - index: 96
-  x: 1659 # hand-crafted
+  x: 1659 # hand-located
   y: 574.0
   z: 1296.0
 - index: 97
