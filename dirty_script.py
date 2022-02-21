@@ -34,12 +34,15 @@ while True:
         for i in range(0, 2592, 10):
             things = list(
                 filter(
+                    # lambda x: x.less_than("x", i),
                     lambda x: x.less_than("z", i),
+                    # lambda x: x.less_than("y", i),
                     lights,
                 )
             )
             indeces = list(map(lambda x: x.index, things))
             if indeces:
                 hat.colour_indeces(colour, indeces)
+            print(indeces)
             print(i)
             # time.sleep(0.05)
