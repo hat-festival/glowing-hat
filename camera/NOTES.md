@@ -30,6 +30,8 @@ So I constructed a Lego interface for this
 
 BLAH BLAH BLAH
 
+58 STUDS APART
+
 ## Taking the photos
 
 Something about adjusting the exposure, killing AWB, taking the secondary pictures
