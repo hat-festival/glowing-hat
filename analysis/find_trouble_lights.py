@@ -1,5 +1,6 @@
-import yaml
 from pathlib import Path
+
+import yaml
 
 locations = yaml.safe_load(Path("../conf/locations.yaml").read_text())
 

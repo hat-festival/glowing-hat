@@ -1,8 +1,9 @@
 # pylint: skip-file
 
+import sys
 import time
 from pathlib import Path
-import sys
+
 import yaml
 
 from lib.hat import Hat

@@ -13,7 +13,7 @@ sudo apt-get install -y python3-pip
 python -m pip install picamera
 ```
 
-## Focus the camera
+## Align the camera
 
 First, put the hat in `webserver` mode; on the Hat Pi:
 

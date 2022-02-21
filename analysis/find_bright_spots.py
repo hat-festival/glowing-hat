@@ -22,4 +22,3 @@ for aspect in ["back", "front", "left", "right"]:
                 Path(directory, f"{file.stem}.json").write_text(
                     json.dumps(coords), encoding="UTF-8"
                 )
-   
