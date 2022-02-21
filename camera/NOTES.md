@@ -18,7 +18,7 @@ For the `front` images, the `(x, y)` of the bright spot is straight-up the `(x, 
 
 ## Getting the photos
 
-In addition to a second Pi with [a camera](https://projects.raspberrypi.org/en/projects/getting-started-with-picamera), we'll need some method of placing the hat and the camera a fixed distance apart and square-on to each other. Did I use Lego? Of course I used Lego:
+In addition to a second Pi with [a camera](https://projects.raspberrypi.org/en/projects/getting-started-with-picamera), we'll need some method of placing the hat and the camera a fixed distance apart and square-on to each other. Did I use Lego? Of course I used Lego.
 
 ### Attaching the hat
 
@@ -28,9 +28,29 @@ The strapping inside the hat has this plastic bracket thing at the centre:
 
 So I constructed a Lego interface for this
 
-BLAH BLAH BLAH
+![hat interface](/assets/hat-interface.png)
 
-58 STUDS APART
+and they fit together like this
+
+![lego in hat](/assets/lego-hat-junction.png)
+
+### Mounting the camera
+
+I tried lining up the holes with Technic beams and using cable-ties and all that, but eventually I found the best way to mount the camera to the Lego was by sticking it on with some blu-tack:
+
+![camera mount](/assets/camera-mount.png)
+
+### Linking it all together
+
+After a lot of tinkering and fine-tuning, I came up with this arrangement:
+
+![side view](/assets/side-view.png)
+
+The hat is mounted high enough that its internal parts don't foul on the Lego, the camera is mounted at the right height to get the whole hat in frame, and the distance between the base of each platform is 58 studs.
+
+And how did I
+
+FOCUSCAM
 
 ## Taking the photos
 
