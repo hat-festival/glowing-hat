@@ -30,12 +30,12 @@ hat.off()
 length = 0
 while True:
     for colour in [off, red]:
-        for i in range(0, 2592, 50):
+        for i in range(0, 2592, 10):
             things = list(
                 filter(
                     # lambda x: x.less_than("x", i),
-                    lambda x: x.less_than("z", i),
-                    # lambda x: x.less_than("y", i),
+                    # lambda x: x.less_than("z", i),
+                    lambda x: x.less_than("y", i),
                     lights,
                 )
             )
@@ -44,6 +44,4 @@ while True:
                 hat.colour_indeces(colour, indeces)
             print(indeces)
             print(i)
-            # time.sleep(0.05)
-            # input("Hit key for next")
-            # if 
+            time.sleep(0.05)
