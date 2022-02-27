@@ -1,3 +1,5 @@
+# TODO
+# MOVE THIS TO YAML
 conf = {
     "lights": 100,
     "redis-defaults": {

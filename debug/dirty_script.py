@@ -9,7 +9,7 @@ import yaml
 from lib.hat import Hat
 from lib.pixel import Pixel
 
-data = yaml.safe_load(Path("conf", "locations.yaml").read_text(encoding="UTF-8"))
+data = yaml.safe_load(Path("..", "conf", "locations.yaml").read_text(encoding="UTF-8"))
 
 lights = []
 
@@ -29,7 +29,7 @@ hat.off()
 length = 0
 while True:
     for index, colour in enumerate([red, green, blue]):
-        for i in range(0, 2592, 50):
+        for i in range(0, 2592, 30):
             things = list(
                 filter(
                     lambda x: x.less_than("x", i),

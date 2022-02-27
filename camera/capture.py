@@ -45,16 +45,20 @@ def snap(index, colour, shutter_speed=2000, suffix=""):
         headers={"Content-Type": "application/json"},
     )
     sleep(0.5)
-    camera.shutter_speed = 2000
+    camera.shutter_speed = shutter_speed
     camera.capture(f"{str(outdir)}/{str(index).zfill(3)}{suffix}.jpg")
     sleep(0.5)
 
 
 colour = [255, 0, 0]
 for index in range(conf["lights"]):
+    # take a regular photo
     snap(index, colour)
+
+    # take a longer-exposure photo
     snap(index, [255, 255, 255], 1000000, "-long")
 
+# take a photo with all lights on
 requests.post(
     f"{hat}/light-all",
     data=json.dumps({"colour": colour}),

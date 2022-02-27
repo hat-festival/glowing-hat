@@ -1,2 +1,3 @@
 .coverage
 Makefile
+.vscode/settings.json
