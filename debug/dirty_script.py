@@ -1,7 +1,6 @@
 # pylint: skip-file
+# flake8: noqa
 
-import sys
-import time
 from pathlib import Path
 
 import yaml

@@ -1,13 +1,14 @@
-from unittest import TestCase
+# from unittest import TestCase
 
-from lib.pixel_locator import PixelLocator, average_out, scale
+# from lib.pixel_locator import PixelLocator, average_out, scale
 
 # class TestPixelLocator(TestCase):
 #     """Test the PixelLocator."""
 
 #     def test_consolidate(self):
 #         """Test it consolidates the data."""
-#         ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis", lights=20)
+#         ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis",
+# lights=20)
 #         self.assertEqual(
 #             ploc.consolidated_data,
 #             {
@@ -82,7 +83,8 @@ from lib.pixel_locator import PixelLocator, average_out, scale
 
 #     def test_flattening(self):
 #         """Test it averages-out the data."""
-#         ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis", lights=20)
+#         ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis",
+# lights=20)
 #         self.assertEqual(
 #             ploc.flattened_data,
 #             {
@@ -157,7 +159,8 @@ from lib.pixel_locator import PixelLocator, average_out, scale
 
 #     def test_limits(self):
 #         """ "Test it finds the mins and maxes."""
-#         ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis", lights=20)
+#         ploc = PixelLocator([720, 480], data_root="tests/fixtures/analysis",
+# lights=20)
 #         self.assertEqual(
 #             ploc.limits,
 #             {
@@ -168,33 +171,33 @@ from lib.pixel_locator import PixelLocator, average_out, scale
 #         )
 
 
-def test_scale():
-    """Test it scales some items."""
-    cases = (
-        ([1, 2], [-1, 1]),
-        ([0, 1, 2], [-1, 0, 1]),
-        ([0, 2, 4], [-1, 0, 1]),
-        ([1, 2, 3], [-1, 0, 1]),
-        ([0, 1, 2, 3, 4, 8], [-1.0, -0.75, -0.5, -0.25, 0.0, 1.0]),
-        ([4, 2, 3, 8, 0, 1], [0.0, -0.5, -0.25, 1.0, -1.0, -0.75]),
-    )
+# def test_scale():
+#     """Test it scales some items."""
+#     cases = (
+#         ([1, 2], [-1, 1]),
+#         ([0, 1, 2], [-1, 0, 1]),
+#         ([0, 2, 4], [-1, 0, 1]),
+#         ([1, 2, 3], [-1, 0, 1]),
+#         ([0, 1, 2, 3, 4, 8], [-1.0, -0.75, -0.5, -0.25, 0.0, 1.0]),
+#         ([4, 2, 3, 8, 0, 1], [0.0, -0.5, -0.25, 1.0, -1.0, -0.75]),
+#     )
 
-    for items, expected in cases:
-        assert scale(items) == expected
+#     for items, expected in cases:
+#         assert scale(items) == expected
 
-    more_cases = (
-        ([1, 2], 1, [-1, 1]),
-        ([1, 2], 2, [-2, 2]),
-        ([1, 2], 0.5, [-0.5, 0.5]),
-        ([0, 1, 2, 3, 4, 8], 2, [-2.0, -1.5, -1.0, -0.5, 0.0, 2.0]),
-        ([0, 1, 2, 3, 4, 8], 0.5, [-0.5, -0.375, -0.25, -0.125, 0.0, 0.5]),
-    )
-    for items, factor, expected in more_cases:
-        assert scale(items, factor) == expected
+#     more_cases = (
+#         ([1, 2], 1, [-1, 1]),
+#         ([1, 2], 2, [-2, 2]),
+#         ([1, 2], 0.5, [-0.5, 0.5]),
+#         ([0, 1, 2, 3, 4, 8], 2, [-2.0, -1.5, -1.0, -0.5, 0.0, 2.0]),
+#         ([0, 1, 2, 3, 4, 8], 0.5, [-0.5, -0.375, -0.25, -0.125, 0.0, 0.5]),
+#     )
+#     for items, factor, expected in more_cases:
+#         assert scale(items, factor) == expected
 
 
-def test_average_out():
-    """Test it averages a list."""
-    assert average_out([1]) == 1
-    assert average_out([1, 3]) == 2
-    assert average_out([1, 4]) == 2.5
+# def test_average_out():
+#     """Test it averages a list."""
+#     assert average_out([1]) == 1
+#     assert average_out([1, 3]) == 2
+#     assert average_out([1, 4]) == 2.5
