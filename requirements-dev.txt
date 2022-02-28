@@ -15,10 +15,10 @@ Deprecated==1.2.13
 executing==0.8.2
 Flask==2.0.3
 hiredis==2.0.0
-importlib-metadata==4.11.1
+importlib-metadata==4.11.2
 iniconfig==1.1.1
 ipdb==0.13.9
-ipython==8.0.1
+ipython==8.1.0
 isort==5.10.1
 itsdangerous==2.1.0
 jedi==0.18.1
