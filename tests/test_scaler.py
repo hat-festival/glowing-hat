@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.scaler import Scaler, deconstruct
+from lib.scaler import Scaler, deconstruct, find_largest_span
 
 
 class TestScaler(TestCase):
@@ -36,6 +36,25 @@ class TestScaler(TestCase):
                 {"index": 4, "x": 1, "y": 1, "z": 1},
             ],
         )
+
+
+def test_find_largest_span():
+    """Test it finds the largest span."""
+    assert (
+        find_largest_span(
+            {
+                "lights": [
+                    {"index": 0, "x": 1, "y": 2, "z": 3},
+                    {"index": 1, "x": 10, "y": 11, "z": 12},
+                    {"index": 2, "x": 4, "y": 5, "z": 6},
+                    {"index": 3, "x": 7, "y": 8, "z": 9},
+                    {"index": 4, "x": 25, "y": 14, "z": 15},
+                ],
+                "centres": {"x": 7, "y": 8, "z": 9},
+            }
+        )
+        == 18
+    )
 
 
 def test_deconstruct():

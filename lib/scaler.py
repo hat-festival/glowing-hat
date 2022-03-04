@@ -12,13 +12,33 @@ class Scaler:
         self.locations = locations
         self.absolutes = yaml.safe_load(Path(locations).read_text(encoding="UTF-8"))
 
-        self.scaled = [
-            {"index": 0, "x": -1, "y": -1, "z": -1},
-            {"index": 1, "x": -0.5, "y": -0.5, "z": -0.5},
-            {"index": 2, "x": 0, "y": 0, "z": 0},
-            {"index": 3, "x": 0.5, "y": 0.5, "z": 0.5},
-            {"index": 4, "x": 1, "y": 1, "z": 1},
-        ]
+        magic_number = find_largest_span(self.absolutes)
+        self.scaled = []
+        for light in self.absolutes["lights"]:
+            scaled_light = {"index": light["index"]}
+            for axis in ["x", "y", "z"]:
+                scaled_light[axis] = (light[axis] - magic_number) / magic_number
+            self.scaled.append(scaled_light)
+
+
+def find_largest_span(absolutes):
+    """Find the largest step from the centre, given some lists."""
+    largest = 0
+    centres = absolutes["centres"]
+    deconstructed = deconstruct(absolutes["lights"])
+
+    for axis in ["x", "y", "z"]:
+        centre = centres[axis]
+        for value in deconstructed[axis]:
+            if value >= centre:
+                if value - centre > largest:
+                    largest = value - centre
+
+            else:
+                if centre - value > largest:
+                    largest = centre - value
+
+    return largest
 
 
 def deconstruct(absolutes):
