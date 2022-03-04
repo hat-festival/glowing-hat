@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.scaler import Scaler
+from lib.scaler import Scaler, deconstruct
 
 
 class TestScaler(TestCase):
@@ -36,3 +36,20 @@ class TestScaler(TestCase):
                 {"index": 4, "x": 1, "y": 1, "z": 1},
             ],
         )
+
+
+def test_deconstruct():
+    """Test it breaks-up the data."""
+    assert deconstruct(
+        [
+            {"index": 0, "x": 1, "y": 2, "z": 3},
+            {"index": 1, "x": 10, "y": 11, "z": 12},
+            {"index": 2, "x": 4, "y": 5, "z": 6},
+            {"index": 3, "x": 7, "y": 8, "z": 9},
+            {"index": 4, "x": 13, "y": 14, "z": 15},
+        ]
+    ) == {
+        "x": [1, 10, 4, 7, 13],
+        "y": [2, 11, 5, 8, 14],
+        "z": [3, 12, 6, 9, 15],
+    }

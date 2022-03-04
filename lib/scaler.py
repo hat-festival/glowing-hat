@@ -1,4 +1,5 @@
 from pathlib import Path
+from posixpath import abspath
 
 import yaml
 
@@ -18,3 +19,13 @@ class Scaler:
             {"index": 3, "x": 0.5, "y": 0.5, "z": 0.5},
             {"index": 4, "x": 1, "y": 1, "z": 1},
         ]
+
+
+def deconstruct(absolutes):
+    """Pull the data to pieces."""
+    deconstructed = {}
+
+    for axis in ["x", "y", "z"]:
+        deconstructed[axis] = list(map(lambda w: w[axis], absolutes))
+
+    return deconstructed
