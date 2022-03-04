@@ -12,12 +12,14 @@ class Scaler:
         self.locations = locations
         self.absolutes = yaml.safe_load(Path(locations).read_text(encoding="UTF-8"))
 
-        magic_number = find_largest_span(self.absolutes)
+        largest_span = find_largest_span(self.absolutes)
+
         self.scaled = []
         for light in self.absolutes["lights"]:
             scaled_light = {"index": light["index"]}
             for axis in ["x", "y", "z"]:
-                scaled_light[axis] = (light[axis] - magic_number) / magic_number
+                centre = self.absolutes["centres"][axis]
+                scaled_light[axis] = (light[axis] - centre) / largest_span
             self.scaled.append(scaled_light)
 
 

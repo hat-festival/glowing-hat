@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import pytest
+
 from lib.scaler import Scaler, deconstruct, find_largest_span
 
 
@@ -26,6 +28,7 @@ class TestScaler(TestCase):
     def test_simple_scaling(self):
         """Test it scales the simple data."""
         scaler = Scaler("tests/fixtures/conf/simple-locations.yaml")
+        self.assertEqual(find_extreme(scaler.scaled), 1.0)
         self.assertEqual(
             scaler.scaled,
             [
@@ -36,6 +39,78 @@ class TestScaler(TestCase):
                 {"index": 4, "x": 1, "y": 1, "z": 1},
             ],
         )
+
+    def test_offset_scaling(self):
+        """Test it scales the offset data."""
+        scaler = Scaler("tests/fixtures/conf/offset-locations.yaml")
+        self.assertEqual(find_largest_span(scaler.absolutes), 1.5)
+        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(
+            scaler.scaled,
+            [
+                {
+                    "index": 0,
+                    "x": -0.3333333333333333,
+                    "y": -0.6666666666666666,
+                    "z": -0.6666666666666666,
+                },
+                {"index": 1, "x": 0.3333333333333333, "y": 0.0, "z": 0.0},
+                {
+                    "index": 2,
+                    "x": 1.0,
+                    "y": 0.6666666666666666,
+                    "z": 0.6666666666666666,
+                },
+            ],
+        )
+
+    def test_messy_scaling(self):
+        """Test it scales the messy data."""
+        scaler = Scaler("tests/fixtures/conf/messy-locations.yaml")
+        self.assertEqual(find_largest_span(scaler.absolutes), 200)
+        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(
+            scaler.scaled,
+            [
+                {"index": 0, "x": -0.38, "y": -0.945, "z": -0.57},
+                {"index": 1, "x": 0.55, "y": 1.0, "z": -0.79},
+                {"index": 2, "x": 0.045, "y": -0.91, "z": 0.65},
+            ],
+        )
+
+    def test_backloaded_scaling(self):
+        """Test it scales the back-loaded data (where the extreme is -1.0)."""
+        scaler = Scaler("tests/fixtures/conf/back-loaded-locations.yaml")
+        self.assertEqual(find_largest_span(scaler.absolutes), 45)
+        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(
+            scaler.scaled,
+            [
+                {
+                    "index": 0,
+                    "x": -0.3333333333333333,
+                    "y": -0.6666666666666666,
+                    "z": -1.0,
+                },
+                {
+                    "index": 1,
+                    "x": -0.1111111111111111,
+                    "y": -0.2222222222222222,
+                    "z": -0.3333333333333333,
+                },
+                {
+                    "index": 2,
+                    "x": 0.1111111111111111,
+                    "y": 0.2222222222222222,
+                    "z": 0.3333333333333333,
+                },
+            ],
+        )
+
+    def test_realistic_scaling(self):
+        """Test it scales the actual data."""
+        scaler = Scaler("tests/fixtures/conf/actual-locations.yaml")
+        self.assertEqual(find_extreme(scaler.scaled), 1.0)
 
 
 def test_find_largest_span():
@@ -72,3 +147,22 @@ def test_deconstruct():
         "y": [2, 11, 5, 8, 14],
         "z": [3, 12, 6, 9, 15],
     }
+
+
+def test_scaling_factor():
+    """Test it finds the scaling factor."""
+
+
+###
+
+
+def find_extreme(data):
+    """Find the largest absolute value in some data."""
+    largest = 0
+
+    for item in data:
+        for axis in ["x", "y", "z"]:
+            if abs(item[axis]) > largest:
+                largest = abs(item[axis])
+
+    return largest

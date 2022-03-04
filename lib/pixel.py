@@ -21,7 +21,10 @@ class Pixel:
         try:
             return self.location[axis] < value
         except KeyError:
+<<<<<<< HEAD
             print(self.index)
+=======
+>>>>>>> OK this now WORKS
             return None
 
     # def is_inside_slice(self):
