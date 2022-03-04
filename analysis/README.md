@@ -120,6 +120,10 @@ sudo PYTHONPATH=../ python calibrator.py x 1000
 
 This will light all lights with an `x` value less than 1000. Adjust this value up and down until you get to the range which should have illuminated the bad light, then put this value in `locations.yaml`. Repeat for any other wonky lights, on any of the axes.
 
+## Find the centres
+
+Also use the centres of each axis, and record them in `conf/locations.yaml`.
+
 ## And we're done
 
 All of this tooling is a bit crufty because it was developed by running it on the hat until it worked. It doesn't have any tests, except the actual test of Are The Lights Correctly Located In Hatspace?
