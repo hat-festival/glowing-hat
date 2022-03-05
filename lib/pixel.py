@@ -1,6 +1,8 @@
 # pylint: disable=C0103
 
 
+
+
 class Pixel:
     """Class representing a single NeoPixel."""
 
@@ -15,15 +17,16 @@ class Pixel:
     def less_than(self, axis, value):
         """Is this Pixel's coord on `axis` < `value`."""
         try:
-            return self.location[axis] < value
+            return self.data[axis] < value
         except KeyError:
-            print(self.index)
-
             return None
 
     def __getitem__(self, key):
         """Implement foo['bar']."""
-        return self.data[key]
+        try:
+            return self.data[key]
+        except KeyError:
+            return None
 
     # def is_inside_slice(self):
     # this is a prism with very large ends

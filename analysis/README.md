@@ -122,8 +122,8 @@ This will light all lights with an `x` value less than 1000. Adjust this value u
 
 ## Find the centres
 
-Also use the centres of each axis, and record them in `conf/locations.yaml`.
+Also use `calibrator` to find the centres of each axis, and record them in `conf/locations.yaml`.
 
 ## And we're done
 
-All of this tooling is a bit crufty because it was developed by running it on the hat until it worked. It doesn't have any tests, except the actual test of Are The Lights Correctly Located In Hatspace?
+All of this tooling is very crufty because it was developed by running it on the hat until it worked. It doesn't have any tests, except the actual test of Are The Lights Correctly Located In Hatspace?

@@ -5,20 +5,19 @@ from pathlib import Path
 
 import yaml
 
-from lib.hat import Hat
+from hat import Hat
 from lib.pixel import Pixel
 
 data = yaml.safe_load(Path("..", "conf", "locations.yaml").read_text(encoding="UTF-8"))
 
 lights = []
 
-for index, point in enumerate(data):
-    lights.append(Pixel(index, point))
+for index, point in enumerate(data["lights"]):
+    lights.append(Pixel(point))
 
 red = [127, 0, 0]
 green = [0, 127, 0]
 blue = [0, 0, 127]
-magenta = [127, 0, 127]
 off = [0, 0, 0]
 
 axes = ["x", "y", "z"]
@@ -37,7 +36,7 @@ while True:
                     lights,
                 )
             )
-            indeces = list(map(lambda x: x.index, things))
+            indeces = list(map(lambda x: x["index"], things))
             if indeces:
-                hat.colour_indeces(colour, indeces)
+                hat.colour_indeces(indeces, colour)
             # time.sleep(0.05)

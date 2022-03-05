@@ -3,7 +3,7 @@
 
 import time
 
-from lib.hat import Hat
+from hat import Hat
 
 hat = Hat()
 from lib.conf import conf

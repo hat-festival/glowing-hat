@@ -6,7 +6,7 @@ from pathlib import Path
 
 import yaml
 
-from lib.hat import Hat
+from hat import Hat
 from lib.pixel import Pixel
 
 axis = sys.argv[1]
@@ -15,8 +15,8 @@ value = int(sys.argv[2])
 data = yaml.safe_load(Path("..", "conf", "locations.yaml").read_text(encoding="UTF-8"))
 
 lights = []
-for index, point in enumerate(data):
-    lights.append(Pixel(index, point))
+for index, point in enumerate(data["lights"]):
+    lights.append(Pixel(point))
 
 red = [255, 0, 0]
 
@@ -27,6 +27,6 @@ indeces = []
 print(f"Lighting for {axis} less than {value}")
 for light in lights:
     if light.less_than(axis, value):
-        indeces.append(light.index)
+        indeces.append(light["index"])
 
-hat.colour_indeces(red, indeces)
+hat.colour_indeces(indeces, red)
