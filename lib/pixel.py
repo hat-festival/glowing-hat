@@ -1,8 +1,6 @@
 # pylint: disable=C0103
 
 
-
-
 class Pixel:
     """Class representing a single NeoPixel."""
 
@@ -20,6 +18,14 @@ class Pixel:
             return self.data[axis] < value
         except KeyError:
             return None
+
+    def positive(self, axis):
+        """Is this Pixel's `value` on `axis` >= than zero"""
+        return self.greater_than(axis, 0)
+
+    def negative(self, axis):
+        """Is this Pixel's `value` on `axis` < than zero"""
+        return self.less_than(axis, 0)
 
     def __getitem__(self, key):
         """Implement foo['bar']."""

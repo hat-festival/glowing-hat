@@ -5,8 +5,8 @@ import sys
 from pathlib import Path
 
 import yaml
-
 from hat import Hat
+
 from lib.pixel import Pixel
 
 axis = sys.argv[1]

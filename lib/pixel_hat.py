@@ -8,8 +8,7 @@ from lib.scaler import Scaler
 class PixelHat(list):
     """Hat with pixels."""
 
-    def __init__(self, locations="conf/locations.yaml"):
-        """Construct."""
+    def __init__(self, locations="conf/locations.yaml"):  # pylint: disable=W0231
         self.locations = locations
         self.scaler = Scaler(locations)
 
@@ -24,7 +23,15 @@ class PixelHat(list):
             self.pixels[index] = colour
         self.pixels.show()
 
+    def light_one(self, index, colour):
+        """Light up a single pixel."""
+        self.pixels[index] = colour
+
     def off(self):
         """Turn all the lights off."""
         self.pixels.fill([0, 0, 0])
+        self.pixels.show()
+
+    def show(self):
+        """Show our lights."""
         self.pixels.show()

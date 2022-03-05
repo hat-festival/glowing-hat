@@ -4,8 +4,8 @@
 from pathlib import Path
 
 import yaml
-
 from hat import Hat
+
 from lib.pixel import Pixel
 
 data = yaml.safe_load(Path("..", "conf", "locations.yaml").read_text(encoding="UTF-8"))

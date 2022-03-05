@@ -1,8 +1,8 @@
 import redis
 
 from lib.conf import conf
-from lib.tools import make_key
-from lib.tools import hue_to_rgb
+from lib.tools import hue_to_rgb, make_key
+from lib.oled import Oled
 
 
 class RedisManager:
@@ -11,6 +11,7 @@ class RedisManager:
     def __init__(self, namespace="hat"):
         self.redis = redis.Redis()
         self.namespace = namespace
+        self.oled = Oled(self)
 
     def populate(self, flush=False):
         """Insert initial data."""
@@ -37,6 +38,8 @@ class RedisManager:
     def enter(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
+        if key in conf["display-keys"]:
+            self.oled.update()
 
     def push(self, key, value):
         """Delegate `lpush`."""

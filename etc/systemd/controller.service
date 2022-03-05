@@ -1,15 +1,15 @@
 [Unit]
-Description=Colour Wheel
+Description=Hat Controller
 
 [Service]
 User=pi
 WorkingDirectory=/home/pi/hatlights
 Environment=PYTHONDONTWRITEBYTECODE=1
-ExecStart=/bin/bash -lc 'python wheel_spinner.py'
+ExecStart=/bin/bash -lc 'sudo python controller.py'
 Restart=always
 StandardInput=null
-StandardOutput=file:/var/log/hatlights/colour-wheel.log
-StandardError=file:/var/log/hatlights/colour-wheel.err
+StandardOutput=file:/var/log/hatlights/controller.log
+StandardError=file:/var/log/hatlights/controller.err
 KillMode=mixed
 TimeoutStopSec=5
 

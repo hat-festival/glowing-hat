@@ -28,9 +28,6 @@ def scale(items, centre, factor=1):
     shifted = list(map(lambda x: x - min(items), items))
     multiplier = (2 / max(shifted)) * factor
     normalised = list(map(lambda x: x * multiplier, shifted))
-    import ipdb
-
-    ipdb.set_trace()
     centred = list(map(lambda x: x - factor, normalised))
 
     return centred

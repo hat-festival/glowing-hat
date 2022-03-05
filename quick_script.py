@@ -1,4 +1,3 @@
-from lib.hat import Hat
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
