@@ -4,27 +4,21 @@
 class Pixel:
     """Class representing a single NeoPixel."""
 
-    def __init__(self, index, location):
+    def __init__(self, data):
         """Construct."""
-        self.index = index
-        self.location = location
+        self.data = data
 
     def greater_than(self, axis, value):
         """Is this Pixel's coord on `axis` >= `value`."""
-        try:
-            return self.location[axis] >= value
-        except KeyError:
-            return None
+        return self.data[axis] >= value
 
     def less_than(self, axis, value):
         """Is this Pixel's coord on `axis` < `value`."""
         try:
             return self.location[axis] < value
         except KeyError:
-<<<<<<< HEAD
             print(self.index)
-=======
->>>>>>> OK this now WORKS
+
             return None
 
     # def is_inside_slice(self):
