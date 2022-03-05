@@ -21,6 +21,10 @@ class Pixel:
 
             return None
 
+    def __getitem__(self, key):
+        """Implement foo['bar']."""
+        return self.data[key]
+
     # def is_inside_slice(self):
     # this is a prism with very large ends
 

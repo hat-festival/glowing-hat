@@ -2,6 +2,7 @@ import redis
 
 from lib.conf import conf
 from lib.tools import make_key
+from lib.tools import hue_to_rgb
 
 
 class RedisManager:
@@ -28,6 +29,10 @@ class RedisManager:
             return value.decode()
 
         return None
+
+    def fetch_colour(self):
+        """Return an RGB triple based on the current `hue`."""
+        return hue_to_rgb(float(self.retrieve("hue")))
 
     def enter(self, key, value):
         """Set a value."""
