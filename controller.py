@@ -4,10 +4,13 @@ from multiprocessing import Process
 
 from RPi import GPIO
 
-from lib.modes.random import Random
+from lib.modes.random_lights import RandomLights
 from lib.modes.z_wave import ZWave
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
+
+###
+
 
 class Controller:
     """Management class."""
@@ -15,14 +18,15 @@ class Controller:
     def __init__(self):
         """Construct."""
         self.hat = PixelHat()
-        self.rm = RedisManager()
+        self.redis_man = RedisManager()
         self.mode_index = -1
-        self.modes = [ZWave(self.hat), Random(self.hat)]
+        self.modes = [ZWave(self.hat), RandomLights(self.hat)]
 
         self.process = None
         self.next_mode(None)
 
     def next_mode(self, _):
+        """Bump to the next mode."""
         if self.process and self.process.is_alive():
             self.process.terminate()
 
@@ -34,7 +38,7 @@ class Controller:
 
         mode_name = type(mode).__name__
         print(f"Mode is now {mode_name}")
-        self.rm.enter("mode", mode_name)
+        self.redis_man.enter("mode", mode_name)
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""

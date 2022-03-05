@@ -1,4 +1,3 @@
-from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
 
@@ -7,15 +6,16 @@ class ZWave:
 
     def __init__(self, hat, steps=50):
         """Construct."""
+        self.name = "Z-Wave"
         self.hat = hat
         self.steps = steps
-        self.rm = RedisManager()
+        self.redis_man = RedisManager()
 
     def run(self):
         """Do stuff."""
         self.hat.off()
         while True:
-            colour = self.rm.fetch_colour()
+            colour = self.redis_man.fetch_colour()
             for i in range(self.steps):
                 positives = list(
                     filter(

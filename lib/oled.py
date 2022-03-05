@@ -42,6 +42,7 @@ class Oled:
         font = ImageFont.load_default()
         step = 10
 
+# Nah, this could be much richer
         for index, key in enumerate(conf["display-keys"]):
             text = f"{key}: "
             text += self.redisman.retrieve(key)

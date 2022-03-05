@@ -1,8 +1,8 @@
 import redis
 
 from lib.conf import conf
-from lib.tools import hue_to_rgb, make_key
 from lib.oled import Oled
+from lib.tools import hue_to_rgb, make_key
 
 
 class RedisManager:

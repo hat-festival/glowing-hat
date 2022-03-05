@@ -50,8 +50,6 @@ def deconstruct(absolutes):
     deconstructed = {}
 
     for axis in ["x", "y", "z"]:
-        deconstructed[axis] = list(
-            map(lambda w: w[axis], absolutes)  # pylint: disable=W0640
-        )
+        deconstructed[axis] = list(map(lambda w: w[axis], absolutes))
 
     return deconstructed
