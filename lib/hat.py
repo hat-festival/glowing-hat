@@ -29,7 +29,7 @@ class Hat:
         self.pixels.fill(colour)
         self.pixels.show()
 
-    def colour_indeces(self, colour, indeces):
+    def colour_indeces(self, indeces, colour):
         """Apply a colour to a list of lights."""
         for index in indeces:
             self.pixels[index] = colour

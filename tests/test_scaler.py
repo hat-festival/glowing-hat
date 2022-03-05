@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-import pytest
-
 from lib.scaler import Scaler, deconstruct, find_largest_span
 
 
@@ -28,9 +26,9 @@ class TestScaler(TestCase):
     def test_simple_scaling(self):
         """Test it scales the simple data."""
         scaler = Scaler("tests/fixtures/conf/simple-locations.yaml")
-        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(find_extreme(scaler), 1.0)
         self.assertEqual(
-            scaler.scaled,
+            scaler,
             [
                 {"index": 0, "x": -1, "y": -1, "z": -1},
                 {"index": 1, "x": -0.5, "y": -0.5, "z": -0.5},
@@ -44,9 +42,9 @@ class TestScaler(TestCase):
         """Test it scales the offset data."""
         scaler = Scaler("tests/fixtures/conf/offset-locations.yaml")
         self.assertEqual(find_largest_span(scaler.absolutes), 1.5)
-        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(find_extreme(scaler), 1.0)
         self.assertEqual(
-            scaler.scaled,
+            scaler,
             [
                 {
                     "index": 0,
@@ -68,9 +66,9 @@ class TestScaler(TestCase):
         """Test it scales the messy data."""
         scaler = Scaler("tests/fixtures/conf/messy-locations.yaml")
         self.assertEqual(find_largest_span(scaler.absolutes), 200)
-        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(find_extreme(scaler), 1.0)
         self.assertEqual(
-            scaler.scaled,
+            scaler,
             [
                 {"index": 0, "x": -0.38, "y": -0.945, "z": -0.57},
                 {"index": 1, "x": 0.55, "y": 1.0, "z": -0.79},
@@ -82,9 +80,9 @@ class TestScaler(TestCase):
         """Test it scales the back-loaded data (where the extreme is -1.0)."""
         scaler = Scaler("tests/fixtures/conf/back-loaded-locations.yaml")
         self.assertEqual(find_largest_span(scaler.absolutes), 45)
-        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(find_extreme(scaler), 1.0)
         self.assertEqual(
-            scaler.scaled,
+            scaler,
             [
                 {
                     "index": 0,
@@ -110,7 +108,7 @@ class TestScaler(TestCase):
     def test_realistic_scaling(self):
         """Test it scales the actual data."""
         scaler = Scaler("tests/fixtures/conf/actual-locations.yaml")
-        self.assertEqual(find_extreme(scaler.scaled), 1.0)
+        self.assertEqual(find_extreme(scaler), 1.0)
 
 
 def test_find_largest_span():

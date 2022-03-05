@@ -1,17 +1,17 @@
 from pathlib import Path
-from posixpath import abspath
 
 import yaml
 
 
-class Scaler:
+class Scaler(list):
     """Pixel scaler thing."""
 
-    def __init__(self, locations="conf/locations.yaml"):
+    def __init__(self, locations="conf/locations.yaml"):  # pylint: disable=W0231
         """Construct."""
         self.locations = locations
         self.absolutes = yaml.safe_load(Path(locations).read_text(encoding="UTF-8"))
 
+        ### WE CAN HAVE THREE INDEPENDENT SPANS HERE
         largest_span = find_largest_span(self.absolutes)
 
         self.scaled = []
@@ -20,7 +20,7 @@ class Scaler:
             for axis in ["x", "y", "z"]:
                 centre = self.absolutes["centres"][axis]
                 scaled_light[axis] = (light[axis] - centre) / largest_span
-            self.scaled.append(scaled_light)
+            self.append(scaled_light)
 
 
 def find_largest_span(absolutes):
@@ -48,6 +48,8 @@ def deconstruct(absolutes):
     deconstructed = {}
 
     for axis in ["x", "y", "z"]:
-        deconstructed[axis] = list(map(lambda w: w[axis], absolutes))
+        deconstructed[axis] = list(
+            map(lambda w: w[axis], absolutes)  # pylint: disable=W0640
+        )
 
     return deconstructed
