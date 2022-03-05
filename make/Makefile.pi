@@ -20,16 +20,13 @@ prepare-logs:
 system-install: systemd restart-services
 
 systemd: prepare-logs
-	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/hat-manager.service
-	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/modes.service
+	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/colour-wheel.service
 
 restart-services:
-	sudo service hat-manager restart
-	sudo service modes restart
+	sudo service colour-wheel restart
 
 stop-services:
-	sudo service hat-manager stop
-	sudo service modes stop
+	sudo service colour-wheel stop
 
 install:
 	sudo python -m pip install -r requirements.txt

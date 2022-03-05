@@ -1,0 +1,17 @@
+[Unit]
+Description=Hat Modes
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/hatlights
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -lc 'python wheel_spinner.py'
+Restart=always
+StandardInput=null
+StandardOutput=file:/var/log/hatlights/spinner.log
+StandardError=file:/var/log/hatlights/spinner.err
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

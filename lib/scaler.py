@@ -14,6 +14,8 @@ class Scaler(list):
         ### WE CAN HAVE THREE INDEPENDENT SPANS HERE
         largest_span = find_largest_span(self.absolutes)
 
+        ### INVERT Y!
+
         self.scaled = []
         for light in self.absolutes["lights"]:
             scaled_light = {"index": light["index"]}

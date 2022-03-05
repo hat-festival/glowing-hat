@@ -1,7 +1,6 @@
 import redis
 
 from lib.conf import conf
-from lib.oled import Oled
 from lib.tools import make_key
 
 
@@ -11,7 +10,6 @@ class RedisManager:
     def __init__(self, namespace="hat"):
         self.redis = redis.Redis()
         self.namespace = namespace
-        self.oled = Oled(self)
 
     def populate(self, flush=False):
         """Insert initial data."""
@@ -22,8 +20,6 @@ class RedisManager:
         for key, value in conf["redis-defaults"].items():
             if not self.redis.get(make_key(key, self.namespace)):
                 self.redis.set(make_key(key, self.namespace), value)
-
-        self.oled.update()
 
     def retrieve(self, key):
         """Get a value."""
@@ -36,8 +32,6 @@ class RedisManager:
     def enter(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
-        if key in conf["display-keys"]:
-            self.oled.update()
 
     def push(self, key, value):
         """Delegate `lpush`."""

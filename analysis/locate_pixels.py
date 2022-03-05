@@ -47,13 +47,13 @@ for i in range(conf["lights"]):
                 lights[key][stuff["axis"]].append(v)
 
 # take a mean of the value lists
-final_lights = []
+final_lights = {"lights": [], "centres": {}}
 index = 0
 for key, points in lights.items():
-    final_lights.append({"index": index})
+    final_lights["lights"].append({"index": index})
     for axis, values in points.items():
         if values:
-            final_lights[int(key)][axis] = sum(values) / len(values)
+            final_lights["lights"][int(key)][axis] = sum(values) / len(values)
     index += 1
 
 Path("..", "conf", "locations.yaml").write_text(
