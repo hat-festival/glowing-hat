@@ -1,4 +1,3 @@
-# from lib.redis_manager import RedisManager
 from lib.mode import Mode
 
 
@@ -7,9 +6,8 @@ class ZWave(Mode):
 
     def __init__(self, hat):
         """Construct."""
-        self.steps = 20
-
         super().__init__(hat, "Z-Wave")
+        self.steps = 20
 
     def run(self):
         """Do stuff."""
