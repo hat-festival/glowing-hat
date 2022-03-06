@@ -4,7 +4,7 @@ from lib.redis_manager import RedisManager
 class ZWave:
     """Simple wave mode."""
 
-    def __init__(self, hat, steps=50):
+    def __init__(self, hat, steps=20):
         """Construct."""
         self.name = "Z-Wave"
         self.hat = hat

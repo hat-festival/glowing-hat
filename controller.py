@@ -9,8 +9,6 @@ from lib.modes.z_wave import ZWave
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
-###
-
 
 class Controller:
     """Management class."""
@@ -19,6 +17,7 @@ class Controller:
         """Construct."""
         self.hat = PixelHat()
         self.redis_man = RedisManager()
+        self.redis_man.populate(flush=True)
         self.mode_index = -1
         self.modes = [ZWave(self.hat), RandomLights(self.hat)]
 
