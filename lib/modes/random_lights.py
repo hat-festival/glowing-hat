@@ -7,11 +7,9 @@ from lib.tools import hue_to_rgb
 class RandomLights(Mode):
     """Random lights mode."""
 
-    ### Make a superclass that parses a conf-file for settings?
     def __init__(self, hat):
         """Construct."""
-        self.name = "Headache-Inducer"
-        super().__init__(hat)
+        super().__init__(hat, "Headache")
 
     def run(self):
         """Do stuff."""

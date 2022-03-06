@@ -7,10 +7,9 @@ class ZWave(Mode):
 
     def __init__(self, hat):
         """Construct."""
-        self.name = "Z-Wave"
         self.steps = 20
 
-        super().__init__(hat)
+        super().__init__(hat, "Z-Wave")
 
     def run(self):
         """Do stuff."""

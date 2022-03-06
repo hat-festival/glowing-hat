@@ -1,11 +1,13 @@
 import signal
 import sys
+from collections import deque
 from multiprocessing import Process
 
 from RPi import GPIO
 
-from lib.modes.random_lights import RandomLights
-from lib.modes.z_wave import ZWave
+from lib.mode import Mode
+from lib.modes.random_lights import RandomLights  # noqa
+from lib.modes.z_wave import ZWave  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
@@ -19,7 +21,8 @@ class Controller:
         self.redisman = RedisManager()
         self.redisman.populate(flush=True)
         self.mode_index = -1
-        self.modes = [ZWave(self.hat), RandomLights(self.hat)]
+
+        self.modes = deque(Mode.__subclasses__())
 
         self.process = None
         self.next_mode(None)
@@ -29,15 +32,15 @@ class Controller:
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        self.mode_index = (self.mode_index + 1) % len(self.modes)
-        mode = self.modes[self.mode_index]
+        mode_class = self.modes.pop()
+        self.modes.appendleft(mode_class)
 
+        mode = mode_class(self.hat)
         self.process = Process(target=mode.run)
         self.process.start()
 
-        mode_name = type(mode).__name__
-        print(f"Mode is now {mode_name}")
-        self.redisman.set("mode", mode_name)
+        print(f"Mode is now {mode.name}")
+        self.redisman.set("mode", mode.name)
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""

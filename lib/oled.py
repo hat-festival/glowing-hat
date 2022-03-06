@@ -40,13 +40,16 @@ class Oled:
         top = 1
         left = 1
         font = ImageFont.load_default()
-        step = 10
 
         # Nah, this could be much richer
-        for index, key in enumerate(conf["display-keys"]):
-            text = f"{key}: "
-            text += self.redisman.get(key)
-            draw.text((left, top + index * step), text, font=font, fill=255)
+        # for index, key in enumerate(conf["display-keys"]):
+        #     text = f"{key}: "
+        #     text += self.redisman.get(key)
+        #     draw.text((left, top + index * step), text, font=font, fill=255)
+
+        mode = self.redisman.get("mode")
+        text = f"mode: {mode.lower()}"
+        draw.text((left, top), text, font=font, fill=255)
 
         self.display.image(image)
         self.display.show()
