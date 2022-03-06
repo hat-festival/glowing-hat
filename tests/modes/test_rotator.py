@@ -17,12 +17,11 @@ def test_vertical_line():
     """Test a vertical line."""
     assert close_enough(line(90, 2), [(0.0, 0.0), (0.0, 1.0)])
 
+
 def test_populated_line():
     """Test it generates more points."""
-    assert close_enough(
-        line(0, 3),
-        [(0.0, 0.0), (0.5, 0.0), (1.0, 0.0)]
-    )
+    assert close_enough(line(0, 3), [(0.0, 0.0), (0.5, 0.0), (1.0, 0.0)])
+
 
 ###
 
