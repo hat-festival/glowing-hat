@@ -16,3 +16,11 @@ def gamma_correct(triple):
 def make_key(key, namespace):
     """Make compound key."""
     return f"{namespace}:{key}"
+
+
+def close_enough(actual, target, tolerance=0.1):
+    """Is a value close enough."""
+    if abs(target - actual) <= tolerance:
+        return True
+
+    return False
