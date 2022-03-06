@@ -6,10 +6,9 @@ from multiprocessing import Process
 from RPi import GPIO
 
 from lib.mode import Mode
-
 from lib.modes.random_lights import RandomLights  # noqa
-from lib.modes.z_wave import ZWave  # noqa
 from lib.modes.rotator import Rotator  # noqa
+from lib.modes.z_wave import ZWave  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
