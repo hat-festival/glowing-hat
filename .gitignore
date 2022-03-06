@@ -1,2 +1,4 @@
 .coverage
 Makefile
+.vscode/
+.DS_Store

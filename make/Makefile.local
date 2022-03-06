@@ -12,7 +12,9 @@ run:
 		--hostname ${PROJECT}-dev \
 		--volume $(shell pwd):/opt/${PROJECT} \
 		--volume ${HOME}/.ssh:/root/.ssh \
-		--volume $(shell pwd)/../hat-analysis:/opt/hat-analysis \
+		--volume $(shell pwd)/../analysis:/opt/analysis \
+		--volume $(shell pwd)/../calibration:/opt/calibration \
+		--volume $(shell pwd)/../circles:/opt/circles \
 		--publish ${WEBSERVERPORT}:${WEBSERVERPORT} \
 		--interactive \
 		--tty \

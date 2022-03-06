@@ -2,7 +2,7 @@ import redis
 
 from lib.conf import conf
 from lib.oled import Oled
-from lib.tools import make_key
+from lib.tools import hue_to_rgb, make_key
 
 
 class RedisManager:
@@ -23,9 +23,7 @@ class RedisManager:
             if not self.redis.get(make_key(key, self.namespace)):
                 self.redis.set(make_key(key, self.namespace), value)
 
-        self.oled.update()
-
-    def retrieve(self, key):
+    def get(self, key):
         """Get a value."""
         value = self.redis.get(make_key(key, self.namespace))
         if value:
@@ -33,13 +31,17 @@ class RedisManager:
 
         return None
 
-    def enter(self, key, value):
+    def get_colour(self):
+        """Return an RGB triple based on the current `hue`."""
+        return hue_to_rgb(float(self.get("hue")))
+
+    def set(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
         if key in conf["display-keys"]:
             self.oled.update()
 
-    def push(self, key, value):
+    def lpush(self, key, value):
         """Delegate `lpush`."""
         self.redis.lpush(make_key(key, self.namespace), value)
 

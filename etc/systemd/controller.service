@@ -1,0 +1,17 @@
+[Unit]
+Description=Hat Controller
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/hatlights
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -lc 'sudo python controller.py'
+Restart=always
+StandardInput=null
+StandardOutput=file:/var/log/hatlights/controller.log
+StandardError=file:/var/log/hatlights/controller.err
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

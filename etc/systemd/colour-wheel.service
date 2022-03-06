@@ -1,0 +1,17 @@
+[Unit]
+Description=Colour Wheel
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/hatlights
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -lc 'python wheel_spinner.py'
+Restart=always
+StandardInput=null
+StandardOutput=file:/var/log/hatlights/colour-wheel.log
+StandardError=file:/var/log/hatlights/colour-wheel.err
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

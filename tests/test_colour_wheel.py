@@ -14,7 +14,7 @@ class TestColourWheel(TestCase):
 
     def test_finding_start_hue(self):
         """Test it finds the existing hue."""
-        self.redisman.enter("hue", 0.777)
+        self.redisman.set("hue", 0.777)
         wheel = ColourWheel(namespace="test")
         self.assertEqual(wheel.start_hue, 0.777)
 
@@ -26,7 +26,7 @@ class TestColourWheel(TestCase):
 
     def test_rotate(self):
         """Test it rotates."""
-        self.redisman.enter("hue", 0.3)
+        self.redisman.set("hue", 0.3)
         wheel = ColourWheel(namespace="test")
         wheel.rotate(testing=True, steps=500)
-        self.assertEqual(float(self.redisman.retrieve("hue")), 0.7989999999999999)
+        self.assertEqual(float(self.redisman.get("hue")), 0.7989999999999999)
