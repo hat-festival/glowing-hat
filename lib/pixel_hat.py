@@ -22,12 +22,18 @@ class PixelHat(list):
             self.pixels = NeoPixel(board.D18, len(self), auto_write=False)  # nocov
         else:
             self.pixels = FakePixel(4)
+            
+    def light_one(self, index, colour):
+        """Light up a single pixel."""
+        self.pixels[index] = colour
+        self.pixels.show()
 
-    def colour_indeces(self, indeces, colour):
+    def colour_indeces(self, indeces, colour, auto_show=True):
         """Apply a colour to a list of lights."""
         for index in indeces:
             self.pixels[index] = colour
-        self.pixels.show()
+        if auto_show:
+            self.pixels.show()
 
     def off(self):
         """Turn all the lights off."""
