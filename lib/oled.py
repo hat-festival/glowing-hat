@@ -45,7 +45,7 @@ class Oled:
         # Nah, this could be much richer
         for index, key in enumerate(conf["display-keys"]):
             text = f"{key}: "
-            text += self.redisman.retrieve(key)
+            text += self.redisman.get(key)
             draw.text((left, top + index * step), text, font=font, fill=255)
 
         self.display.image(image)

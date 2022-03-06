@@ -14,11 +14,11 @@ class ColourWheel:
     @property
     def start_hue(self):
         """Get the initial hue."""
-        hue = self.redisman.retrieve("hue")
+        hue = self.redisman.get("hue")
         if not hue:
-            self.redisman.enter("hue", 0)
+            self.redisman.set("hue", 0)
 
-        return float(self.redisman.retrieve("hue"))
+        return float(self.redisman.get("hue"))
 
     def rotate(self, testing=False, steps=1000):
         """Spin the wheel."""
@@ -30,7 +30,7 @@ class ColourWheel:
         while True:
             for i in range(steps):
                 hue = ((i / 1000) + offset) % 1
-                self.redisman.enter("hue", hue)
+                self.redisman.set("hue", hue)
                 sleep(self.interval)
 
             if testing:

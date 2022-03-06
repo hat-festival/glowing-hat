@@ -16,8 +16,8 @@ class Controller:
     def __init__(self):
         """Construct."""
         self.hat = PixelHat()
-        self.redis_man = RedisManager()
-        self.redis_man.populate(flush=True)
+        self.redisman = RedisManager()
+        self.redisman.populate(flush=True)
         self.mode_index = -1
         self.modes = [ZWave(self.hat), RandomLights(self.hat)]
 
@@ -37,7 +37,7 @@ class Controller:
 
         mode_name = type(mode).__name__
         print(f"Mode is now {mode_name}")
-        self.redis_man.enter("mode", mode_name)
+        self.redisman.set("mode", mode_name)
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""

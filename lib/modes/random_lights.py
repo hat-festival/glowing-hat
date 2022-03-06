@@ -1,16 +1,17 @@
 from random import random
 
+from lib.mode import Mode
 from lib.tools import hue_to_rgb
 
 
-class RandomLights:
+class RandomLights(Mode):
     """Random lights mode."""
 
     ### Make a superclass that parses a conf-file for settings?
     def __init__(self, hat):
         """Construct."""
         self.name = "Headache-Inducer"
-        self.hat = hat
+        super().__init__(hat)
 
     def run(self):
         """Do stuff."""

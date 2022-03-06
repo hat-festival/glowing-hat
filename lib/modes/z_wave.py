@@ -1,21 +1,22 @@
-from lib.redis_manager import RedisManager
+# from lib.redis_manager import RedisManager
+from lib.mode import Mode
 
 
-class ZWave:
+class ZWave(Mode):
     """Simple wave mode."""
 
-    def __init__(self, hat, steps=20):
+    def __init__(self, hat):
         """Construct."""
         self.name = "Z-Wave"
-        self.hat = hat
-        self.steps = steps
-        self.redis_man = RedisManager()
+        self.steps = 20
+
+        super().__init__(hat)
 
     def run(self):
         """Do stuff."""
         self.hat.off()
         while True:
-            colour = self.redis_man.fetch_colour()
+            colour = self.redisman.get_colour()
             for i in range(self.steps):
                 positives = list(
                     filter(

@@ -23,7 +23,7 @@ class RedisManager:
             if not self.redis.get(make_key(key, self.namespace)):
                 self.redis.set(make_key(key, self.namespace), value)
 
-    def retrieve(self, key):
+    def get(self, key):
         """Get a value."""
         value = self.redis.get(make_key(key, self.namespace))
         if value:
@@ -31,17 +31,17 @@ class RedisManager:
 
         return None
 
-    def fetch_colour(self):
+    def get_colour(self):
         """Return an RGB triple based on the current `hue`."""
-        return hue_to_rgb(float(self.retrieve("hue")))
+        return hue_to_rgb(float(self.get("hue")))
 
-    def enter(self, key, value):
+    def set(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
         if key in conf["display-keys"]:
             self.oled.update()
 
-    def push(self, key, value):
+    def lpush(self, key, value):
         """Delegate `lpush`."""
         self.redis.lpush(make_key(key, self.namespace), value)
 
