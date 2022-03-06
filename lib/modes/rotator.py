@@ -1,5 +1,5 @@
 from fileinput import close
-from math import radians, sin, cos
+from math import cos, radians, sin
 
 from lib.mode import Mode
 from lib.tools import close_enough
@@ -14,38 +14,34 @@ class Rotator(Mode):
 
     def run(self):
         """Do the work."""
-        # for w in range(360):
-        #     print(sin(radians(w)))
+        while True:
+            for data in generator():
+                colour = self.redisman.get_colour()
+                indeces = []
+                for pair in data:
+                    for pixel in self.hat:
+                        if close_enough(pixel["x"], pair[0]):
+                            if close_enough(pixel["z"], pair[1]):
+                                indeces.append(pixel["index"])
 
-        self.hat.off()
-        indeces = []
-        for pixel in self.hat:
-            # if close_enough(pixel["z"], 0):
-            #     indeces.append(pixel["index"])
-            for w in range(100):
-                v = w / 100
-                if close_enough(pixel["x"], v):
-                    if close_enough(pixel["z"], 0 - pixel["x"]):
-                        indeces.append(pixel["index"])
-
-        self.hat.colour_indeces(indeces, [0, 255, 0])
+                self.hat.colour_indeces(indeces, colour)
 
 
 def generator():
     """Iterator."""
-    for w in range(360):
-        print(sin(radians(w)))
+    for angle in range(0, 360, 15):
+        yield line(angle, 8)
 
 
 def line(angle, resolution=100):
     """A line for an angle as a series of pairs of points."""
-    line = [(0.0, 0.0)]
+    res = resolution - 1
+    line = []
 
-    next_hop = (
-        cos(radians(angle)),
-        sin(radians(angle)) 
-    )
+    for i in range(res):
+        factor = i / res
+        line.append((cos(radians(angle)) * factor, sin(radians(angle)) * factor))
 
-    line.append(next_hop)
+    line.append((cos(radians(angle)), sin(radians(angle))))
 
     return line
