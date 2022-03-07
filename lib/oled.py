@@ -37,15 +37,9 @@ class Oled:
         # clear the board
         draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
-        top = 1
-        left = 1
-        font = ImageFont.load_default()
-
-        # Nah, this could be much richer
-        # for index, key in enumerate(conf["display-keys"]):
-        #     text = f"{key}: "
-        #     text += self.redisman.get(key)
-        #     draw.text((left, top + index * step), text, font=font, fill=255)
+        top = 0
+        left = 0
+        font = ImageFont.truetype(font='fonts/Hubballi-Regular.ttf', size=18)
 
         mode = self.redisman.get("mode")
         text = f"mode: {mode.lower()}"
