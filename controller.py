@@ -7,6 +7,7 @@ from RPi import GPIO
 
 from lib.mode import Mode
 from lib.modes.random_lights import RandomLights  # noqa
+from lib.modes.rotator import Rotator  # noqa
 from lib.modes.z_wave import ZWave  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
@@ -20,7 +21,6 @@ class Controller:
         self.hat = PixelHat()
         self.redisman = RedisManager()
         self.redisman.populate(flush=True)
-        self.mode_index = -1
 
         self.modes = deque(Mode.__subclasses__())
 

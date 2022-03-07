@@ -15,13 +15,13 @@ class Oled:
 
     def __init__(self, redis_manager):
         """Construct."""
-        dimensions = conf["oled-size"]
+        self.conf = conf["oled"]
         self.redisman = redis_manager
 
         if "arm" in platform.platform():
             i2c = busio.I2C(SCL, SDA)
             self.display = adafruit_ssd1306.SSD1306_I2C(
-                dimensions["x"], dimensions["y"], i2c
+                self.conf["size"]["x"], self.conf["size"]["y"], i2c
             )
 
         else:
@@ -37,15 +37,9 @@ class Oled:
         # clear the board
         draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
-        top = 1
-        left = 1
-        font = ImageFont.load_default()
-
-        # Nah, this could be much richer
-        # for index, key in enumerate(conf["display-keys"]):
-        #     text = f"{key}: "
-        #     text += self.redisman.get(key)
-        #     draw.text((left, top + index * step), text, font=font, fill=255)
+        top = 0
+        left = 0
+        font = ImageFont.truetype(font=f"fonts/{self.conf['font']['name']}.ttf", size=self.conf["font"]["size"])
 
         mode = self.redisman.get("mode")
         text = f"mode: {mode.lower()}"

@@ -29,4 +29,4 @@ class TestColourWheel(TestCase):
         self.redisman.set("hue", 0.3)
         wheel = ColourWheel(namespace="test")
         wheel.rotate(testing=True, steps=500)
-        self.assertEqual(float(self.redisman.get("hue")), 0.7989999999999999)
+        self.assertEqual(float(self.redisman.get("hue")), 0.29800000000000004)
