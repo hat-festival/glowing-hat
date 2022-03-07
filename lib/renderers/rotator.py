@@ -1,8 +1,8 @@
+import pickle
 from math import cos, radians, sin
 from pathlib import Path
 
 import numpy as np
-import yaml
 
 
 class Rotator:
@@ -13,21 +13,32 @@ class Rotator:
         self.hat = hat
 
     def render(self):
-        """Do the work."""
-        data = []
-        for line in generator():
-            pixels = populate_indeces(line, self.hat)
-            data.append(pixels)
+        """Create the data"""
+        data = {}
+        for pair in [("x", "y"), ("y", "z"), ("x", "z")]:
+            data[f"{pair[0]}_{pair[1]}"] = make_frameset(self.hat, pair[0], pair[1])
 
-        Path("renders/rotator.yaml").write_text(yaml.dump(data), encoding="UTF-8")
+        Path("renders/rotator.pickle").write_bytes(pickle.dumps(data))
 
 
-def populate_indeces(data, hat):
+def make_frameset(hat, axis_1, axis_2):
+    """Create the frames."""
+    data = []
+    for line in generator():
+        pixels = populate_indeces(line, hat, axis_1, axis_2)
+        data.append(pixels)
+
+    return data
+
+
+def populate_indeces(data, hat, axis_1, axis_2):
     """Populate some indeces."""
     return list(
         map(
             lambda x: x["index"],
-            filter(lambda pixel: point_on_line((pixel["x"], pixel["z"]), data), hat),
+            filter(
+                lambda pixel: point_on_line((pixel[axis_1], pixel[axis_2]), data), hat
+            ),
         )
     )
 

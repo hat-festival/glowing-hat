@@ -21,7 +21,6 @@ class Controller:
         self.hat = PixelHat()
         self.redisman = RedisManager()
         self.redisman.populate(flush=True)
-        self.mode_index = -1
 
         self.modes = deque(Mode.__subclasses__())
 

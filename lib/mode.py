@@ -1,4 +1,7 @@
 import json
+from pathlib import Path
+
+import yaml
 
 from lib.redis_manager import RedisManager
 
@@ -10,6 +13,13 @@ class Mode:
         """Construct."""
         self.hat = hat
         self.name = name
+        try:
+            self.conf = yaml.safe_load(
+                Path("conf/modes.yaml").read_text(encoding="UTF-8")
+            )[self.name]
+        except KeyError:
+            self.conf = {}
+
         self.redisman = RedisManager()
         self.register()
 

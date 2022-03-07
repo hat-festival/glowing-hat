@@ -1,0 +1,8 @@
+rotator:
+  steps: 9
+  offset: 36
+  invert: False
+  axes:
+    - x
+    - z
+  
