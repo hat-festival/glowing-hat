@@ -1,6 +1,6 @@
 from math import sqrt
 
-from lib.modes.rotator import line
+from lib.modes.rotator import line, point_on_line
 
 
 def test_flat_line():
@@ -23,12 +23,18 @@ def test_populated_line():
     assert close_enough(line(0, 3), [(0.0, 0.0), (0.5, 0.0), (1.0, 0.0)])
 
 
+def test_point_on_line():
+    """Test if a point is on a line."""
+    assert point_on_line((0, 0), ((0, 0), (1, 0)))
+    assert point_on_line((0.1, 0.1), ((0, 0), (1, 1)))
+
+
 ###
 
 
 def close_enough(actual, expected):
     """These numbers are fucking fiddly."""
-    for i in range(len(expected)):
+    for i in range(len(expected)):  # pylint:disable=C0200
         for j in range(len(expected[i])):
             if abs(expected[i][j] - actual[i][j]) > 0.0000001:
                 return False
