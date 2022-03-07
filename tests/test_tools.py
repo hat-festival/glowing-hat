@@ -1,4 +1,4 @@
-from lib.tools import close_enough, gamma_correct, hue_to_rgb
+from lib.tools import close_enough, gamma_correct, hue_to_rgb, scale_colour
 
 
 def test_hue_to_rgb():
@@ -29,11 +29,16 @@ def test_gamma_correction():
 
 def test_close_enough():
     """Test it knows if a thing is close enough."""
-    assert close_enough(0.01, 0) == True
-    assert close_enough(0.05, 0) == True
-    assert close_enough(0.1, 0, tolerance=0.05) == False
-    assert close_enough(0.51, 0.5) == True
-    assert close_enough(0.49, 0.5) == True
-    assert close_enough(0.44, 0.5) == True
-    assert close_enough(-0.51, -0.5) == True
-    assert close_enough(-0.44, -0.5, tolerance=0.01) == False
+    assert close_enough(0.01, 0)
+    assert close_enough(0.05, 0)
+    assert not close_enough(0.1, 0, tolerance=0.05)
+    assert close_enough(0.51, 0.5)
+    assert close_enough(0.49, 0.5)
+    assert close_enough(0.44, 0.5)
+    assert close_enough(-0.51, -0.5)
+    assert not close_enough(-0.44, -0.5, tolerance=0.01)
+
+
+def test_scale_colour():
+    """Test it scales a colour."""
+    assert scale_colour([255, 0, 127], 0.5) == [127, 0, 63]

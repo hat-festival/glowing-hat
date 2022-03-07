@@ -24,3 +24,8 @@ def close_enough(actual, target, tolerance=0.1):
         return True
 
     return False
+
+
+def scale_colour(triple, factor):
+    """Dim a colour."""
+    return list(map(lambda x: int(x * factor), triple))
