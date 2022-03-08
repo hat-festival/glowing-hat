@@ -3,6 +3,7 @@ redis-defaults:
   hue: 0
   invert: "false"
   axis: y
+  colour: free
 
 webserver-port: 5001
 oled:
@@ -11,12 +12,13 @@ oled:
     y: 32 
   font:
     name: Hubballi-Regular
-    size: 18
+    size: 15
 
 display-keys:
   - mode
   - axis
   - invert
+  - colour
 
 buttons:
   mode:
@@ -34,3 +36,12 @@ buttons:
   invert:
     logical: 23
     physical: 16
+
+colours:
+  red: [255, 0, 0]
+  yellow: [255, 255, 0]
+  green: [0, 255, 0]
+  cyan: [0, 255, 255]
+  blue: [0, 0, 255]
+  magenta: [255, 0, 255]
+  free: None

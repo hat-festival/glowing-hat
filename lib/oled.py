@@ -37,16 +37,22 @@ class Oled:
         # clear the board
         draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
-        top = 0
-        left = 0
         font = ImageFont.truetype(
             font=f"fonts/{self.conf['font']['name']}.ttf",
             size=self.conf["font"]["size"],
         )
 
-        mode = self.redisman.get("mode")
-        text = f"mode: {mode.lower()}"
-        draw.text((left, top), text, font=font, fill=255)
+        mode = f"m: {self.redisman.get('mode')}"
+        draw.text((0, 0), mode.lower(), font=font, fill=255)
+
+        colour = f"c: {self.redisman.get('colour')}"
+        draw.text((80, 0), colour.lower(), font=font, fill=255)
+
+        axis = f"a: {self.redisman.get('axis')}"
+        draw.text((0, 16), axis.lower(), font=font, fill=255)
+
+        invert = f"i: {self.redisman.get('invert')}"
+        draw.text((80, 16), invert.lower(), font=font, fill=255)
 
         self.display.image(image)
         self.display.show()

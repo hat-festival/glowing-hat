@@ -3,6 +3,7 @@ from pathlib import Path
 
 import yaml
 
+from lib.conf import conf
 from lib.redis_manager import RedisManager
 
 
@@ -13,12 +14,13 @@ class Mode:
         """Construct."""
         self.hat = hat
         self.name = name
+        self.conf = conf
         try:
-            self.conf = yaml.safe_load(
+            self.mode_conf = yaml.safe_load(
                 Path("conf/modes.yaml").read_text(encoding="UTF-8")
             )[self.name]
         except KeyError:
-            self.conf = {}
+            self.mode_conf = {}
 
         self.redisman = RedisManager()
         self.register()
@@ -29,3 +31,11 @@ class Mode:
             "modes",
             json.dumps({"class": type(self).__name__, "display-name": self.name}),
         )
+
+    def get_colour(self):
+        """Retrieve the colour from Redis."""
+        colour = self.redisman.get("colour")
+        if colour == "free":
+            return self.redisman.get_colour()
+
+        return self.conf["colours"][colour]

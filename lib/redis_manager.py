@@ -38,7 +38,8 @@ class RedisManager:
     def set(self, key, value):
         """Set a value."""
         self.redis.set(make_key(key, self.namespace), value)
-        if key in conf["display-keys"]:
+        # if key in conf["display-keys"]:
+        if key == "mode":
             self.oled.update()
 
     def lpush(self, key, value):

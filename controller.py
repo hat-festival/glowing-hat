@@ -32,31 +32,34 @@ class Controller:
 
     def restart_process(self):
         """Restart the process."""
+        print("Restarting process")
         if self.process and self.process.is_alive():
             self.process.terminate()
+
+        self.mode = self.mode_class(self.hat)
+        self.redisman.set("mode", self.mode.name)
         self.process = Process(target=self.mode.run)
         self.process.start()
 
     def bump_mode(self, _):
         """Bump mode."""
-        mode_class = self.modes.pop()
-        self.modes.appendleft(mode_class)
-
-        self.mode = mode_class(self.hat)
-        self.redisman.set("mode", self.mode.name)
+        self.mode_class = self.modes.pop()
+        self.modes.appendleft(self.mode_class)
 
         self.restart_process()
 
     def bump_axis(self, _):
         """Bump mode."""
+        print("Bumping axis")
         axes = ["x", "y", "z"]
         current_axis = self.redisman.get("axis")
-        self.redisman.set("axis", (axes.index(current_axis) + 1) % 3)
+        self.redisman.set("axis", axes[(axes.index(current_axis) + 1) % 3])
 
         self.restart_process()
 
     def bump_invert(self, _):
         """Bump mode."""
+        print("Bumping invert")
         current_invert = self.redisman.get("invert")
         if current_invert == "true":
             self.redisman.set("invert", "false")
@@ -67,7 +70,12 @@ class Controller:
 
     def bump_colour(self, _):
         """Bump mode."""
-        print("colour")
+        print("Bumping colour")
+        colours = list(self.conf["colours"].keys())
+        current_colour = self.redisman.get("colour")
+        self.redisman.set("colour", colours[(colours.index(current_colour) + 1) % len(colours)])
+
+        self.restart_process()
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""
