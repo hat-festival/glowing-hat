@@ -29,3 +29,8 @@ def close_enough(actual, target, tolerance=0.1):
 def scale_colour(triple, factor):
     """Dim a colour."""
     return list(map(lambda x: int(x * factor), triple))
+
+
+def remove_axis(axis):
+    """Remove an axis from x, y, z."""
+    return list(filter(lambda x: x != axis, ["x", "y", "z"]))

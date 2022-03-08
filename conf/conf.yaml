@@ -1,6 +1,8 @@
 lights: 100
 redis-defaults:
   hue: 0
+  invert: "false"
+  axis: y
 
 webserver-port: 5001
 oled:
@@ -13,3 +15,22 @@ oled:
 
 display-keys:
   - mode
+  - axis
+  - invert
+
+buttons:
+  mode:
+    logical: 16
+    physical: 36
+  
+  colour:
+    logical: 12
+    physical: 32
+
+  axis:
+    logical: 25
+    physical: 22
+
+  invert:
+    logical: 23
+    physical: 16

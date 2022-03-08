@@ -3,7 +3,7 @@ from collections import deque
 from pathlib import Path
 
 from lib.mode import Mode
-from lib.tools import scale_colour
+from lib.tools import remove_axis, scale_colour
 
 
 class Rotator(Mode):
@@ -14,10 +14,13 @@ class Rotator(Mode):
     def __init__(self, hat):
         """Construct."""
         super().__init__(hat, "rotator")
+        self.axis = self.redisman.get("axis")
 
-        frames = Rotator.frame_sets[f"{self.conf['axes'][0]}_{self.conf['axes'][1]}"]
+        frames_key = "_".join(remove_axis(self.axis))
 
-        if self.conf["invert"]:
+        frames = Rotator.frame_sets[frames_key]
+
+        if self.redisman.get("invert") == "true":
             frames.reverse()
 
         self.data = deque(frames)

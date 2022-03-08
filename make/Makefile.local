@@ -15,7 +15,6 @@ run:
 		--volume $(shell pwd)/../analysis:/opt/analysis \
 		--volume $(shell pwd)/../calibration:/opt/calibration \
 		--volume $(shell pwd)/../circles:/opt/circles \
-		--publish ${WEBSERVERPORT}:${WEBSERVERPORT} \
 		--interactive \
 		--tty \
 		--rm \

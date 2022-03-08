@@ -5,6 +5,7 @@ from multiprocessing import Process
 
 from RPi import GPIO
 
+from lib.conf import conf
 from lib.mode import Mode
 from lib.modes.random_lights import RandomLights  # noqa
 from lib.modes.rotator import Rotator  # noqa
@@ -21,26 +22,52 @@ class Controller:
         self.hat = PixelHat()
         self.redisman = RedisManager()
         self.redisman.populate(flush=True)
+        self.conf = conf
 
         self.modes = deque(Mode.__subclasses__())
 
+        self.mode = None
         self.process = None
-        self.next_mode(None)
+        self.bump_mode(None)
 
-    def next_mode(self, _):
-        """Bump to the next mode."""
+    def restart_process(self):
+        """Restart the process."""
         if self.process and self.process.is_alive():
             self.process.terminate()
+        self.process = Process(target=self.mode.run)
+        self.process.start()
 
+    def bump_mode(self, _):
+        """Bump mode."""
         mode_class = self.modes.pop()
         self.modes.appendleft(mode_class)
 
-        mode = mode_class(self.hat)
-        self.process = Process(target=mode.run)
-        self.process.start()
+        self.mode = mode_class(self.hat)
+        self.redisman.set("mode", self.mode.name)
 
-        print(f"Mode is now {mode.name}")
-        self.redisman.set("mode", mode.name)
+        self.restart_process()
+
+    def bump_axis(self, _):
+        """Bump mode."""
+        axes = ["x", "y", "z"]
+        current_axis = self.redisman.get("axis")
+        self.redisman.set("axis", (axes.index(current_axis) + 1) % 3)
+
+        self.restart_process()
+
+    def bump_invert(self, _):
+        """Bump mode."""
+        current_invert = self.redisman.get("invert")
+        if current_invert == "true":
+            self.redisman.set("invert", "false")
+        else:
+            self.redisman.set("invert", "true")
+
+        self.restart_process()
+
+    def bump_colour(self, _):
+        """Bump mode."""
+        print("colour")
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""
@@ -49,15 +76,16 @@ class Controller:
 
     def manage(self):
         """Do the thing."""
-        pin = 25  # from conf
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(
-            pin,
-            GPIO.FALLING,
-            callback=self.next_mode,
-            bouncetime=500,
-        )
+        for name, pins in self.conf["buttons"].items():
+            GPIO.setup(pins["logical"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(
+                pins["logical"],
+                GPIO.FALLING,
+                callback=getattr(self, f"bump_{name}"),
+                bouncetime=500,
+            )
+
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.pause()
 

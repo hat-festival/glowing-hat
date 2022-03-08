@@ -39,7 +39,10 @@ class Oled:
 
         top = 0
         left = 0
-        font = ImageFont.truetype(font=f"fonts/{self.conf['font']['name']}.ttf", size=self.conf["font"]["size"])
+        font = ImageFont.truetype(
+            font=f"fonts/{self.conf['font']['name']}.ttf",
+            size=self.conf["font"]["size"],
+        )
 
         mode = self.redisman.get("mode")
         text = f"mode: {mode.lower()}"

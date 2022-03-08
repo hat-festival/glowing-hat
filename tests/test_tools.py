@@ -1,4 +1,4 @@
-from lib.tools import close_enough, gamma_correct, hue_to_rgb, scale_colour
+from lib.tools import close_enough, gamma_correct, hue_to_rgb, remove_axis, scale_colour
 
 
 def test_hue_to_rgb():
@@ -42,3 +42,10 @@ def test_close_enough():
 def test_scale_colour():
     """Test it scales a colour."""
     assert scale_colour([255, 0, 127], 0.5) == [127, 0, 63]
+
+
+def test_remove_axis():
+    """Test it removes the axis."""
+    assert remove_axis("x") == ["y", "z"]
+    assert remove_axis("y") == ["x", "z"]
+    assert remove_axis("z") == ["x", "y"]
