@@ -27,35 +27,38 @@ class Oled:
         else:
             self.display = FakeDisplay()
 
-    def update(self):
-        """Read and display data from Redis."""
-        width = self.display.width
-        height = self.display.height
-        image = Image.new("1", (width, height))
-        draw = ImageDraw.Draw(image)
-
-        # clear the board
-        draw.rectangle((0, 0, width, height), outline=0, fill=0)
-
-        font = ImageFont.truetype(
+        self.font = ImageFont.truetype(
             font=f"fonts/{self.conf['font']['name']}.ttf",
             size=self.conf["font"]["size"],
         )
 
-        mode = f"m: {self.redisman.get('mode')}"
-        draw.text((0, 0), mode.lower(), font=font, fill=255)
+        self.image = Image.new("1", (self.display.width, self.display.height))
+        self.draw = ImageDraw.Draw(self.image)
 
-        colour = f"c: {self.redisman.get('colour')}"
-        draw.text((80, 0), colour.lower(), font=font, fill=255)
+    def update(self):
+        """Read and display data from Redis."""
+        # clear the board
+        self.draw.rectangle(
+            (0, 0, self.display.width, self.display.height), outline=0, fill=0
+        )
 
-        axis = f"a: {self.redisman.get('axis')}"
-        draw.text((0, 16), axis.lower(), font=font, fill=255)
+        self.put_text("m", self.redisman.get("mode"), 0, 0)
+        self.put_text("c", self.redisman.get("colour"), 0, self.display.height / 2)
+        self.put_text("a", self.redisman.get("axis"), self.conf["offset"], 0)
+        self.put_text(
+            "i",
+            self.redisman.get("invert")[0],
+            self.conf["offset"],
+            self.display.height / 2,
+        )
 
-        invert = f"i: {self.redisman.get('invert')}"
-        draw.text((80, 16), invert.lower(), font=font, fill=255)
-
-        self.display.image(image)
+        self.display.image(self.image)
         self.display.show()
+
+    def put_text(self, key, value, across, down):
+        """Draw some text."""
+        text = f"{key}:{value}"
+        self.draw.text((across, down), text.lower(), font=self.font, fill=255)
 
 
 class FakeDisplay:

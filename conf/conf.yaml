@@ -6,13 +6,16 @@ redis-defaults:
   colour: free
 
 webserver-port: 5001
+
 oled:
   size: 
     x: 128
     y: 32 
   font:
-    name: Hubballi-Regular
-    size: 15
+    name: SourceCodePro-Light
+    size: 13
+  offset:
+    104
 
 display-keys:
   - mode
