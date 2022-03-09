@@ -9,7 +9,7 @@ from lib.conf import conf
 from lib.mode import Mode
 from lib.modes.random_lights import RandomLights  # noqa
 from lib.modes.rotator import Rotator  # noqa
-from lib.modes.z_wave import ZWave  # noqa
+from lib.modes.wave import Wave  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
@@ -73,7 +73,9 @@ class Controller:
         print("Bumping colour")
         colours = list(self.conf["colours"].keys())
         current_colour = self.redisman.get("colour")
-        self.redisman.set("colour", colours[(colours.index(current_colour) + 1) % len(colours)])
+        self.redisman.set(
+            "colour", colours[(colours.index(current_colour) + 1) % len(colours)]
+        )
 
         self.restart_process()
 

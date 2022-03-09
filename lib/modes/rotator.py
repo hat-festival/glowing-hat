@@ -13,28 +13,27 @@ class Rotator(Mode):
 
     def __init__(self, hat):
         """Construct."""
-        super().__init__(hat, "rotator")
-        self.axis = self.redisman.get("axis")
+        self.name = "rotator"
+        super().__init__(hat, self.name)
 
         frames_key = "_".join(remove_axis(self.axis))
 
         frames = Rotator.frame_sets[frames_key]
 
-        if self.redisman.get("invert") == "true":
-        # this has a bug, works exactly half the time
-            frames.reverse()
+        if self.invert:
+            frames = list(reversed(frames))
 
         self.data = deque(frames)
         self.tail_data = deque(frames)
 
-        self.tail_data.rotate(self.mode_conf["offset"])
+        self.tail_data.rotate(self.conf["modes"][self.name]["offset"])
 
     def run(self):
         """Do the work."""
         self.hat.off()
         while True:
             for index, lights in enumerate(self.data):
-                if index % self.mode_conf["steps"] == 0:
+                if index % self.conf["modes"][self.name]["steps"] == 0:
                     colour = self.get_colour()
                     tail_colour = scale_colour(colour, 0.1)
                     self.hat.colour_indeces(

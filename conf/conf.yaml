@@ -1,4 +1,5 @@
 lights: 100
+
 redis-defaults:
   hue: 0
   invert: "false"
@@ -48,3 +49,15 @@ colours:
   blue: [0, 0, 255]
   magenta: [255, 0, 255]
   free: None
+
+modes:
+  rotator:
+    steps: 9
+    offset: 90
+
+  wave:
+    steps: 20
+
+  bands:
+    width: 0.66666666
+    count: 3

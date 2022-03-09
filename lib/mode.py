@@ -1,8 +1,3 @@
-import json
-from pathlib import Path
-
-import yaml
-
 from lib.conf import conf
 from lib.redis_manager import RedisManager
 
@@ -15,22 +10,13 @@ class Mode:
         self.hat = hat
         self.name = name
         self.conf = conf
-        try:
-            self.mode_conf = yaml.safe_load(
-                Path("conf/modes.yaml").read_text(encoding="UTF-8")
-            )[self.name]
-        except KeyError:
-            self.mode_conf = {}
-
         self.redisman = RedisManager()
-        self.register()
 
-    def register(self):
-        """Register ourself with Redis."""
-        self.redisman.lpush(
-            "modes",
-            json.dumps({"class": type(self).__name__, "display-name": self.name}),
-        )
+        self.invert = False
+        if self.redisman.get("invert") == "true":
+            self.invert = True
+
+        self.axis = self.redisman.get("axis")
 
     def get_colour(self):
         """Retrieve the colour from Redis."""

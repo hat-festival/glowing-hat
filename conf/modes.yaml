@@ -1,4 +1,1 @@
 # move these into main conf?
-rotator:
-  steps: 9
-  offset: 36
