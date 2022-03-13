@@ -1,6 +1,6 @@
 import pickle
 from pathlib import Path
-
+import numpy as np
 from lib.pixel_hat import PixelHat
 
 
@@ -22,12 +22,12 @@ class Band(list):
 
         self.append([])
 
-        for number in range(-1, 1 + 1, 2):
+        for number in np.arange(-1, 2, 2 / (len(hat) - 1)):
             upper_bound = number
             lower_bound = number - self.width
 
             uppered = filter(lambda w: w[axis] <= upper_bound, self.hat)
-            lowered = filter(lambda w: w[axis] >= lower_bound, uppered)
+            lowered = filter(lambda w: w[axis] > lower_bound, uppered)
 
             self.append(list(map(lambda w: w["index"], lowered)))
 

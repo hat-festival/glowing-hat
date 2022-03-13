@@ -15,3 +15,12 @@ class TestBand(TestCase):
         band = Band(1, 1, "x", "up", hat)
 
         self.assertEqual(band, [[], [0], [1], []])
+
+    def test_three_location_rendering(self):
+        """Test it renders with three simple locations."""
+        hat = PixelHat(
+            locations="tests/fixtures/bands/three-locations.yaml", auto_centre=True
+        )
+        band = Band(1, 1, "x", "up", hat)
+
+        self.assertEqual(band, [[], [0], [1], [2], []])
