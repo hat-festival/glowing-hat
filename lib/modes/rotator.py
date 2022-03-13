@@ -1,6 +1,4 @@
-import pickle
 from collections import deque
-from pathlib import Path
 
 from lib.mode import Mode
 from lib.tools import remove_axis, scale_colour
@@ -9,16 +7,13 @@ from lib.tools import remove_axis, scale_colour
 class Rotator(Mode):
     """Rotator mode."""
 
-    frame_sets = pickle.loads(Path("renders/rotator.pickle").read_bytes())
-
     def __init__(self, hat):
         """Construct."""
-        self.name = "rotator"
-        super().__init__(hat, self.name)
+        super().__init__(hat)
 
         frames_key = "_".join(remove_axis(self.axis))
 
-        frames = Rotator.frame_sets[frames_key]
+        frames = self.frame_sets[frames_key]
 
         if self.invert:
             frames = list(reversed(frames))

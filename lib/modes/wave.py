@@ -6,8 +6,7 @@ class Wave(Mode):
 
     def __init__(self, hat):
         """Construct."""
-        self.name = "wave"
-        super().__init__(hat, self.name)
+        super().__init__(hat)
         self.steps = self.conf["modes"][self.name]["steps"]
 
     def run(self):

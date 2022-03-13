@@ -11,9 +11,11 @@ if "arm" in platform.platform():  # nocov
 class PixelHat(list):
     """Hat with pixels."""
 
-    def __init__(self, locations="conf/locations.yaml"):  # pylint: disable=W0231
+    def __init__(
+        self, locations="conf/locations.yaml", auto_centre=False
+    ):  # pylint: disable=W0231
         self.locations = locations
-        self.scaler = Scaler(locations)
+        self.scaler = Scaler(locations, auto_centre=auto_centre)
 
         for location in self.scaler:
             self.append(Pixel(location))

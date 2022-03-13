@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.scaler import Scaler, deconstruct, find_largest_span
+from lib.scaler import Scaler, deconstruct, find_largest_span, normalise_list
 
 
 class TestScaler(TestCase):
@@ -134,6 +134,35 @@ class TestScaler(TestCase):
         scaler = Scaler("tests/fixtures/conf/actual-locations.yaml")
         self.assertEqual(find_extreme(scaler), 1.0)
 
+    def test_non_autocentering(self):
+        """Test it does independent centering."""
+        scaler = Scaler(
+            "tests/fixtures/conf/non-centered-locations.yaml", auto_centre=True
+        )
+        self.assertEqual(
+            scaler,
+            [
+                {
+                    "index": 0,
+                    "x": -1,
+                    "y": -1,
+                    "z": -1,
+                },
+                {
+                    "index": 1,
+                    "x": 0,
+                    "y": 0,
+                    "z": -0.5,
+                },
+                {
+                    "index": 2,
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                },
+            ],
+        )
+
 
 def test_find_largest_span():
     """Test it finds the largest span."""
@@ -171,8 +200,13 @@ def test_deconstruct():
     }
 
 
-def test_scaling_factor():
-    """Test it finds the scaling factor."""
+def test_normalise_list():
+    """Test it normalises a list."""
+    assert normalise_list([-1, 0, 1]) == [-1, 0, 1]
+    assert normalise_list([1, 2, 3]) == [-1, 0, 1]
+    assert normalise_list([19, 25, 31]) == [-1, 0, 1]
+    assert normalise_list([19, 22, 25, 31]) == [-1, -0.5, 0, 1]
+    assert normalise_list([19, 31, 25, 22]) == [-1.0, 1.0, 0.0, -0.5]
 
 
 ###

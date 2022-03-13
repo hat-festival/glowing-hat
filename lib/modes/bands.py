@@ -1,4 +1,5 @@
-# noqa
+from collections import deque
+
 from lib.mode import Mode
 
 
@@ -7,37 +8,26 @@ class Bands(Mode):
 
     def __init__(self, hat):
         """Construct."""
-        self.name = "bands"
-        super().__init__(hat, self.name)
+        super().__init__(hat)
+
+        direction = "up"
+        if self.invert:
+            direction = "down"
+
+        frames_key = f"{self.axis}_{direction}"
+
+        frames = self.frame_sets[frames_key]
+
+        self.data = deque(frames)
 
     def run(self):
         """Do the stuff."""
         self.hat.off()
 
         while True:
-
-            for i in range(-10, 11, 1):
-                increment = i / 10
-                print(increment)
-
-                for j in range(self.conf["modes"][self.name]["count"]):
-                    lights = list(
-                        filter(
-                            lambda w: w.less_than(
-                                self.axis,
-                                increment - self.conf["modes"][self.name]["width"] * j,
-                            ),
-                            self.hat,
-                        )
-                    )
-                    band = list(map(lambda x: x["index"], lights))
+            colour = self.get_colour()
+            for index, lights in enumerate(self.data):
+                if index % self.conf["modes"][self.name]["steps"] == 0:
                     self.hat.colour_indeces(
-                        band,
-                        self.conf["colours"][
-                            list(self.conf["colours"].keys())[(j * 2)]
-                        ],
-                        auto_show=False,
+                        list(map(lambda x: x["index"], lights)), colour
                     )
-
-                self.hat.show()
-                # sleep(0.01)

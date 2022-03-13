@@ -1,3 +1,6 @@
+import pickle
+from pathlib import Path
+
 from lib.conf import conf
 from lib.redis_manager import RedisManager
 
@@ -5,10 +8,10 @@ from lib.redis_manager import RedisManager
 class Mode:
     """Superclass for `modes`."""
 
-    def __init__(self, hat, name):
+    def __init__(self, hat):
         """Construct."""
         self.hat = hat
-        self.name = name
+        self.name = type(self).__name__.lower()
         self.conf = conf
         self.redisman = RedisManager()
 
@@ -25,3 +28,8 @@ class Mode:
             return self.redisman.get_colour()
 
         return self.conf["colours"][colour]
+
+    @property
+    def frame_sets(self):
+        """Load the frame data."""
+        return pickle.loads(Path("renders", f"{self.name}.pickle").read_bytes())

@@ -1,5 +1,5 @@
-from lib.modes.bands import Bands
+from lib.modes.larsen import Larsen
 from lib.pixel_hat import PixelHat
 
-bands = Bands(PixelHat())
-bands.run()
+larsen = Larsen(PixelHat())
+larsen.run()

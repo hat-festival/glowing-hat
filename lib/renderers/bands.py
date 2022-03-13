@@ -1,13 +1,16 @@
 import pickle
 from pathlib import Path
 
+from lib.pixel_hat import PixelHat
 
+
+# THIS SHOULD WRITE JUST THE INDECES
 class Bands:
     """Bands of colour."""
 
-    def __init__(self, hat):
+    def __init__(self):
         """Construct."""
-        self.hat = hat
+        self.hat = PixelHat(auto_centre=True)
 
     def render(self):
         """Create the data."""
@@ -24,16 +27,16 @@ def make_frames(hat, axis, direction):
     """Create some frames."""
     steps = 100
 
-    rng = range(0-steps, steps + 1, 1)
+    rng = range(0 - steps, steps + 1, 1)
     method = "less_than"
 
     if direction == "down":
-        rng = range(steps, 0-steps - 1, -1)
+        rng = range(steps, 0 - steps - 1, -1)
         method = "greater_than"
 
     data = []
     for i in rng:
-        slice = i / steps
-        data.append(list(filter(lambda x: getattr(x, method)(axis, slice), hat)))
+        chunk = i / steps
+        data.append(list(filter(lambda x: getattr(x, method)(axis, chunk), hat)))
 
     return data

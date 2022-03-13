@@ -4,12 +4,8 @@ from lib.mode import Mode
 from lib.tools import hue_to_rgb
 
 
-class RandomLights(Mode):
+class Headache(Mode):
     """Random lights mode."""
-
-    def __init__(self, hat):
-        """Construct."""
-        super().__init__(hat, "Headache")
 
     def run(self):
         """Do stuff."""

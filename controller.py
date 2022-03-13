@@ -7,9 +7,12 @@ from RPi import GPIO
 
 from lib.conf import conf
 from lib.mode import Mode
-from lib.modes.random_lights import RandomLights  # noqa
+
+# from lib.modes.larsen import Larsen  # noqa
+# from lib.modes.wave import Wave  # noqa
+from lib.modes.bands import Bands  # noqa
+from lib.modes.headache import Headache  # noqa
 from lib.modes.rotator import Rotator  # noqa
-from lib.modes.wave import Wave  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
 
@@ -21,7 +24,7 @@ class Controller:
         """Construct."""
         self.hat = PixelHat()
         self.redisman = RedisManager()
-        self.redisman.populate(flush=True)
+        self.redisman.populate()
         self.conf = conf
 
         self.modes = deque(Mode.__subclasses__())
