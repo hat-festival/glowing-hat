@@ -1,17 +1,15 @@
 import pickle
 from pathlib import Path
 
-
 from lib.pixel_hat import PixelHat
 
 
 class Band(list):
     """Individual Band sequence."""
 
-    def __init__(self, width, count, axis, direction, steps=200, hat=None):
+    def __init__(self, width, axis, direction, steps=200, hat=None):
         """Construct."""
         self.width = width
-        self.count = count
         self.axis = axis
         self.direction = direction
         self.steps = steps
@@ -20,28 +18,25 @@ class Band(list):
             self.hat = hat
         else:
             self.hat = PixelHat(auto_centre=True)
-            
-        for number in get_intervals(self.steps):
-            upper_bound = number
-            lower_bound = number - self.width
-            filtered = filter(lambda w: lower_bound < w[axis] <= upper_bound, self.hat)
+
+        self.populate()
+        Path("renders/bands.pickle").write_bytes(pickle.dumps(self))
+
+    def populate(self):
+        """Populate ourself."""
+        gap = 2 / (self.steps - 1)
+        position = -1
+        while position <= 1:
+            upper_bound = position + self.width
+            lower_bound = position - self.width
+            filtered = filter(
+                lambda w: lower_bound <= w[self.axis] <= upper_bound, self.hat
+            )
 
             self.append(list(map(lambda w: w["index"], filtered)))
 
+            position += gap
 
-def get_intervals(steps):
-    """Generate some intervals."""
-    intervals = [-1]
-    seed = -1
-    gap = 2 / (steps - 1)
-    while True:
-        seed += gap
-        if seed > 1:
-            return intervals
-
-        intervals.append(round(seed, 3))
-
-    # return intervals
 
 #     def render(self):
 #         """Create the data."""

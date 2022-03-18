@@ -22,7 +22,8 @@ class Scaler(list):
 
             for i in range(len(deconstructed["x"])):
                 scaled_light = {"index": i}
-                for axis in ["x", "y", "z"]:
+                scaled_light = {}
+                for axis in ["index", "x", "y", "z"]:
                     scaled_light[axis] = deconstructed[axis][i]
 
                 self.append(scaled_light)
@@ -73,7 +74,7 @@ def deconstruct(absolutes):
     """Pull the data to pieces."""
     deconstructed = {}
 
-    for axis in ["x", "y", "z"]:
+    for axis in ["index", "x", "y", "z"]:
         deconstructed[axis] = list(map(lambda w: w[axis], absolutes))
 
     return deconstructed

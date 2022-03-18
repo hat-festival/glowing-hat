@@ -11,9 +11,7 @@ class Rotator(Mode):
         """Construct."""
         super().__init__(hat)
 
-        frames_key = "_".join(remove_axis(self.axis))
-
-        frames = self.frame_sets[frames_key]
+        frames = self.frame_sets[self.axis]
 
         if self.invert:
             frames = list(reversed(frames))
