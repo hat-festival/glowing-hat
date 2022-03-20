@@ -9,7 +9,6 @@ class Headache(Mode):
 
     def run(self):
         """Do stuff."""
-        self.hat.off()
         while True:
             for i in range(len(self.hat)):
                 self.hat.light_one(i, hue_to_rgb(random()))

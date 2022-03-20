@@ -23,7 +23,6 @@ class Rotator(Mode):
 
     def run(self):
         """Do the work."""
-        self.hat.off()
         while True:
             for index, lights in enumerate(self.data):
                 if index % self.conf["modes"][self.name]["steps"] == 0:

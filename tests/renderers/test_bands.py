@@ -14,7 +14,7 @@ class TestBand(TestCase):
         )
         band = Band(1, "x", "up", steps=2, hat=hat)
 
-        self.assertEqual(band, [[19], [24]])
+        self.assertEqual(band, [[19], [19], [19, 24], [24], [24]])
 
     def test_more_steps_simple_rendering(self):
         """Test it renders correctly for the more-steps simple case."""
@@ -33,7 +33,22 @@ class TestBand(TestCase):
         band = Band(1, "x", "up", steps=6, hat=hat)
 
         self.assertEqual(
-            band, [[27, 35], [27, 35], [27, 35], [35, 16], [35, 16], [35, 16]]
+            band,
+            [
+                [27],
+                [27],
+                [27],
+                [27],
+                [27, 35],
+                [27, 35],
+                [27, 35],
+                [35, 16],
+                [35, 16],
+                [35, 16],
+                [16],
+                [16],
+                [16],
+            ],
         )
 
     def test_wider_rendering(self):
@@ -43,7 +58,10 @@ class TestBand(TestCase):
         )
         band = Band(2, "x", "up", steps=3, hat=hat)
 
-        self.assertEqual(band, [[19, 24], [19, 24], [19, 24]])
+        self.assertEqual(
+            band,
+            [[19], [19], [19], [19], [19, 24], [19, 24], [19, 24], [24], [24], [24]],
+        )
 
     def test_more_steps_simple_rendering(self):
         """Test it renders correctly for the simple case."""
@@ -52,4 +70,15 @@ class TestBand(TestCase):
         )
         band = Band(1, "x", "up", steps=4, hat=hat)
 
-        self.assertEqual(band, [[19], [19], [24], [24]])
+        self.assertEqual(
+            band, [[19], [19], [19], [19], [19, 24], [24], [24], [24], [24]]
+        )
+
+    def test_slide_in_out(self):
+        """Test it slides in and out correctly."""
+        hat = PixelHat(
+            locations="tests/fixtures/bands/three-locations.yaml", auto_centre=True
+        )
+        band = Band(1, "x", "up", steps=2, hat=hat)
+
+        self.assertEqual(band, [[27], [27, 35], [27, 35, 16], [35, 16], [16]])

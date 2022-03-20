@@ -59,8 +59,7 @@ modes:
     steps: 20
 
   bands:
-    steps: 10
-    count: 3
+    jump: 3
 
   larsen:
     offset: 20

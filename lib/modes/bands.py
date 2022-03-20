@@ -1,5 +1,7 @@
-from collections import deque
-
+from math import ceil
+from random import random
+from lib.tools import hue_to_rgb
+from lib.conf import conf
 from lib.mode import Mode
 
 
@@ -10,30 +12,39 @@ class Bands(Mode):
         """Construct."""
         super().__init__(hat)
 
-        direction = "up"
+        self.hat.sort(key=lambda w: w[self.axis])
+
         if self.invert:
-            direction = "down"
+            self.hat.reverse()
 
-        # frames_key = f"{self.axis}_{direction}"
-
-        # frames = self.frame_sets[frames_key]
-
-        # self.data = deque(frames)
+        self.jump = self.conf["modes"]["bands"]["jump"]
 
     def run(self):
         """Do the stuff."""
-        self.hat.off()
-
+        colours_index = 0
         while True:
-            colour = self.get_colour()
-            # for index, lights in enumerate(self.data):
-            #     if index % self.conf["modes"][self.name]["steps"] == 0:
-            #         self.hat.colour_indeces(
-            #             list(map(lambda x: x["index"], lights)), colour
-            #         )
-            for frames in self.frame_sets:
-                self.hat.colour_indeces(frames, colour, auto_show=False)
-                self.hat.colour_indeces(
-                    list(set(range(100)) - set(frames)), [0, 0, 0], auto_show=False
-                )
+            # colour = self.redisman.get_colour()
+            colour = hue_to_rgb(random())
+            for i in range(ceil(len(self.hat) / self.jump)):
+                for j in range(self.jump):
+                    try:
+                        self.hat.light_one(
+                            self.hat[i * self.jump + j]["index"],
+                            colour,
+                            auto_show=False,
+                        )
+                    except IndexError:
+                        pass
                 self.hat.show()
+
+                # try:
+                #     self.hat.light_one(
+                #     self.hat[i * self.jump + j - 10]["index"],
+                #         [0, 0, 0],
+                #         auto_show=False,
+                #     )
+                #     self.hat.show()
+                # except IndexError:
+                #     pass 
+
+            colours_index = (colours_index + 1) % 6

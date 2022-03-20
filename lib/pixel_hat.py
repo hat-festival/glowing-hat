@@ -25,10 +25,11 @@ class PixelHat(list):
         else:
             self.pixels = FakePixel(4)
 
-    def light_one(self, index, colour):
+    def light_one(self, index, colour, auto_show=True):
         """Light up a single pixel."""
         self.pixels[index] = colour
-        self.pixels.show()
+        if auto_show:
+            self.pixels.show()
 
     def colour_indeces(self, indeces, colour, auto_show=True):
         """Apply a colour to a list of lights."""

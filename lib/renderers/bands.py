@@ -1,6 +1,3 @@
-import pickle
-from pathlib import Path
-
 from lib.pixel_hat import PixelHat
 
 
@@ -20,13 +17,12 @@ class Band(list):
             self.hat = PixelHat(auto_centre=True)
 
         self.populate()
-        Path("renders/bands.pickle").write_bytes(pickle.dumps(self))
 
     def populate(self):
         """Populate ourself."""
-        gap = 2 / (self.steps - 1)
-        position = -1
-        while position <= 1:
+        gap = 2 / (self.steps)
+        position = -1 - self.width
+        while position <= 1 + self.width:
             upper_bound = position + self.width
             lower_bound = position - self.width
             filtered = filter(
