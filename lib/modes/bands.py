@@ -1,7 +1,8 @@
 from math import ceil
 from random import random
-from lib.tools import hue_to_rgb
+
 from lib.mode import Mode
+from lib.tools import hue_to_rgb
 
 
 class Bands(Mode):
@@ -21,7 +22,6 @@ class Bands(Mode):
 
     def run(self):
         """Do the stuff."""
-        colours_index = 0
         while True:
             colour = hue_to_rgb(random())
             for i in range(ceil(len(self.hat) / self.jump)):
@@ -33,11 +33,11 @@ class Bands(Mode):
                             auto_show=False,
                         )
                     except IndexError:
-                        pass 
+                        pass
 
                     try:
                         self.hat.light_one(
-                        self.hat[i * self.jump + j - self.width]["index"],
+                            self.hat[i * self.jump + j - self.width]["index"],
                             [0, 0, 0],
                             auto_show=False,
                         )
@@ -45,5 +45,3 @@ class Bands(Mode):
                         pass
 
                 self.hat.show()
-
-            colours_index = (colours_index + 1) % 6

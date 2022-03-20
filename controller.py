@@ -7,11 +7,11 @@ from RPi import GPIO
 
 from lib.conf import conf
 from lib.mode import Mode
-
-# from lib.modes.larsen import Larsen  # noqa
-# from lib.modes.wave import Wave  # noqa
 from lib.modes.bands import Bands  # noqa
-from lib.modes.headache import Headache  # noqa
+
+# from lib.modes.wave import Wave  # noqa
+# from lib.modes.headache import Headache  # noqa
+from lib.modes.larsen import Larsen  # noqa
 from lib.modes.rotator import Rotator  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager

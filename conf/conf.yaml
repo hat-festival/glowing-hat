@@ -48,6 +48,12 @@ colours:
   cyan: [0, 255, 255]
   blue: [0, 0, 255]
   magenta: [255, 0, 255]
+  # red: [209, 34, 41]
+  # orange: [246, 138, 30]
+  # yellow: [ 253, 224, 26]
+  # green: [0, 121, 64]
+  # indigo: [36, 64, 142]
+  # violet: [115, 41, 130]
   free: None
 
 modes:
@@ -63,5 +69,6 @@ modes:
     width: 40
 
   larsen:
-    offset: 20
-    steps: 1
+    jump: 2
+    width: 10
+    delay: 0.5
