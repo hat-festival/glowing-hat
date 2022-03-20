@@ -60,6 +60,7 @@ modes:
 
   bands:
     jump: 3
+    width: 40
 
   larsen:
     offset: 20
