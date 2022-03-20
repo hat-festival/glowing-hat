@@ -1,7 +1,6 @@
 from math import ceil
 from time import sleep
 
-from lib.conf import conf
 from lib.mode import Mode
 from lib.tools import scale_colour
 
