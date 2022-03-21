@@ -1,4 +1,4 @@
 PROJECT = $(shell basename $(shell pwd))
 
-HATHOST = hatlights.local
+HATHOST = 192.168.68.135
 CAMERAHOST = fancycamera.local

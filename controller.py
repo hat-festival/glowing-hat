@@ -1,14 +1,13 @@
-import signal
 import sys
 from collections import deque
 from multiprocessing import Process
+from signal import pause
 
-from RPi import GPIO
+from gpiozero import Button
 
 from lib.conf import conf
 from lib.mode import Mode
 from lib.modes.bands import Bands  # noqa
-
 # from lib.modes.wave import Wave  # noqa
 # from lib.modes.headache import Headache  # noqa
 from lib.modes.larsen import Larsen  # noqa
@@ -26,7 +25,7 @@ class Controller:
         self.redisman = RedisManager()
         self.redisman.populate()
         self.conf = conf
-
+        self.buttons  = {}
         self.modes = deque(Mode.__subclasses__())
 
         self.mode = None
@@ -73,6 +72,11 @@ class Controller:
 
     def bump_colour(self, _):
         """Bump mode."""
+        if self.buttons["colour"]["was-held"]:
+            print("do held thing")
+            self.buttons["colour"]["was-held"] = False
+            return 
+
         print("Bumping colour")
         colours = list(self.conf["colours"].keys())
         current_colour = self.redisman.get("colour")
@@ -84,23 +88,30 @@ class Controller:
 
     def signal_handler(self, _, __):
         """Handle a Ctrl-C etc."""
-        GPIO.cleanup()
         sys.exit(0)
+
+    def held_mode(self, _):
+        self.buttons["mode"]["was-held"] = True
+
+    def held_colour(self, _):
+        self.buttons["colour"]["was-held"] = True
+
+    def held_axis(self, _):
+        self.buttons["axis"]["was-held"] = True
+
+    def held_invert(self, _):
+        self.buttons["invert"]["was-held"] = True
 
     def manage(self):
         """Do the thing."""
-        GPIO.setmode(GPIO.BCM)
         for name, pins in self.conf["buttons"].items():
-            GPIO.setup(pins["logical"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.add_event_detect(
-                pins["logical"],
-                GPIO.FALLING,
-                callback=getattr(self, f"bump_{name}"),
-                bouncetime=500,
-            )
+            self.buttons[name] = {}
+            self.buttons[name]["button"] = Button(pins["logical"])
+            self.buttons[name]["was-held"] = False
+            self.buttons[name]["button"].when_held = getattr(self, f"held_{name}")
+            self.buttons[name]["button"].when_released = getattr(self, f"bump_{name}")
 
-        signal.signal(signal.SIGINT, self.signal_handler)
-        signal.pause()
+        pause()
 
 
 if __name__ == "__main__":
