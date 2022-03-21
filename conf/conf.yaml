@@ -41,20 +41,22 @@ buttons:
     logical: 23
     physical: 16
 
-colours:
-  red: [255, 0, 0]
-  yellow: [255, 255, 0]
-  green: [0, 255, 0]
-  cyan: [0, 255, 255]
-  blue: [0, 0, 255]
-  magenta: [255, 0, 255]
-  # red: [209, 34, 41]
-  # orange: [246, 138, 30]
-  # yellow: [ 253, 224, 26]
-  # green: [0, 121, 64]
-  # indigo: [36, 64, 142]
-  # violet: [115, 41, 130]
-  free: None
+colour-sets:
+  rgb:
+    red: [255, 0, 0]
+    yellow: [255, 255, 0]
+    green: [0, 255, 0]
+    cyan: [0, 255, 255]
+    blue: [0, 0, 255]
+    magenta: [255, 0, 255]
+
+  rainbow:
+    red: [209, 34, 41]
+    orange: [246, 138, 30]
+    yellow: [ 253, 224, 26]
+    green: [0, 121, 64]
+    indigo: [36, 64, 142]
+    violet: [115, 41, 130]
 
 modes:
   rotator:

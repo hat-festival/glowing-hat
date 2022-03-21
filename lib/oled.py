@@ -43,7 +43,7 @@ class Oled:
         )
 
         self.put_text("m", self.redisman.get("mode"), 0, 0)
-        self.put_text("c", self.redisman.get("colour"), 0, self.display.height / 2)
+        self.put_text("r", self.redisman.get("colour"), 0, self.display.height / 2)
         self.put_text("a", self.redisman.get("axis"), self.conf["offset"], 0)
         self.put_text(
             "i",

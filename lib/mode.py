@@ -3,7 +3,7 @@ from pathlib import Path
 
 from lib.conf import conf
 from lib.redis_manager import RedisManager
-
+import json
 
 class Mode:
     """Superclass for `modes`."""
@@ -24,10 +24,10 @@ class Mode:
     def get_colour(self):
         """Retrieve the colour from Redis."""
         colour = self.redisman.get("colour")
-        if colour == "free":
+        if colour == "wheel":
             return self.redisman.get_colour()
 
-        return self.conf["colours"][colour]
+        return json.loads(self.redisman.get("colour"))
 
     @property
     def frame_sets(self):

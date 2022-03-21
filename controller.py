@@ -2,19 +2,22 @@ import sys
 from collections import deque
 from multiprocessing import Process
 from signal import pause
-
+import json
 from gpiozero import Button
 
 from lib.conf import conf
 from lib.mode import Mode
 from lib.modes.bands import Bands  # noqa
+
 # from lib.modes.wave import Wave  # noqa
 # from lib.modes.headache import Headache  # noqa
 from lib.modes.larsen import Larsen  # noqa
 from lib.modes.rotator import Rotator  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
-
+from lib.rollers.random_roller import RandomRoller
+from lib.rollers.set_roller import SetRoller
+from lib.rollers.free_roller import FreeRoller
 
 class Controller:
     """Management class."""
@@ -25,8 +28,16 @@ class Controller:
         self.redisman = RedisManager()
         self.redisman.populate()
         self.conf = conf
-        self.buttons  = {}
+        self.buttons = {}
         self.modes = deque(Mode.__subclasses__())
+
+        self.rollers = deque([
+            SetRoller("RGB", self.conf["colour-sets"]["rgb"]),
+            SetRoller("Rainbow", self.conf["colour-sets"]["rainbow"]),
+            FreeRoller(),
+            RandomRoller(),
+        ])
+        self.roller = self.rollers[0]
 
         self.mode = None
         self.process = None
@@ -73,17 +84,21 @@ class Controller:
     def bump_colour(self, _):
         """Bump mode."""
         if self.buttons["colour"]["was-held"]:
-            print("do held thing")
+            print("Changing roller")
+            self.rollers.rotate(-1)
+            self.roller = self.rollers[0]
+            self.redisman.set("roller", self.roller.name)
+            self.restart_process()
             self.buttons["colour"]["was-held"] = False
-            return 
 
         print("Bumping colour")
-        colours = list(self.conf["colours"].keys())
-        current_colour = self.redisman.get("colour")
-        self.redisman.set(
-            "colour", colours[(colours.index(current_colour) + 1) % len(colours)]
-        )
 
+        clr = self.roller.next 
+        if type(clr).__name__ == 'list':
+            clr = json.dumps(clr)
+        self.redisman.set(
+            "colour", clr
+        )
         self.restart_process()
 
     def signal_handler(self, _, __):

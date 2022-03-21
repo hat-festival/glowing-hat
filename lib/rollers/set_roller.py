@@ -1,9 +1,10 @@
-class ColourRoller:
+class SetRoller:
     """Roll some colours."""
 
-    def __init__(self, colours):
+    def __init__(self, name, colours):
         """Construct."""
 
+        self.name = name
         self.colours = colours
         self.rgbs = list(self.colours.values())
         self.length = len(self.rgbs)
