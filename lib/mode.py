@@ -1,9 +1,10 @@
+import json
 import pickle
 from pathlib import Path
 
 from lib.conf import conf
 from lib.redis_manager import RedisManager
-import json
+
 
 class Mode:
     """Superclass for `modes`."""

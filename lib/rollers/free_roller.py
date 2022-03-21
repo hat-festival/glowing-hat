@@ -1,6 +1,3 @@
-
-
-
 class FreeRoller:
     """Use the rotating wheel."""
 

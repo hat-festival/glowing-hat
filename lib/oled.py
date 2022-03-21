@@ -42,22 +42,26 @@ class Oled:
             (0, 0, self.display.width, self.display.height), outline=0, fill=0
         )
 
-        self.put_text("m", self.redisman.get("mode"), 0, 0)
-        self.put_text("r", self.redisman.get("colour"), 0, self.display.height / 2)
-        self.put_text("a", self.redisman.get("axis"), self.conf["offset"], 0)
+        direction = "↑"
+        if self.redisman.get("invert") == "true":
+            direction = "↓"
+
+        self.put_text(f"{self.redisman.get('mode')}", 0, 0)
+
         self.put_text(
-            "i",
-            self.redisman.get("invert")[0],
-            self.conf["offset"],
+            f"{self.redisman.get('roller')}/#{''.join(f'{i:02x}' for i in self.redisman.get_colour())}",
+            0,
             self.display.height / 2,
+        )
+        self.put_text(
+            f"{self.redisman.get('axis')}/{direction}", self.conf["offset"], 0
         )
 
         self.display.image(self.image)
         self.display.show()
 
-    def put_text(self, key, value, across, down):
+    def put_text(self, text, across, down):
         """Draw some text."""
-        text = f"{key}:{value}"
         self.draw.text((across, down), text.lower(), font=self.font, fill=255)
 
 

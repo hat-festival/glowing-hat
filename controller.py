@@ -1,8 +1,9 @@
+import json
 import sys
 from collections import deque
 from multiprocessing import Process
 from signal import pause
-import json
+
 from gpiozero import Button
 
 from lib.conf import conf
@@ -15,9 +16,10 @@ from lib.modes.larsen import Larsen  # noqa
 from lib.modes.rotator import Rotator  # noqa
 from lib.pixel_hat import PixelHat
 from lib.redis_manager import RedisManager
+from lib.rollers.free_roller import FreeRoller
 from lib.rollers.random_roller import RandomRoller
 from lib.rollers.set_roller import SetRoller
-from lib.rollers.free_roller import FreeRoller
+
 
 class Controller:
     """Management class."""
@@ -31,12 +33,14 @@ class Controller:
         self.buttons = {}
         self.modes = deque(Mode.__subclasses__())
 
-        self.rollers = deque([
-            SetRoller("RGB", self.conf["colour-sets"]["rgb"]),
-            SetRoller("Rainbow", self.conf["colour-sets"]["rainbow"]),
-            FreeRoller(),
-            RandomRoller(),
-        ])
+        self.rollers = deque(
+            [
+                SetRoller("rgb", self.conf["colour-sets"]["rgb"]),
+                SetRoller("rainbow", self.conf["colour-sets"]["rainbow"]),
+                FreeRoller(),
+                RandomRoller(),
+            ]
+        )
         self.roller = self.rollers[0]
 
         self.mode = None
@@ -93,12 +97,10 @@ class Controller:
 
         print("Bumping colour")
 
-        clr = self.roller.next 
-        if type(clr).__name__ == 'list':
+        clr = self.roller.next
+        if type(clr).__name__ == "list":
             clr = json.dumps(clr)
-        self.redisman.set(
-            "colour", clr
-        )
+        self.redisman.set("colour", clr)
         self.restart_process()
 
     def signal_handler(self, _, __):

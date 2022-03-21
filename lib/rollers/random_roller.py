@@ -8,7 +8,7 @@ class RandomRoller:
 
     def __init__(self):
         """Construct."""
-        self.name = "Random"
+        self.name = "random"
 
     @property
     def next(self):
