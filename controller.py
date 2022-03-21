@@ -9,9 +9,6 @@ from gpiozero import Button
 from lib.conf import conf
 from lib.mode import Mode
 from lib.modes.bands import Bands  # noqa
-
-# from lib.modes.wave import Wave  # noqa
-# from lib.modes.headache import Headache  # noqa
 from lib.modes.larsen import Larsen  # noqa
 from lib.modes.rotator import Rotator  # noqa
 from lib.pixel_hat import PixelHat
@@ -41,7 +38,6 @@ class Controller:
                 RandomRoller(),
             ]
         )
-        self.roller = self.rollers[0]
 
         self.mode = None
         self.process = None
@@ -90,14 +86,13 @@ class Controller:
         if self.buttons["colour"]["was-held"]:
             print("Changing roller")
             self.rollers.rotate(-1)
-            self.roller = self.rollers[0]
-            self.redisman.set("roller", self.roller.name)
+            self.redisman.set("roller", self.rollers[0].name)
             self.restart_process()
             self.buttons["colour"]["was-held"] = False
 
         print("Bumping colour")
 
-        clr = self.roller.next
+        clr = self.rollers[0].next
         if type(clr).__name__ == "list":
             clr = json.dumps(clr)
         self.redisman.set("colour", clr)
@@ -108,15 +103,19 @@ class Controller:
         sys.exit(0)
 
     def held_mode(self, _):
+        """Mode button held."""
         self.buttons["mode"]["was-held"] = True
 
     def held_colour(self, _):
+        """Colour button held."""
         self.buttons["colour"]["was-held"] = True
 
     def held_axis(self, _):
+        """Axis button held."""
         self.buttons["axis"]["was-held"] = True
 
     def held_invert(self, _):
+        """Invert button held."""
         self.buttons["invert"]["was-held"] = True
 
     def manage(self):

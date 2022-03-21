@@ -8,7 +8,7 @@ class TestSetRoller(TestCase):
 
     def test_rolling(self):
         """Test it rolls."""
-        roller = SetRoller({"red": [255, 0, 0], "blue": [0, 0, 255]})
+        roller = SetRoller("test", {"red": [255, 0, 0], "blue": [0, 0, 255]})
 
         results = []
         for _ in range(3):

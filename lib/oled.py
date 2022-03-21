@@ -49,7 +49,10 @@ class Oled:
         self.put_text(f"{self.redisman.get('mode')}", 0, 0)
 
         self.put_text(
-            f"{self.redisman.get('roller')}/#{''.join(f'{i:02x}' for i in self.redisman.get_colour())}",
+            (
+                f"{self.redisman.get('roller')}/"
+                f"#{''.join(f'{i:02x}' for i in self.redisman.get_colour())}"
+            ),
             0,
             self.display.height / 2,
         )
