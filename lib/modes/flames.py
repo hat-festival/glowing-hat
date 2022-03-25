@@ -35,12 +35,10 @@ class Flames(Mode):
                 dice = random()
                 if dice > (1 - margin):
                     value += modifier
-                    if value > yellow:
-                        value = yellow
+                    value = min(value, yellow)
                 if dice < margin:
                     value -= modifier
-                    if value < 0:
-                        value = 0
+                    value = max(value, 0)
 
                 colour = hue_to_rgb(value)
                 self.hat.light_one(self.hat[i]["index"], colour)

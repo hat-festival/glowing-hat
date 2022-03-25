@@ -45,7 +45,7 @@ class Oled:
         )
 
         direction = "↑"
-        if self.custodian.get("invert") == True:
+        if self.custodian.get("invert"):
             direction = "↓"
 
         self.put_text(f"{self.custodian.get('mode')}", 0, 0)
@@ -77,7 +77,7 @@ class Oled:
             (0, 0, self.display.width, self.display.height), outline=0, fill=0
         )
 
-        for i in range(256):
+        for _ in range(256):
             self.draw.point(
                 (
                     randint(0, self.display.width - 1),

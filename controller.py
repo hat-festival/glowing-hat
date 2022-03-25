@@ -33,7 +33,7 @@ class Controller:
             "rotator": Rotator,
             "larsen": Larsen,
         }
-        for mode in self.modes.keys():
+        for mode in self.modes:
             self.custodian.add_item_to_hoop(mode, "mode")
 
         self.mode = None
