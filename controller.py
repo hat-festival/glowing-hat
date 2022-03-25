@@ -8,8 +8,6 @@ from gpiozero import Button
 
 from lib.conf import conf
 from lib.custodian import Custodian
-
-# from lib.mode import Mode
 from lib.modes.bands import Bands
 from lib.modes.larsen import Larsen
 from lib.modes.rotator import Rotator
