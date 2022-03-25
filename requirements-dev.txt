@@ -1,7 +1,7 @@
 Adafruit-Blinka==7.1.0
 adafruit-circuitpython-neopixel==6.2.4
 adafruit-circuitpython-pixelbuf==1.1.3
-Adafruit-PlatformDetect==3.20.1
+Adafruit-PlatformDetect==3.22.0
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
 asttokens==2.0.5
@@ -29,7 +29,7 @@ matplotlib-inline==0.1.3
 mccabe==0.6.1
 mypy-extensions==0.4.3
 numpy==1.22.3
-opencv-python==4.5.5.62
+opencv-python==4.5.5.64
 packaging==21.3
 parso==0.8.3
 pathspec==0.9.0
@@ -47,7 +47,7 @@ pydocstyle==6.1.1
 pyflakes==2.4.0
 pyftdi==0.54.0
 Pygments==2.11.2
-pylama==8.3.7
+pylama==8.3.8
 pylint==2.12.2
 pyparsing==3.0.7
 pyserial==3.5
