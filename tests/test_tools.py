@@ -1,4 +1,11 @@
-from lib.tools import close_enough, gamma_correct, hue_to_rgb, remove_axis, scale_colour
+from lib.tools import (
+    close_enough,
+    colour_set_to_colour_list,
+    gamma_correct,
+    hue_to_rgb,
+    remove_axis,
+    scale_colour,
+)
 
 
 def test_hue_to_rgb():
@@ -49,3 +56,29 @@ def test_remove_axis():
     assert remove_axis("x") == ["y", "z"]
     assert remove_axis("y") == ["x", "z"]
     assert remove_axis("z") == ["x", "y"]
+
+
+def test_colour_set_to_colour_list():
+    """Test it transforms the colours."""
+    colour_set = {
+        "red": [255, 0, 0],
+        "yellow": [255, 255, 0],
+        "green": [0, 255, 0],
+        "cyan": [0, 255, 255],
+        "blue": [0, 0, 255],
+        "magenta": [255, 0, 255],
+    }
+    assert colour_set_to_colour_list(colour_set, 2) == [
+        [255, 0, 0],
+        [255, 0, 0],
+        [255, 255, 0],
+        [255, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 255],
+        [0, 255, 255],
+        [0, 0, 255],
+        [0, 0, 255],
+        [255, 0, 255],
+        [255, 0, 255],
+    ]

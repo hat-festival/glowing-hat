@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from lib.colour_wheel import ColourWheel
-from lib.redis_manager import RedisManager
+from lib.custodian import Custodian
 
 
 class TestColourWheel(TestCase):
@@ -9,24 +9,23 @@ class TestColourWheel(TestCase):
 
     def setUp(self):
         """Setup."""
-        self.redisman = RedisManager(namespace="test")
-        self.redisman.populate(flush=True)
+        self.custodian = Custodian(namespace="test")
+        self.custodian.populate(flush=True)
 
     def test_finding_start_hue(self):
         """Test it finds the existing hue."""
-        self.redisman.set("hue", 0.777)
+        self.custodian.set("hue", 0.777)
         wheel = ColourWheel(namespace="test")
         self.assertEqual(wheel.start_hue, 0.777)
 
     def test_with_no_start_hue(self):
         """Test it handles no start hue."""
-        self.redisman.unset("hue")
         wheel = ColourWheel(namespace="test")
         self.assertEqual(wheel.start_hue, 0)
 
     def test_rotate(self):
         """Test it rotates."""
-        self.redisman.set("hue", 0.3)
+        self.custodian.set("hue", 0.3)
         wheel = ColourWheel(namespace="test")
         wheel.rotate(testing=True, steps=500)
-        self.assertEqual(float(self.redisman.get("hue")), 0.29800000000000004)
+        self.assertEqual(float(self.custodian.get("hue")), 0.29800000000000004)

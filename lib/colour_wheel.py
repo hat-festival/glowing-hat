@@ -1,6 +1,6 @@
 from time import sleep
 
-from lib.redis_manager import RedisManager
+from lib.custodian import Custodian
 
 
 class ColourWheel:
@@ -9,16 +9,16 @@ class ColourWheel:
     def __init__(self, interval=0.01, namespace="hat"):
         """Construct."""
         self.interval = interval
-        self.redisman = RedisManager(namespace)
+        self.custodian = Custodian(namespace=namespace)
 
     @property
     def start_hue(self):
         """Get the initial hue."""
-        hue = self.redisman.get("hue")
+        hue = self.custodian.get("hue")
         if not hue:
-            self.redisman.set("hue", 0)
+            self.custodian.set("hue", 0)
 
-        return float(self.redisman.get("hue"))
+        return float(self.custodian.get("hue"))
 
     def rotate(self, testing=False, steps=250):
         """Spin the wheel."""
@@ -30,7 +30,7 @@ class ColourWheel:
         while True:
             for i in range(steps):
                 hue = ((i / steps) + offset) % 1
-                self.redisman.set("hue", hue)
+                self.custodian.set("hue", hue)
                 sleep(self.interval)
 
             if testing:

@@ -3,7 +3,7 @@ import pickle
 from pathlib import Path
 
 from lib.conf import conf
-from lib.redis_manager import RedisManager
+from lib.custodian import Custodian
 
 
 class Mode:
@@ -14,21 +14,14 @@ class Mode:
         self.hat = hat
         self.name = type(self).__name__.lower()
         self.conf = conf
-        self.redisman = RedisManager()
+        self.custodian = Custodian()
 
-        self.invert = False
-        if self.redisman.get("invert") == "true":
-            self.invert = True
-
-        self.axis = self.redisman.get("axis")
+        self.invert = self.custodian.get("invert")
+        self.axis = self.custodian.get("axis")
 
     def get_colour(self):
         """Retrieve the colour from Redis."""
-        colour = self.redisman.get("colour")
-        if colour == "wheel":
-            return self.redisman.get_colour()
-
-        return json.loads(self.redisman.get("colour"))
+        return self.custodian.get("colour")
 
     @property
     def frame_sets(self):

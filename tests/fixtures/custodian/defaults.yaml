@@ -1,0 +1,37 @@
+# redis-defaults:
+#   hue: 0
+#   invert: "false"
+#   axis: y
+#   colour-source: wheel
+
+colour-sets:
+  rgb:
+    red: [255, 0, 0]
+    yellow: [255, 255, 0]
+    green: [0, 255, 0]
+    cyan: [0, 255, 255]
+    blue: [0, 0, 255]
+    magenta: [255, 0, 255]
+
+  rainbow:
+    red: [209, 34, 41]
+    orange: [246, 138, 30]
+    yellow: [ 253, 224, 26]
+    green: [0, 121, 64]
+    indigo: [36, 64, 142]
+    violet: [115, 41, 130]
+
+hoops:
+  invert:
+    - "false"
+    - "true"
+
+  axis:
+    - x
+    - y
+    - z
+
+  colour-source:
+    - wheel
+    - random
+    - redis 

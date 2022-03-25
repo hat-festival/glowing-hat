@@ -1,5 +1,5 @@
-from lib.modes.bands import Bands
+from lib.modes.flames import Flames
 from lib.pixel_hat import PixelHat
 
-bands = Bands(PixelHat())
-bands.run()
+flames = Flames(PixelHat())
+flames.run()

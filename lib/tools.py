@@ -1,4 +1,5 @@
 from colorsys import hsv_to_rgb
+from datetime import datetime
 
 from lib.gamma import gamma
 
@@ -34,3 +35,18 @@ def scale_colour(triple, factor):
 def remove_axis(axis):
     """Remove an axis from x, y, z."""
     return list(filter(lambda x: x != axis, ["x", "y", "z"]))
+
+
+def colour_set_to_colour_list(colour_set, width):
+    """Turn a colour-set definition into a list of RGB triples."""
+    result = []
+    for triple in list(colour_set.values()):
+        for _ in range(width):
+            result.append(triple)
+
+    return result
+
+
+def colour_from_time():
+    """Generate an RGB triple from a hue from sub-seconds."""
+    return hue_to_rgb(datetime.now().microsecond / 10**6)

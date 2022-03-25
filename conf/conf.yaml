@@ -1,11 +1,5 @@
 lights: 100
 
-redis-defaults:
-  hue: 0
-  invert: "false"
-  axis: y
-  colour: free
-
 webserver-port: 5001
 
 oled:
@@ -33,11 +27,11 @@ buttons:
     logical: 12
     physical: 32
 
-  axis:
+  colour_source:
     logical: 25
     physical: 22
 
-  invert:
+  axis:
     logical: 23
     physical: 16
 
@@ -51,12 +45,27 @@ colour-sets:
     magenta: [255, 0, 255]
 
   rainbow:
-    red: [209, 34, 41]
-    orange: [246, 138, 30]
-    yellow: [ 253, 224, 26]
-    green: [0, 121, 64]
-    indigo: [36, 64, 142]
-    violet: [115, 41, 130]
+    red: [255, 0, 0]
+    orange: [230, 60, 0]
+    yellow: [255, 255, 0]
+    green: [0, 255, 0]
+    blue: [0, 0, 255]
+    violet: [255, 0, 255]
+
+hoops:
+  invert:
+    - "false"
+    - "true"
+
+  axis:
+    - x
+    - y
+    - z
+
+  colour-source:
+    - wheel
+    - random
+    - redis 
 
 modes:
   rotator:
@@ -67,10 +76,10 @@ modes:
     steps: 20
 
   bands:
-    jump: 3
-    width: 40
+    jump: 5
+    width: 50
 
   larsen:
     jump: 2
     width: 10
-    delay: 0.5
+    delay: 0.2
