@@ -1,6 +1,6 @@
 Adafruit-Blinka==7.1.0
 adafruit-circuitpython-neopixel==6.2.4
-adafruit-circuitpython-pixelbuf==1.1.2
+adafruit-circuitpython-pixelbuf==1.1.3
 Adafruit-PlatformDetect==3.20.1
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
@@ -15,7 +15,7 @@ Deprecated==1.2.13
 executing==0.8.3
 Flask==2.0.3
 hiredis==2.0.0
-importlib-metadata==4.11.2
+importlib-metadata==4.11.3
 iniconfig==1.1.1
 ipdb==0.13.9
 ipython==8.1.1
