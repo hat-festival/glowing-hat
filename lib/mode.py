@@ -1,31 +1,28 @@
-import json
+import pickle
 from pathlib import Path
 
-import yaml
-
-from lib.redis_manager import RedisManager
+from lib.conf import conf
+from lib.custodian import Custodian
 
 
 class Mode:
     """Superclass for `modes`."""
 
-    def __init__(self, hat, name):
+    def __init__(self, hat):
         """Construct."""
         self.hat = hat
-        self.name = name
-        try:
-            self.conf = yaml.safe_load(
-                Path("conf/modes.yaml").read_text(encoding="UTF-8")
-            )[self.name]
-        except KeyError:
-            self.conf = {}
+        self.name = type(self).__name__.lower()
+        self.conf = conf
+        self.custodian = Custodian()
 
-        self.redisman = RedisManager()
-        self.register()
+        self.invert = self.custodian.get("invert")
+        self.axis = self.custodian.get("axis")
 
-    def register(self):
-        """Register ourself with Redis."""
-        self.redisman.lpush(
-            "modes",
-            json.dumps({"class": type(self).__name__, "display-name": self.name}),
-        )
+    def get_colour(self):
+        """Retrieve the colour from Redis."""
+        return self.custodian.get("colour")
+
+    @property
+    def frame_sets(self):
+        """Load the frame data."""
+        return pickle.loads(Path("renders", f"{self.name}.pickle").read_bytes())

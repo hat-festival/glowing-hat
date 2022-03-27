@@ -1,5 +1,4 @@
 PROJECT = $(shell basename $(shell pwd))
-WEBSERVERPORT = $(shell cat lib/conf.py | grep webserver-port | sed "s/.*: \(.*\),/\1/")
 
-HATHOST = hatlights.local
+HATHOST = 192.168.68.135
 CAMERAHOST = fancycamera.local

@@ -1,0 +1,17 @@
+lights:
+  - index: 0
+    x: 19
+    y: 0
+    z: 1
+  - index: 1
+    x: 25
+    y: 1
+    z: 2
+  - index: 2
+    x: 31
+    y: 2
+    z: 5
+centres:
+  x: 0.5
+  y: 1
+  z: 1

@@ -4,19 +4,24 @@ from pathlib import Path
 
 import numpy as np
 
+from lib.pixel_hat import PixelHat
+from lib.tools import remove_axis
+
 
 class Rotator:
     """Rotator renderer."""
 
-    def __init__(self, hat):
+    def __init__(self):
         """Construct."""
-        self.hat = hat
+        self.hat = PixelHat(auto_centre=True)
 
     def render(self):
         """Create the data"""
         data = {}
-        for pair in [("x", "y"), ("y", "z"), ("x", "z")]:
-            data[f"{pair[0]}_{pair[1]}"] = make_frameset(self.hat, pair[0], pair[1])
+
+        for axis in ["x", "y", "z"]:
+            others = remove_axis(axis)
+            data[axis] = make_frameset(self.hat, others[0], others[1])
 
         Path("renders/rotator.pickle").write_bytes(pickle.dumps(data))
 

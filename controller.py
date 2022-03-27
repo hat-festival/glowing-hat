@@ -1,16 +1,18 @@
-import signal
 import sys
-from collections import deque
+
+# from collections import deque
 from multiprocessing import Process
+from signal import pause
 
-from RPi import GPIO
+from gpiozero import Button
 
-from lib.mode import Mode
-from lib.modes.random_lights import RandomLights  # noqa
-from lib.modes.rotator import Rotator  # noqa
-from lib.modes.z_wave import ZWave  # noqa
+from lib.conf import conf
+from lib.custodian import Custodian
+from lib.modes.bands import Bands
+from lib.modes.larsen import Larsen
+from lib.modes.rotator import Rotator
+from lib.oled import Oled
 from lib.pixel_hat import PixelHat
-from lib.redis_manager import RedisManager
 
 
 class Controller:
@@ -19,47 +21,105 @@ class Controller:
     def __init__(self):
         """Construct."""
         self.hat = PixelHat()
-        self.redisman = RedisManager()
-        self.redisman.populate(flush=True)
+        self.conf = conf
+        self.custodian = Custodian(conf=self.conf)
+        self.custodian.populate(flush=True)
+        self.buttons = {}
+        self.oled = Oled()
+        self.modes = {
+            "bands": Bands,
+            "rotator": Rotator,
+            "larsen": Larsen,
+        }
+        for mode in self.modes:
+            self.custodian.add_item_to_hoop(mode, "mode")
 
-        self.modes = deque(Mode.__subclasses__())
-
+        self.mode = None
         self.process = None
-        self.next_mode(None)
+        self.bump_mode(None)
 
-    def next_mode(self, _):
-        """Bump to the next mode."""
+    def restart_process(self):
+        """Restart the process."""
+        print("Restarting process")
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        mode_class = self.modes.pop()
-        self.modes.appendleft(mode_class)
-
-        mode = mode_class(self.hat)
-        self.process = Process(target=mode.run)
+        self.mode = self.modes[self.custodian.get("mode")](self.hat)
+        self.process = Process(target=self.mode.run)
         self.process.start()
+        self.oled.update()
 
-        print(f"Mode is now {mode.name}")
-        self.redisman.set("mode", mode.name)
+    def bump_mode(self, _):
+        """Bump mode."""
+        self.custodian.next("mode")
+        self.restart_process()
 
-    def signal_handler(self, _, __):
-        """Handle a Ctrl-C etc."""
-        GPIO.cleanup()
-        sys.exit(0)
+    def bump_colour(self, _):
+        """Bump colour / colour-set."""
+        if self.buttons["colour"]["was-held"]:
+            print("Bumping colour-set")
+            self.custodian.next("colour-set")
+            self.custodian.set("colour-source", "redis")
+            self.restart_process()
+            self.buttons["colour"]["was-held"] = False
+
+        print("Bumping colour")
+        self.custodian.next("colour")
+        self.restart_process()
+
+    def bump_colour_source(self, _):
+        """Bump colour-source."""
+        print("Bumping colour-source")
+        self.custodian.next("colour-source")
+        self.restart_process()
+
+    def bump_axis(self, _):
+        """Bump axis / invert."""
+        if self.buttons["axis"]["was-held"]:
+            print("Bumping invert")
+            self.custodian.next("invert")
+            self.restart_process()
+            self.buttons["axis"]["was-held"] = False
+
+        else:
+            print("Bumping axis")
+            self.custodian.next("axis")
+            self.restart_process()
+
+    def held_mode(self, _):
+        """Mode button held."""
+        # self.oled.flash()
+        self.buttons["mode"]["was-held"] = True
+
+    def held_colour(self, _):
+        """Colour button held."""
+        self.oled.flash()
+        self.buttons["colour"]["was-held"] = True
+
+    def held_colour_source(self, _):
+        """Colour-source button held."""
+        # self.oled.flash()
+        self.buttons["colour_source"]["was-held"] = True
+
+    def held_axis(self, _):
+        """Axis button held."""
+        self.oled.flash()
+        self.buttons["axis"]["was-held"] = True
 
     def manage(self):
         """Do the thing."""
-        pin = 25  # from conf
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(
-            pin,
-            GPIO.FALLING,
-            callback=self.next_mode,
-            bouncetime=500,
-        )
-        signal.signal(signal.SIGINT, self.signal_handler)
-        signal.pause()
+        for name, pins in self.conf["buttons"].items():
+            self.buttons[name] = {}
+            self.buttons[name]["button"] = Button(pins["logical"])
+            self.buttons[name]["was-held"] = False
+            self.buttons[name]["button"].when_held = getattr(self, f"held_{name}")
+            self.buttons[name]["button"].when_released = getattr(self, f"bump_{name}")
+
+        pause()
+
+    def signal_handler(self, _, __):
+        """Handle a Ctrl-C etc."""
+        sys.exit(0)
 
 
 if __name__ == "__main__":

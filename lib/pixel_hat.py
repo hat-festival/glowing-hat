@@ -11,9 +11,11 @@ if "arm" in platform.platform():  # nocov
 class PixelHat(list):
     """Hat with pixels."""
 
-    def __init__(self, locations="conf/locations.yaml"):  # pylint: disable=W0231
+    def __init__(
+        self, locations="conf/locations.yaml", auto_centre=False
+    ):  # pylint: disable=W0231
         self.locations = locations
-        self.scaler = Scaler(locations)
+        self.scaler = Scaler(locations, auto_centre=auto_centre)
 
         for location in self.scaler:
             self.append(Pixel(location))
@@ -23,10 +25,11 @@ class PixelHat(list):
         else:
             self.pixels = FakePixel(4)
 
-    def light_one(self, index, colour):
+    def light_one(self, index, colour, auto_show=True):
         """Light up a single pixel."""
         self.pixels[index] = colour
-        self.pixels.show()
+        if auto_show:
+            self.pixels.show()
 
     def colour_indeces(self, indeces, colour, auto_show=True):
         """Apply a colour to a list of lights."""

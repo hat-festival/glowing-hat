@@ -5,6 +5,7 @@ Adafruit-PlatformDetect==3.22.0
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
 asttokens==2.0.5
+async-timeout==4.0.2
 attrs==21.4.0
 backcall==0.2.0
 black==22.1.0
