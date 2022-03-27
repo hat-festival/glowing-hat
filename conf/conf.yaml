@@ -35,15 +35,8 @@ buttons:
     logical: 23
     physical: 16
 
+# the ordering of these is important: the top one will become the default
 colour-sets:
-  rgb:
-    red: [255, 0, 0]
-    yellow: [255, 255, 0]
-    green: [0, 255, 0]
-    cyan: [0, 255, 255]
-    blue: [0, 0, 255]
-    magenta: [255, 0, 255]
-
   rainbow:
     red: [255, 0, 0]
     orange: [230, 60, 0]
@@ -52,32 +45,37 @@ colour-sets:
     blue: [0, 0, 255]
     violet: [255, 0, 255]
 
+  rgb:
+    red: [255, 0, 0]
+    yellow: [255, 255, 0]
+    green: [0, 255, 0]
+    cyan: [0, 255, 255]
+    blue: [0, 0, 255]
+    magenta: [255, 0, 255]
+
 hoops:
   invert:
     - "false"
     - "true"
 
   axis:
-    - x
     - y
     - z
+    - x
 
   colour-source:
+    - redis 
     - wheel
     - random
-    - redis 
 
 modes:
   rotator:
     steps: 9
-    offset: 90
-
-  wave:
-    steps: 20
+    offset: 10
 
   bands:
     jump: 5
-    width: 50
+    width: 30
 
   larsen:
     jump: 2
