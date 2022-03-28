@@ -1,5 +1,5 @@
 redis
-adafruit-circuitpython-neopixel==6.2.4
+adafruit-circuitpython-neopixel==6.3.0
 flask
 adafruit-circuitpython-ssd1306 
 Pillow
