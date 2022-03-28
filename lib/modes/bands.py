@@ -1,6 +1,5 @@
 from collections import deque
 
-from lib.conf import conf
 from lib.mode import Mode
 from lib.tools import colour_set_to_colour_list
 
@@ -20,17 +19,16 @@ class Bands(Mode):
 
         self.width = self.conf["modes"]["bands"]["width"]
 
-    def run(self):
-        """Do the stuff."""
-        bands = deque(
+        self.bands = deque(
             colour_set_to_colour_list(
-                conf["colour-sets"][self.custodian.get("colour-set")], self.width
+                self.conf["colour-sets"][self.custodian.get("colour-set")], self.width
             )
         )
 
-        self.hat.off()
+    def run(self):
+        """Do the stuff."""
         while True:
             for i, _ in enumerate(self.hat):
-                self.hat.light_one(self.hat[i]["index"], bands[i], auto_show=False)
+                self.hat.light_one(self.hat[i]["index"], self.bands[i], auto_show=False)
             self.hat.show()
-            bands.rotate(self.jump)
+            self.bands.rotate(self.jump)

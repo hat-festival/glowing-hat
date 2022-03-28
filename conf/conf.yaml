@@ -69,15 +69,30 @@ hoops:
     - random
 
 modes:
+  bands:
+    jump: 5
+    width: 75
+
+  brain-waves:
+    jump: 5
+    steps: 150
+
+  cuttlefish:
+    jump: 1
+    steps: 200
+
+  larsen:
+    jump: 2
+    width: 20
+    delay: 0.2
+
   rotator:
     steps: 9
     offset: 10
 
-  bands:
-    jump: 5
-    width: 30
-
-  larsen:
-    jump: 2
-    width: 10
+###
+    
+  colour-brain:
+    jump: 10
+    steps: 200
     delay: 0.2

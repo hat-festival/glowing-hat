@@ -8,9 +8,7 @@ from gpiozero import Button
 
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.modes.bands import Bands
-from lib.modes.larsen import Larsen
-from lib.modes.rotator import Rotator
+from lib.modes_list import modes
 from lib.oled import Oled
 from lib.pixel_hat import PixelHat
 
@@ -26,17 +24,14 @@ class Controller:
         self.custodian.populate(flush=True)
         self.buttons = {}
         self.oled = Oled()
-        self.modes = {
-            "bands": Bands,
-            "rotator": Rotator,
-            "larsen": Larsen,
-        }
+
+        self.modes = modes
         for mode in self.modes:
             self.custodian.add_item_to_hoop(mode, "mode")
+        self.custodian.next("mode")
 
-        self.mode = None
         self.process = None
-        self.bump_mode(None)
+        self.restart_process()
 
     def restart_process(self):
         """Restart the process."""
