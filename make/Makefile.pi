@@ -18,7 +18,11 @@ prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
 	sudo chown pi /var/log/hatlights/
 
-system-install: systemd restart-services
+raspi-config:
+	sudo raspi-config nonint do_serial 1
+	sudo raspi-config nonint do_i2c 0
+
+system-install: raspi-config systemd restart-services
 
 systemd: prepare-logs
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/colour-wheel.service
