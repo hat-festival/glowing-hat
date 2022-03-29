@@ -17,6 +17,14 @@ buttons:
     logical: 23
     physical: 16
 
+shimbuttons:
+  - press: mode 
+  - press: colour 
+    hold: colour_set 
+  - press: colour_source 
+  - press: axis 
+  - press: invert
+
 # the ordering of these is important: the top one will become the default
 colour-sets:
   rainbow:
