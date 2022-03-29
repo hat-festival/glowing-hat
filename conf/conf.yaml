@@ -1,23 +1,5 @@
 lights: 100
 
-webserver-port: 5001
-
-oled:
-  size: 
-    x: 128
-    y: 32 
-  font:
-    name: SourceCodePro-Light
-    size: 13
-  offset:
-    104
-
-display-keys:
-  - mode
-  - axis
-  - invert
-  - colour
-
 buttons:
   mode:
     logical: 16
@@ -68,16 +50,49 @@ hoops:
     - wheel
     - random
 
-modes:
-  rotator:
-    steps: 9
-    offset: 10
+modes:    
+  cuttlefish:
+    jump: 2
+    steps: 200
+
+  brain-waves:
+    jump: 5
+    steps: 150
 
   bands:
     jump: 5
-    width: 30
+    width: 75
+
+  rotator:
+    steps: 9
+    offset: 90
 
   larsen:
     jump: 2
-    width: 10
+    width: 20
     delay: 0.2
+
+###
+
+  colour-brain:
+    jump: 10
+    steps: 200
+    delay: 0.2
+
+###
+
+wheel:
+  interval: 0.01
+  steps: 1000
+
+webserver-port: 5001
+
+oled:
+  size: 
+    x: 128
+    y: 32 
+  font:
+    name: SourceCodePro-Light
+    size: 13
+  offset:
+    104

@@ -3,6 +3,12 @@ include make/Makefile.common
 default: setup
 
 setup: apt-installs install system-install clean
+	@echo "========================================================"
+	@echo
+	@echo "Install complete, rebooting your hat..."
+	@echo
+	@echo "========================================================"
+	sudo reboot
 
 apt-installs:
 	sudo apt update
@@ -40,7 +46,7 @@ install:
 	sudo python -m pip install -r requirements.txt
 
 clean:
-	sudo find . -name __pycache__ -exec rm -fr {} \;
+	sudo rm -fr $$(find . -name __pycache__)
 
 webserver: stop-services
 	sudo python webserver.py

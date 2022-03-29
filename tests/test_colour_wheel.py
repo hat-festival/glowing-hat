@@ -27,5 +27,6 @@ class TestColourWheel(TestCase):
         """Test it rotates."""
         self.custodian.set("hue", 0.3)
         wheel = ColourWheel(namespace="test")
-        wheel.rotate(testing=True, steps=500)
+        wheel.steps = 500
+        wheel.rotate(testing=True)
         self.assertEqual(float(self.custodian.get("hue")), 0.29800000000000004)

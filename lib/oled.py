@@ -12,6 +12,11 @@ if "arm" in platform.platform():  # nocov
     from board import SCL, SDA
 
 
+SEPARATOR = "|"
+UP_ARROW = "↑"
+DOWN_ARROW = "↓"
+
+
 class Oled:
     """Class wrapping the PiOLED display."""
 
@@ -44,9 +49,9 @@ class Oled:
             (0, 0, self.display.width, self.display.height), outline=0, fill=0
         )
 
-        direction = "↑"
+        direction = UP_ARROW
         if self.custodian.get("invert"):
-            direction = "↓"
+            direction = DOWN_ARROW
 
         self.put_text(f"{self.custodian.get('mode')}", 0, 0)
 
@@ -54,7 +59,7 @@ class Oled:
         if source == "redis":
             self.put_text(
                 (
-                    f"{self.custodian.get('colour-set')}/"
+                    f"{self.custodian.get('colour-set')}{SEPARATOR}"
                     f"#{''.join(f'{i:02x}' for i in self.custodian.get('colour'))}"
                 ),
                 0,
@@ -65,7 +70,9 @@ class Oled:
             self.put_text(source, 0, self.display.height / 2)
 
         self.put_text(
-            f"{self.custodian.get('axis')}/{direction}", self.conf["offset"], 0
+            f"{self.custodian.get('axis')}{SEPARATOR}{direction}",
+            self.conf["offset"],
+            0,
         )
 
         self.display.image(self.image)

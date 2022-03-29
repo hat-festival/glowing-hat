@@ -4,7 +4,8 @@ PUSHHOST ?= ${HATHOST}
 
 default: format lint test freeze
 
-push-code:
+push-code: clean
+	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure && make clean"
 	rsync --archive \
 		  --verbose \
 		  --delete \
@@ -28,8 +29,8 @@ lint:
 	python -m pylama
 
 clean:
-	@find . -name __pycache__ -exec rm -fr {} \;
-	@find . -name .pytest_cache -exec rm -fr {} \;
+	rm -fr $$(find . -name __pycache__)
+	rm -fr $$(find . -name .pytest_cache)
 
 format: isort black
 

@@ -1,14 +1,17 @@
 from time import sleep
 
+from lib.conf import conf
 from lib.custodian import Custodian
 
 
 class ColourWheel:
     """Spin the `hue` wheel round and round."""
 
-    def __init__(self, interval=0.01, namespace="hat"):
+    def __init__(self, namespace="hat"):
         """Construct."""
-        self.interval = interval
+        self.conf = conf
+        self.interval = self.conf["wheel"]["interval"]
+        self.steps = self.conf["wheel"]["steps"]
         self.custodian = Custodian(namespace=namespace)
 
     @property
@@ -20,7 +23,7 @@ class ColourWheel:
 
         return float(self.custodian.get("hue"))
 
-    def rotate(self, testing=False, steps=250):
+    def rotate(self, testing=False):
         """Spin the wheel."""
         offset = self.start_hue
 
@@ -28,8 +31,8 @@ class ColourWheel:
             self.interval = 0
 
         while True:
-            for i in range(steps):
-                hue = ((i / steps) + offset) % 1
+            for i in range(self.steps):
+                hue = ((i / self.steps) + offset) % 1
                 self.custodian.set("hue", hue)
                 sleep(self.interval)
 

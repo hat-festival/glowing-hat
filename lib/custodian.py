@@ -18,8 +18,7 @@ class Custodian:
     def populate(self, flush=False):
         """Insert initial data."""
         if flush:
-            for key in self.redis.scan_iter(f"{self.namespace}:*"):
-                self.redis.delete(key)
+            self.redis.flushall()
 
         if self.conf:
             for name, values in self.conf["hoops"].items():
