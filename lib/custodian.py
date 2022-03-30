@@ -52,6 +52,11 @@ class Custodian:
         if thing == "colour-set":
             self.load_colour_set(self.conf["colour-sets"][self.get("colour-set")])
 
+    def rotate_until(self, value, hoop):
+        """Rotate a hoop until the desired value is selected."""
+        while not self.get(hoop) == value:
+            self.next
+
     def get(self, key):
         """Get a value."""
         if key == "colour" and self.get("colour-source") == "wheel":
@@ -77,6 +82,10 @@ class Custodian:
     def set(self, key, value):
         """Set a value."""
         self.redis.set(self.make_key(key), value)
+
+    def unset(self, key):
+        """Unset something."""
+        self.redis.delete(self.make_key(key))
 
     def load_colour_set(self, colours):
         """Load-in a colour-set."""

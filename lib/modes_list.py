@@ -11,3 +11,10 @@ modes = {
     "rotator": Rotator,
     "larsen": Larsen,
 }
+
+
+def load_modes(custodian):
+    """Load the modes into the Custodian."""
+    custodian.unset("hoop:mode")
+    for mode in modes:
+        custodian.add_item_to_hoop(mode, "mode")

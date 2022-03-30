@@ -15,6 +15,12 @@ class Mode:
         self.conf = conf
         self.custodian = Custodian()
 
+        # just get `self.data` as the whole thing?
+        if "preferred-axis" in self.conf["modes"][self.name]:
+            self.custodian.rotate_until(
+                self.conf["modes"][self.name]["preferred-axis"], "axis"
+            )
+
         self.invert = self.custodian.get("invert")
         self.axis = self.custodian.get("axis")
 

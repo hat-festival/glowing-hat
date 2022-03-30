@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
 from lib.custodian import Custodian
+from lib.logger import logging
 
 if "arm" in platform.platform():  # nocov
     import adafruit_ssd1306
@@ -44,7 +45,7 @@ class Oled:
 
     def update(self):
         """Read and display data from Redis."""
-        # clear the board
+        logging.info("updating display")
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height), outline=0, fill=0
         )
@@ -79,7 +80,8 @@ class Oled:
         self.display.show()
 
     def flash(self):
-        """Blank the screen."""
+        """Draw random patterns the screen."""
+        logging.info("flashing display")
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height), outline=0, fill=0
         )
@@ -92,6 +94,16 @@ class Oled:
                 ),
                 1,
             )
+
+        self.display.image(self.image)
+        self.display.show()
+
+    def off(self):
+        """Blank the screen."""
+        logging.info("turning display off")
+        self.draw.rectangle(
+            (0, 0, self.display.width, self.display.height), outline=0, fill=0
+        )
 
         self.display.image(self.image)
         self.display.show()

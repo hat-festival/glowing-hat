@@ -13,11 +13,11 @@ class Cuttlefish(Mode):
 
         self.hat.sort(key=lambda w: w[self.axis])
 
-        self.jump = self.conf["modes"]["cuttlefish"]["jump"]
+        self.jump = self.conf["modes"][self.name]["jump"]
         if self.invert:
             self.jump = 0 - self.jump
 
-        self.steps = self.conf["modes"]["cuttlefish"]["steps"]
+        self.steps = self.conf["modes"][self.name]["steps"]
 
         self.colours = deque()
         for i in range(self.steps):

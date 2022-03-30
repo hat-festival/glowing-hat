@@ -139,3 +139,33 @@ class TestCustodian(TestCase):
         # cus.next("colour-set")
         # cus.next("colour")
         # self.assertEqual(cus.get("colour"), [246, 138, 30])
+
+    def test_unsetting(self):
+        """Test it unsets something."""
+        cus = Custodian("test")
+        cus.add_item_to_hoop("apple", "fruit")
+        cus.add_item_to_hoop("banana", "fruit")
+        cus.add_item_to_hoop("clementine", "fruit")
+
+        self.assertEqual(
+            list(
+                map(lambda x: x.decode(), self.redis.lrange("test:hoop:fruit", 0, -1))
+            ),
+            ["clementine", "banana", "apple"],
+        )
+
+        cus.unset("hoop:fruit")
+        self.assertIsNone(cus.get("hoop:fruit"))
+
+    def test_rotate_until(self):
+        """Test it rotates-until."""
+        cus = Custodian("test")
+        cus.add_item_to_hoop("aardvark", "animal")
+        cus.add_item_to_hoop("baboon", "animal")
+        cus.add_item_to_hoop("cuttlefish", "animal")
+        cus.add_item_to_hoop("dog", "animal")
+        cus.add_item_to_hoop("elephant", "animal")
+        cus.add_item_to_hoop("fruitbat", "animal")
+
+        cus.rotate_until("dog", "animal")
+        self.assertEqual(cus.get("animal"), "dog")

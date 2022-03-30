@@ -13,11 +13,11 @@ class Bands(Mode):
 
         self.hat.sort(key=lambda w: w[self.axis])
 
-        self.jump = self.conf["modes"]["bands"]["jump"]
+        self.jump = self.conf["modes"][self.name]["jump"]
         if self.invert:
             self.jump = 0 - self.jump
 
-        self.width = self.conf["modes"]["bands"]["width"]
+        self.width = self.conf["modes"][self.name]["width"]
 
         self.bands = deque(
             colour_set_to_colour_list(

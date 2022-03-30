@@ -14,8 +14,12 @@ class Larsen(Mode):
 
         self.hat.sort(key=lambda w: w[self.axis])
 
-        self.jump = self.conf["modes"]["larsen"]["jump"]
-        self.width = self.conf["modes"]["larsen"]["width"]
+        self.jump = self.conf["modes"][self.name]["jump"]
+        self.width = self.conf["modes"][self.name]["width"]
+
+        self.custodian.rotate_until(
+            self.conf["modes"]["larsen"]["preferred-axis"], "axis"
+        )
 
     def run(self):
         """Do the stuff."""
@@ -37,7 +41,9 @@ class Larsen(Mode):
                         if tail_index >= 0:
                             self.hat.light_one(
                                 self.hat[tail_index]["index"],
-                                scale_colour(colour, 0.1),
+                                scale_colour(
+                                    colour, self.conf["modes"][self.name]["fade-factor"]
+                                ),
                                 auto_show=False,
                             )
                     except IndexError:
@@ -45,6 +51,6 @@ class Larsen(Mode):
 
                 self.hat.show()
 
-            sleep(self.conf["modes"]["larsen"]["delay"])
+            sleep(self.conf["modes"][self.name]["delay"])
 
             self.hat.reverse()

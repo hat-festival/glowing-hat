@@ -1,6 +1,4 @@
 import sys
-
-# from collections import deque
 from multiprocessing import Process
 from signal import pause
 
