@@ -16,16 +16,16 @@ class Rotator(Mode):
         if self.invert:
             frames = list(reversed(frames))
 
-        self.data = deque(frames)
+        self.lead_data = deque(frames)
         self.tail_data = deque(frames)
 
-        self.tail_data.rotate(self.conf["modes"][self.name]["offset"])
+        self.tail_data.rotate(self.data["offset"])
 
     def run(self):
         """Do the work."""
         while True:
-            for index, lights in enumerate(self.data):
-                if index % self.conf["modes"][self.name]["steps"] == 0:
+            for index, lights in enumerate(self.lead_data):
+                if index % self.data["steps"] == 0:
                     colour = self.get_colour()
                     tail_colour = scale_colour(colour, 0.1)
                     self.hat.colour_indeces(

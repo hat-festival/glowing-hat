@@ -13,11 +13,11 @@ class BrainWaves(Mode):
 
         self.hat.sort(key=lambda w: w[self.axis])
 
-        self.jump = self.conf["modes"][self.name]["jump"]
+        self.jump = self.data["jump"]
         if self.invert:
             self.jump = 0 - self.jump
 
-        self.steps = self.conf["modes"][self.name]["steps"]
+        self.steps = self.data["steps"]
 
         self.colours = deque()
         for i in range(self.steps):

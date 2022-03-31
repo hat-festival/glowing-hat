@@ -55,7 +55,7 @@ class Custodian:
     def rotate_until(self, value, hoop):
         """Rotate a hoop until the desired value is selected."""
         while not self.get(hoop) == value:
-            self.next
+            self.next(hoop)
 
     def get(self, key):
         """Get a value."""

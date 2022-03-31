@@ -12,14 +12,12 @@ class Mode:
         """Construct."""
         self.hat = hat
         self.name = type(self).__name__.lower()
-        self.conf = conf
         self.custodian = Custodian()
+        self.conf = conf
+        self.data = self.conf["modes"][self.name]
 
-        # just get `self.data` as the whole thing?
-        if "preferred-axis" in self.conf["modes"][self.name]:
-            self.custodian.rotate_until(
-                self.conf["modes"][self.name]["preferred-axis"], "axis"
-            )
+        if "preferred-axis" in self.data:
+            self.custodian.rotate_until(self.data["preferred-axis"], "axis")
 
         self.invert = self.custodian.get("invert")
         self.axis = self.custodian.get("axis")
