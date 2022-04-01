@@ -10,7 +10,6 @@ from lib.conf import conf
 from lib.custodian import Custodian
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
-
 from lib.oled import Oled
 from lib.pixel_hat import PixelHat
 

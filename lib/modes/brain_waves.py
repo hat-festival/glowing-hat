@@ -25,7 +25,7 @@ class BrainWaves(Mode):
     def run(self):
         """Do the stuff."""
         self.sort_hat()
-        
+
         while True:
             for i, _ in enumerate(self.hat):
                 self.hat.light_one(
