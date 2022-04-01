@@ -17,6 +17,14 @@ buttons:
     logical: 23
     physical: 16
 
+shimbuttons:
+  - press: mode 
+  - press: colour 
+    hold: colour-set 
+  - press: colour-source 
+  - press: axis 
+  - press: invert
+
 # the ordering of these is important: the top one will become the default
 colour-sets:
   rainbow:
@@ -54,23 +62,29 @@ modes:
   cuttlefish:
     jump: 2
     steps: 200
+    preferred-axis: y
 
-  brain-waves:
+  brainwaves:
     jump: 5
     steps: 150
+    preferred-axis: y
 
   bands:
     jump: 5
     width: 75
+    preferred-axis: y
 
   rotator:
     steps: 9
     offset: 90
+    preferred-axis: y
 
   larsen:
     jump: 2
     width: 20
     delay: 0.2
+    fade-factor: 0.2
+    preferred-axis: x
 
 ###
 
@@ -96,3 +110,4 @@ oled:
     size: 13
   offset:
     104
+  timeout: 10

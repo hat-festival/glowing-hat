@@ -1,122 +1,128 @@
-import sys
+# http://docs.pimoroni.com/buttonshim/#module-buttonshim
 
-# from collections import deque
 from multiprocessing import Process
 from signal import pause
+from string import ascii_uppercase
 
-from gpiozero import Button
+import buttonshim
 
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.modes_list import modes
+from lib.logger import logging
+from lib.modes_list import load_modes, modes
+
 from lib.oled import Oled
 from lib.pixel_hat import PixelHat
 
+BUTTONS = {}
+
+for index, data in enumerate(conf["shimbuttons"]):
+    BUTTONS[index] = data
+    BUTTONS[index]["name"] = ascii_uppercase[index]
+    BUTTONS[index]["held"] = False
+
+BUTTON_IDS = list(BUTTONS.keys())
+
 
 class Controller:
-    """Management class."""
+    """Hat controller."""
 
     def __init__(self):
         """Construct."""
         self.hat = PixelHat()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf)
-        self.custodian.populate(flush=True)
-        self.buttons = {}
-        self.oled = Oled()
+        self.custodian.populate(flush=False)
 
         self.modes = modes
-        for mode in self.modes:
-            self.custodian.add_item_to_hoop(mode, "mode")
+        load_modes(self.custodian)
         self.custodian.next("mode")
 
-        self.process = None
-        self.restart_process()
+        self.oled = Oled()
 
-    def restart_process(self):
-        """Restart the process."""
-        print("Restarting process")
+        self.process = None
+        self.restart_hat(is_mode=True)
+
+    def restart_hat(self, is_mode=False):
+        """Restart the hat."""
+        logging.info("restarting hat")
         if self.process and self.process.is_alive():
             self.process.terminate()
 
         self.mode = self.modes[self.custodian.get("mode")](self.hat)
+        if is_mode:
+            self.mode.set_preferred_axis()
+
         self.process = Process(target=self.mode.run)
         self.process.start()
+        logging.info("hat restarted")
         self.oled.update()
 
-    def bump_mode(self, _):
-        """Bump mode."""
-        self.custodian.next("mode")
-        self.restart_process()
+    def bump(self, parameter):
+        """Bump something."""
+        logging.info("bumping `%s`", parameter)
+        self.custodian.next(parameter)
+        logging.info("`%s` is now `%s`", parameter, self.custodian.get(parameter))
 
-    def bump_colour(self, _):
-        """Bump colour / colour-set."""
-        if self.buttons["colour"]["was-held"]:
-            print("Bumping colour-set")
-            self.custodian.next("colour-set")
-            self.custodian.set("colour-source", "redis")
-            self.restart_process()
-            self.buttons["colour"]["was-held"] = False
+        is_mode = parameter == "mode"
+        self.restart_hat(is_mode=is_mode)
 
-        print("Bumping colour")
-        self.custodian.next("colour")
-        self.restart_process()
 
-    def bump_colour_source(self, _):
-        """Bump colour-source."""
-        print("Bumping colour-source")
-        self.custodian.next("colour-source")
-        self.restart_process()
+c = Controller()
 
-    def bump_axis(self, _):
-        """Bump axis / invert."""
-        if self.buttons["axis"]["was-held"]:
-            print("Bumping invert")
-            self.custodian.next("invert")
-            self.restart_process()
-            self.buttons["axis"]["was-held"] = False
 
-        else:
-            print("Bumping axis")
-            self.custodian.next("axis")
-            self.restart_process()
+@buttonshim.on_release(BUTTON_IDS)
+def release_handler(button, _):
+    """Handle button release."""
+    logging.debug("button `%s` released", BUTTONS[button]["name"])
+    if not BUTTONS[button]["held"]:
+        green()
+        c.bump(BUTTONS[button]["press"])
 
-    def held_mode(self, _):
-        """Mode button held."""
-        # self.oled.flash()
-        self.buttons["mode"]["was-held"] = True
+    else:
+        BUTTONS[button]["held"] = False
 
-    def held_colour(self, _):
-        """Colour button held."""
-        self.oled.flash()
-        self.buttons["colour"]["was-held"] = True
+    off()
 
-    def held_colour_source(self, _):
-        """Colour-source button held."""
-        # self.oled.flash()
-        self.buttons["colour_source"]["was-held"] = True
 
-    def held_axis(self, _):
-        """Axis button held."""
-        self.oled.flash()
-        self.buttons["axis"]["was-held"] = True
+@buttonshim.on_hold(BUTTON_IDS, hold_time=1)
+def held_handler(button):
+    """Handle button hold."""
+    logging.debug("button `%s` held", BUTTONS[button]["name"])
+    if "hold" in BUTTONS[button]:
+        blue()
+        c.bump(BUTTONS[button]["hold"])
 
-    def manage(self):
-        """Do the thing."""
-        for name, pins in self.conf["buttons"].items():
-            self.buttons[name] = {}
-            self.buttons[name]["button"] = Button(pins["logical"])
-            self.buttons[name]["was-held"] = False
-            self.buttons[name]["button"].when_held = getattr(self, f"held_{name}")
-            self.buttons[name]["button"].when_released = getattr(self, f"bump_{name}")
+    else:
+        red()
 
-        pause()
+    BUTTONS[button]["held"] = True
 
-    def signal_handler(self, _, __):
-        """Handle a Ctrl-C etc."""
-        sys.exit(0)
+
+def red():
+    """LED red."""
+    buttonshim.set_pixel(255, 0, 0)
+
+
+def green():
+    """LED green."""
+    buttonshim.set_pixel(0, 255, 0)
+
+
+def blue():
+    """LED blue."""
+    buttonshim.set_pixel(0, 0, 255)
+
+
+def off():
+    """LED off."""
+    buttonshim.set_pixel(0, 0, 0)
+
+
+def manage():
+    """Loop forever."""
+    pause()
 
 
 if __name__ == "__main__":
-    con = Controller()
-    con.manage()
+    manage()

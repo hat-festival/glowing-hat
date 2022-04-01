@@ -12,13 +12,13 @@ class Larsen(Mode):
         """Construct."""
         super().__init__(hat)
 
-        self.hat.sort(key=lambda w: w[self.axis])
-
-        self.jump = self.conf["modes"]["larsen"]["jump"]
-        self.width = self.conf["modes"]["larsen"]["width"]
+        self.jump = self.data["jump"]
+        self.width = self.data["width"]
 
     def run(self):
         """Do the stuff."""
+        self.sort_hat()
+        
         while True:
             colour = self.get_colour()
             for i in range(ceil(len(self.hat) / self.jump) + 10):
@@ -37,7 +37,7 @@ class Larsen(Mode):
                         if tail_index >= 0:
                             self.hat.light_one(
                                 self.hat[tail_index]["index"],
-                                scale_colour(colour, 0.1),
+                                scale_colour(colour, self.data["fade-factor"]),
                                 auto_show=False,
                             )
                     except IndexError:
@@ -45,6 +45,6 @@ class Larsen(Mode):
 
                 self.hat.show()
 
-            sleep(self.conf["modes"]["larsen"]["delay"])
+            sleep(self.data["delay"])
 
             self.hat.reverse()

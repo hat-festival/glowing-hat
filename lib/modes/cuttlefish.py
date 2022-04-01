@@ -11,13 +11,11 @@ class Cuttlefish(Mode):
         """Construct."""
         super().__init__(hat)
 
-        self.hat.sort(key=lambda w: w[self.axis])
-
-        self.jump = self.conf["modes"]["cuttlefish"]["jump"]
+        self.jump = self.data["jump"]
         if self.invert:
             self.jump = 0 - self.jump
 
-        self.steps = self.conf["modes"]["cuttlefish"]["steps"]
+        self.steps = self.data["steps"]
 
         self.colours = deque()
         for i in range(self.steps):
@@ -25,6 +23,8 @@ class Cuttlefish(Mode):
 
     def run(self):
         """Do the stuff."""
+        self.sort_hat()
+
         while True:
             for i, _ in enumerate(self.hat):
                 self.hat.light_one(

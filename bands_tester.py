@@ -1,5 +1,5 @@
-from lib.modes.flames import Flames
+from lib.modes.rotator import Rotator
 from lib.pixel_hat import PixelHat
 
-flames = Flames(PixelHat())
-flames.run()
+rot = Rotator(PixelHat())
+rot.run()
