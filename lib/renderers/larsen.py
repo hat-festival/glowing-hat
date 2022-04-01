@@ -1,3 +1,6 @@
+from collections import deque
+import pickle
+from pathlib import Path
 class Larsen(list):
     """Larsen pre-renderer."""
 
@@ -5,7 +8,28 @@ class Larsen(list):
         """Construct."""
         self.length = length
 
+    def render(self):
+        """Populate and save."""
+        self.populate()
+        Path("renders/larsen.pickle").write_bytes(pickle.dumps(self))
+
+
     def populate(self):
         """Add data to self."""
-        self.append([1])
-        self.append([1, 0.5])
+        middle = deque(middle_member(self.length))
+        for i in range(self.length):
+            middle.append(0.0)
+            middle.appendleft(0.0)
+
+        for i in range(2 * self.length - 1):
+            middle.rotate(-1)
+            self.append(list(middle)[0:self.length])
+
+
+def middle_member(length):
+    """Generate the most-populated member."""
+    member = []
+    for i in range(length):
+        member.append((length - i) / length)
+
+    return member

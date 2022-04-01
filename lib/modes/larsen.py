@@ -1,3 +1,4 @@
+from enum import auto
 from math import ceil
 from time import sleep
 
@@ -18,33 +19,15 @@ class Larsen(Mode):
     def run(self):
         """Do the stuff."""
         self.sort_hat()
-        
+        self.hat.off()
         while True:
             colour = self.get_colour()
-            for i in range(ceil(len(self.hat) / self.jump) + 10):
-                for j in range(self.jump):
-                    try:
-                        self.hat.light_one(
-                            self.hat[i * self.jump + j]["index"],
-                            colour,
-                            auto_show=False,
-                        )
-                    except IndexError:
-                        pass
+            for index, frame in enumerate(self.frame_sets):
+                if index % 5 == 0:
+                    colours = list(map(lambda x: scale_colour(colour, x), frame))
+                    for index, value in enumerate(colours):
+                        self.hat.light_one(self.hat[index]["index"], value, auto_show=False)
 
-                    try:
-                        tail_index = i * self.jump + j - self.width
-                        if tail_index >= 0:
-                            self.hat.light_one(
-                                self.hat[tail_index]["index"],
-                                scale_colour(colour, self.data["fade-factor"]),
-                                auto_show=False,
-                            )
-                    except IndexError:
-                        pass
-
-                self.hat.show()
-
-            sleep(self.data["delay"])
+                    self.hat.show()
 
             self.hat.reverse()
