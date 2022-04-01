@@ -38,6 +38,7 @@ class TestLarsen(TestCase):
             ],
         )
 
+
 def test_middle_member():
     """Test it generates the middle-member correctly."""
     assert middle_member(2) == [1, 0.5]
