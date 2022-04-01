@@ -11,8 +11,6 @@ class Bands(Mode):
         """Construct."""
         super().__init__(hat)
 
-        self.hat.sort(key=lambda w: w[self.axis])
-
         self.jump = self.data["jump"]
         if self.invert:
             self.jump = 0 - self.jump
@@ -27,6 +25,8 @@ class Bands(Mode):
 
     def run(self):
         """Do the stuff."""
+        self.sort_hat()
+
         while True:
             for i, _ in enumerate(self.hat):
                 self.hat.light_one(self.hat[i]["index"], self.bands[i], auto_show=False)
