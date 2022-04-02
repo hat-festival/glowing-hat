@@ -80,10 +80,7 @@ modes:
     preferred-axis: y
 
   larsen:
-    # jump: 2
-    # width: 20
     delay: 0.2
-    # fade-factor: 0.2
     step: 5
     preferred-axis: x
 

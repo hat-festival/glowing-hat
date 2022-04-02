@@ -15,9 +15,10 @@ class Larsen(Mode):  # pylint: disable=W0231
                 if index % self.data["step"] == 0:
                     colours = list(map(lambda x: scale_colour(colour, x), frame))
                     for index, value in enumerate(colours):
-                        self.hat.light_one(
-                            self.hat[index]["index"], value, auto_show=False
-                        )
+                        if value != [0, 0, 0]:
+                            self.hat.light_one(
+                                self.hat[index]["index"], value, auto_show=False
+                            )
 
                     self.hat.show()
 
