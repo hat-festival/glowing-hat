@@ -68,6 +68,7 @@ modes:
     jump: 5
     steps: 150
     preferred-axis: y
+    # preferred colour-source?
 
   bands:
     jump: 5
@@ -85,6 +86,12 @@ modes:
     delay: 0.2
     fade-factor: 0.2
     preferred-axis: x
+
+  pulsator:
+    steps:
+      min: 32
+      max: 128
+    preferred-axis: y
 
 ###
 
