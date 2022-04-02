@@ -1,4 +1,3 @@
-from math import ceil
 from time import sleep
 
 from lib.mode import Mode
@@ -18,7 +17,7 @@ class Larsen(Mode):
     def run(self):
         """Do the stuff."""
         self.sort_hat()
-        
+
         while True:
             colour = self.get_colour()
             for i in range(ceil(len(self.hat) / self.jump) + 10):
