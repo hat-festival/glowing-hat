@@ -1,13 +1,12 @@
 import pickle
 from collections import deque
+from math import cos, pi
 from pathlib import Path
 
 
 class Larsen(list):
     """Larsen pre-renderer."""
 
-    # THIS NEEDS TO BE SCALABLE SOMEHOW
-    # USE A SIN-CURVE RATHER THAN A STRAIGHT LINE?
     def __init__(self, length=100):  # pylint: disable=W0231
         """Construct."""
         self.length = length
@@ -33,6 +32,6 @@ def middle_member(length):
     """Generate the most-populated member."""
     member = []
     for i in range(length):
-        member.append((length - i) / length)
+        member.append(round((cos(pi * (i / length)) + 1) / 2, 3))
 
     return member
