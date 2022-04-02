@@ -1,3 +1,4 @@
+from math import ceil
 from time import sleep
 
 from lib.mode import Mode

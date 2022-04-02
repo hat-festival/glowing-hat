@@ -47,7 +47,7 @@ class TestThrobber(TestCase):
         self.assertEqual(list(throb), [0, 0.5, 1, 0.5])
 
         results = []
-        for i in range(8):
+        for _ in range(8):
             results.append(throb.next())
 
         self.assertEqual(results, [0.0, 0.5, 1.0, 0.5, 0.0, 0.5, 1.0, 0.5])

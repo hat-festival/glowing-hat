@@ -35,7 +35,7 @@ class Pulsator(Mode):
 class Throbber(deque):
     """Cos renderer."""
 
-    def __init__(self, seed, steps):
+    def __init__(self, seed, steps):  # pylint: disable=W0231
         """Construct."""
         self.seed = seed
         self.steps = steps
