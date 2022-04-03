@@ -31,7 +31,16 @@ class Larsen(list):
 def middle_member(length):
     """Generate the most-populated member."""
     member = []
-    for i in range(length):
-        member.append(round((cos(pi * (i / length)) + 1) / 2, 3))
+    for i in range_finder(length):
+        member.append(round(cos(i * pi) + 1, 3))
 
     return member
+
+
+def range_finder(length):
+    """Generate a scaled range."""
+    results = []
+    for i in range(length):
+        results.append((i / (length * 2)) + 0.5)
+
+    return results
