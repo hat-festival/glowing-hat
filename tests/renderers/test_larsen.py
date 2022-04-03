@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.renderers.larsen import Larsen, middle_member
+from lib.renderers.larsen import Larsen, middle_member, range_finder
 
 
 class TestLarsen(TestCase):
@@ -15,8 +15,8 @@ class TestLarsen(TestCase):
             larsen,
             [
                 [0, 1],
-                [1, 0.5],
-                [0.5, 0],
+                [1, 0.293],
+                [0.293, 0],
             ],
         )
 
@@ -29,17 +29,24 @@ class TestLarsen(TestCase):
             larsen,
             [
                 [0, 0, 0, 1],
-                [0, 0, 1, 0.75],
-                [0, 1, 0.75, 0.5],
-                [1, 0.75, 0.5, 0.25],
-                [0.75, 0.5, 0.25, 0],
-                [0.5, 0.25, 0, 0],
-                [0.25, 0, 0, 0],
+                [0, 0, 1.0, 0.617],
+                [0, 1, 0.617, 0.293],
+                [1, 0.617, 0.293, 0.076],
+                [0.617, 0.293, 0.076, 0],
+                [0.293, 0.076, 0, 0],
+                [0.076, 0, 0, 0],
             ],
         )
 
 
 def test_middle_member():
     """Test it generates the middle-member correctly."""
-    assert middle_member(2) == [1, 0.5]
-    assert middle_member(8) == [1.0, 0.875, 0.75, 0.625, 0.5, 0.375, 0.25, 0.125]
+    assert middle_member(2) == [1, 0.293]
+    assert middle_member(4) == [1.0, 0.617, 0.293, 0.076]
+    assert middle_member(8) == [1.0, 0.805, 0.617, 0.444, 0.293, 0.169, 0.076, 0.019]
+
+
+def test_range_finder():
+    """Test it makes a good range."""
+    assert range_finder(2) == [0.5, 0.75]
+    assert range_finder(4) == [0.5, 0.625, 0.75, 0.875]
