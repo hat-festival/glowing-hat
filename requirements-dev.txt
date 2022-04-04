@@ -70,4 +70,4 @@ typing_extensions==4.1.1
 wcwidth==0.2.5
 Werkzeug==2.0.3
 wrapt==1.13.3
-zipp==3.7.0
+zipp==3.8.0
