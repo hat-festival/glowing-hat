@@ -25,6 +25,14 @@ class Mode:
             self.custodian.rotate_until(self.data["preferred-axis"], "axis")
             self.axis = self.custodian.get("axis")
 
+    def set_preferred_colour_source(self):
+        """Rotate to preferred colour-source for this mode."""
+        if "preferred-colour-source" in self.data:
+            self.custodian.rotate_until(
+                self.data["preferred-colour-source"], "colour-source"
+            )
+            self.axis = self.custodian.get("colour-source")
+
     def sort_hat(self):
         """Sort the hat."""
         self.hat.sort(key=lambda w: w[self.axis])

@@ -1,29 +1,13 @@
 lights: 100
 
 buttons:
-  mode:
-    logical: 16
-    physical: 36
-  
-  colour:
-    logical: 12
-    physical: 32
-
-  colour_source:
-    logical: 25
-    physical: 22
-
-  axis:
-    logical: 23
-    physical: 16
-
-shimbuttons:
-  - press: mode 
+  - press: display-type
+  - press: axis 
+    hold: invert
+  - press: colour-source 
   - press: colour 
     hold: colour-set 
-  - press: colour-source 
-  - press: axis 
-  - press: invert
+  - press: mode 
 
 # the ordering of these is important: the top one will become the default
 colour-sets:
@@ -58,6 +42,10 @@ hoops:
     - wheel
     - random
 
+  display-type:
+  - hat-settings
+  - ip-address
+
 modes:    
   cuttlefish:
     jump: 2
@@ -68,7 +56,6 @@ modes:
     jump: 5
     steps: 150
     preferred-axis: y
-    # preferred colour-source?
 
   bands:
     jump: 5
@@ -92,6 +79,7 @@ modes:
       min: 32
       max: 128
     preferred-axis: y
+    preferred-colour-source: wheel
 
 ###
 

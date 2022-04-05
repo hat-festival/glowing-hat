@@ -1,9 +1,12 @@
+import pickle
 from collections import deque
-from math import cos, pi
-from random import randint, random
+from pathlib import Path
+from random import randint
 
 from lib.mode import Mode
 from lib.tools import scale_colour
+
+CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())
 
 
 class Pulsator(Mode):
@@ -13,13 +16,9 @@ class Pulsator(Mode):
         """Construct."""
         super().__init__(hat)
 
-        self.steps = self.data["steps"]
         self.throbbers = []
-
         for _ in range(len(self.hat)):
-            self.throbbers.append(
-                Throbber(random(), randint(self.steps["min"], self.steps["max"]))
-            )
+            self.throbbers.append(Throbber())
 
     def run(self):
         """Do the stuff."""
@@ -32,32 +31,19 @@ class Pulsator(Mode):
             self.hat.show()
 
 
-class Throbber(deque):
+class Throbber:
     """Cos renderer."""
 
-    def __init__(self, seed, steps):  # pylint: disable=W0231
+    def __init__(self):  # pylint: disable=W0231
         """Construct."""
-        self.seed = seed
-        self.steps = steps
-
-        self.populate()
-
-    def populate(self):
-        """Fill ourselves in."""
-        accumulator = -1 + self.seed
-        interval = (1 / self.steps) * 2
-
-        while accumulator < 1 + self.seed:
-            actual = cos(accumulator * pi)
-            offset = actual + 1
-            normalised = offset / 2
-            rounded = round(normalised, 3)
-            self.append(rounded)
-            accumulator += interval
+        self.values = deque()
 
     def next(self):
         """Get the next value."""
-        value = self[0]
-        self.rotate(-1)
+        if len(self.values) == 0:
+            key = randint(2, 255)
+            self.values = deque(CURVES[key])
+
+        value = self.values.popleft()
 
         return value

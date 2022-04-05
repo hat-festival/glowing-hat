@@ -41,7 +41,7 @@ isort:
 	isort .
 
 render:
-	find . -name "renderer_*" -exec python {} \;
+	python render_renderers.py
 
 freeze:
 	python -m pip freeze > requirements-dev.txt
