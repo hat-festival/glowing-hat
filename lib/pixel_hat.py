@@ -21,7 +21,7 @@ class PixelHat(list):
             self.append(Pixel(location))
 
         if "arm" in platform.platform():
-            self.pixels = NeoPixel(board.D18, len(self), auto_write=False)  # nocov
+            self.pixels = NeoPixel(board.D21, len(self), auto_write=False)  # nocov
         else:
             self.pixels = FakePixel(4)
 

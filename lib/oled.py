@@ -1,4 +1,5 @@
 import platform
+import socket
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
@@ -44,8 +45,36 @@ class Oled:
         self.draw = ImageDraw.Draw(self.image)
 
     def update(self):
-        """Read and display data from Redis."""
-        logging.info("updating display")
+        """UPdate ourself."""
+        display_type = self.custodian.get("display-type")
+
+        if display_type == "hat-settings":
+            self.hat_settings()
+
+        if display_type == "ip-address":
+            self.ip_address()
+
+    def ip_address(self):
+        """Show our IP address."""
+        logging.info("updating display with ipaddress")
+        self.draw.rectangle(
+            (0, 0, self.display.width, self.display.height), outline=0, fill=0
+        )
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.connect(("8.8.8.8", 80))
+        ipaddress = sock.getsockname()[0]
+        hostname = socket.gethostname()
+
+        self.put_text(hostname, 0, 0)
+        self.put_text(ipaddress, 0, self.display.height / 2)
+
+        self.display.image(self.image)
+        self.display.show()
+
+    def hat_settings(self):
+        """Read and display hat data from Redis."""
+        logging.info("updating display with hat-details")
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height), outline=0, fill=0
         )

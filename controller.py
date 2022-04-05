@@ -15,7 +15,7 @@ from lib.pixel_hat import PixelHat
 
 BUTTONS = {}
 
-for index, data in enumerate(conf["shimbuttons"]):
+for index, data in enumerate(conf["buttons"]):
     BUTTONS[index] = data
     BUTTONS[index]["name"] = ascii_uppercase[index]
     BUTTONS[index]["held"] = False
@@ -31,7 +31,7 @@ class Controller:
         self.hat = PixelHat()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf)
-        self.custodian.populate(flush=False)
+        self.custodian.populate(flush=True)
 
         self.modes = modes
         load_modes(self.custodian)
@@ -51,6 +51,7 @@ class Controller:
         self.mode = self.modes[self.custodian.get("mode")](self.hat)
         if is_mode:
             self.mode.set_preferred_axis()
+            self.mode.set_preferred_colour_source()
 
         self.process = Process(target=self.mode.run)
         self.process.start()
@@ -65,6 +66,9 @@ class Controller:
 
         is_mode = parameter == "mode"
         self.restart_hat(is_mode=is_mode)
+
+        # if parameter == "display-type":
+        #     self.oled.update()
 
 
 c = Controller()
