@@ -167,5 +167,5 @@ class TestCustodian(TestCase):
         cus.add_item_to_hoop("elephant", "animal")
         cus.add_item_to_hoop("fruitbat", "animal")
 
-        cus.rotate_until("dog", "animal")
+        cus.rotate_until("animal", "dog")
         self.assertEqual(cus.get("animal"), "dog")

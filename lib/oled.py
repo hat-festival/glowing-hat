@@ -1,22 +1,15 @@
 import platform
 import socket
-from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.logger import logging
 
 if "arm" in platform.platform():  # nocov
     import adafruit_ssd1306
     import busio
     from board import SCL, SDA
-
-
-SEPARATOR = "|"
-UP_ARROW = "↑"
-DOWN_ARROW = "↓"
 
 
 class Oled:
@@ -36,110 +29,12 @@ class Oled:
         else:
             self.display = FakeDisplay()
 
-        self.font = ImageFont.truetype(
-            font=f"fonts/{self.conf['font']['name']}.ttf",
-            size=self.conf["font"]["size"],
-        )
-
-        self.image = Image.new("1", (self.display.width, self.display.height))
-        self.draw = ImageDraw.Draw(self.image)
-
     def update(self):
-        """UPdate ourself."""
-        display_type = self.custodian.get("display-type")
-
-        if display_type == "hat-settings":
-            self.hat_settings()
-
-        if display_type == "ip-address":
-            self.ip_address()
-
-    def ip_address(self):
-        """Show our IP address."""
-        logging.info("updating display with ipaddress")
-        self.draw.rectangle(
-            (0, 0, self.display.width, self.display.height), outline=0, fill=0
-        )
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.connect(("8.8.8.8", 80))
-        ipaddress = sock.getsockname()[0]
-        hostname = socket.gethostname()
-
-        self.put_text(hostname, 0, 0)
-        self.put_text(ipaddress, 0, self.display.height / 2)
-
-        self.display.image(self.image)
+        """Update ourself."""
+        gen = ImageGenerator(self.custodian, self.conf)
+        gen.generate()
+        self.display.image(gen.image)
         self.display.show()
-
-    def hat_settings(self):
-        """Read and display hat data from Redis."""
-        logging.info("updating display with hat-details")
-        self.draw.rectangle(
-            (0, 0, self.display.width, self.display.height), outline=0, fill=0
-        )
-
-        direction = UP_ARROW
-        if self.custodian.get("invert"):
-            direction = DOWN_ARROW
-
-        self.put_text(f"{self.custodian.get('mode')}", 0, 0)
-
-        source = self.custodian.get("colour-source")
-        if source == "redis":
-            self.put_text(
-                (
-                    f"{self.custodian.get('colour-set')}{SEPARATOR}"
-                    f"#{''.join(f'{i:02x}' for i in self.custodian.get('colour'))}"
-                ),
-                0,
-                self.display.height / 2,
-            )
-
-        else:
-            self.put_text(source, 0, self.display.height / 2)
-
-        self.put_text(
-            f"{self.custodian.get('axis')}{SEPARATOR}{direction}",
-            self.conf["offset"],
-            0,
-        )
-
-        self.display.image(self.image)
-        self.display.show()
-
-    def flash(self):
-        """Draw random patterns the screen."""
-        logging.info("flashing display")
-        self.draw.rectangle(
-            (0, 0, self.display.width, self.display.height), outline=0, fill=0
-        )
-
-        for _ in range(256):
-            self.draw.point(
-                (
-                    randint(0, self.display.width - 1),
-                    randint(0, self.display.height - 1),
-                ),
-                1,
-            )
-
-        self.display.image(self.image)
-        self.display.show()
-
-    def off(self):
-        """Blank the screen."""
-        logging.info("turning display off")
-        self.draw.rectangle(
-            (0, 0, self.display.width, self.display.height), outline=0, fill=0
-        )
-
-        self.display.image(self.image)
-        self.display.show()
-
-    def put_text(self, text, across, down):
-        """Draw some text."""
-        self.draw.text((across, down), text.lower(), font=self.font, fill=255)
 
 
 class FakeDisplay:
@@ -154,3 +49,105 @@ class FakeDisplay:
 
     def show(self):
         """Show something."""
+
+
+class ImageGenerator:
+    """Generate an image for the Oled."""
+
+    def __init__(self, custodian, conf):
+        """Construct."""
+        self.custodian = custodian
+        self.conf = conf
+        self.width = self.conf["size"]["x"]
+        self.height = self.conf["size"]["y"]
+
+        self.font = ImageFont.truetype(
+            font=f"fonts/{self.conf['font']['name']}.ttf",
+            size=self.conf["font"]["size"],
+        )
+        self.image = None
+        self.draw = None
+
+    def set_image(self, width, height):
+        """Set up our image."""
+        self.image = Image.new("1", (width, height))
+        self.draw = ImageDraw.Draw(self.image)
+        self.draw.rectangle((0, 0, width, height), outline=0, fill=0)
+
+    def generate(self, save_to=None):
+        """Make the picture."""
+        if self.custodian.get("display-type") == "hat-settings":
+            self.set_image(self.width, self.height)
+
+            self.add_text(self.custodian.get("mode"), 0, 0)
+
+            source = self.custodian.get("colour-source")
+            if source == "redis":
+                self.add_text(
+                    (
+                        f"{self.custodian.get('colour-set')}"
+                        f"{self.conf['characters']['separator']}"
+                        f"{self.hex_colour()}"
+                    ),
+                    0,
+                    self.height / 2,
+                )
+
+            else:
+                self.add_text(source, 0, self.height / 2)
+
+            self.add_text(
+                (
+                    f"{self.custodian.get('axis')}"
+                    f"{self.conf['characters']['separator']}"
+                    f"{self.get_direction()}"
+                ),
+                104,
+                0,
+            )
+
+        if self.custodian.get("display-type") == "button-config":
+            self.set_image(self.height, self.width)
+
+            for index, abbreviation in enumerate(
+                reversed(list(map(lambda x: x["abbreviation"], conf["buttons"])))
+            ):
+                y_pos = index * 28
+                self.add_text(abbreviation, 0, y_pos)
+                self.add_text("----", 0, y_pos + 14)
+
+            self.image = self.image.rotate(90, expand=True)
+
+        if self.custodian.get("display-type") == "ip-address":
+            self.set_image(self.width, self.height)
+
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            sock.connect(("8.8.8.8", 80))
+
+            hostname = socket.gethostname()
+            ipaddress = sock.getsockname()[0]
+
+            self.add_text(hostname, 0, 0)
+            self.add_text(ipaddress, 0, self.height / 2)
+
+        if save_to:
+            self.image.save(f"tmp/{save_to}.png")
+
+    def hex_colour(self):
+        """Get a hex-colour."""
+        colour = ""
+        for byte in self.custodian.get("colour"):
+            colour += f"{byte:02x}"
+        return f"#{colour}"
+
+    def get_direction(self):
+        """Get the inversion direction."""
+        direction = self.conf["characters"]["up"]
+        if self.custodian.get("invert"):
+            direction = self.conf["characters"]["up"]
+
+        return direction
+
+    def add_text(self, text, across, down):
+        """Add some text."""
+        self.draw.text((across, down), text.lower(), font=self.font, fill=255)
