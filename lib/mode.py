@@ -22,7 +22,7 @@ class Mode:
     def set_preferred_axis(self):
         """Rotate to preferred axis for this mode."""
         if "preferred-axis" in self.data:
-            self.custodian.rotate_until(self.data["preferred-axis"], "axis")
+            self.custodian.rotate_until("axis", self.data["preferred-axis"])
             self.axis = self.custodian.get("axis")
 
     def set_preferred_colour_source(self):

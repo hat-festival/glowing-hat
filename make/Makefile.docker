@@ -2,7 +2,7 @@ include make/Makefile.common
 
 PUSHHOST ?= ${HATHOST}
 
-default: format lint test freeze
+default: format lint test freeze clean
 
 push-code: clean
 	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure && make clean"

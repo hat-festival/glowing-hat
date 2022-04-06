@@ -52,7 +52,7 @@ class Custodian:
         if thing == "colour-set":
             self.load_colour_set(self.conf["colour-sets"][self.get("colour-set")])
 
-    def rotate_until(self, value, hoop):
+    def rotate_until(self, hoop, value):
         """Rotate a hoop until the desired value is selected."""
         while not self.get(hoop) == value:
             self.next(hoop)
