@@ -29,11 +29,11 @@ class Oled:
         else:
             self.display = FakeDisplay()
 
+        self.gen = ImageGenerator(self.custodian, self.conf)
+
     def update(self):
         """Update ourself."""
-        gen = ImageGenerator(self.custodian, self.conf)
-        gen.generate()
-        self.display.image(gen.image)
+        self.display.image(self.gen.generate())
         self.display.show()
 
 
@@ -76,62 +76,65 @@ class ImageGenerator:
 
     def generate(self, save_to=None):
         """Make the picture."""
-        if self.custodian.get("display-type") == "hat-settings":
-            self.set_image(self.width, self.height)
-
-            self.add_text(self.custodian.get("mode"), 0, 0)
-
-            source = self.custodian.get("colour-source")
-            if source == "redis":
-                self.add_text(
-                    (
-                        f"{self.custodian.get('colour-set')}"
-                        f"{self.conf['characters']['separator']}"
-                        f"{self.hex_colour()}"
-                    ),
-                    0,
-                    self.height / 2,
-                )
-
-            else:
-                self.add_text(source, 0, self.height / 2)
-
-            self.add_text(
-                (
-                    f"{self.custodian.get('axis')}"
-                    f"{self.conf['characters']['separator']}"
-                    f"{self.get_direction()}"
-                ),
-                104,
-                0,
-            )
-
-        if self.custodian.get("display-type") == "button-config":
-            self.set_image(self.height, self.width)
-
-            for index, abbreviation in enumerate(
-                reversed(list(map(lambda x: x["abbreviation"], conf["buttons"])))
-            ):
-                y_pos = index * 28
-                self.add_text(abbreviation, 0, y_pos)
-                self.add_text("----", 0, y_pos + 14)
-
-            self.image = self.image.rotate(90, expand=True)
-
-        if self.custodian.get("display-type") == "ip-address":
-            self.set_image(self.width, self.height)
-
-            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            sock.connect(("8.8.8.8", 80))
-
-            hostname = socket.gethostname()
-            ipaddress = sock.getsockname()[0]
-
-            self.add_text(hostname, 0, 0)
-            self.add_text(ipaddress, 0, self.height / 2)
+        # map redis value to method name
+        getattr(self, self.custodian.get("display-type").replace("-", "_"))()
 
         if save_to:
             self.image.save(f"tmp/{save_to}.png")
+
+        return self.image
+
+    def hat_settings(self):
+        """Make the `hat-settings` image."""
+        self.set_image(self.width, self.height)
+
+        self.add_text(self.custodian.get("mode"), 0, 0)
+
+        source = self.custodian.get("colour-source")
+        if source == "redis":
+            self.add_text(
+                self.colour_text(),
+                0,
+                self.height / 2,
+            )
+
+        else:
+            self.add_text(source, 0, self.height / 2)
+
+        self.add_text(
+            self.axis_invert(),
+            self.width - 24,  # align this to the right
+            0,
+        )
+
+    def button_config(self):
+        """Make the `button-config` image."""
+        self.set_image(self.height, self.width)
+
+        items = (
+            len(conf["buttons"]) * 2
+        ) - 1  # number of buttons, with a divider between each
+        step_size = round(self.width / items)
+
+        for index, abbreviation in enumerate(
+            reversed(list(map(lambda x: x["abbreviation"], conf["buttons"])))
+        ):
+            self.add_button(abbreviation, index, step_size)
+
+        self.image = self.image.rotate(90, expand=True)
+
+    def ip_address(self):
+        """Make the `ip-address` image."""
+        self.set_image(self.width, self.height)
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.connect(("8.8.8.8", 80))
+
+        hostname = socket.gethostname()
+        ipaddress = sock.getsockname()[0]
+
+        self.add_text(hostname, 0, 0)
+        self.add_text(ipaddress, 0, self.height / 2)
 
     def hex_colour(self):
         """Get a hex-colour."""
@@ -147,6 +150,29 @@ class ImageGenerator:
             direction = self.conf["characters"]["up"]
 
         return direction
+
+    def axis_invert(self):
+        """Construct the axis-inversion string."""
+        return (
+            f"{self.custodian.get('axis')}"
+            f"{self.conf['characters']['separator']}"
+            f"{self.get_direction()}"
+        )
+
+    def add_button(self, text, index, step_size):
+        """Add button marker."""
+        y_pos = index * step_size * 2
+        self.add_text(text, 0, y_pos)
+        # https://www.compart.com/en/unicode/U+2015
+        self.add_text("――――", 0, y_pos + step_size)
+
+    def colour_text(self):
+        """Get the colour-set/hex text."""
+        return (
+            f"{self.custodian.get('colour-set')}"
+            f"{self.conf['characters']['separator']}"
+            f"{self.hex_colour()}"
+        )
 
     def add_text(self, text, across, down):
         """Add some text."""

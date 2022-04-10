@@ -1,12 +1,8 @@
 ## Wiring
 
-| Component             | Logical Pin | Physical Pin |
-| --------------------- | ----------- | ------------ |
-| Lights Data           | GPIO 18     | 12           |
-| Lights Ground         | GND         | 6            |
-| Wheel-control button  | GPIO 17     | 11           |
-| Colour-stepper button | GPIO 23     | 16           |
-| Mode button           | GPIO 25     | 22           |
+| Component   | Logical Pin | Physical Pin |
+| ----------- | ----------- | ------------ |
+| Lights Data | GPIO 21     | 40           |
 
 ## Set hostname and enable serial port
 

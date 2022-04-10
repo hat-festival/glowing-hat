@@ -41,7 +41,7 @@ class Throbber:
     def next(self):
         """Get the next value."""
         if len(self.values) == 0:
-            key = randint(2, 255)
+            key = randint(16, 255)
             self.values = deque(CURVES[key])
 
         value = self.values.popleft()

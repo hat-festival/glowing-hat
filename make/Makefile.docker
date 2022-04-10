@@ -29,8 +29,8 @@ lint:
 	python -m pylama
 
 clean:
-	rm -fr $$(find . -name __pycache__)
-	rm -fr $$(find . -name .pytest_cache)
+	@rm -fr $$(find . -name __pycache__)
+	@rm -fr $$(find . -name .pytest_cache)
 
 format: isort black
 

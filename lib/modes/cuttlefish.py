@@ -26,6 +26,9 @@ class Cuttlefish(Mode):
         self.sort_hat()
 
         while True:
+            # NEED TO SORT THIS LIST BY HAT INDECES?
+            # self.hat.illuminate(list(self.colours)[:100])
+
             for i, _ in enumerate(self.hat):
                 self.hat.light_one(
                     self.hat[i]["index"], self.colours[i], auto_show=False

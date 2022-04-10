@@ -2,6 +2,7 @@ import platform
 
 from lib.pixel import Pixel
 from lib.scaler import Scaler
+from lib.tools import gamma_correct
 
 if "arm" in platform.platform():  # nocov
     import board
@@ -27,16 +28,22 @@ class PixelHat(list):
 
     def light_one(self, index, colour, auto_show=True):
         """Light up a single pixel."""
-        self.pixels[index] = colour
+        self.pixels[index] = gamma_correct(colour)
         if auto_show:
             self.pixels.show()
 
     def colour_indeces(self, indeces, colour, auto_show=True):
         """Apply a colour to a list of lights."""
         for index in indeces:
-            self.pixels[index] = colour
+            self.pixels[index] = gamma_correct(colour)
         if auto_show:
             self.pixels.show()
+
+    def illuminate(self, colours):
+        """Apply a whole list of colours to ourself."""
+        for index, colour in enumerate(colours):
+            self.light_one(index, colour, auto_show=False)
+        self.show()
 
     def off(self):
         """Turn all the lights off."""

@@ -31,7 +31,7 @@ class Controller:
         self.hat = PixelHat()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf)
-        self.custodian.populate(flush=False)
+        self.custodian.populate(flush=True)
 
         self.modes = modes
         load_modes(self.custodian)
