@@ -29,7 +29,7 @@ class Mode:
         """Rotate to preferred colour-source for this mode."""
         if "preferred-colour-source" in self.data:
             self.custodian.rotate_until(
-                self.data["preferred-colour-source"], "colour-source"
+                "colour-source", self.data["preferred-colour-source"]
             )
             self.axis = self.custodian.get("colour-source")
 
