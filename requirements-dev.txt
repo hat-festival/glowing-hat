@@ -50,7 +50,7 @@ pyflakes==2.4.0
 pyftdi==0.54.0
 Pygments==2.11.2
 pylama==8.3.8
-pylint==2.12.2
+pylint==2.13.5
 pyparsing==3.0.8
 pyserial==3.5
 pytest==7.1.1
