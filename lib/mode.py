@@ -35,7 +35,7 @@ class Mode:
 
     def sort_hat(self):
         """Sort the hat."""
-        self.hat.sort(key=lambda w: w[self.axis])
+        self.hat.sort(self.axis)
 
     def get_colour(self):
         """Retrieve the colour from Redis."""

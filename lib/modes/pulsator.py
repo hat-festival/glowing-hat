@@ -24,11 +24,17 @@ class Pulsator(Mode):
         """Do the stuff."""
         while True:
             colour = self.get_colour()
-            for index, throbber in enumerate(self.throbbers):
-                self.hat.light_one(
-                    index, scale_colour(colour, throbber.next()), auto_show=False
+            list(
+                map(
+                    lambda throbber: scale_colour(colour, throbber.next()),
+                    self.throbbers,
                 )
-            self.hat.show()
+            )
+            # for index, throbber in enumerate(self.throbbers):
+            #     self.hat.light_one(
+            #         index, scale_colour(colour, throbber.next()), auto_show=False
+            #     )
+            # self.hat.show()
 
 
 class Throbber:

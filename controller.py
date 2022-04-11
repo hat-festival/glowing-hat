@@ -8,10 +8,10 @@ import buttonshim
 
 from lib.conf import conf
 from lib.custodian import Custodian
+from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
-from lib.pixel_hat import PixelHat
 
 BUTTONS = {}
 
@@ -28,7 +28,7 @@ class Controller:
 
     def __init__(self):
         """Construct."""
-        self.hat = PixelHat()
+        self.hat = Hat()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf)
         self.custodian.populate(flush=True)

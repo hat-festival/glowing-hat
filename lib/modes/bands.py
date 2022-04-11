@@ -22,13 +22,10 @@ class Bands(Mode):
                 self.conf["colour-sets"][self.custodian.get("colour-set")], self.width
             )
         )
+        self.hat.sort(self.axis)
 
     def run(self):
         """Do the stuff."""
-        self.sort_hat()
-
         while True:
-            for i, _ in enumerate(self.hat):
-                self.hat.light_one(self.hat[i]["index"], self.bands[i], auto_show=False)
-            self.hat.show()
+            self.hat.illuminate(list(self.bands)[:100])
             self.bands.rotate(self.jump)

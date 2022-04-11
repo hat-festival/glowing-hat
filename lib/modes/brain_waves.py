@@ -22,14 +22,10 @@ class BrainWaves(Mode):
             rgb = hsv_to_rgb(0, 0, i / self.steps)
             self.colours.append(list(map(lambda x: x * 255, rgb)))
 
+        self.hat.sort(self.axis)
+
     def run(self):
         """Do the stuff."""
-        self.sort_hat()
-
         while True:
-            for i, _ in enumerate(self.hat):
-                self.hat.light_one(
-                    self.hat[i]["index"], self.colours[i], auto_show=False
-                )
-            self.hat.show()
+            self.hat.illuminate(list(self.colours)[:100])
             self.colours.rotate(self.jump)
