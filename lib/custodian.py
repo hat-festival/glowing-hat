@@ -96,6 +96,12 @@ class Custodian:
 
         self.next("colour")
 
+    def reset_colour_sources(self, sources):
+        """Load-in a list of valid colour-sources."""
+        self.unset("hoop:colour-source")
+        for source in sources:
+            self.add_item_to_hoop(source, "colour-source")
+
     def make_key(self, key):
         """Make compound key."""
         return f"{self.namespace}:{key}"

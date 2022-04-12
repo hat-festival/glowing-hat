@@ -60,6 +60,15 @@ class Hat:
         """Show our lights."""
         self.lights.show()
 
+    @property
+    def length(self):
+        """How long are we."""
+        return len(self.pixels)
+
+    def reverse(self):
+        """Turn ourself around."""
+        self.pixels.reverse()
+
 
 class FakeLights(list):
     """Fake NeoPixels for testing."""

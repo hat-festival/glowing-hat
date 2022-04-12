@@ -51,7 +51,7 @@ class Controller:
         self.mode = self.modes[self.custodian.get("mode")](self.hat)
         if is_mode:
             self.mode.set_preferred_axis()
-            self.mode.set_preferred_colour_source()
+            self.mode.reset_colour_sources()
 
         self.process = Process(target=self.mode.run)
         self.process.start()

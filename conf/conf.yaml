@@ -32,6 +32,10 @@ colour-sets:
     blue: [0, 0, 255]
     magenta: [255, 0, 255]
 
+  mono:
+    black: [0, 0, 0]
+    white: [255, 255, 255]
+
 hoops:
   invert:
     - "false"
@@ -56,47 +60,61 @@ modes:
   cuttlefish:
     jump: 2
     steps: 200
-    preferred-axis: y
+    prefs:
+      axis: y
+      invert: no
 
   brainwaves:
     jump: 5
     steps: 150
-    preferred-axis: y
+    prefs:
+      axis: y 
+      invert: no 
+      colour-sources:
+        - wheel
+        - redis 
+
+  pulsator:
+    steps:
+      min: 32
+      max: 128
+    prefs: 
+      axis: none 
+      invert: none 
+      colour-sources:
+        - wheel
+        - redis 
 
   bands:
     jump: 5
     width: 75
     preferred-axis: y
+    prefs:
+      axis: y 
+      invert: no 
+      colour-sources:
+        - redis 
 
   rotator:
     steps: 9
     offset: 90
-    preferred-axis: y
+    prefs:
+      axis: y 
+      colour-sources:
+        - wheel
+        - redis 
 
   larsen:
     jump: 2
     width: 20
     delay: 0.2
     fade-factor: 0.2
-    preferred-axis: x
-
-  pulsator:
-    steps:
-      min: 32
-      max: 128
-    preferred-axis: y
-    preferred-colour-source: wheel
-
-  quarters:
-    preferred-axis: y
-    preferred-colour-source: random
-
-###
-
-  colour-brain:
-    jump: 10
-    steps: 200
-    delay: 0.2
+    prefs:
+      axis: x 
+      colour-sources:
+        - wheel
+        - random 
+        - redis 
 
 ###
 

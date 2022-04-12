@@ -169,3 +169,22 @@ class TestCustodian(TestCase):
 
         cus.rotate_until("animal", "dog")
         self.assertEqual(cus.get("animal"), "dog")
+
+    def test_reset_colour_sources(self):
+        """Test it resets the colour-sources."""
+        conf = yaml.safe_load(
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
+        )
+        cus = Custodian("test", conf=conf)
+        cus.populate()
+
+        cus.reset_colour_sources(["wheel", "redis"])
+        self.assertEqual(
+            list(
+                map(
+                    lambda x: x.decode(),
+                    self.redis.lrange("test:hoop:colour-source", 0, -1),
+                )
+            ),
+            ["redis", "wheel"],
+        )

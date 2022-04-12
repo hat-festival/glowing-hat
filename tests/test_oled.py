@@ -51,11 +51,28 @@ class TestImageGenerator(TestCase):
         self.cus.rotate_until("colour-source", "wheel")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
-        gen.generate(save_to="hat-settings")
+        gen.generate(save_to="hat-settings-with-wheel")
 
-        checksum = sha256(Path("tmp/hat-settings.png").read_bytes()).hexdigest()
+        checksum = sha256(
+            Path("tmp/hat-settings-with-wheel.png").read_bytes()
+        ).hexdigest()
         self.assertEqual(
             checksum, "713a43fadb28f9b406f3af3812d3082a9decaed94a97d7138e2fd81b0858bd45"
+        )
+
+    def test_hat_settings_with_invert(self):
+        """Test it generates the hat-settings screen."""
+        self.cus.rotate_until("display-type", "hat-settings")
+        self.cus.rotate_until("invert", True)
+
+        gen = ImageGenerator(self.cus, self.oled_conf)
+        gen.generate(save_to="hat-settings-with-invert")
+
+        checksum = sha256(
+            Path("tmp/hat-settings-with-invert.png").read_bytes()
+        ).hexdigest()
+        self.assertEqual(
+            checksum, "777ba4bf1b08db94a7bbb22a369d87eedc2ff37ff70c1d967af2fe5c5ff0024e"
         )
 
     def test_button_config(self):

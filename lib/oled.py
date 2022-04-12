@@ -98,7 +98,7 @@ class ImageGenerator:
                 self.height / 2,
             )
 
-        else:
+        elif source != "none":
             self.add_text(source, 0, self.height / 2)
 
         self.add_text(
@@ -147,12 +147,15 @@ class ImageGenerator:
         """Get the inversion direction."""
         direction = self.conf["characters"]["up"]
         if self.custodian.get("invert"):
-            direction = self.conf["characters"]["up"]
+            direction = self.conf["characters"]["down"]
 
         return direction
 
     def axis_invert(self):
         """Construct the axis-inversion string."""
+        if self.custodian.get("axis") == "none":
+            return ""
+
         return (
             f"{self.custodian.get('axis')}"
             f"{self.conf['characters']['separator']}"

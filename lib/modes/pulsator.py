@@ -17,24 +17,21 @@ class Pulsator(Mode):
         super().__init__(hat)
 
         self.throbbers = []
-        for _ in range(len(self.hat)):
+        for _ in range(self.hat.length):
             self.throbbers.append(Throbber())
 
     def run(self):
         """Do the stuff."""
         while True:
             colour = self.get_colour()
-            list(
-                map(
-                    lambda throbber: scale_colour(colour, throbber.next()),
-                    self.throbbers,
+            self.hat.illuminate(
+                list(
+                    map(
+                        lambda throbber: scale_colour(colour, throbber.next()),
+                        self.throbbers,
+                    )
                 )
             )
-            # for index, throbber in enumerate(self.throbbers):
-            #     self.hat.light_one(
-            #         index, scale_colour(colour, throbber.next()), auto_show=False
-            #     )
-            # self.hat.show()
 
 
 class Throbber:

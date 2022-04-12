@@ -1,7 +1,7 @@
 from collections import deque
-from colorsys import hsv_to_rgb
 
 from lib.mode import Mode
+from lib.tools import scale_colour
 
 
 class BrainWaves(Mode):
@@ -17,15 +17,16 @@ class BrainWaves(Mode):
 
         self.steps = self.data["steps"]
 
-        self.colours = deque()
+        self.values = deque()
         for i in range(self.steps):
-            rgb = hsv_to_rgb(0, 0, i / self.steps)
-            self.colours.append(list(map(lambda x: x * 255, rgb)))
-
-        self.hat.sort(self.axis)
+            self.values.append(i / self.steps)
 
     def run(self):
         """Do the stuff."""
+        self.sort_hat()
         while True:
-            self.hat.illuminate(list(self.colours)[:100])
-            self.colours.rotate(self.jump)
+            # clr = [255, 255, 255]
+            clr = self.get_colour()
+            rgbs = list(map(lambda x: scale_colour(clr, x), list(self.values)[:100]))
+            self.hat.illuminate(rgbs)
+            self.values.rotate(self.jump)
