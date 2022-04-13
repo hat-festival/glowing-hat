@@ -7,10 +7,12 @@ from lib.tools import colour_set_to_colour_list
 class Bands(Mode):
     """Bands of colour."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, namespace="hat"):
         """Construct."""
-        super().__init__(hat)
+        super().__init__(hat, namespace=namespace)
 
+    def reconfigure(self):
+        """Configure ourself."""
         self.jump = self.data["jump"]
         if self.invert:
             self.jump = 0 - self.jump
@@ -26,6 +28,8 @@ class Bands(Mode):
 
     def run(self):
         """Do the stuff."""
+        self.reconfigure()
+
         while True:
             self.hat.illuminate(list(self.bands)[:100])
             self.bands.rotate(self.jump)

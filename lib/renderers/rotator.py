@@ -4,7 +4,8 @@ from pathlib import Path
 
 import numpy as np
 
-from lib.pixel_hat import PixelHat
+# from lib.pixel_hat import PixelHat
+from lib.hat import Hat
 from lib.tools import remove_axis
 
 
@@ -13,7 +14,7 @@ class Rotator:
 
     def __init__(self):
         """Construct."""
-        self.hat = PixelHat(auto_centre=True)
+        self.hat = Hat(auto_centre=True)
 
     def render(self):
         """Create the data"""
@@ -42,7 +43,8 @@ def populate_indeces(data, hat, axis_1, axis_2):
         map(
             lambda x: x["index"],
             filter(
-                lambda pixel: point_on_line((pixel[axis_1], pixel[axis_2]), data), hat
+                lambda pixel: point_on_line((pixel[axis_1], pixel[axis_2]), data),
+                hat.pixels,
             ),
         )
     )

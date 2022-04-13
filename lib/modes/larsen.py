@@ -8,16 +8,19 @@ from lib.tools import scale_colour
 class Larsen(Mode):
     """Larsen scanner."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, namespace="hat"):
         """Construct."""
-        super().__init__(hat)
+        super().__init__(hat, namespace=namespace)
 
+    def reconfigure(self):
+        """Configure ourself."""
         self.jump = self.data["jump"]
         self.width = self.data["width"]
+        self.sort_hat()
 
     def run(self):
         """Do the stuff."""
-        self.sort_hat()
+        self.reconfigure()
 
         while True:
             colour = self.get_colour()

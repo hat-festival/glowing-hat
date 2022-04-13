@@ -7,10 +7,12 @@ from lib.tools import scale_colour
 class Rotator(Mode):
     """Rotator mode."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, namespace="hat"):
         """Construct."""
-        super().__init__(hat)
+        super().__init__(hat, namespace=namespace)
 
+    def reconfigure(self):
+        """Configure ourself."""
         frames = self.frame_sets[self.axis]
 
         if self.invert:
@@ -23,6 +25,8 @@ class Rotator(Mode):
 
     def run(self):
         """Do the work."""
+        self.reconfigure()
+
         while True:
             for index, lights in enumerate(self.lead_data):
                 if index % self.data["steps"] == 0:

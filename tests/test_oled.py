@@ -2,9 +2,9 @@ from hashlib import sha256
 from pathlib import Path
 from unittest import TestCase
 
-import yaml
 from mock import patch
 
+from lib.conf import conf
 from lib.custodian import Custodian
 from lib.oled import ImageGenerator
 
@@ -16,11 +16,7 @@ class TestImageGenerator(TestCase):
         """Pre-test setup."""
         Path("tmp").mkdir(exist_ok=True)
 
-        self.conf = yaml.safe_load(
-            Path("tests", "fixtures", "image-generator", "conf.yaml").read_text(
-                encoding="UTF-8"
-            )
-        )
+        self.conf = conf
 
         self.oled_conf = self.conf["oled"]
         self.cus = Custodian(namespace="test", conf=self.conf)
@@ -42,7 +38,7 @@ class TestImageGenerator(TestCase):
 
         checksum = sha256(Path("tmp/hat-settings.png").read_bytes()).hexdigest()
         self.assertEqual(
-            checksum, "8e17ae00b9fc4558a031c04bfe951a62c6dcd197e0b0ac6c1786939ecf91aee3"
+            checksum, "15b87dd71eafa771fc8dc651b3cc2679eacef8086632a5c11af79e1116608bfd"
         )
 
     def test_hat_settings_with_wheel(self):
@@ -57,13 +53,28 @@ class TestImageGenerator(TestCase):
             Path("tmp/hat-settings-with-wheel.png").read_bytes()
         ).hexdigest()
         self.assertEqual(
-            checksum, "713a43fadb28f9b406f3af3812d3082a9decaed94a97d7138e2fd81b0858bd45"
+            checksum, "d5df7c667430f066acfa5370f5393f6e6464d110b2db8cf6b91eb798ca63a058"
+        )
+
+    def test_hat_settings_with_no_axis(self):
+        """Test it generates the hat-settings screen with no `axis` marker."""
+        self.cus.rotate_until("display-type", "hat-settings")
+        self.cus.rotate_until("colour-source", "wheel")
+        self.cus.set("axis", "none")
+
+        gen = ImageGenerator(self.cus, self.oled_conf)
+        gen.generate(save_to="hat-settings-no-axis")
+
+        checksum = sha256(Path("tmp/hat-settings-no-axis.png").read_bytes()).hexdigest()
+        self.assertEqual(
+            checksum, "20489e514bb2c56e20d559f1a6d7f1f1f9bb3af5b43c153593f812657d39d09c"
         )
 
     def test_hat_settings_with_invert(self):
         """Test it generates the hat-settings screen."""
         self.cus.rotate_until("display-type", "hat-settings")
         self.cus.rotate_until("invert", True)
+        self.cus.rotate_until("axis", "x")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="hat-settings-with-invert")
@@ -72,7 +83,7 @@ class TestImageGenerator(TestCase):
             Path("tmp/hat-settings-with-invert.png").read_bytes()
         ).hexdigest()
         self.assertEqual(
-            checksum, "777ba4bf1b08db94a7bbb22a369d87eedc2ff37ff70c1d967af2fe5c5ff0024e"
+            checksum, "83dcbc0f01651905874056224ac912d94abc54279f22f63fff174f574d9201e2"
         )
 
     def test_button_config(self):
@@ -103,3 +114,13 @@ class TestImageGenerator(TestCase):
         self.assertEqual(
             checksum, "e4fccb2d14ecdd921a8375688ef529e4f0de579dd23837fc7287060e19c43209"
         )
+
+    def test_get_sign(self):
+        """Test it generates the correct sign."""
+        gen = ImageGenerator(self.cus, self.oled_conf)
+
+        self.cus.rotate_until("invert", False)
+        self.assertEqual(gen.get_sign(), "+")
+
+        self.cus.rotate_until("invert", True)
+        self.assertEqual(gen.get_sign(), "-")

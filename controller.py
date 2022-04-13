@@ -33,6 +33,7 @@ class Controller:
         self.custodian = Custodian(conf=self.conf)
         self.custodian.populate(flush=True)
 
+        # we pre-instantiate all the modes because it takes a long time
         self.modes = modes
         load_modes(self.custodian)
         self.custodian.next("mode")
@@ -49,9 +50,10 @@ class Controller:
             self.process.terminate()
 
         self.mode = self.modes[self.custodian.get("mode")](self.hat)
+        # if we're moving to a new mode (rather than just changing the axis or whatever)
         if is_mode:
-            self.mode.set_preferred_axis()
-            self.mode.reset_colour_sources()
+            # we want to set the mode to its preferential configuration
+            self.mode.reset()
 
         self.process = Process(target=self.mode.run)
         self.process.start()
@@ -66,9 +68,6 @@ class Controller:
 
         is_mode = parameter == "mode"
         self.restart_hat(is_mode=is_mode)
-
-        # if parameter == "display-type":
-        #     self.oled.update()
 
 
 c = Controller()

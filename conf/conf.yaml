@@ -62,14 +62,14 @@ modes:
     steps: 200
     prefs:
       axis: y
-      invert: no
+      invert: False
 
   brainwaves:
     jump: 5
     steps: 150
     prefs:
       axis: y 
-      invert: no 
+      invert: False 
       colour-sources:
         - wheel
         - redis 
@@ -80,7 +80,7 @@ modes:
       max: 128
     prefs: 
       axis: none 
-      invert: none 
+      invert: False 
       colour-sources:
         - wheel
         - redis 
@@ -91,7 +91,7 @@ modes:
     preferred-axis: y
     prefs:
       axis: y 
-      invert: no 
+      invert: False 
       colour-sources:
         - redis 
 
@@ -131,8 +131,5 @@ oled:
   font:
     name: SourceCodePro-Light
     size: 13
-  timeout: 10
   characters:
-    up: ↑
-    down: ↓
     separator: "|"

@@ -143,24 +143,16 @@ class ImageGenerator:
             colour += f"{byte:02x}"
         return f"#{colour}"
 
-    def get_direction(self):
-        """Get the inversion direction."""
-        direction = self.conf["characters"]["up"]
-        if self.custodian.get("invert"):
-            direction = self.conf["characters"]["down"]
-
-        return direction
+    def get_sign(self):
+        """Get the sign of the inversion."""
+        return "-" if self.custodian.get("invert") else "+"
 
     def axis_invert(self):
         """Construct the axis-inversion string."""
         if self.custodian.get("axis") == "none":
             return ""
 
-        return (
-            f"{self.custodian.get('axis')}"
-            f"{self.conf['characters']['separator']}"
-            f"{self.get_direction()}"
-        )
+        return f"{self.get_sign()}{self.custodian.get('axis')}"
 
     def add_button(self, text, index, step_size):
         """Add button marker."""

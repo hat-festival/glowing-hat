@@ -7,10 +7,12 @@ from lib.tools import scale_colour
 class BrainWaves(Mode):
     """White bands rising."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, namespace="hat"):
         """Construct."""
-        super().__init__(hat)
+        super().__init__(hat, namespace=namespace)
 
+    def reconfigure(self):
+        """Configure ourself."""
         self.jump = self.data["jump"]
         if self.invert:
             self.jump = 0 - self.jump
@@ -21,9 +23,12 @@ class BrainWaves(Mode):
         for i in range(self.steps):
             self.values.append(i / self.steps)
 
+        self.sort_hat()
+
     def run(self):
         """Do the stuff."""
-        self.sort_hat()
+        self.reconfigure()
+
         while True:
             # clr = [255, 255, 255]
             clr = self.get_colour()

@@ -12,9 +12,9 @@ CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())
 class Pulsator(Mode):
     """A huge pulsating brain."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, namespace="hat"):
         """Construct."""
-        super().__init__(hat)
+        super().__init__(hat, namespace=namespace)
 
         self.throbbers = []
         for _ in range(self.hat.length):

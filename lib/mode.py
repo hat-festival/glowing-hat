@@ -8,11 +8,11 @@ from lib.custodian import Custodian
 class Mode:
     """Superclass for `modes`."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, namespace="hat"):
         """Construct."""
         self.hat = hat
         self.name = type(self).__name__.lower()
-        self.custodian = Custodian()
+        self.custodian = Custodian(namespace=namespace)
         self.conf = conf
         self.data = self.conf["modes"][self.name]
         self.prefs = self.data["prefs"]
@@ -20,8 +20,22 @@ class Mode:
         self.invert = self.custodian.get("invert")
 
         self.axis = self.custodian.get("axis")
+
+        # pretty sure this is redundant, as this will be set at startup-time
         if self.axis == "none":
             self.set_preferred_axis()
+
+    def reset(self):
+        """Reset some things."""
+        self.set_preferred_axis()
+        self.set_preferred_invert()
+        self.reset_colour_sources()
+
+    def set_preferred_invert(self):
+        """Rotate to preferred inversion for this mode."""
+        if "invert" in self.prefs:
+            self.custodian.rotate_until("invert", self.prefs["invert"])
+            self.invert = self.custodian.get("invert")
 
     def set_preferred_axis(self):
         """Rotate to preferred axis for this mode."""
