@@ -15,7 +15,7 @@ class TestFish(TestCase):
 
     def test_data(self):
         """Test it gets the correct inherited data."""
-        fish = Cuttlefish(Hat(), namespace="test")
+        fish = Cuttlefish(Hat(), self.custodian)
 
         self.assertEqual(fish.name, "cuttlefish")
         self.assertEqual(
@@ -26,7 +26,7 @@ class TestFish(TestCase):
 
     def test_resetting(self):
         """Test it resets correctly."""
-        fish = Cuttlefish(Hat(), namespace="test")
+        fish = Cuttlefish(Hat(), self.custodian)
         fish.reset()
 
         self.assertFalse(self.custodian.get("invert"))
@@ -39,13 +39,13 @@ class TestFish(TestCase):
 
     def test_reconfiguring(self):
         """Test it reconfigures correctly."""
-        fish = Cuttlefish(Hat(), namespace="test")
+        fish = Cuttlefish(Hat(), self.custodian)
         fish.reset()
 
         self.assertFalse(self.custodian.get("invert"))
         self.assertFalse(fish.invert)
 
-        self.custodian.rotate_until("invert", True)
+        self.custodian.set("invert", True)
         fish.reconfigure()
 
         self.assertTrue(self.custodian.get("invert"))

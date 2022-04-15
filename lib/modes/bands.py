@@ -7,17 +7,16 @@ from lib.tools import colour_set_to_colour_list
 class Bands(Mode):
     """Bands of colour."""
 
-    def __init__(self, hat, namespace="hat"):
+    def __init__(self, hat, custodian):
         """Construct."""
-        super().__init__(hat, namespace=namespace)
+        super().__init__(hat, custodian)
+        self.jump = self.data["jump"]
+        self.width = self.data["width"]
 
     def reconfigure(self):
         """Configure ourself."""
-        self.jump = self.data["jump"]
         if self.invert:
             self.jump = 0 - self.jump
-
-        self.width = self.data["width"]
 
         self.bands = deque(
             colour_set_to_colour_list(

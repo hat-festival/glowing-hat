@@ -52,11 +52,6 @@ class Custodian:
         if thing == "colour-set":
             self.load_colour_set(self.conf["colour-sets"][self.get("colour-set")])
 
-    def rotate_until(self, hoop, value):
-        """Rotate a hoop until the desired value is selected."""
-        while not self.get(hoop) == value:
-            self.next(hoop)
-
     def get(self, key):
         """Get a value."""
         if key == "colour" and self.get("colour-source") == "wheel":
@@ -75,13 +70,15 @@ class Custodian:
             try:
                 return json.loads(decoded)
             except json.decoder.JSONDecodeError:
+                if decoded.lower() in ["frue", "false"]:
+                    return decoded.lower() == "true"
                 return decoded
 
         return None
 
     def set(self, key, value):
         """Set a value."""
-        self.redis.set(self.make_key(key), value)
+        self.redis.set(self.make_key(key), str(value))
 
     def unset(self, key):
         """Unset something."""

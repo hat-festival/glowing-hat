@@ -157,19 +157,6 @@ class TestCustodian(TestCase):
         cus.unset("hoop:fruit")
         self.assertIsNone(cus.get("hoop:fruit"))
 
-    def test_rotate_until(self):
-        """Test it rotates-until."""
-        cus = Custodian("test")
-        cus.add_item_to_hoop("aardvark", "animal")
-        cus.add_item_to_hoop("baboon", "animal")
-        cus.add_item_to_hoop("cuttlefish", "animal")
-        cus.add_item_to_hoop("dog", "animal")
-        cus.add_item_to_hoop("elephant", "animal")
-        cus.add_item_to_hoop("fruitbat", "animal")
-
-        cus.rotate_until("animal", "dog")
-        self.assertEqual(cus.get("animal"), "dog")
-
     def test_reset_colour_sources(self):
         """Test it resets the colour-sources."""
         conf = yaml.safe_load(

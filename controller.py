@@ -1,6 +1,6 @@
-# http://docs.pimoroni.com/buttonshim/#module-buttonshim
-
+from collections import deque
 from multiprocessing import Process
+from random import shuffle
 from signal import pause
 from string import ascii_uppercase
 
@@ -30,18 +30,43 @@ class Controller:
         """Construct."""
         self.hat = Hat()
         self.conf = conf
-        self.custodian = Custodian(conf=self.conf)
+        self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=True)
 
-        # we pre-instantiate all the modes because it takes a long time
+        # we pre-load all the modes because it takes a long time
         self.modes = modes
         load_modes(self.custodian)
         self.custodian.next("mode")
 
-        self.oled = Oled()
+        self.oled = Oled(self.custodian)
 
         self.process = None
+
+        self.boot_hat()
+
         self.restart_hat(is_mode=True)
+
+    def boot_hat(self):
+        """Boot the hat."""
+        self.custodian.set("display-type", "boot")
+        self.custodian.set("colour-source", "wheel")
+        self.oled.update()
+
+        colour = self.custodian.get("colour")
+
+        indeces = deque(list(range(100)))
+        while len(indeces):
+            shuffle(indeces)
+            victim = indeces.pop()
+            self.hat.light_one(victim, colour)
+
+        indeces = deque(list(range(100)))
+        while len(indeces):
+            shuffle(indeces)
+            victim = indeces.pop()
+            self.hat.light_one(victim, [0, 0, 0])
+
+        self.custodian.set("display-type", "hat-settings")
 
     def restart_hat(self, is_mode=False):
         """Restart the hat."""
@@ -49,7 +74,7 @@ class Controller:
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        self.mode = self.modes[self.custodian.get("mode")](self.hat)
+        self.mode = self.modes[self.custodian.get("mode")](self.hat, self.custodian)
         # if we're moving to a new mode (rather than just changing the axis or whatever)
         if is_mode:
             # we want to set the mode to its preferential configuration

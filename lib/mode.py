@@ -2,28 +2,22 @@ import pickle
 from pathlib import Path
 
 from lib.conf import conf
-from lib.custodian import Custodian
 
 
 class Mode:
     """Superclass for `modes`."""
 
-    def __init__(self, hat, namespace="hat"):
+    def __init__(self, hat, custodian):
         """Construct."""
         self.hat = hat
         self.name = type(self).__name__.lower()
-        self.custodian = Custodian(namespace=namespace)
+        self.custodian = custodian
         self.conf = conf
         self.data = self.conf["modes"][self.name]
         self.prefs = self.data["prefs"]
 
         self.invert = self.custodian.get("invert")
-
         self.axis = self.custodian.get("axis")
-
-        # pretty sure this is redundant, as this will be set at startup-time
-        if self.axis == "none":
-            self.set_preferred_axis()
 
     def reset(self):
         """Reset some things."""
@@ -34,7 +28,7 @@ class Mode:
     def set_preferred_invert(self):
         """Rotate to preferred inversion for this mode."""
         if "invert" in self.prefs:
-            self.custodian.rotate_until("invert", self.prefs["invert"])
+            self.custodian.set("invert", str(self.prefs["invert"]))
             self.invert = self.custodian.get("invert")
 
     def set_preferred_axis(self):
@@ -44,7 +38,7 @@ class Mode:
                 self.custodian.set("axis", "none")
 
             else:
-                self.custodian.rotate_until("axis", self.prefs["axis"])
+                self.custodian.set("axis", self.prefs["axis"])
                 self.axis = self.custodian.get("axis")
 
     def reset_colour_sources(self):
@@ -56,6 +50,9 @@ class Mode:
             self.custodian.reset_colour_sources(["none"])
 
         self.custodian.next("colour-source")
+
+        if "colour-set" in self.prefs:
+            self.custodian.set("colour-set", self.prefs["colour-set"])
 
     def sort_hat(self):
         """Sort the hat."""

@@ -5,11 +5,10 @@ from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
 from lib.modes.rotator import Rotator
 
-# we pre-instantiate all the modes and hold on to them
 modes = {
+    "pulsator": Pulsator,
     "cuttlefish": Cuttlefish,
     "brainwaves": BrainWaves,
-    "pulsator": Pulsator,
     "bands": Bands,
     "rotator": Rotator,
     "larsen": Larsen,

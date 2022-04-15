@@ -22,16 +22,16 @@ class TestImageGenerator(TestCase):
         self.cus = Custodian(namespace="test", conf=self.conf)
         self.cus.populate(flush=True)
 
-        self.cus.rotate_until("axis", "y")
-        self.cus.rotate_until("invert", False)
-        self.cus.rotate_until("colour-source", "redis")
-        self.cus.rotate_until("colour-set", "rgb")
-        self.cus.rotate_until("colour", [255, 0, 0])
+        self.cus.set("axis", "y")
+        self.cus.set("invert", False)
+        self.cus.set("colour-source", "redis")
+        self.cus.set("colour-set", "rgb")
+        self.cus.set("colour", [255, 0, 0])
         self.cus.set("mode", "rotator")
 
     def test_hat_settings(self):
         """Test it generates the hat-settings screen."""
-        self.cus.rotate_until("display-type", "hat-settings")
+        self.cus.set("display-type", "hat-settings")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="hat-settings")
@@ -43,8 +43,8 @@ class TestImageGenerator(TestCase):
 
     def test_hat_settings_with_wheel(self):
         """Test it generates the hat-settings screen with the `wheel` colour-source."""
-        self.cus.rotate_until("display-type", "hat-settings")
-        self.cus.rotate_until("colour-source", "wheel")
+        self.cus.set("display-type", "hat-settings")
+        self.cus.set("colour-source", "wheel")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="hat-settings-with-wheel")
@@ -58,8 +58,8 @@ class TestImageGenerator(TestCase):
 
     def test_hat_settings_with_no_axis(self):
         """Test it generates the hat-settings screen with no `axis` marker."""
-        self.cus.rotate_until("display-type", "hat-settings")
-        self.cus.rotate_until("colour-source", "wheel")
+        self.cus.set("display-type", "hat-settings")
+        self.cus.set("colour-source", "wheel")
         self.cus.set("axis", "none")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
@@ -72,9 +72,9 @@ class TestImageGenerator(TestCase):
 
     def test_hat_settings_with_invert(self):
         """Test it generates the hat-settings screen."""
-        self.cus.rotate_until("display-type", "hat-settings")
-        self.cus.rotate_until("invert", True)
-        self.cus.rotate_until("axis", "x")
+        self.cus.set("display-type", "hat-settings")
+        self.cus.set("invert", True)
+        self.cus.set("axis", "x")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="hat-settings-with-invert")
@@ -88,7 +88,7 @@ class TestImageGenerator(TestCase):
 
     def test_button_config(self):
         """Test it generates the button-config screen."""
-        self.cus.rotate_until("display-type", "button-config")
+        self.cus.set("display-type", "button-config")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="button-config")
@@ -98,6 +98,18 @@ class TestImageGenerator(TestCase):
             checksum, "1f831d8afbe5b805d55bf39f32987d994d04be26f355d566701bb8d9bbb9b5ce"
         )
 
+    def test_boot_screen(self):
+        """Test it generates the boot-screen."""
+        self.cus.set("display-type", "boot")
+
+        gen = ImageGenerator(self.cus, self.oled_conf)
+        gen.generate(save_to="boot")
+
+        checksum = sha256(Path("tmp/boot.png").read_bytes()).hexdigest()
+        self.assertEqual(
+            checksum, "06fcc3e52988d996d43c6fb8eb9f983edfe4a858e35ae3766c914e0f24c9b148"
+        )
+
     @patch("socket.gethostname")
     @patch("socket.socket")
     def test_ip_address(self, mocked, mocked_method):
@@ -105,7 +117,7 @@ class TestImageGenerator(TestCase):
         mocked.return_value.getsockname.return_value = ["192.168.168.111"]
         mocked_method.return_value = "testhost"
 
-        self.cus.rotate_until("display-type", "ip-address")
+        self.cus.set("display-type", "ip-address")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="ip-address")
@@ -119,8 +131,8 @@ class TestImageGenerator(TestCase):
         """Test it generates the correct sign."""
         gen = ImageGenerator(self.cus, self.oled_conf)
 
-        self.cus.rotate_until("invert", False)
+        self.cus.set("invert", False)
         self.assertEqual(gen.get_sign(), "+")
 
-        self.cus.rotate_until("invert", True)
+        self.cus.set("invert", True)
         self.assertEqual(gen.get_sign(), "-")

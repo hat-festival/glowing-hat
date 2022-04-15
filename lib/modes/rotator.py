@@ -7,9 +7,9 @@ from lib.tools import scale_colour
 class Rotator(Mode):
     """Rotator mode."""
 
-    def __init__(self, hat, namespace="hat"):
-        """Construct."""
-        super().__init__(hat, namespace=namespace)
+    # def __init__(self, hat, custodian):
+    #     """Construct."""
+    #     super().__init__(hat, custodian)
 
     def reconfigure(self):
         """Configure ourself."""

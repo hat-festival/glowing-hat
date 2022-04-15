@@ -7,21 +7,19 @@ from lib.tools import hue_to_rgb
 class Cuttlefish(Mode):
     """Ripples of colour."""
 
-    def __init__(self, hat, namespace="hat"):
+    def __init__(self, hat, custodian):
         """Construct."""
-        super().__init__(hat, namespace=namespace)
-
-    def reconfigure(self):
-        """Configure ourself."""
+        super().__init__(hat, custodian)
         self.jump = self.data["jump"]
-        if self.invert:
-            self.jump = 0 - self.jump
-
         self.steps = self.data["steps"]
-
         self.colours = deque()
         for i in range(self.steps):
             self.colours.append(hue_to_rgb(i / self.steps))
+
+    def reconfigure(self):
+        """Configure ourself."""
+        if self.invert:
+            self.jump = 0 - self.jump
 
         self.sort_hat()
 

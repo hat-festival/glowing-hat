@@ -4,7 +4,6 @@ import socket
 from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
-from lib.custodian import Custodian
 
 if "arm" in platform.platform():  # nocov
     import adafruit_ssd1306
@@ -15,10 +14,10 @@ if "arm" in platform.platform():  # nocov
 class Oled:
     """Class wrapping the PiOLED display."""
 
-    def __init__(self):
+    def __init__(self, custodian):
         """Construct."""
         self.conf = conf["oled"]
-        self.custodian = Custodian()
+        self.custodian = custodian
 
         if "arm" in platform.platform():
             i2c = busio.I2C(SCL, SDA)
@@ -135,6 +134,15 @@ class ImageGenerator:
 
         self.add_text(hostname, 0, 0)
         self.add_text(ipaddress, 0, self.height / 2)
+
+    def boot(self):
+        """Boot-time message."""
+        self.set_image(self.width, self.height)
+
+        message = "Hat is booting"
+        left = (self.width - (len(message) * 8)) / 2
+        top = (self.height - 16) / 2
+        self.add_text("Hat is booting", left, top)
 
     def hex_colour(self):
         """Get a hex-colour."""
