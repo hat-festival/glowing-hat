@@ -38,7 +38,7 @@ pathspec==0.9.0
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.1.0
-platformdirs==2.5.1
+platformdirs==2.5.2
 pluggy==1.0.0
 prompt-toolkit==3.0.29
 ptyprocess==0.7.0
@@ -48,7 +48,7 @@ pycodestyle==2.8.0
 pydocstyle==6.1.1
 pyflakes==2.4.0
 pyftdi==0.54.0
-Pygments==2.11.2
+Pygments==2.12.0
 pylama==8.3.8
 pylint==2.12.2
 pyparsing==3.0.8
