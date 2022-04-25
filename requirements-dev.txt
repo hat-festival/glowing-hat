@@ -48,7 +48,7 @@ pycodestyle==2.8.0
 pydocstyle==6.1.1
 pyflakes==2.4.0
 pyftdi==0.54.0
-Pygments==2.11.2
+Pygments==2.12.0
 pylama==8.3.8
 pylint==2.12.2
 pyparsing==3.0.8
