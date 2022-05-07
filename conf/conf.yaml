@@ -1,18 +1,18 @@
 lights: 100
 
 buttons:
-  - press: display-type
-    abbreviation: disp
-  - press: axis 
-    hold: invert
-    abbreviation: axis
-  - press: colour-source 
-    abbreviation: csrc
+  - press: mode 
+    abbreviation: mode
   - press: colour 
     hold: colour-set 
     abbreviation: colr
-  - press: mode 
-    abbreviation: mode
+  - press: colour-source 
+    abbreviation: csrc
+  - press: axis 
+    hold: invert
+    abbreviation: axis
+  - press: display-type
+    abbreviation: disp
 
 # the ordering of these is important: the top one will become the default
 colour-sets:
@@ -31,6 +31,9 @@ colour-sets:
     cyan: [0, 255, 255]
     blue: [0, 0, 255]
     magenta: [255, 0, 255]
+
+  white:
+    white: [255, 255, 255]
 
 hoops:
   invert:
@@ -56,47 +59,63 @@ modes:
   cuttlefish:
     jump: 2
     steps: 200
-    preferred-axis: y
+    prefs:
+      axis: y
+      invert: False
 
   brainwaves:
     jump: 5
     steps: 150
-    preferred-axis: y
+    prefs:
+      axis: y 
+      invert: False 
+      colour-sources:
+        - redis
+        - wheel
+      colour-set: white  
+
+  pulsator:
+    steps:
+      min: 32
+      max: 128
+    prefs: 
+      axis: none 
+      invert: False 
+      colour-sources:
+        - wheel
+        - redis 
 
   bands:
     jump: 5
     width: 75
     preferred-axis: y
+    prefs:
+      axis: y 
+      invert: False 
+      colour-sources:
+        - redis 
+      colour-set: rainbow
 
   rotator:
     steps: 9
     offset: 90
-    preferred-axis: y
+    prefs:
+      axis: y 
+      colour-sources:
+        - wheel
+        - redis 
 
   larsen:
     jump: 2
     width: 20
     delay: 0.2
     fade-factor: 0.2
-    preferred-axis: x
-
-  pulsator:
-    steps:
-      min: 32
-      max: 128
-    preferred-axis: y
-    preferred-colour-source: wheel
-
-  quarters:
-    preferred-axis: y
-    preferred-colour-source: random
-
-###
-
-  colour-brain:
-    jump: 10
-    steps: 200
-    delay: 0.2
+    prefs:
+      axis: x 
+      colour-sources:
+        - wheel
+        - random 
+        - redis 
 
 ###
 
@@ -113,8 +132,5 @@ oled:
   font:
     name: SourceCodePro-Light
     size: 13
-  timeout: 10
   characters:
-    up: ↑
-    down: ↓
     separator: "|"

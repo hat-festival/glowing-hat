@@ -4,7 +4,6 @@ import socket
 from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
-from lib.custodian import Custodian
 
 if "arm" in platform.platform():  # nocov
     import adafruit_ssd1306
@@ -15,10 +14,10 @@ if "arm" in platform.platform():  # nocov
 class Oled:
     """Class wrapping the PiOLED display."""
 
-    def __init__(self):
+    def __init__(self, custodian):
         """Construct."""
         self.conf = conf["oled"]
-        self.custodian = Custodian()
+        self.custodian = custodian
 
         if "arm" in platform.platform():
             i2c = busio.I2C(SCL, SDA)
@@ -33,7 +32,9 @@ class Oled:
 
     def update(self):
         """Update ourself."""
-        self.display.image(self.gen.generate())
+        screen = self.gen.generate()
+        screen = screen.rotate(180, expand=True)
+        self.display.image(screen)
         self.display.show()
 
 
@@ -98,7 +99,7 @@ class ImageGenerator:
                 self.height / 2,
             )
 
-        else:
+        elif source != "none":
             self.add_text(source, 0, self.height / 2)
 
         self.add_text(
@@ -121,7 +122,7 @@ class ImageGenerator:
         ):
             self.add_button(abbreviation, index, step_size)
 
-        self.image = self.image.rotate(90, expand=True)
+        self.image = self.image.rotate(270, expand=True)
 
     def ip_address(self):
         """Make the `ip-address` image."""
@@ -136,6 +137,15 @@ class ImageGenerator:
         self.add_text(hostname, 0, 0)
         self.add_text(ipaddress, 0, self.height / 2)
 
+    def boot(self):
+        """Boot-time message."""
+        self.set_image(self.width, self.height)
+
+        message = "Hat is booting"
+        left = (self.width - (len(message) * 8)) / 2
+        top = (self.height - 16) / 2
+        self.add_text("Hat is booting", left, top)
+
     def hex_colour(self):
         """Get a hex-colour."""
         colour = ""
@@ -143,21 +153,16 @@ class ImageGenerator:
             colour += f"{byte:02x}"
         return f"#{colour}"
 
-    def get_direction(self):
-        """Get the inversion direction."""
-        direction = self.conf["characters"]["up"]
-        if self.custodian.get("invert"):
-            direction = self.conf["characters"]["up"]
-
-        return direction
+    def get_sign(self):
+        """Get the sign of the inversion."""
+        return "-" if self.custodian.get("invert") else "+"
 
     def axis_invert(self):
         """Construct the axis-inversion string."""
-        return (
-            f"{self.custodian.get('axis')}"
-            f"{self.conf['characters']['separator']}"
-            f"{self.get_direction()}"
-        )
+        if self.custodian.get("axis") == "none":
+            return ""
+
+        return f"{self.get_sign()}{self.custodian.get('axis')}"
 
     def add_button(self, text, index, step_size):
         """Add button marker."""

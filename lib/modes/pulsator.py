@@ -12,23 +12,32 @@ CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())
 class Pulsator(Mode):
     """A huge pulsating brain."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, custodian):
         """Construct."""
-        super().__init__(hat)
+        super().__init__(hat, custodian)
 
         self.throbbers = []
-        for _ in range(len(self.hat)):
+        for _ in range(self.hat.length):
             self.throbbers.append(Throbber())
+
+    def reconfigure(self):
+        """Reconfig some stuff."""
+        self.custodian.set("axis", "none")
 
     def run(self):
         """Do the stuff."""
+        self.reconfigure()
+
         while True:
             colour = self.get_colour()
-            for index, throbber in enumerate(self.throbbers):
-                self.hat.light_one(
-                    index, scale_colour(colour, throbber.next()), auto_show=False
+            self.hat.illuminate(
+                list(
+                    map(
+                        lambda throbber: scale_colour(colour, throbber.next()),
+                        self.throbbers,
+                    )
                 )
-            self.hat.show()
+            )
 
 
 class Throbber:

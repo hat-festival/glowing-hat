@@ -1,6 +1,6 @@
-# http://docs.pimoroni.com/buttonshim/#module-buttonshim
-
+from collections import deque
 from multiprocessing import Process
+from random import shuffle
 from signal import pause
 from string import ascii_uppercase
 
@@ -8,10 +8,10 @@ import buttonshim
 
 from lib.conf import conf
 from lib.custodian import Custodian
+from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
-from lib.pixel_hat import PixelHat
 
 BUTTONS = {}
 
@@ -28,19 +28,45 @@ class Controller:
 
     def __init__(self):
         """Construct."""
-        self.hat = PixelHat()
+        self.hat = Hat()
         self.conf = conf
-        self.custodian = Custodian(conf=self.conf)
+        self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=True)
 
+        # we pre-load all the modes because it takes a long time
         self.modes = modes
         load_modes(self.custodian)
         self.custodian.next("mode")
 
-        self.oled = Oled()
+        self.oled = Oled(self.custodian)
 
         self.process = None
+
+        self.boot_hat()
+
         self.restart_hat(is_mode=True)
+
+    def boot_hat(self):
+        """Boot the hat."""
+        self.custodian.set("display-type", "boot")
+        self.custodian.set("colour-source", "wheel")
+        self.oled.update()
+
+        colour = self.custodian.get("colour")
+
+        indeces = deque(list(range(100)))
+        while len(indeces):
+            shuffle(indeces)
+            victim = indeces.pop()
+            self.hat.light_one(victim, colour)
+
+        indeces = deque(list(range(100)))
+        while len(indeces):
+            shuffle(indeces)
+            victim = indeces.pop()
+            self.hat.light_one(victim, [0, 0, 0])
+
+        self.custodian.set("display-type", "hat-settings")
 
     def restart_hat(self, is_mode=False):
         """Restart the hat."""
@@ -48,10 +74,11 @@ class Controller:
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        self.mode = self.modes[self.custodian.get("mode")](self.hat)
+        self.mode = self.modes[self.custodian.get("mode")](self.hat, self.custodian)
+        # if we're moving to a new mode (rather than just changing the axis or whatever)
         if is_mode:
-            self.mode.set_preferred_axis()
-            self.mode.set_preferred_colour_source()
+            # we want to set the mode to its preferential configuration
+            self.mode.reset()
 
         self.process = Process(target=self.mode.run)
         self.process.start()
@@ -67,9 +94,6 @@ class Controller:
         is_mode = parameter == "mode"
         self.restart_hat(is_mode=is_mode)
 
-        # if parameter == "display-type":
-        #     self.oled.update()
-
 
 c = Controller()
 
@@ -77,6 +101,11 @@ c = Controller()
 @buttonshim.on_release(BUTTON_IDS)
 def release_handler(button, _):
     """Handle button release."""
+    logging.debug(
+        "button `%s` held-status: `%s`",
+        BUTTONS[button]["name"],
+        BUTTONS[button]["held"],
+    )
     logging.debug("button `%s` released", BUTTONS[button]["name"])
     if not BUTTONS[button]["held"]:
         green()
@@ -91,6 +120,11 @@ def release_handler(button, _):
 @buttonshim.on_hold(BUTTON_IDS, hold_time=1)
 def held_handler(button):
     """Handle button hold."""
+    logging.debug(
+        "button `%s` held-status: `%s`",
+        BUTTONS[button]["name"],
+        BUTTONS[button]["held"],
+    )
     logging.debug("button `%s` held", BUTTONS[button]["name"])
     if "hold" in BUTTONS[button]:
         blue()

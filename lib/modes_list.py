@@ -3,17 +3,15 @@ from lib.modes.brain_waves import BrainWaves
 from lib.modes.cuttlefish import Cuttlefish
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
-from lib.modes.quarters import Quarters
 from lib.modes.rotator import Rotator
 
 modes = {
+    "pulsator": Pulsator,
     "cuttlefish": Cuttlefish,
     "brainwaves": BrainWaves,
-    "pulsator": Pulsator,
     "bands": Bands,
     "rotator": Rotator,
     "larsen": Larsen,
-    "quarters": Quarters,
 }
 
 

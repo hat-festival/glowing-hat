@@ -11,7 +11,7 @@ def hue_to_rgb(hue):
 
 def gamma_correct(triple):
     """Gamma-correct a colour."""
-    return list(map(lambda n: gamma[n], triple))
+    return tuple(map(lambda n: gamma[int(n)], triple))
 
 
 def make_key(key, namespace):

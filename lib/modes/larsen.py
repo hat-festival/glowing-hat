@@ -8,24 +8,27 @@ from lib.tools import scale_colour
 class Larsen(Mode):
     """Larsen scanner."""
 
-    def __init__(self, hat):
+    def __init__(self, hat, custodian):
         """Construct."""
-        super().__init__(hat)
-
+        super().__init__(hat, custodian)
         self.jump = self.data["jump"]
         self.width = self.data["width"]
 
+    def reconfigure(self):
+        """Configure ourself."""
+        self.sort_hat()
+
     def run(self):
         """Do the stuff."""
-        self.sort_hat()
+        self.reconfigure()
 
         while True:
             colour = self.get_colour()
-            for i in range(ceil(len(self.hat) / self.jump) + 10):
+            for i in range(ceil(self.hat.length / self.jump) + 10):
                 for j in range(self.jump):
                     try:
                         self.hat.light_one(
-                            self.hat[i * self.jump + j]["index"],
+                            self.hat.pixels[i * self.jump + j]["index"],
                             colour,
                             auto_show=False,
                         )
@@ -36,7 +39,7 @@ class Larsen(Mode):
                         tail_index = i * self.jump + j - self.width
                         if tail_index >= 0:
                             self.hat.light_one(
-                                self.hat[tail_index]["index"],
+                                self.hat.pixels[tail_index]["index"],
                                 scale_colour(colour, self.data["fade-factor"]),
                                 auto_show=False,
                             )
