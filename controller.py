@@ -101,6 +101,11 @@ c = Controller()
 @buttonshim.on_release(BUTTON_IDS)
 def release_handler(button, _):
     """Handle button release."""
+    logging.debug(
+        "button `%s` held-status: `%s`",
+        BUTTONS[button]["name"],
+        BUTTONS[button]["held"],
+    )
     logging.debug("button `%s` released", BUTTONS[button]["name"])
     if not BUTTONS[button]["held"]:
         green()
@@ -115,6 +120,11 @@ def release_handler(button, _):
 @buttonshim.on_hold(BUTTON_IDS, hold_time=1)
 def held_handler(button):
     """Handle button hold."""
+    logging.debug(
+        "button `%s` held-status: `%s`",
+        BUTTONS[button]["name"],
+        BUTTONS[button]["held"],
+    )
     logging.debug("button `%s` held", BUTTONS[button]["name"])
     if "hold" in BUTTONS[button]:
         blue()

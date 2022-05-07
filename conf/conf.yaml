@@ -1,18 +1,18 @@
 lights: 100
 
 buttons:
-  - press: display-type
-    abbreviation: disp
+  - press: mode 
+    abbreviation: mode
+  - press: colour 
+    hold: colour-set 
+    abbreviation: colr
+  - press: colour-source 
+    abbreviation: csrc
   - press: axis 
     hold: invert
     abbreviation: axis
-  - press: colour-source 
-    hold: colour-set 
-    abbreviation: csrc
-  - press: colour 
-    abbreviation: colr
-  - press: mode 
-    abbreviation: mode
+  - press: display-type
+    abbreviation: disp
 
 # the ordering of these is important: the top one will become the default
 colour-sets:

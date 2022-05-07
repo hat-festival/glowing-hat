@@ -95,7 +95,7 @@ class TestImageGenerator(TestCase):
 
         checksum = sha256(Path("tmp/button-config.png").read_bytes()).hexdigest()
         self.assertEqual(
-            checksum, "1f831d8afbe5b805d55bf39f32987d994d04be26f355d566701bb8d9bbb9b5ce"
+            checksum, "46755679d44966c448c49a9f39b1fab279f23332b31a3421bf5b36e9be77ad2f"
         )
 
     def test_boot_screen(self):

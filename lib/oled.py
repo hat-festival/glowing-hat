@@ -32,7 +32,9 @@ class Oled:
 
     def update(self):
         """Update ourself."""
-        self.display.image(self.gen.generate())
+        screen = self.gen.generate()
+        screen = screen.rotate(180, expand=True)
+        self.display.image(screen)
         self.display.show()
 
 
@@ -120,7 +122,7 @@ class ImageGenerator:
         ):
             self.add_button(abbreviation, index, step_size)
 
-        self.image = self.image.rotate(90, expand=True)
+        self.image = self.image.rotate(270, expand=True)
 
     def ip_address(self):
         """Make the `ip-address` image."""

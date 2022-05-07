@@ -53,6 +53,7 @@ class Mode:
 
         if "colour-set" in self.prefs:
             self.custodian.set("colour-set", self.prefs["colour-set"])
+            self.custodian.next("colour")
 
     def sort_hat(self):
         """Sort the hat."""
