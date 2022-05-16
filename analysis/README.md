@@ -80,7 +80,7 @@ No 'x' for [54, 77, 91, 96]
 No 'z' for [52]
 ```
 
-To help deal with this problem, the `capture.py` script takes an additional photo of each light, lit with `[255, 25, 255]` (e.g. very bright white) and using a much longer exposure time, named `001-long.jpg` or whatever. So to solve for light `55`, for example, from the laptop (not inside the container), try something like
+To help deal with this problem, the `capture.py` script takes an additional photo of each light, lit with `[255, 255, 255]` (e.g. very bright white) and using a much longer exposure time, named `001-long.jpg` or whatever. So to solve for light `55`, for example, from the laptop (not inside the container), try something like
 
 ```bash
 open ../analysis/left/055*jpg ../analysis/right/055*jpg
