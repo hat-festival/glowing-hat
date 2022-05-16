@@ -15,7 +15,7 @@ class Hat:
         self.length = conf["lights"]
 
         if "arm" in platform.platform():
-            self.pixels = NeoPixel(board.D18, self.length, auto_write=False)  # nocov
+            self.pixels = NeoPixel(board.D21, self.length, auto_write=False)  # nocov
         else:
             self.pixels = FakePixel(4)
 
