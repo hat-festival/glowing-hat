@@ -4,7 +4,6 @@ from pathlib import Path
 
 import numpy as np
 
-# from lib.pixel_hat import PixelHat
 from lib.hat import Hat
 from lib.tools import remove_axis
 
