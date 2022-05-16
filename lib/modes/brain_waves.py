@@ -28,7 +28,6 @@ class BrainWaves(Mode):
         self.reconfigure()
 
         while True:
-            # clr = [255, 255, 255]
             clr = self.get_colour()
             rgbs = list(map(lambda x: scale_colour(clr, x), list(self.values)[:100]))
             self.hat.illuminate(rgbs)

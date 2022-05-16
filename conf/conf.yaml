@@ -64,8 +64,8 @@ modes:
       invert: False
 
   brainwaves:
-    jump: 5
-    steps: 150
+    jump: 8
+    steps: 128
     prefs:
       axis: y 
       invert: False 
@@ -87,14 +87,13 @@ modes:
 
   bands:
     jump: 5
-    width: 75
-    preferred-axis: y
+    width: 50
     prefs:
-      axis: y 
+      axis: z 
       invert: False 
       colour-sources:
         - redis 
-      colour-set: rainbow
+      colour-set: rgb
 
   rotator:
     steps: 9
