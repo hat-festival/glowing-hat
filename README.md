@@ -2,7 +2,7 @@
 
 _I glued 100 WS2812 NeoPixels to a hat then mapped them in 3D space_
 
-![hat](assets/animated-hat.gif)
+https://user-images.githubusercontent.com/885973/168619388-2ef59b61-9f68-4e90-99ad-9d77b64aa226.mp4
 
 ## Construction
 
