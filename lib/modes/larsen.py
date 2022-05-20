@@ -1,5 +1,4 @@
-from math import ceil
-from time import sleep
+from collections import deque
 
 from lib.mode import Mode
 from lib.tools import scale_colour
@@ -12,42 +11,34 @@ class Larsen(Mode):
         """Construct."""
         super().__init__(hat, custodian)
         self.jump = self.data["jump"]
-        self.width = self.data["width"]
+        self.steps = self.data["steps"]
+        self.values = deque()
+
+        for i in range(self.steps):
+            self.values.append(0)
+        for i in range(self.steps):
+            self.values.append(i / self.steps)
 
     def reconfigure(self):
         """Configure ourself."""
+        if self.invert:
+            self.jump = 0 - self.jump
+
         self.sort_hat()
 
     def run(self):
         """Do the stuff."""
         self.reconfigure()
 
+        count = 0
+        clr = self.get_colour()
         while True:
-            colour = self.get_colour()
-            for i in range(ceil(self.hat.length / self.jump) + 10):
-                for j in range(self.jump):
-                    try:
-                        self.hat.light_one(
-                            self.hat.pixels[i * self.jump + j]["index"],
-                            colour,
-                            auto_show=False,
-                        )
-                    except IndexError:
-                        pass
+            rgbs = list(map(lambda x: scale_colour(clr, x), list(self.values)[:100]))
+            self.hat.illuminate(rgbs)
+            self.values.rotate(self.jump)
 
-                    try:
-                        tail_index = i * self.jump + j - self.width
-                        if tail_index >= 0:
-                            self.hat.light_one(
-                                self.hat.pixels[tail_index]["index"],
-                                scale_colour(colour, self.data["fade-factor"]),
-                                auto_show=False,
-                            )
-                    except IndexError:
-                        pass
-
-                self.hat.show()
-
-            sleep(self.data["delay"])
-
-            self.hat.reverse()
+            count += self.jump
+            if abs(count) >= len(self.values):
+                self.hat.reverse()
+                clr = self.get_colour()
+                count = 0

@@ -1,16 +1,18 @@
 from lib.modes.bands import Bands
+from lib.modes.bigtop import BigTop
 from lib.modes.brain_waves import BrainWaves
 from lib.modes.cuttlefish import Cuttlefish
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
-from lib.modes.rotator import Rotator
+from lib.modes.sweeper import Sweeper
 
 modes = {
-    "pulsator": Pulsator,
     "cuttlefish": Cuttlefish,
+    "sweeper": Sweeper,
+    "pulsator": Pulsator,
     "brainwaves": BrainWaves,
+    "bigtop": BigTop,
     "bands": Bands,
-    "rotator": Rotator,
     "larsen": Larsen,
 }
 

@@ -28,7 +28,7 @@ class Mode:
     def set_preferred_invert(self):
         """Rotate to preferred inversion for this mode."""
         if "invert" in self.prefs:
-            self.custodian.set("invert", str(self.prefs["invert"]))
+            self.custodian.rotate_until("invert", self.prefs["invert"])
             self.invert = self.custodian.get("invert")
 
     def set_preferred_axis(self):
@@ -38,8 +38,9 @@ class Mode:
                 self.custodian.set("axis", "none")
 
             else:
-                self.custodian.set("axis", self.prefs["axis"])
-                self.axis = self.custodian.get("axis")
+                self.custodian.rotate_until("axis", self.prefs["axis"])
+
+            self.axis = self.custodian.get("axis")
 
     def reset_colour_sources(self):
         """Load acceptable colour-sources for this mode."""
@@ -66,4 +67,13 @@ class Mode:
     @property
     def frame_sets(self):
         """Load the frame data."""
-        return pickle.loads(Path("renders", f"{self.name}.pickle").read_bytes())
+        try:
+            data = pickle.loads(Path("renders", f"{self.name}.pickle").read_bytes())
+        except FileNotFoundError:
+            data = pickle.loads(
+                Path(
+                    "renders", f"{self.__class__.__bases__[0].__name__.lower()}.pickle"
+                ).read_bytes()
+            )
+
+        return data

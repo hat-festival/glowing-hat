@@ -45,7 +45,8 @@ class TestFish(TestCase):
         self.assertFalse(self.custodian.get("invert"))
         self.assertFalse(fish.invert)
 
-        self.custodian.set("invert", True)
+        self.custodian.rotate_until("invert", True)
+        # self.custodian.set("invert", True)
         fish.reconfigure()
 
         self.assertTrue(self.custodian.get("invert"))

@@ -1,0 +1,14 @@
+lights:
+  - index: 0
+    x: 1
+    y: 0
+    z: 0  
+  - index: 1
+    x: -1
+    y: 0
+    z: 0
+
+centres:
+  x: 0
+  y: 0
+  z: 0

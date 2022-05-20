@@ -81,6 +81,11 @@ class Custodian:
         """Unset something."""
         self.redis.delete(self.make_key(key))
 
+    def rotate_until(self, hoop, value):
+        """Rotate a hoop until the desired value is selected."""
+        while not self.get(hoop) == value:
+            self.next(hoop)
+
     def load_colour_set(self, colours):
         """Load-in a colour-set."""
         key = self.make_key("hoop:colour")

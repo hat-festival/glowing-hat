@@ -66,7 +66,7 @@ class Controller:
             victim = indeces.pop()
             self.hat.light_one(victim, [0, 0, 0])
 
-        self.custodian.set("display-type", "hat-settings")
+        self.custodian.rotate_until("display-type", "hat-settings")
 
     def restart_hat(self, is_mode=False):
         """Restart the hat."""

@@ -1,0 +1,74 @@
+cuttlefish:
+  jump: 2
+  steps: 200
+  prefs:
+    axis: y
+    invert: False
+
+pulsator:
+  steps:
+    min: 32
+    max: 128
+  prefs: 
+    axis: none 
+    invert: False 
+    colour-sources:
+      - wheel
+      - redis 
+
+brainwaves:
+  jump: 8
+  steps: 128
+  prefs:
+    axis: y 
+    invert: False 
+    colour-sources:
+      - redis
+      - wheel
+    colour-set: white  
+
+rotator:
+  steps: 9
+  offset: 45
+  prefs:
+    axis: y 
+    invert: False
+    colour-sources:
+      - wheel
+      - redis 
+
+bands:
+  jump: 5
+  width: 50
+  prefs:
+    axis: z 
+    invert: True 
+    colour-sources:
+      - redis 
+    colour-set: rgb
+
+larsen:
+  jump: 8
+  steps: 128
+  prefs:
+    axis: x 
+    invert: False
+    colour-sources:
+      - random 
+      - wheel
+      - redis 
+
+sweeper:
+  jump: 15
+  prefs:
+    axis: y 
+    invert: False
+    colour-sources:
+      - wheel
+      - redis 
+
+bigtop:
+  jump: 15
+  prefs:
+    axis: y 
+    invert: False

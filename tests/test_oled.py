@@ -58,6 +58,7 @@ class TestImageGenerator(TestCase):
 
     def test_hat_settings_with_no_axis(self):
         """Test it generates the hat-settings screen with no `axis` marker."""
+        self.cus.set("mode", "pulsator")
         self.cus.set("display-type", "hat-settings")
         self.cus.set("colour-source", "wheel")
         self.cus.set("axis", "none")
@@ -67,7 +68,7 @@ class TestImageGenerator(TestCase):
 
         checksum = sha256(Path("tmp/hat-settings-no-axis.png").read_bytes()).hexdigest()
         self.assertEqual(
-            checksum, "20489e514bb2c56e20d559f1a6d7f1f1f9bb3af5b43c153593f812657d39d09c"
+            checksum, "12ac0e23994b774583ab7f47ae2e8a46e3736bf3cbb922807421d9e9eb5ab240"
         )
 
     def test_hat_settings_with_invert(self):

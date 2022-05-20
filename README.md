@@ -17,7 +17,7 @@ You will need:
 - Wire
 - Hot glue
 
-I hot-glued the lights to the hat, turning in a random(ish) direction after I'd glued-down each one, attempting to move towards empty space each time.
+I hot-glued the lights to the hat, turning in a random(ish) direction after I'd glued-down each one, attempting to move towards empty space each time. I also managed to stick 2 or 3 of them on backwards because I'm an idiot.
 
 I cable-tied the Pi to the power-bank and wired everything up, producing something you absolutely would not want to try to take through an airport:
 
@@ -29,7 +29,7 @@ The data line is connected to [pin 21](lib/hat.py#L23) ([physical pin 40](https:
 
 From a box-fresh install of [Raspberry Pi Bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/):
 
-### Set hostname and enable serial port
+### Set hostname and enable serial port and i2c
 
 ```bash
 sudo raspi-config nonint do_hostname hatlights
@@ -64,7 +64,7 @@ Once everything is assembled, you need to [take lots of photos](camera/README.md
 
 ## Controls
 
-The five buttons are [mapped in `conf/conf.yaml`](conf/conf.yaml#L3-L15):
+The five buttons are [mapped in `conf/buttons.yaml`](conf/buttons.yaml):
 
 | button | press to cycle                    | hold to cycle               |
 | ------ | --------------------------------- | --------------------------- |
@@ -78,20 +78,20 @@ The five buttons are [mapped in `conf/conf.yaml`](conf/conf.yaml#L3-L15):
 
 A [`mode`](lib/modes/cuttlefish.py) needs to inherit from [`Mode`](lib/mode.py), and should expose a [`run`](lib/modes/cuttlefish.py#L26) method, which loops forever and does something with the lights, and a [`reconfigure`](lib/modes/cuttlefish.py#L19) method, which resets the hat to the mode's preferences.
 
-The ordering of the modes is [defined in this list](lib/modes_list.py#L8-L15), and the modes' preferences are defined in [conf/conf.yaml](conf/conf.yaml#L58-L117).
+The ordering of the modes is [defined in this list](lib/modes_list.py#L8-L15), and the modes' preferences are defined in [conf/modes.yaml](conf/modes.yaml).
 
 Some of the modes involve some pretty intense maths which, if done in real-time, will slow everything down to a crawl. In these cases, it's [sensible to pre-render the set of states](lib/renderers/rotator.py). A `mode` named `foo` will (lazily) attempt to [deserialise a file at `renders/foo.pickle`](lib/mode.py#L67) into an instance attribute called `frame_sets`.
 
 ## Colour-sets
 
-Colour sets are defined in [conf/conf.yaml](conf/conf.yaml#L18-L36) - pressing the `colours` button will step through the colours in a set, while holding the same button will step through the sets themselves. It's up to a mode if it actually makes use of these settings.
+Colour sets are defined in [conf/colour-sets.yaml](conf/colour-sets.yaml) - pressing the `colours` button will step through the colours in a set, while holding the same button will step through the sets themselves. It's up to a mode if it actually makes use of these settings.
 
 ## Colour sources
 
 There are three kinds of colour-source:
 
 - Redis: this (poorly-named) source means "use whatever colour is currently defined at `hat:colour` in Redis". This is the colour that gets set by the `colour` button
-- Wheel: the [ColourWheel](lib/colour_wheel.py) is running as a daemon, and populating the `hat:hue` key in Redis with a constantly-rotating value between 0 and 1, using a step-size and interval defined in [conf/conf.yaml](conf/conf.yaml#L121-L123). Calling `get("colour")` on the [`Custodian`](lib/custodian.py) (which is mostly a wrapper around Redis) will, if the `colour-source` is `wheel`, return an [RGB triple based on that `hue` value](lib/tools.py#L7-L9)
+- Wheel: the [ColourWheel](lib/colour_wheel.py) is running as a daemon, and populating the `hat:hue` key in Redis with a constantly-rotating value between 0 and 1, using a step-size and interval defined in [conf/conf.yaml](conf/conf.yaml#L23-L25). Calling `get("colour")` on the [`Custodian`](lib/custodian.py) (which is mostly a wrapper around Redis) will, if the `colour-source` is `wheel`, return an [RGB triple based on that `hue` value](lib/tools.py#L7-L9)
 - Random: uses a random hue between 0 and 1 to [generate an RGB triple](lib/tools.py#L7-L9)
 
 ## Axes
@@ -102,7 +102,7 @@ If you're looking at the hat square-on from the front, then
 - `y` goes from -1 at the bottom to +1 at the top
 - `z` goes from -1 at the back to +1 at the front
 
-For most of the modes, it makes sense for them orient themselves with respect to an axis, and pressing the `axis` button will cycle through `x`, `y` and `z`. Holding this button will invert the direction of movement along or around that axis.
+For most of the modes, it makes sense for them to orient themselves with respect to an axis, and pressing the `axis` button will cycle through `x`, `y` and `z`. Holding this button will invert the direction of movement along or around that axis.
 
 ## Display modes
 

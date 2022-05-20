@@ -144,7 +144,7 @@ class ImageGenerator:
         message = "Hat is booting"
         left = (self.width - (len(message) * 8)) / 2
         top = (self.height - 16) / 2
-        self.add_text("Hat is booting", left, top)
+        self.add_text(message, left, top)
 
     def hex_colour(self):
         """Get a hex-colour."""
@@ -159,7 +159,15 @@ class ImageGenerator:
 
     def axis_invert(self):
         """Construct the axis-inversion string."""
-        if self.custodian.get("axis") == "none":
+        axisless_modes = list(
+            dict(
+                filter(
+                    lambda x: x[1].get("prefs").get("axis") == "none",
+                    conf.get("modes").items(),
+                )
+            ).keys()
+        )
+        if self.custodian.get("mode") in axisless_modes:
             return ""
 
         return f"{self.get_sign()}{self.custodian.get('axis')}"

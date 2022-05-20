@@ -25,7 +25,6 @@ class Hat:
         else:
             self.lights = FakeLights(len(self.pixels))
 
-    # probably deprecate these two fom the public API
     def light_one(self, index, colour, auto_show=True):
         """Light up a single pixel."""
         self.lights[index] = gamma_correct(colour)

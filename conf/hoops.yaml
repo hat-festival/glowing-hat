@@ -1,0 +1,18 @@
+invert:
+  - "false"
+  - "true"
+
+axis:
+  - x
+  - y
+  - z
+
+colour-source:
+  - redis 
+  - wheel
+  - random
+
+display-type:
+- hat-settings
+- button-config
+- ip-address
