@@ -19,6 +19,8 @@ class Mode:
         self.invert = self.custodian.get("invert")
         self.axis = self.custodian.get("axis")
 
+        self.frame_sets = self.load_frame_sets()
+
     def reset(self):
         """Reset some things."""
         self.set_preferred_axis()
@@ -64,16 +66,20 @@ class Mode:
         """Retrieve the colour from Redis."""
         return self.custodian.get("colour")
 
-    @property
-    def frame_sets(self):
+    def load_frame_sets(self):
         """Load the frame data."""
+        data = None
         try:
             data = pickle.loads(Path("renders", f"{self.name}.pickle").read_bytes())
         except FileNotFoundError:
-            data = pickle.loads(
-                Path(
-                    "renders", f"{self.__class__.__bases__[0].__name__.lower()}.pickle"
-                ).read_bytes()
-            )
+            try:
+                data = pickle.loads(
+                    Path(
+                        "renders",
+                        f"{self.__class__.__bases__[0].__name__.lower()}.pickle",
+                    ).read_bytes()
+                )
+            except FileNotFoundError:
+                pass
 
         return data
