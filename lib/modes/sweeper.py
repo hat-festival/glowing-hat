@@ -32,10 +32,7 @@ class Sweeper(Mode):
                     clr = self.get_colour()
                     for index, factor in frame:
                         self.hat.light_one(
-                            index,
-                            self.colour(clr, factor),
-                            auto_show=False
-                            # index, hue_to_rgb(factor), auto_show=False
+                            index, self.colour(clr, factor), auto_show=False
                         )
 
                     self.hat.show()
