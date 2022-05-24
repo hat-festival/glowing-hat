@@ -29,12 +29,10 @@ class Sweeper(Mode):
 
             for frame in self.frames:
                 if count % self.jump == 0:
-                    clr = self.get_colour()
-                    for index, factor in frame:
-                        self.hat.light_one(
-                            index, self.colour(clr, factor), auto_show=False
-                        )
-
-                    self.hat.show()
+                    self.illuminate(frame, self.get_colour())
 
                 count += 1
+
+    def illuminate(self, frame, clr):
+        """Light the hat."""
+        self.hat.illuminate(list(map(lambda x: self.colour(clr, x[1]), frame)))

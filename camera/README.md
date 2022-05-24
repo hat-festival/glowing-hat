@@ -67,7 +67,7 @@ After a lot of tinkering and fine-tuning, I came up with this arrangement:
 
 The hat is mounted high enough that its internal parts don't foul on the Lego, the camera is mounted at the right height to get the whole hat in frame, and the distance between the base of each platform is 58 studs. Please ignore the Thor picture it's all sitting on, it was the handiest Big Flat Surface I could find.
 
-And how did I come up with that 56-stud distance?
+And how did I come up with that 58-stud distance?
 
 ### Calibrating the distance
 

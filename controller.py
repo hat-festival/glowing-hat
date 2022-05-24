@@ -49,7 +49,7 @@ class Controller:
     def boot_hat(self):
         """Boot the hat."""
         self.custodian.set("display-type", "boot")
-        self.custodian.set("colour-source", "wheel")
+        self.custodian.rotate_until("colour-source", "wheel")
         self.oled.update()
 
         colour = self.custodian.get("colour")
@@ -82,6 +82,7 @@ class Controller:
 
         self.process = Process(target=self.mode.run)
         self.process.start()
+
         logging.info("hat restarted")
         self.oled.update()
 

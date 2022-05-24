@@ -1,4 +1,4 @@
-from lib.modes.bands import Bands
+from lib.modes.accelerator import Accelerator
 from lib.modes.bigtop import BigTop
 from lib.modes.brain_waves import BrainWaves
 from lib.modes.cuttlefish import Cuttlefish
@@ -8,12 +8,12 @@ from lib.modes.sweeper import Sweeper
 
 modes = {
     "cuttlefish": Cuttlefish,
-    "sweeper": Sweeper,
+    "accelerator": Accelerator,
     "pulsator": Pulsator,
     "brainwaves": BrainWaves,
     "bigtop": BigTop,
-    "bands": Bands,
     "larsen": Larsen,
+    "sweeper": Sweeper,
 }
 
 

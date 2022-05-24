@@ -1,6 +1,6 @@
 cuttlefish:
   jump: 2
-  steps: 200
+  steps: 200  # more than 100 please
   prefs:
     axis: y
     invert: False
@@ -59,7 +59,7 @@ larsen:
       - redis 
 
 sweeper:
-  jump: 15
+  jump: 25
   prefs:
     axis: y 
     invert: False
@@ -68,7 +68,19 @@ sweeper:
       - redis 
 
 bigtop:
-  jump: 15
+  jump: 20
   prefs:
     axis: y 
     invert: False
+
+accelerator:
+  jump: 0.5
+  limits:
+    min: 2
+    max: 50
+  prefs:
+    axis: y 
+    invert: True
+    colour-sources:
+      - wheel
+      - redis 
