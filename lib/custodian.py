@@ -3,6 +3,7 @@ from random import random
 
 import redis
 
+from lib.conf import conf
 from lib.tools import hue_to_rgb
 
 
@@ -14,6 +15,7 @@ class Custodian:
         self.redis = redis.Redis()
         self.namespace = namespace
         self.conf = conf
+        self.rcs = RandomColourSource()
 
     def populate(self, flush=False):
         """Insert initial data."""
@@ -56,7 +58,7 @@ class Custodian:
             return hue_to_rgb(hue)
 
         if key == "colour" and self.get("colour-source") == "random":
-            return hue_to_rgb(random())
+            return self.rcs.colour
 
         # else:
         value = self.redis.get(self.make_key(key))
@@ -104,3 +106,24 @@ class Custodian:
     def make_key(self, key):
         """Make compound key."""
         return f"{self.namespace}:{key}"
+
+
+class RandomColourSource:
+    """Generate spaced-out random colours."""
+
+    def __init__(self):
+        """Construct."""
+        self.conf = conf
+        self.hue = self.next_hue = random()
+
+    @property
+    def colour(self):
+        """Get a colour."""
+        while (
+            abs(self.hue - self.next_hue) < self.conf["random-colour"]["hue-distance"]
+        ):
+            self.next_hue = random()
+
+        self.hue = self.next_hue
+
+        return hue_to_rgb(self.hue)

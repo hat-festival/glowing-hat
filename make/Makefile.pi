@@ -50,3 +50,7 @@ clean:
 
 webserver: stop-services
 	sudo python webserver.py
+
+wpa:
+	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
+	sudo ln -s $$(pwd)/etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant

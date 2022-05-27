@@ -84,3 +84,11 @@ accelerator:
     colour-sources:
       - wheel
       - redis 
+
+crawler:
+  max-jump: 4
+  # hue-distance: 0.2
+  prefs:
+    axis: none
+    colour-sources:
+      - random

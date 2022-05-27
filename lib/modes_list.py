@@ -1,6 +1,7 @@
 from lib.modes.accelerator import Accelerator
 from lib.modes.bigtop import BigTop
 from lib.modes.brain_waves import BrainWaves
+from lib.modes.crawler import Crawler
 from lib.modes.cuttlefish import Cuttlefish
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
@@ -14,6 +15,7 @@ modes = {
     "bigtop": BigTop,
     "larsen": Larsen,
     "sweeper": Sweeper,
+    "crawler": Crawler,
 }
 
 

@@ -4,6 +4,9 @@ wheel:
   interval: 0.01
   steps: 1000
 
+random-colour:
+  hue-distance: 0.2
+
 webserver-port: 5001
 
 oled:
