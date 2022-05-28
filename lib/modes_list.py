@@ -4,6 +4,7 @@ from lib.modes.brain_waves import BrainWaves
 from lib.modes.crawler import Crawler
 from lib.modes.cuttlefish import Cuttlefish
 from lib.modes.larsen import Larsen
+from lib.modes.off import Off
 from lib.modes.pulsator import Pulsator
 from lib.modes.sweeper import Sweeper
 
@@ -16,6 +17,7 @@ modes = {
     "larsen": Larsen,
     "sweeper": Sweeper,
     "crawler": Crawler,
+    "off": Off,
 }
 
 
