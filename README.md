@@ -99,7 +99,7 @@ There are three kinds of colour-source:
 If you're looking at the hat square-on from the front, then
 
 - `x` goes from -1 on the left to +1 on the right
-- `y` goes from -1 at the bottom to +1 at the top
+- `y` goes from 0 at the bottom to +1 at the top (this makes sense if you think about the hat as the top half of a sphere)
 - `z` goes from -1 at the back to +1 at the front
 
 For most of the modes, it makes sense for them to orient themselves with respect to an axis, and pressing the `axis` button will cycle through `x`, `y` and `z`. Holding this button will invert the direction of movement along or around that axis.

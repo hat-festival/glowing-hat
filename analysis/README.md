@@ -106,7 +106,7 @@ This will trigger waves of light sweeping across the hat
 
 > enable lines `35`, `36` or `37` to select the axis, and _decrease_ the step-size in line `32` to slow it all down
 
-Running this will should expose any rogue lights, as they will light ahead of or behind those close to them. Once you've spotted an offender, mark it somehow (I stuck a little piece of blu-tack to mine), then run another script:
+Running this should expose any rogue lights, as they will light ahead of or behind those close to them. Once you've spotted an offender, mark it somehow (I stuck a little piece of blu-tack to mine), then run another script:
 
 ```bash
 sudo PYTHONPATH=../ python step_lights.py
@@ -123,6 +123,12 @@ This will light all lights with an `x` value less than 1000. Adjust this value u
 ## Find the centres
 
 Also use `calibrator` to find the centres of each axis, and record them in `conf/locations.yaml`.
+
+> Because the hat is essentially the top-half of a sphere, I found it useful to locate the centre of the `y`-axis at the bottom of the hat:
+
+```
+python -c "import yaml ; from pathlib import Path ; print(max(list(map(lambda x: x['y'], yaml.safe_load(Path('conf/locations.yaml').read_text())['lights']))))"
+```
 
 ## And we're done
 
