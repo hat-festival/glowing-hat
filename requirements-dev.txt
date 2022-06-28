@@ -42,7 +42,7 @@ pickleshare==0.7.5
 Pillow==9.1.1
 platformdirs==2.5.2
 pluggy==1.0.0
-prompt-toolkit==3.0.29
+prompt-toolkit==3.0.30
 ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
@@ -60,11 +60,11 @@ pytest-cov==3.0.0
 pytest-random-order==1.0.4
 pyusb==1.2.1
 PyYAML==6.0
-redis==4.3.3
+redis==4.3.4
 six==1.16.0
 smbus==1.1.post2
 snowballstemmer==2.2.0
-stack-data==0.2.0
+stack-data==0.3.0
 toml==0.10.2
 tomli==2.0.1
 traitlets==5.2.2.post1
