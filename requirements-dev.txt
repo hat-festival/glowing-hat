@@ -64,7 +64,7 @@ redis==4.3.3
 six==1.16.0
 smbus==1.1.post2
 snowballstemmer==2.2.0
-stack-data==0.2.0
+stack-data==0.3.0
 toml==0.10.2
 tomli==2.0.1
 traitlets==5.2.2.post1
