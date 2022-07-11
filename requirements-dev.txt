@@ -5,7 +5,7 @@ adafruit-circuitpython-pixelbuf==1.1.5
 adafruit-circuitpython-typing==1.7.1
 Adafruit-PlatformDetect==3.24.1
 Adafruit-PureIO==1.1.9
-astroid==2.9.3
+astroid==2.12.1
 asttokens==2.0.5
 async-timeout==4.0.2
 attrs==21.4.0
