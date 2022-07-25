@@ -1,4 +1,4 @@
-Adafruit-Blinka==8.0.2
+Adafruit-Blinka==8.1.0
 adafruit-circuitpython-busdevice==5.1.10
 adafruit-circuitpython-neopixel==6.3.3
 adafruit-circuitpython-pixelbuf==1.1.5
