@@ -3,7 +3,7 @@ adafruit-circuitpython-busdevice==5.1.10
 adafruit-circuitpython-neopixel==6.3.3
 adafruit-circuitpython-pixelbuf==1.1.5
 adafruit-circuitpython-typing==1.7.1
-Adafruit-PlatformDetect==3.26.0
+Adafruit-PlatformDetect==3.27.0
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
 asttokens==2.0.5
