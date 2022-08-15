@@ -6,7 +6,7 @@ adafruit-circuitpython-typing==1.7.1
 Adafruit-PlatformDetect==3.27.0
 Adafruit-PureIO==1.1.9
 astroid==2.9.3
-asttokens==2.0.5
+asttokens==2.0.8
 async-timeout==4.0.2
 attrs==21.4.0
 backcall==0.2.0
