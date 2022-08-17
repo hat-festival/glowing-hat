@@ -1,6 +1,6 @@
 Adafruit-Blinka==8.1.0
 adafruit-circuitpython-busdevice==5.2.1
-adafruit-circuitpython-neopixel==6.3.3
+adafruit-circuitpython-neopixel==6.3.5
 adafruit-circuitpython-pixelbuf==1.1.5
 adafruit-circuitpython-typing==1.7.1
 Adafruit-PlatformDetect==3.27.0
@@ -8,7 +8,7 @@ Adafruit-PureIO==1.1.9
 astroid==2.9.3
 asttokens==2.0.8
 async-timeout==4.0.2
-attrs==21.4.0
+attrs==22.1.0
 backcall==0.2.0
 black==22.6.0
 click==8.1.3
