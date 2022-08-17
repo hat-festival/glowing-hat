@@ -1,7 +1,7 @@
 Adafruit-Blinka==8.1.0
 adafruit-circuitpython-busdevice==5.2.1
 adafruit-circuitpython-neopixel==6.3.5
-adafruit-circuitpython-pixelbuf==1.1.5
+adafruit-circuitpython-pixelbuf==1.1.6
 adafruit-circuitpython-typing==1.7.3
 Adafruit-PlatformDetect==3.27.0
 Adafruit-PureIO==1.1.9
