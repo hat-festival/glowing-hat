@@ -34,7 +34,7 @@ mock==4.0.3
 mypy-extensions==0.4.3
 numpy==1.23.5
 opencv-python==4.5.5.64
-packaging==21.3
+packaging==23.0
 parso==0.8.3
 pathspec==0.10.1
 pexpect==4.8.0
