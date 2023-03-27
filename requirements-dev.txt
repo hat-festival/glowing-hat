@@ -60,7 +60,7 @@ pytest-cov==4.0.0
 pytest-random-order==1.1.0
 pyusb==1.2.1
 PyYAML==6.0
-redis==4.4.0
+redis==4.5.3
 six==1.16.0
 smbus==1.1.post2
 snowballstemmer==2.2.0
