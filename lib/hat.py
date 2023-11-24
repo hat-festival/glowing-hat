@@ -1,8 +1,9 @@
 import platform
 
+from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
-from lib.tools import gamma_correct
+from lib.tools import normalise
 
 if "arm" in platform.platform():  # nocov
     import board
@@ -13,6 +14,7 @@ class Hat:
     """Hat with pixels."""
 
     def __init__(self, locations="conf/locations.yaml", auto_centre=False):
+        self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
 
@@ -27,7 +29,7 @@ class Hat:
 
     def light_one(self, index, colour, auto_show=True):
         """Light up a single pixel."""
-        self.lights[index] = gamma_correct(colour)
+        self.lights[index] = normalise(colour, factor=self.conf["brightness-factor"])
 
         if auto_show:
             self.show()
@@ -35,7 +37,9 @@ class Hat:
     def colour_indeces(self, indeces, colour, auto_show=True):
         """Apply a colour to a list of lights."""
         for index in indeces:
-            self.lights[index] = gamma_correct(colour)
+            self.lights[index] = normalise(
+                colour, factor=self.conf["brightness-factor"]
+            )
 
         if auto_show:
             self.show()

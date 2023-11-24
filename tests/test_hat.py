@@ -1,8 +1,12 @@
 from unittest import TestCase
 
+from mock import patch
+
+from lib.conf import conf
 from lib.hat import Hat
 
 
+@patch.dict(conf, {"brightness-factor": 1.0})
 class TestHat(TestCase):
     """Test the Hat."""
 
