@@ -3,6 +3,7 @@ from lib.tools import (
     colour_set_to_colour_list,
     gamma_correct,
     hue_to_rgb,
+    normalise,
     remove_axis,
     scale_colour,
 )
@@ -33,6 +34,12 @@ def test_gamma_correction():
 
     for colour, corrected in cases:
         assert gamma_correct(colour) == corrected
+
+
+def test_normalise():
+    """Test it normalises a colour."""
+    assert normalise([255, 255, 255]) == (255, 255, 255)
+    assert normalise([255, 255, 255], factor=0.5) == (127, 127, 127)
 
 
 def test_close_enough():

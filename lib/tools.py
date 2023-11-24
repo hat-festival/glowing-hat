@@ -14,6 +14,11 @@ def gamma_correct(triple):
     return tuple(map(lambda n: gamma[int(n)], triple))
 
 
+def normalise(triple, factor=1):
+    """Adjust colours."""
+    return tuple(map(lambda x: int(x * factor), gamma_correct(triple)))
+
+
 def make_key(key, namespace):
     """Make compound key."""
     return f"{namespace}:{key}"

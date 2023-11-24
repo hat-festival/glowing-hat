@@ -7,12 +7,14 @@ wheel:
 random-colour:
   hue-distance: 0.2
 
+brightness-factor: 0.15
+
 webserver-port: 5001
 
 oled:
-  size: 
+  size:
     x: 128
-    y: 32 
+    y: 32
   font:
     name: SourceCodePro-Light
     size: 13
