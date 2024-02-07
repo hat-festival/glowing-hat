@@ -1,3 +1,7 @@
+musicbounce:
+  prefs:
+    axis: y
+
 cuttlefish:
   jump: 2
   steps: 200  # more than 100 please
@@ -9,68 +13,68 @@ pulsator:
   steps:
     min: 32
     max: 128
-  prefs: 
-    axis: none 
-    invert: False 
+  prefs:
+    axis: none
+    invert: False
     colour-sources:
       - wheel
-      - redis 
+      - redis
 
 brainwaves:
   jump: 8
   steps: 128
   prefs:
-    axis: y 
-    invert: False 
+    axis: y
+    invert: False
     colour-sources:
       - redis
       - wheel
-    colour-set: white  
+    colour-set: white
 
 rotator:
   steps: 9
   offset: 45
   prefs:
-    axis: y 
+    axis: y
     invert: False
     colour-sources:
       - wheel
-      - redis 
+      - redis
 
 bands:
   jump: 5
   width: 50
   prefs:
-    axis: z 
-    invert: True 
+    axis: z
+    invert: True
     colour-sources:
-      - redis 
+      - redis
     colour-set: rgb
 
 larsen:
   jump: 8
   steps: 128
   prefs:
-    axis: x 
+    axis: x
     invert: False
     colour-sources:
-      - random 
+      - random
       - wheel
-      - redis 
+      - redis
 
 sweeper:
   jump: 25
   prefs:
-    axis: y 
+    axis: y
     invert: False
     colour-sources:
       - wheel
-      - redis 
+      - redis
 
 bigtop:
   jump: 20
   prefs:
-    axis: y 
+    axis: y
     invert: False
 
 accelerator:
@@ -79,11 +83,11 @@ accelerator:
     min: 2
     max: 50
   prefs:
-    axis: y 
+    axis: y
     invert: True
     colour-sources:
       - wheel
-      - redis 
+      - redis
 
 crawler:
   max-jump: 4
@@ -92,6 +96,6 @@ crawler:
     colour-sources:
       - random
 
-'off': 
+'off':
   prefs:
     axis: none
