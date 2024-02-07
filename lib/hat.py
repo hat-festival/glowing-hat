@@ -45,8 +45,14 @@ class Hat:
             self.show()
 
     def sort(self, axis):
-        """Sort our pixels a long an axis."""
+        """Sort our pixels along an axis."""
         self.pixels.sort(key=lambda w: w[axis])
+
+    def fill(self, colour):
+        """Fill every light with a colour."""
+        for index in range(len(self.lights)):
+            self.light_one(index, colour, auto_show=False)
+        self.show()
 
     def illuminate(self, colours):
         """Apply a whole list of colours to ourself."""
