@@ -36,9 +36,7 @@ class MusicBounce(Mode):
 
     def punch(self, colour):
         """Illuminate the hat."""
-        print()
-        for i in range(100, 0, -1):
+        for i in range(100, 50, -10):
             colour = scale_colour(colour, i / 100)
-            print(colour)
             self.hat.fill(colour)
             sleep(0.01)
