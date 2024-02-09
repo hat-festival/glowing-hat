@@ -1,5 +1,4 @@
 import datetime
-from random import random
 from time import sleep
 
 from lib.custodian import Custodian
@@ -8,6 +7,7 @@ cust = Custodian(namespace="hat")
 
 
 def pause():
+    """Sleep."""
     sleep(0.2)
 
 
