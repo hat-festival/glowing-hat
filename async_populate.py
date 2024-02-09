@@ -12,22 +12,22 @@ def pause():
 
 
 while True:
-    cust.set("mid", datetime.datetime.now().timestamp())  # noqa: DTZ005
+    cust.set("mid", datetime.datetime.now(tz=datetime.UTC).timestamp())
     pause()
     pause()
     pause()
     pause()
-    cust.set("high", datetime.datetime.now().timestamp())  # noqa: DTZ005
+    cust.set("high", datetime.datetime.now(tz=datetime.UTC).timestamp())
     pause()
     pause()
     pause()
     pause()
-    cust.set("low", datetime.datetime.now().timestamp())  # noqa: DTZ005
+    cust.set("low", datetime.datetime.now(tz=datetime.UTC).timestamp())
     pause()
     pause()
     pause()
     pause()
-    cust.set("high", datetime.datetime.now().timestamp())  # noqa: DTZ005
+    cust.set("high", datetime.datetime.now(tz=datetime.UTC).timestamp())
     pause()
     pause()
     pause()
