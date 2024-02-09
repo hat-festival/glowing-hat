@@ -14,7 +14,7 @@ class Larsen(Mode):
         self.steps = self.data["steps"]
         self.values = deque()
 
-        for i in range(self.steps):
+        for i in range(self.steps):  # noqa: B007
             self.values.append(0)
         for i in range(self.steps):
             self.values.append(i / self.steps)
@@ -33,7 +33,9 @@ class Larsen(Mode):
         count = 0
         clr = self.get_colour()
         while True:
-            rgbs = list(map(lambda x: scale_colour(clr, x), list(self.values)[:100]))
+            rgbs = list(  # noqa: C417
+                map(lambda x: scale_colour(clr, x), list(self.values)[:100])
+            )
             self.hat.illuminate(rgbs)
             self.values.rotate(self.jump)
 

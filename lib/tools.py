@@ -6,17 +6,17 @@ from lib.gamma import gamma
 
 def hue_to_rgb(hue):
     """Generate a GRB triple from a hue."""
-    return list(map(lambda x: int(x * 255), hsv_to_rgb(hue, 1, 1)))
+    return list(map(lambda x: int(x * 255), hsv_to_rgb(hue, 1, 1)))  # noqa: C417
 
 
 def gamma_correct(triple):
     """Gamma-correct a colour."""
-    return tuple(map(lambda n: gamma[int(n)], triple))
+    return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417
 
 
 def normalise(triple, factor=1):
     """Adjust colours."""
-    return tuple(map(lambda x: int(x * factor), gamma_correct(triple)))
+    return tuple(map(lambda x: int(x * factor), gamma_correct(triple)))  # noqa: C417
 
 
 def make_key(key, namespace):
@@ -34,7 +34,7 @@ def close_enough(actual, target, tolerance=0.1):
 
 def scale_colour(triple, factor):
     """Dim a colour."""
-    return list(map(lambda x: int(x * factor), triple))
+    return list(map(lambda x: int(x * factor), triple))  # noqa: C417
 
 
 def remove_axis(axis):
@@ -47,11 +47,11 @@ def colour_set_to_colour_list(colour_set, width):
     result = []
     for triple in list(colour_set.values()):
         for _ in range(width):
-            result.append(triple)
+            result.append(triple)  # noqa: PERF401
 
     return result
 
 
 def colour_from_time():
     """Generate an RGB triple from a hue from sub-seconds."""
-    return hue_to_rgb(datetime.now().microsecond / 10**6)
+    return hue_to_rgb(datetime.now().microsecond / 10**6)  # noqa: DTZ005

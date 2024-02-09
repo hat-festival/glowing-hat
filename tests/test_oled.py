@@ -1,8 +1,7 @@
 from hashlib import sha256
 from pathlib import Path
 from unittest import TestCase
-
-from mock import patch
+from unittest.mock import patch
 
 from lib.conf import conf
 from lib.custodian import Custodian
@@ -23,7 +22,7 @@ class TestImageGenerator(TestCase):
         self.cus.populate(flush=True)
 
         self.cus.set("axis", "y")
-        self.cus.set("invert", False)
+        self.cus.set("invert", False)  # noqa: FBT003
         self.cus.set("colour-source", "redis")
         self.cus.set("colour-set", "rgb")
         self.cus.set("colour", [255, 0, 0])
@@ -37,12 +36,13 @@ class TestImageGenerator(TestCase):
         gen.generate(save_to="hat-settings")
 
         checksum = sha256(Path("tmp/hat-settings.png").read_bytes()).hexdigest()
-        self.assertEqual(
-            checksum, "15b87dd71eafa771fc8dc651b3cc2679eacef8086632a5c11af79e1116608bfd"
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "15b87dd71eafa771fc8dc651b3cc2679eacef8086632a5c11af79e1116608bfd",
         )
 
     def test_hat_settings_with_wheel(self):
-        """Test it generates the hat-settings screen with the `wheel` colour-source."""
+        """Test it generates the hat-settings screen with the `wheel` colour-source."""  # noqa: E501
         self.cus.set("display-type", "hat-settings")
         self.cus.set("colour-source", "wheel")
 
@@ -52,8 +52,9 @@ class TestImageGenerator(TestCase):
         checksum = sha256(
             Path("tmp/hat-settings-with-wheel.png").read_bytes()
         ).hexdigest()
-        self.assertEqual(
-            checksum, "d5df7c667430f066acfa5370f5393f6e6464d110b2db8cf6b91eb798ca63a058"
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "d5df7c667430f066acfa5370f5393f6e6464d110b2db8cf6b91eb798ca63a058",
         )
 
     def test_hat_settings_with_no_axis(self):
@@ -66,15 +67,18 @@ class TestImageGenerator(TestCase):
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="hat-settings-no-axis")
 
-        checksum = sha256(Path("tmp/hat-settings-no-axis.png").read_bytes()).hexdigest()
-        self.assertEqual(
-            checksum, "12ac0e23994b774583ab7f47ae2e8a46e3736bf3cbb922807421d9e9eb5ab240"
+        checksum = sha256(
+            Path("tmp/hat-settings-no-axis.png").read_bytes()
+        ).hexdigest()
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "12ac0e23994b774583ab7f47ae2e8a46e3736bf3cbb922807421d9e9eb5ab240",
         )
 
     def test_hat_settings_with_invert(self):
         """Test it generates the hat-settings screen."""
         self.cus.set("display-type", "hat-settings")
-        self.cus.set("invert", True)
+        self.cus.set("invert", True)  # noqa: FBT003
         self.cus.set("axis", "x")
 
         gen = ImageGenerator(self.cus, self.oled_conf)
@@ -83,8 +87,9 @@ class TestImageGenerator(TestCase):
         checksum = sha256(
             Path("tmp/hat-settings-with-invert.png").read_bytes()
         ).hexdigest()
-        self.assertEqual(
-            checksum, "83dcbc0f01651905874056224ac912d94abc54279f22f63fff174f574d9201e2"
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "83dcbc0f01651905874056224ac912d94abc54279f22f63fff174f574d9201e2",
         )
 
     def test_button_config(self):
@@ -94,9 +99,12 @@ class TestImageGenerator(TestCase):
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="button-config")
 
-        checksum = sha256(Path("tmp/button-config.png").read_bytes()).hexdigest()
-        self.assertEqual(
-            checksum, "46755679d44966c448c49a9f39b1fab279f23332b31a3421bf5b36e9be77ad2f"
+        checksum = sha256(
+            Path("tmp/button-config.png").read_bytes()
+        ).hexdigest()
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "46755679d44966c448c49a9f39b1fab279f23332b31a3421bf5b36e9be77ad2f",
         )
 
     def test_boot_screen(self):
@@ -107,8 +115,9 @@ class TestImageGenerator(TestCase):
         gen.generate(save_to="boot")
 
         checksum = sha256(Path("tmp/boot.png").read_bytes()).hexdigest()
-        self.assertEqual(
-            checksum, "06fcc3e52988d996d43c6fb8eb9f983edfe4a858e35ae3766c914e0f24c9b148"
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "06fcc3e52988d996d43c6fb8eb9f983edfe4a858e35ae3766c914e0f24c9b148",
         )
 
     @patch("socket.gethostname")
@@ -124,16 +133,17 @@ class TestImageGenerator(TestCase):
         gen.generate(save_to="ip-address")
 
         checksum = sha256(Path("tmp/ip-address.png").read_bytes()).hexdigest()
-        self.assertEqual(
-            checksum, "e4fccb2d14ecdd921a8375688ef529e4f0de579dd23837fc7287060e19c43209"
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "e4fccb2d14ecdd921a8375688ef529e4f0de579dd23837fc7287060e19c43209",
         )
 
     def test_get_sign(self):
         """Test it generates the correct sign."""
         gen = ImageGenerator(self.cus, self.oled_conf)
 
-        self.cus.set("invert", False)
-        self.assertEqual(gen.get_sign(), "+")
+        self.cus.set("invert", False)  # noqa: FBT003
+        self.assertEqual(gen.get_sign(), "+")  # noqa: PT009
 
-        self.cus.set("invert", True)
-        self.assertEqual(gen.get_sign(), "-")
+        self.cus.set("invert", True)  # noqa: FBT003
+        self.assertEqual(gen.get_sign(), "-")  # noqa: PT009

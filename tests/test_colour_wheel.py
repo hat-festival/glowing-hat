@@ -8,7 +8,7 @@ class TestColourWheel(TestCase):
     """Test the hue-spinner."""
 
     def setUp(self):
-        """Setup."""
+        """Setup."""  # noqa: D401
         self.custodian = Custodian(namespace="test")
         self.custodian.populate(flush=True)
 
@@ -16,12 +16,12 @@ class TestColourWheel(TestCase):
         """Test it finds the existing hue."""
         self.custodian.set("hue", 0.777)
         wheel = ColourWheel(namespace="test")
-        self.assertEqual(wheel.start_hue, 0.777)
+        self.assertEqual(wheel.start_hue, 0.777)  # noqa: PT009
 
     def test_with_no_start_hue(self):
         """Test it handles no start hue."""
         wheel = ColourWheel(namespace="test")
-        self.assertEqual(wheel.start_hue, 0)
+        self.assertEqual(wheel.start_hue, 0)  # noqa: PT009
 
     def test_rotate(self):
         """Test it rotates."""
@@ -29,4 +29,4 @@ class TestColourWheel(TestCase):
         wheel = ColourWheel(namespace="test")
         wheel.steps = 500
         wheel.rotate(testing=True)
-        self.assertEqual(float(self.custodian.get("hue")), 0.29800000000000004)
+        self.assertEqual(float(self.custodian.get("hue")), 0.29800000000000004)  # noqa: PT009

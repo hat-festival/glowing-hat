@@ -6,7 +6,7 @@ from random import randint
 from lib.mode import Mode
 from lib.tools import scale_colour
 
-CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())
+CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())  # noqa: S301
 
 
 class Pulsator(Mode):
@@ -31,7 +31,7 @@ class Pulsator(Mode):
         while True:
             colour = self.get_colour()
             self.hat.illuminate(
-                list(
+                list(  # noqa: C417
                     map(
                         lambda throbber: scale_colour(colour, throbber.next()),
                         self.throbbers,
@@ -50,9 +50,9 @@ class Throbber:
     def next(self):
         """Get the next value."""
         if len(self.values) == 0:
-            key = randint(16, 255)
+            key = randint(16, 255)  # noqa: S311
             self.values = deque(CURVES[key])
 
         value = self.values.popleft()
 
-        return value
+        return value  # noqa: RET504

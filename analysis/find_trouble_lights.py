@@ -2,7 +2,9 @@ from pathlib import Path
 
 import yaml
 
-locations = yaml.safe_load(Path("../conf/locations.yaml").read_text(encoding="UTF-8"))
+locations = yaml.safe_load(
+    Path("../conf/locations.yaml").read_text(encoding="UTF-8")
+)
 
 no_x = []
 no_z = []

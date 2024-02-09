@@ -31,8 +31,8 @@ class Sweeper(Mode):
                 if count % self.jump == 0:
                     self.illuminate(frame, self.get_colour())
 
-                count += 1
+                count += 1  # noqa: SIM113
 
     def illuminate(self, frame, clr):
         """Light the hat."""
-        self.hat.illuminate(list(map(lambda x: self.colour(clr, x[1]), frame)))
+        self.hat.illuminate(list(map(lambda x: self.colour(clr, x[1]), frame)))  # noqa: C417

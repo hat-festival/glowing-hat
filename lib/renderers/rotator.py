@@ -16,7 +16,7 @@ class Rotator:
         self.hat = Hat(auto_centre=True)
 
     def render(self):
-        """Create the data"""
+        """Create the data"""  # noqa: D400, D415
         data = {}
 
         for axis in ["x", "y", "z"]:
@@ -38,11 +38,13 @@ def make_frameset(hat, axis_1, axis_2):
 
 def populate_indeces(data, hat, axis_1, axis_2):
     """Populate some indeces."""
-    return list(
+    return list(  # noqa: C417
         map(
             lambda x: x["index"],
             filter(
-                lambda pixel: point_on_line((pixel[axis_1], pixel[axis_2]), data),
+                lambda pixel: point_on_line(
+                    (pixel[axis_1], pixel[axis_2]), data
+                ),
                 hat.pixels,
             ),
         )
@@ -50,13 +52,13 @@ def populate_indeces(data, hat, axis_1, axis_2):
 
 
 def generator():
-    """Iterator."""
+    """Iterator."""  # noqa: D401
     for angle in range(0, 360, 1):
         yield line(angle)
 
 
 def line(angle):
-    """A line for an angle."""
+    """A line for an angle."""  # noqa: D401
     return [(0, 0), (cos(radians(angle)), sin(radians(angle)))]
 
 
@@ -67,8 +69,8 @@ def point_on_line(point, line):
     this_end = np.array(line[0])
     that_end = np.array(line[1])
     our_point = np.array(point)
-    distance = np.cross(that_end - this_end, our_point - this_end) / np.linalg.norm(
-        that_end - this_end
-    )
+    distance = np.cross(
+        that_end - this_end, our_point - this_end
+    ) / np.linalg.norm(that_end - this_end)
 
     return abs(distance) <= tolerance

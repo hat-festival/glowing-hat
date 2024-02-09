@@ -13,7 +13,7 @@ if "arm" in platform.platform():  # nocov
 class Hat:
     """Hat with pixels."""
 
-    def __init__(self, locations="conf/locations.yaml", auto_centre=False):
+    def __init__(self, locations="conf/locations.yaml", auto_centre=False):  # noqa: FBT002, D107
         self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
@@ -27,14 +27,16 @@ class Hat:
         else:
             self.lights = FakeLights(len(self.pixels))
 
-    def light_one(self, index, colour, auto_show=True):
+    def light_one(self, index, colour, auto_show=True):  # noqa: FBT002
         """Light up a single pixel."""
-        self.lights[index] = normalise(colour, factor=self.conf["brightness-factor"])
+        self.lights[index] = normalise(
+            colour, factor=self.conf["brightness-factor"]
+        )
 
         if auto_show:
             self.show()
 
-    def colour_indeces(self, indeces, colour, auto_show=True):
+    def colour_indeces(self, indeces, colour, auto_show=True):  # noqa: FBT002
         """Apply a colour to a list of lights."""
         for index in indeces:
             self.lights[index] = normalise(

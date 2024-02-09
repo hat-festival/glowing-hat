@@ -11,7 +11,7 @@ class TestLarsen(TestCase):
         larsen = Larsen(2)
 
         larsen.populate()
-        self.assertEqual(
+        self.assertEqual(  # noqa: PT009
             larsen,
             [
                 [0, 1],
@@ -25,7 +25,7 @@ class TestLarsen(TestCase):
         larsen = Larsen(4)
 
         larsen.populate()
-        self.assertEqual(
+        self.assertEqual(  # noqa: PT009
             larsen,
             [
                 [0, 0, 0, 1],
@@ -43,7 +43,16 @@ def test_middle_member():
     """Test it generates the middle-member correctly."""
     assert middle_member(2) == [1, 0.293]
     assert middle_member(4) == [1.0, 0.617, 0.293, 0.076]
-    assert middle_member(8) == [1.0, 0.805, 0.617, 0.444, 0.293, 0.169, 0.076, 0.019]
+    assert middle_member(8) == [
+        1.0,
+        0.805,
+        0.617,
+        0.444,
+        0.293,
+        0.169,
+        0.076,
+        0.019,
+    ]
 
 
 def test_range_finder():

@@ -6,12 +6,12 @@ import yaml
 class Scaler(list):
     """Pixel scaler thing."""
 
-    def __init__(
-        self, locations="conf/locations.yaml", auto_centre=False
-    ):  # pylint: disable=W0231
+    def __init__(self, locations="conf/locations.yaml", auto_centre=False):  # pylint: disable=W0231  # noqa: FBT002
         """Construct."""
         self.locations = locations
-        self.absolutes = yaml.safe_load(Path(locations).read_text(encoding="UTF-8"))
+        self.absolutes = yaml.safe_load(
+            Path(locations).read_text(encoding="UTF-8")
+        )
 
         self.auto_centre = auto_centre
 
@@ -53,21 +53,20 @@ def find_largest_span(absolutes):
                 if value - centre > largest:
                     largest = value - centre
 
-            else:
-                if centre - value > largest:
-                    largest = centre - value
+            elif centre - value > largest:
+                largest = centre - value
 
     return largest
 
 
 def normalise_list(items):
     """Scale a list from -1 to 1."""
-    reset = list(map(lambda x: x - min(items), items))
+    reset = list(map(lambda x: x - min(items), items))  # noqa: C417
     factor = max(reset) / 2
-    scaled = list(map(lambda x: x / factor, reset))
-    normalised = list(map(lambda x: x - 1, scaled))
+    scaled = list(map(lambda x: x / factor, reset))  # noqa: C417
+    normalised = list(map(lambda x: x - 1, scaled))  # noqa: C417
 
-    return normalised
+    return normalised  # noqa: RET504
 
 
 def deconstruct(absolutes):
@@ -75,6 +74,6 @@ def deconstruct(absolutes):
     deconstructed = {}
 
     for axis in ["index", "x", "y", "z"]:
-        deconstructed[axis] = list(map(lambda w: w[axis], absolutes))
+        deconstructed[axis] = list(map(lambda w: w[axis], absolutes))  # noqa: C417
 
     return deconstructed

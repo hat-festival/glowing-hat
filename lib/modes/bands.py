@@ -20,7 +20,8 @@ class Bands(Mode):
 
         self.bands = deque(
             colour_set_to_colour_list(
-                self.conf["colour-sets"][self.custodian.get("colour-set")], self.width
+                self.conf["colour-sets"][self.custodian.get("colour-set")],
+                self.width,
             )
         )
         self.hat.sort(self.axis)

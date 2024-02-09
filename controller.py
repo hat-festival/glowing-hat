@@ -68,14 +68,16 @@ class Controller:
 
         self.custodian.rotate_until("display-type", "hat-settings")
 
-    def restart_hat(self, is_mode=False):
+    def restart_hat(self, is_mode=False):  # noqa: FBT002
         """Restart the hat."""
         logging.info("restarting hat")
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        self.mode = self.modes[self.custodian.get("mode")](self.hat, self.custodian)
-        # if we're moving to a new mode (rather than just changing the axis or whatever)
+        self.mode = self.modes[self.custodian.get("mode")](
+            self.hat, self.custodian
+        )
+        # if we're moving to a new mode (rather than just changing the axis or whatever)  # noqa: E501
         if is_mode:
             # we want to set the mode to its preferential configuration
             self.mode.reset()
@@ -90,7 +92,9 @@ class Controller:
         """Bump something."""
         logging.info("bumping `%s`", parameter)
         self.custodian.next(parameter)
-        logging.info("`%s` is now `%s`", parameter, self.custodian.get(parameter))
+        logging.info(
+            "`%s` is now `%s`", parameter, self.custodian.get(parameter)
+        )
 
         is_mode = parameter == "mode"
         self.restart_hat(is_mode=is_mode)

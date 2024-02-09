@@ -23,7 +23,7 @@ class ColourWheel:
 
         return float(self.custodian.get("hue"))
 
-    def rotate(self, testing=False):
+    def rotate(self, testing=False):  # noqa: FBT002
         """Spin the wheel."""
         offset = self.start_hue
 
