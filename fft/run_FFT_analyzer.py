@@ -3,11 +3,11 @@ import time
 from src.stream_analyzer import Stream_Analyzer
 
 
-def run_FFT_analyzer():
+def run_FFT_analyzer():  # noqa: N802, D103
     ear = Stream_Analyzer(
         rate=None,  # Audio samplerate, None uses the default source settings
         FFT_window_size_ms=60,  # Window size used for the FFT transform
-        updates_per_second=1000,  # How often to read the audio stream for new data
+        updates_per_second=1000,  # How often to read the audio stream for new data  # noqa: E501
         n_frequency_bins=400,  # The FFT features are grouped in bins
     )
 

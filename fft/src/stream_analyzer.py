@@ -3,14 +3,14 @@ import time
 from collections import deque
 
 import numpy as np
-import scipy
-from scipy.signal import savgol_filter
+import scipy  # noqa: F401
+from scipy.signal import savgol_filter  # noqa: F401
 from src.fft import getFFT
 from src.stream_reader_pyaudio import Stream_Reader
-from src.utils import *
+from src.utils import *  # noqa: F403
 
 
-class Stream_Analyzer:
+class Stream_Analyzer:  # noqa: N801
     """
     The Audio_Analyzer class provides access to continuously recorded
     (and mathematically processed) audio data.
@@ -22,12 +22,12 @@ class Stream_Analyzer:
         FFT_window_size_ms: int:  Time window size (in ms) to use for the FFT transform
         updatesPerSecond: int:    How often to record new data.
 
-    """
+    """  # noqa: E501, D205, D212, D407, D412
 
-    def __init__(
+    def __init__(  # noqa: D107
         self,
         rate=None,
-        FFT_window_size_ms=50,
+        FFT_window_size_ms=50,  # noqa: N803
         updates_per_second=100,
         n_frequency_bins=51,
     ):
@@ -45,12 +45,12 @@ class Stream_Analyzer:
         self.rate = self.stream_reader.rate
 
         # Custom settings:
-        self.rolling_stats_window_s = 20  # The axis range of the FFT features will adapt dynamically using a window of N seconds
-        self.equalizer_strength = (
-            0.20  # [0-1] --> gradually rescales all FFT features to have the same mean
-        )
+        self.rolling_stats_window_s = 20  # The axis range of the FFT features will adapt dynamically using a window of N seconds  # noqa: E501
+        self.equalizer_strength = 0.20  # [0-1] --> gradually rescales all FFT features to have the same mean  # noqa: E501
 
-        self.FFT_window_size = round_up_to_even(self.rate * FFT_window_size_ms / 1000)
+        self.FFT_window_size = round_up_to_even(  # noqa: F405
+            self.rate * FFT_window_size_ms / 1000
+        )
         self.FFT_window_size_ms = 1000 * self.FFT_window_size / self.rate
         self.fft = np.ones(int(self.FFT_window_size / 2), dtype=float)
         self.fftx = (
@@ -93,11 +93,13 @@ class Stream_Analyzer:
             bin_frequency_indices = np.where(self.fftx_bin_indices == bin_index)
             self.fftx_indices_per_bin.append(bin_frequency_indices)
             fftx_frequencies_this_bin = self.fftx[bin_frequency_indices]
-            self.frequency_bin_centres[bin_index] = np.mean(fftx_frequencies_this_bin)
+            self.frequency_bin_centres[bin_index] = np.mean(
+                fftx_frequencies_this_bin
+            )
 
         # Hardcoded parameters:
         self.fft_fps = 30
-        self.log_features = False  # Plot log(FFT features) instead of FFT features --> usually pretty bad
+        self.log_features = False  # Plot log(FFT features) instead of FFT features --> usually pretty bad  # noqa: E501
         self.delays = deque(maxlen=20)
         self.num_ffts = 0
         self.strongest_frequency = 0
@@ -114,8 +116,10 @@ class Stream_Analyzer:
         self.rolling_stats_window_n = (
             self.rolling_stats_window_s * self.fft_fps
         )  # Assumes ~30 FFT features per second
-        self.rolling_bin_values = numpy_data_buffer(
-            self.rolling_stats_window_n, self.n_frequency_bins, start_value=25000
+        self.rolling_bin_values = numpy_data_buffer(  # noqa: F405
+            self.rolling_stats_window_n,
+            self.n_frequency_bins,
+            start_value=25000,
         )
         self.bin_mean_values = np.ones(self.n_frequency_bins)
 
@@ -130,7 +134,7 @@ class Stream_Analyzer:
         # Let's get started:
         self.stream_reader.stream_start(self.data_windows_to_buffer)
 
-    def update_rolling_stats(self):
+    def update_rolling_stats(self):  # noqa: D102
         self.rolling_bin_values.append_data(self.frequency_bin_energies)
         self.bin_mean_values = np.mean(
             self.rolling_bin_values.get_buffer_data(), axis=0
@@ -140,7 +144,7 @@ class Stream_Analyzer:
             self.bin_mean_values,
         )
 
-    def update_features(self, n_bins=3):
+    def update_features(self, n_bins=3):  # noqa: ARG002, D102
         latest_data_window = self.stream_reader.data_buffer.get_most_recent(
             self.FFT_window_size
         )
@@ -173,9 +177,9 @@ class Stream_Analyzer:
         # https://github.com/shunfu/python-beat-detector
         # https://pypi.org/project/vamp/
 
-        return
+        return  # noqa: PLR1711
 
-    def get_audio_features(self):
+    def get_audio_features(self):  # noqa: D102
         if (
             self.stream_reader.new_data
         ):  # Check if the stream_reader has new audio data we need to process

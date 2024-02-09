@@ -4,24 +4,29 @@ import numpy as np
 import scipy
 
 
-def round_up_to_even(f):
+def round_up_to_even(f):  # noqa: D103
     return int(math.ceil(f / 2.0) * 2)
 
 
-def round_to_nearest_power_of_two(f, base=2):
-    l = math.log(f, base)
+def round_to_nearest_power_of_two(f, base=2):  # noqa: D103
+    l = math.log(f, base)  # noqa: E741
     rounded = int(np.round(l, 0))
     return base**rounded
 
 
-def get_frequency_bins(start, stop, n):
+def get_frequency_bins(start, stop, n):  # noqa: D103
     octaves = np.logspace(
-        log(start) / log(2), log(stop) / log(2), n, endpoint=True, base=2, dtype=None
+        log(start) / log(2),  # noqa: F821
+        log(stop) / log(2),  # noqa: F821
+        n,
+        endpoint=True,
+        base=2,
+        dtype=None,
     )
     return np.insert(octaves, 0, 0)
 
 
-def gaussian_kernel1d(sigma, truncate=2.0):
+def gaussian_kernel1d(sigma, truncate=2.0):  # noqa: D103
     sigma = float(sigma)
     sigma2 = sigma * sigma
     # make the radius of the filter equal to truncate standard deviations
@@ -30,22 +35,22 @@ def gaussian_kernel1d(sigma, truncate=2.0):
     x = np.arange(-radius, radius + 1)
     phi_x = np.exp(-0.5 / sigma2 * x**2)
     phi_x = phi_x / phi_x.sum()
-    return phi_x
+    return phi_x  # noqa: RET504
 
 
-def gaussian_kernel_1D(w, sigma):
-    sigma = sigma
+def gaussian_kernel_1D(w, sigma):  # noqa: N802, D103
+    sigma = sigma  # noqa: PLW0127
     x = np.linspace(-sigma, sigma, w + 1)
     kern1d = np.diff(scipy.stats.norm.cdf(x))
     return kern1d / kern1d.sum()
 
 
-class numpy_data_buffer:
+class numpy_data_buffer:  # noqa: N801
     """
     A fast, circular FIFO buffer in numpy with minimal memory interactions by using an array of index pointers
-    """
+    """  # noqa: E501, D200, D212, D400, D415
 
-    def __init__(
+    def __init__(  # noqa: D107, PLR0913
         self,
         n_windows,
         samples_per_window,
@@ -72,7 +77,7 @@ class numpy_data_buffer:
         self.last_window_id = np.max(self.indices)
         self.index_order = np.argsort(self.indices)
 
-    def append_data(self, data_window):
+    def append_data(self, data_window):  # noqa: D102
         self.data[self.overwrite_index, :] = data_window
 
         self.last_window_id += 1
@@ -85,11 +90,11 @@ class numpy_data_buffer:
         self.elements_in_buffer += 1
         self.elements_in_buffer = min(self.n_windows, self.elements_in_buffer)
 
-    def get_most_recent(self, window_size):
+    def get_most_recent(self, window_size):  # noqa: D102
         ordered_dataframe = self.data[self.index_order]
         if self.data_dimensions == 1:
             ordered_dataframe = np.hstack(ordered_dataframe)
         return ordered_dataframe[self.total_samples - window_size :]
 
-    def get_buffer_data(self):
+    def get_buffer_data(self):  # noqa: D102
         return self.data[: self.elements_in_buffer]
