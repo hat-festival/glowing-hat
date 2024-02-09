@@ -1,14 +1,14 @@
-import math
-import sys
+import math  # noqa: F401
+import sys  # noqa: F401
 import time
 from collections import deque
 
 import numpy as np
 import pyaudio
-from src.utils import *
+from src.utils import *  # noqa: F403
 
 
-class Stream_Reader:
+class Stream_Reader:  # noqa: N801
     """
     The Stream_Reader continuously reads data from a selected sound source using PyAudio
 
@@ -18,10 +18,9 @@ class Stream_Reader:
         rate: float or None:    Sample rate to use. Defaults to something supported.
         updatesPerSecond: int:  How often to record new data.
 
-    """
+    """  # noqa: E501, D212, D400, D407, D412, D415
 
-    def __init__(self, rate=None, updates_per_second=1000, verbose=False):
-
+    def __init__(self, rate=None, updates_per_second=1000, verbose=False):  # noqa: FBT002, D107
         self.rate = rate
         self.verbose = verbose
         self.pa = pyaudio.PyAudio()
@@ -36,7 +35,9 @@ class Stream_Reader:
         if self.rate is None:
             self.rate = self.valid_low_rate(self.device)
 
-        self.update_window_n_frames = round_up_to_even(self.rate / updates_per_second)
+        self.update_window_n_frames = round_up_to_even(  # noqa: F405
+            self.rate / updates_per_second
+        )
         self.updates_per_second = self.rate / self.update_window_n_frames
         self.info = self.pa.get_device_info_by_index(self.device)
         self.data_capture_delays = deque(maxlen=20)
@@ -64,7 +65,7 @@ class Stream_Reader:
             "\n##################################################################################################"
         )
         print(
-            "Recording from %s at %d Hz\nUsing (non-overlapping) data-windows of %d samples (updating at %.2ffps)"
+            "Recording from %s at %d Hz\nUsing (non-overlapping) data-windows of %d samples (updating at %.2ffps)"  # noqa: E501
             % (
                 self.info["name"],
                 self.rate,
@@ -73,7 +74,7 @@ class Stream_Reader:
             )
         )
 
-    def non_blocking_stream_read(self, in_data, frame_count, time_info, status):
+    def non_blocking_stream_read(self, in_data, frame_count, time_info, status):  # noqa: ARG002, D102
         if self.verbose:
             start = time.time()
 
@@ -87,7 +88,7 @@ class Stream_Reader:
 
         return in_data, pyaudio.paContinue
 
-    def stream_start(self, data_windows_to_buffer=None):
+    def stream_start(self, data_windows_to_buffer=None):  # noqa: D102
         self.data_windows_to_buffer = data_windows_to_buffer
 
         if data_windows_to_buffer is None:
@@ -97,7 +98,7 @@ class Stream_Reader:
         else:
             self.data_windows_to_buffer = data_windows_to_buffer
 
-        self.data_buffer = numpy_data_buffer(
+        self.data_buffer = numpy_data_buffer(  # noqa: F405
             self.data_windows_to_buffer, self.update_window_n_frames
         )
 
@@ -105,13 +106,13 @@ class Stream_Reader:
         self.stream.start_stream()
         self.stream_start_time = time.time()
 
-    def terminate(self):
+    def terminate(self):  # noqa: D102
         print("Sending stream termination command...")
         self.stream.stop_stream()
         self.stream.close()
         self.pa.terminate()
 
-    def valid_low_rate(self, device, test_rates=[44100, 22050]):
+    def valid_low_rate(self, device, test_rates=[44100, 22050]):  # noqa: B006
         """Set the rate to the lowest supported audio rate."""
         for testrate in test_rates:
             if self.test_device(device, rate=testrate):
@@ -125,13 +126,13 @@ class Stream_Reader:
             return default_rate
 
         print(
-            "SOMETHING'S WRONG! I can't figure out a good sample-rate for DEVICE =>",
+            "SOMETHING'S WRONG! I can't figure out a good sample-rate for DEVICE =>",  # noqa: E501
             device,
         )
         return default_rate
 
     def test_device(self, device, rate=None):
-        """given a device ID and a rate, return True/False if it's valid."""
+        """given a device ID and a rate, return True/False if it's valid."""  # noqa: D403
         try:
             self.info = self.pa.get_device_info_by_index(device)
             if not self.info["maxInputChannels"] > 0:
@@ -149,13 +150,13 @@ class Stream_Reader:
                 input=True,
             )
             stream.close()
-            return True
-        except Exception as e:
+            return True  # noqa: TRY300
+        except Exception as e:  # noqa: BLE001, F841
             # print(e)
             return False
 
-    def print_mic_info(self, mic):
+    def print_mic_info(self, mic):  # noqa: D102
         mic_info = self.pa.get_device_info_by_index(mic)
         print("\nMIC %s:" % (str(mic)))
         for k, v in sorted(mic_info.items()):
-            print("%s: %s" % (k, v))
+            print("%s: %s" % (k, v))  # noqa: UP031
