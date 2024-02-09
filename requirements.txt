@@ -1,8 +1,10 @@
-redis
 adafruit-circuitpython-neopixel==6.3.7
-flask
-adafruit-circuitpython-ssd1306 
-Pillow
-pyyaml
+adafruit-circuitpython-ssd1306
 buttonshim
+flask
+Pillow
+pyaudio
+pyyaml
+redis
+scipy
 smbus
