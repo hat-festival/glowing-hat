@@ -20,11 +20,11 @@ class Pixel:
             return None
 
     def positive(self, axis):
-        """Is this Pixel's `value` on `axis` >= than zero"""
+        """Is this Pixel's `value` on `axis` >= than zero"""  # noqa: D400, D415
         return self.greater_than(axis, 0)
 
     def negative(self, axis):
-        """Is this Pixel's `value` on `axis` < than zero"""
+        """Is this Pixel's `value` on `axis` < than zero"""  # noqa: D400, D415
         return self.less_than(axis, 0)
 
     def __getitem__(self, key):

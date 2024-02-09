@@ -118,7 +118,7 @@ class ImageGenerator:
         step_size = round(self.width / items)
 
         for index, abbreviation in enumerate(
-            reversed(list(map(lambda x: x["abbreviation"], conf["buttons"])))
+            reversed(list(map(lambda x: x["abbreviation"], conf["buttons"])))  # noqa: C417
         ):
             self.add_button(abbreviation, index, step_size)
 

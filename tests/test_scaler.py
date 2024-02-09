@@ -9,7 +9,7 @@ class TestScaler(TestCase):
     def test_constructor(self):
         """Test it gets the right data."""
         scaler = Scaler("tests/fixtures/scaler/simple-locations.yaml")
-        self.assertEqual(
+        self.assertEqual(  # noqa: PT009
             scaler.absolutes,
             {
                 "lights": [
@@ -26,8 +26,8 @@ class TestScaler(TestCase):
     def test_simple_scaling(self):
         """Test it scales the simple data."""
         scaler = Scaler("tests/fixtures/scaler/simple-locations.yaml")
-        self.assertEqual(find_extreme(scaler), 1.0)
-        self.assertEqual(
+        self.assertEqual(find_extreme(scaler), 1.0)  # noqa: PT009
+        self.assertEqual(  # noqa: PT009
             scaler,
             [
                 {"index": 0, "x": -1, "y": 1, "z": -1},
@@ -41,9 +41,9 @@ class TestScaler(TestCase):
     def test_offset_scaling(self):
         """Test it scales the offset data."""
         scaler = Scaler("tests/fixtures/scaler/offset-locations.yaml")
-        self.assertEqual(find_largest_span(scaler.absolutes), 1.5)
-        self.assertEqual(find_extreme(scaler), 1.0)
-        self.assertEqual(
+        self.assertEqual(find_largest_span(scaler.absolutes), 1.5)  # noqa: PT009
+        self.assertEqual(find_extreme(scaler), 1.0)  # noqa: PT009
+        self.assertEqual(  # noqa: PT009
             scaler,
             [
                 {
@@ -65,9 +65,9 @@ class TestScaler(TestCase):
     def test_messy_scaling(self):
         """Test it scales the messy data."""
         scaler = Scaler("tests/fixtures/scaler/messy-locations.yaml")
-        self.assertEqual(find_largest_span(scaler.absolutes), 200)
-        self.assertEqual(find_extreme(scaler), 1.0)
-        self.assertEqual(
+        self.assertEqual(find_largest_span(scaler.absolutes), 200)  # noqa: PT009
+        self.assertEqual(find_extreme(scaler), 1.0)  # noqa: PT009
+        self.assertEqual(  # noqa: PT009
             scaler,
             [
                 {"index": 0, "x": -0.38, "y": 0.945, "z": -0.57},
@@ -79,9 +79,9 @@ class TestScaler(TestCase):
     def test_backloaded_scaling(self):
         """Test it scales the back-loaded data (where the extreme is -1.0)."""
         scaler = Scaler("tests/fixtures/scaler/back-loaded-locations.yaml")
-        self.assertEqual(find_largest_span(scaler.absolutes), 45)
-        self.assertEqual(find_extreme(scaler), 1.0)
-        self.assertEqual(
+        self.assertEqual(find_largest_span(scaler.absolutes), 45)  # noqa: PT009
+        self.assertEqual(find_extreme(scaler), 1.0)  # noqa: PT009
+        self.assertEqual(  # noqa: PT009
             scaler,
             [
                 {
@@ -108,9 +108,9 @@ class TestScaler(TestCase):
     def test_inverted_scaling(self):
         """Test it correctly inverts the y-axis."""
         scaler = Scaler("tests/fixtures/scaler/invertable-locations.yaml")
-        self.assertEqual(find_largest_span(scaler.absolutes), 30)
-        self.assertEqual(find_extreme(scaler), 1.0)
-        self.assertEqual(
+        self.assertEqual(find_largest_span(scaler.absolutes), 30)  # noqa: PT009
+        self.assertEqual(find_extreme(scaler), 1.0)  # noqa: PT009
+        self.assertEqual(  # noqa: PT009
             scaler,
             [
                 {
@@ -132,14 +132,15 @@ class TestScaler(TestCase):
     def test_realistic_scaling(self):
         """Test it scales the actual data."""
         scaler = Scaler("tests/fixtures/scaler/actual-locations.yaml")
-        self.assertEqual(find_extreme(scaler), 1.0)
+        self.assertEqual(find_extreme(scaler), 1.0)  # noqa: PT009
 
     def test_non_autocentering(self):
         """Test it does independent centering."""
         scaler = Scaler(
-            "tests/fixtures/scaler/non-centered-locations.yaml", auto_centre=True
+            "tests/fixtures/scaler/non-centered-locations.yaml",
+            auto_centre=True,
         )
-        self.assertEqual(
+        self.assertEqual(  # noqa: PT009
             scaler,
             [
                 {
@@ -179,7 +180,7 @@ def test_find_largest_span():
                 "centres": {"x": 7, "y": 8, "z": 9},
             }
         )
-        == 18
+        == 18  # noqa: PLR2004
     )
 
 

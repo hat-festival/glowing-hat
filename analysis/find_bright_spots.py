@@ -14,7 +14,7 @@ for aspect in ["back", "front", "left", "right"]:
         if file.suffix == ".jpg" and "long" not in str(file):
             image = cv2.imread(str(Path(directory, f"{file.stem}.jpg")))
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)
+            (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)  # noqa: N816
 
             if maxVal > THRESHOLD:
                 coords = {"x": maxLoc[0], "y": maxLoc[1]}

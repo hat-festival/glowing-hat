@@ -70,10 +70,12 @@ class Mode:
         """Load the frame data."""
         data = None
         try:
-            data = pickle.loads(Path("renders", f"{self.name}.pickle").read_bytes())
+            data = pickle.loads(  # noqa: S301
+                Path("renders", f"{self.name}.pickle").read_bytes()
+            )
         except FileNotFoundError:
-            try:
-                data = pickle.loads(
+            try:  # noqa: SIM105
+                data = pickle.loads(  # noqa: S301
                     Path(
                         "renders",
                         f"{self.__class__.__bases__[0].__name__.lower()}.pickle",

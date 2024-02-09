@@ -17,7 +17,7 @@ class Custodian:
         self.conf = conf
         self.rcs = RandomColourSource()
 
-    def populate(self, flush=False):
+    def populate(self, flush=False):  # noqa: FBT002
         """Insert initial data."""
         if flush:
             self.redis.flushall()
@@ -27,10 +27,10 @@ class Custodian:
                 for value in values:
                     self.add_item_to_hoop(value, name)
 
-            for name in self.conf["hoops"].keys():
+            for name in self.conf["hoops"].keys():  # noqa: SIM118
                 self.next(name)
 
-            for name, _ in self.conf["colour-sets"].items():
+            for name, _ in self.conf["colour-sets"].items():  # noqa: PERF102
                 self.add_item_to_hoop(name, "colour-set")
 
             self.next("colour-set")
@@ -38,7 +38,9 @@ class Custodian:
     def add_item_to_hoop(self, item, hoop):
         """Add an item to a hoop."""
         key = self.make_key(f"hoop:{hoop}")
-        existing = list(map(lambda x: x.decode(), self.redis.lrange(key, 0, -1)))
+        existing = list(  # noqa: C417
+            map(lambda x: x.decode(), self.redis.lrange(key, 0, -1))
+        )
         if item not in existing:
             self.redis.lpush(key, item)
 
@@ -77,7 +79,9 @@ class Custodian:
         """Set a value."""
         self.redis.set(self.make_key(key), str(value))
         if key == "colour-set":
-            self.load_colour_set(self.conf["colour-sets"][self.get("colour-set")])
+            self.load_colour_set(
+                self.conf["colour-sets"][self.get("colour-set")]
+            )
 
     def unset(self, key):
         """Unset something."""
@@ -85,7 +89,7 @@ class Custodian:
 
     def rotate_until(self, hoop, value):
         """Rotate a hoop until the desired value is selected."""
-        while not self.get(hoop) == value:
+        while self.get(hoop) != value:
             self.next(hoop)
 
     def load_colour_set(self, colours):
@@ -114,15 +118,16 @@ class RandomColourSource:
     def __init__(self):
         """Construct."""
         self.conf = conf
-        self.hue = self.next_hue = random()
+        self.hue = self.next_hue = random()  # noqa: S311
 
     @property
     def colour(self):
         """Get a colour."""
         while (
-            abs(self.hue - self.next_hue) < self.conf["random-colour"]["hue-distance"]
+            abs(self.hue - self.next_hue)
+            < self.conf["random-colour"]["hue-distance"]
         ):
-            self.next_hue = random()
+            self.next_hue = random()  # noqa: S311
 
         self.hue = self.next_hue
 

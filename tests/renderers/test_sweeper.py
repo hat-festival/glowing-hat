@@ -125,10 +125,10 @@ def test_make_reversed_frame():
 
 def test_angle():
     """Test it gets the angle from an (x, y) pair."""
-    assert angle(1, 0) == 360
-    assert angle(0, 1) == 90
-    assert angle(-1, 0) == 180
-    assert angle(0, -1) == 270
+    assert angle(1, 0) == 360  # noqa: PLR2004
+    assert angle(0, 1) == 90  # noqa: PLR2004
+    assert angle(-1, 0) == 180  # noqa: PLR2004
+    assert angle(0, -1) == 270  # noqa: PLR2004
 
-    assert angle(1, 1) == 45
-    assert angle(-1, 1) == 135
+    assert angle(1, 1) == 45  # noqa: PLR2004
+    assert angle(-1, 1) == 135  # noqa: PLR2004

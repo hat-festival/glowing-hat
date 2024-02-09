@@ -33,10 +33,10 @@ def test_point_near_line():
 
 
 def close_enough(actual, expected):
-    """These numbers are fucking fiddly."""
+    """These numbers are fucking fiddly."""  # noqa: D401
     for i in range(len(expected)):  # pylint:disable=C0200
         for j in range(len(expected[i])):
-            if abs(expected[i][j] - actual[i][j]) > 0.0000001:
+            if abs(expected[i][j] - actual[i][j]) > 0.0000001:  # noqa: PLR2004
                 return False
 
     return True

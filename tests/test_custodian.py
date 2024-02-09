@@ -12,7 +12,7 @@ class TestCustodian(TestCase):
     """Test the Custodian."""
 
     def setUp(self):
-        """Setup."""
+        """Setup."""  # noqa: D401
         self.redis = redis.Redis()
         self.redis.flushdb()
 
@@ -20,14 +20,14 @@ class TestCustodian(TestCase):
         """Test it constructs."""
         cus = Custodian("test")
 
-        self.assertEqual(cus.namespace, "test")
+        self.assertEqual(cus.namespace, "test")  # noqa: PT009
 
     def test_add_to_hoop(self):
         """Test we can add an item to a hoop."""
         cus = Custodian("test")
         cus.add_item_to_hoop("apple", "fruit")
 
-        self.assertEqual(
+        self.assertEqual(  # noqa: PT009
             self.redis.lrange("test:hoop:fruit", 0, -1)[0].decode(), "apple"
         )
 
@@ -38,9 +38,12 @@ class TestCustodian(TestCase):
         cus.add_item_to_hoop("banana", "fruit")
         cus.add_item_to_hoop("clementine", "fruit")
 
-        self.assertEqual(
-            list(
-                map(lambda x: x.decode(), self.redis.lrange("test:hoop:fruit", 0, -1))
+        self.assertEqual(  # noqa: PT009
+            list(  # noqa: C417
+                map(
+                    lambda x: x.decode(),
+                    self.redis.lrange("test:hoop:fruit", 0, -1),
+                )
             ),
             ["clementine", "banana", "apple"],
         )
@@ -54,9 +57,12 @@ class TestCustodian(TestCase):
         cus.add_item_to_hoop("banana", "fruit")
         cus.add_item_to_hoop("banana", "fruit")
 
-        self.assertEqual(
-            list(
-                map(lambda x: x.decode(), self.redis.lrange("test:hoop:fruit", 0, -1))
+        self.assertEqual(  # noqa: PT009
+            list(  # noqa: C417
+                map(
+                    lambda x: x.decode(),
+                    self.redis.lrange("test:hoop:fruit", 0, -1),
+                )
             ),
             ["clementine", "banana", "apple"],
         )
@@ -70,10 +76,13 @@ class TestCustodian(TestCase):
 
         cus.next("fruit")
 
-        self.assertEqual(cus.get("fruit"), "apple")
-        self.assertEqual(
-            list(
-                map(lambda x: x.decode(), self.redis.lrange("test:hoop:fruit", 0, -1))
+        self.assertEqual(cus.get("fruit"), "apple")  # noqa: PT009
+        self.assertEqual(  # noqa: PT009
+            list(  # noqa: C417
+                map(
+                    lambda x: x.decode(),
+                    self.redis.lrange("test:hoop:fruit", 0, -1),
+                )
             ),
             ["apple", "clementine", "banana"],
         )
@@ -96,8 +105,8 @@ class TestCustodian(TestCase):
         }
         cus.load_colour_set(colours)
 
-        self.assertEqual(
-            list(
+        self.assertEqual(  # noqa: PT009
+            list(  # noqa: C417
                 map(
                     lambda x: json.loads(x.decode()),
                     self.redis.lrange("test:hoop:colour", 0, -1),
@@ -106,12 +115,14 @@ class TestCustodian(TestCase):
             [[255, 255, 0], [255, 0, 255], [0, 255, 255]],
         )
 
-        self.assertEqual(cus.get("colour"), [255, 255, 0])
+        self.assertEqual(cus.get("colour"), [255, 255, 0])  # noqa: PT009
 
     def test_populating(self):
         """Test it populates with initial values."""
         conf = yaml.safe_load(
-            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(
+                encoding="UTF-8"
+            )
         )
         cus = Custodian("test", conf=conf)
         cus.populate()
@@ -125,12 +136,14 @@ class TestCustodian(TestCase):
         )
 
         for key, expected in expecteds:
-            self.assertEqual(cus.get(key), expected)
+            self.assertEqual(cus.get(key), expected)  # noqa: PT009
 
     def test_triggering(self):
         """Test a new colour-set triggers a reload."""
         conf = yaml.safe_load(
-            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(
+                encoding="UTF-8"
+            )
         )
         cus = Custodian("test", conf=conf)
         cus.populate()
@@ -147,27 +160,32 @@ class TestCustodian(TestCase):
         cus.add_item_to_hoop("banana", "fruit")
         cus.add_item_to_hoop("clementine", "fruit")
 
-        self.assertEqual(
-            list(
-                map(lambda x: x.decode(), self.redis.lrange("test:hoop:fruit", 0, -1))
+        self.assertEqual(  # noqa: PT009
+            list(  # noqa: C417
+                map(
+                    lambda x: x.decode(),
+                    self.redis.lrange("test:hoop:fruit", 0, -1),
+                )
             ),
             ["clementine", "banana", "apple"],
         )
 
         cus.unset("hoop:fruit")
-        self.assertIsNone(cus.get("hoop:fruit"))
+        self.assertIsNone(cus.get("hoop:fruit"))  # noqa: PT009
 
     def test_reset_colour_sources(self):
         """Test it resets the colour-sources."""
         conf = yaml.safe_load(
-            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(
+                encoding="UTF-8"
+            )
         )
         cus = Custodian("test", conf=conf)
         cus.populate()
 
         cus.reset_colour_sources(["wheel", "redis"])
-        self.assertEqual(
-            list(
+        self.assertEqual(  # noqa: PT009
+            list(  # noqa: C417
                 map(
                     lambda x: x.decode(),
                     self.redis.lrange("test:hoop:colour-source", 0, -1),
@@ -187,4 +205,4 @@ class TestCustodian(TestCase):
         cus.add_item_to_hoop("fruitbat", "animal")
 
         cus.rotate_until("animal", "dog")
-        self.assertEqual(cus.get("animal"), "dog")
+        self.assertEqual(cus.get("animal"), "dog")  # noqa: PT009

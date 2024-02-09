@@ -23,7 +23,7 @@ camera.awb_mode = "off"
 input("Align hat and hit return when ready...")
 
 
-def make_outdir(colour):
+def make_outdir(colour):  # noqa: ARG001
     """Make an outdir."""
     odir = root_dir
     Path.mkdir(odir, parents=True, exist_ok=True)
@@ -34,19 +34,19 @@ def make_outdir(colour):
 def snap(index, colour, shutter_speed=2000, suffix=""):
     """Take a picture of light `i` with colour `colour`."""
     print(
-        f"Capturing light {index} with colour {colour} at shutter-speed {shutter_speed}"
+        f"Capturing light {index} with colour {colour} at shutter-speed {shutter_speed}"  # noqa: E501
     )
 
     outdir = make_outdir(colour)
 
-    requests.post(
+    requests.post(  # noqa: S113
         f"{hat}/light",
         data=json.dumps({"index": index, "colour": colour}),
         headers={"Content-Type": "application/json"},
     )
     sleep(0.5)
     camera.shutter_speed = shutter_speed
-    camera.capture(f"{str(outdir)}/{str(index).zfill(3)}{suffix}.jpg")
+    camera.capture(f"{outdir!s}/{str(index).zfill(3)}{suffix}.jpg")
     sleep(0.5)
 
 
@@ -59,11 +59,11 @@ for index in range(conf["lights"]):
     snap(index, [255, 255, 255], 1000000, "-long")
 
 # take a photo with all lights on
-requests.post(
+requests.post(  # noqa: S113
     f"{hat}/light-all",
     data=json.dumps({"colour": colour}),
     headers={"Content-Type": "application/json"},
 )
 sleep(1)
-camera.capture(f"{str(make_outdir(colour))}/all.jpg")
+camera.capture(f"{make_outdir(colour)!s}/all.jpg")
 sleep(1)
