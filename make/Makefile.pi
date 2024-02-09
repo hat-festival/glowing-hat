@@ -18,7 +18,9 @@ apt-installs:
 		python3-pip \
 		redis \
 		libopenjp2-7-dev \
-		libatlas-base-dev
+		libatlas-base-dev \
+		libopenblas-dev \
+		libportaudio2
 
 prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
