@@ -2,7 +2,7 @@ include make/Makefile.common
 
 PUSHHOST ?= ${HATHOST}
 
-default: format lint test freeze clean
+default: format style test freeze clean
 
 push-code: clean
 	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure && make clean"
@@ -23,22 +23,22 @@ test:
 		--capture no \
 		--failed-first \
 		--cov \
-		--exitfirst 
-		
-lint:
-	python -m pylama
+		--exitfirst
 
 clean:
 	@rm -fr $$(find . -name __pycache__)
 	@rm -fr $$(find . -name .pytest_cache)
 
-format: isort black
+toml-sort:
+	toml-sort -i $$(find . -name "*toml")
 
-black:
-	black .
+ruff:
+	python -m ruff format .
 
-isort:
-	isort .
+format: toml-sort ruff
+
+style:
+	python -m ruff check .
 
 render:
 	python render_renderers.py
