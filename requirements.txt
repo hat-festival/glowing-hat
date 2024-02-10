@@ -2,8 +2,10 @@ adafruit-circuitpython-neopixel==6.3.7
 adafruit-circuitpython-ssd1306
 buttonshim
 flask
-Pillow
+numpy
+pillow
 pyaudio
+pyfftw
 pyyaml
 redis
 scipy

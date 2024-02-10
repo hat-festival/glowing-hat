@@ -3,7 +3,6 @@ import time
 from collections import deque
 
 import numpy as np
-import scipy  # noqa: F401
 from scipy.signal import savgol_filter  # noqa: F401
 from src.fft import getFFT
 from src.stream_reader_pyaudio import Stream_Reader
@@ -99,7 +98,7 @@ class Stream_Analyzer:  # noqa: N801
 
         # Hardcoded parameters:
         self.fft_fps = 30
-        self.log_features = False  # Plot log(FFT features) instead of FFT features --> usually pretty bad  # noqa: E501
+        # self.log_features = False  # Plot log(FFT features) instead of FFT features --> usually pretty bad  # noqa: E501
         self.delays = deque(maxlen=20)
         self.num_ffts = 0
         self.strongest_frequency = 0
@@ -151,10 +150,8 @@ class Stream_Analyzer:  # noqa: N801
 
         self.fft = getFFT(
             latest_data_window,
-            self.rate,
-            self.FFT_window_size,
-            log_scale=self.log_features,
         )
+
         # Equalize pink noise spectrum falloff:
         self.fft = self.fft * self.power_normalization_coefficients
         self.num_ffts += 1
@@ -162,6 +159,8 @@ class Stream_Analyzer:  # noqa: N801
             time.time() - self.stream_reader.stream_start_time
         )
 
+        import ipdb; ipdb.set_trace()
+        print(1)
         self.strongest_frequency = self.fftx[np.argmax(self.fft)]
         # pump this into Redis
         print(self.strongest_frequency)
