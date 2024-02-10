@@ -1,11 +1,11 @@
-import platform
 import socket
 
 from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
+from lib.tools import is_pi
 
-if "arm" in platform.platform():  # nocov
+if is_pi():  # nocov
     import adafruit_ssd1306
     import busio
     from board import SCL, SDA
@@ -19,7 +19,7 @@ class Oled:
         self.conf = conf["oled"]
         self.custodian = custodian
 
-        if "arm" in platform.platform():
+        if is_pi():
             i2c = busio.I2C(SCL, SDA)
             self.display = adafruit_ssd1306.SSD1306_I2C(
                 self.conf["size"]["x"], self.conf["size"]["y"], i2c

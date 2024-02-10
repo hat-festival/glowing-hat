@@ -1,11 +1,9 @@
-import platform
-
 from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
-from lib.tools import normalise
+from lib.tools import is_pi, normalise
 
-if "arm" in platform.platform():  # nocov
+if is_pi():  # nocov
     import board
     from neopixel import NeoPixel
 
@@ -20,7 +18,7 @@ class Hat:
 
         self.pixels = list(map(Pixel, self.scaler))
 
-        if "arm" in platform.platform():
+        if is_pi():
             self.lights = NeoPixel(
                 board.D21, len(self.pixels), auto_write=False
             )  # nocov

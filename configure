@@ -4,7 +4,7 @@ let PLATFORM=local
 
 if [ "$(which lsb_release)" != "" ]
 then
-  if [ "$(lsb_release --id --short)" == "Raspbian" ]
+  if [ -e /sys/firmware/devicetree/base/model ]
   then
     PLATFORM=pi
   fi

@@ -16,6 +16,7 @@ apt-installs:
 		--no-install-recommends \
 		--yes \
 		python3-pip \
+		python3-dev \
 		redis \
 		libopenjp2-7-dev \
 		libatlas-base-dev
