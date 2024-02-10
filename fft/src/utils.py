@@ -1,48 +1,12 @@
 import math
 
 import numpy as np
-import scipy
+
+# import scipy
 
 
 def round_up_to_even(f):  # noqa: D103
     return int(math.ceil(f / 2.0) * 2)
-
-
-def round_to_nearest_power_of_two(f, base=2):  # noqa: D103
-    l = math.log(f, base)  # noqa: E741
-    rounded = int(np.round(l, 0))
-    return base**rounded
-
-
-def get_frequency_bins(start, stop, n):  # noqa: D103
-    octaves = np.logspace(
-        log(start) / log(2),  # noqa: F821
-        log(stop) / log(2),  # noqa: F821
-        n,
-        endpoint=True,
-        base=2,
-        dtype=None,
-    )
-    return np.insert(octaves, 0, 0)
-
-
-def gaussian_kernel1d(sigma, truncate=2.0):  # noqa: D103
-    sigma = float(sigma)
-    sigma2 = sigma * sigma
-    # make the radius of the filter equal to truncate standard deviations
-    radius = int(truncate * sigma + 0.5)
-
-    x = np.arange(-radius, radius + 1)
-    phi_x = np.exp(-0.5 / sigma2 * x**2)
-    phi_x = phi_x / phi_x.sum()
-    return phi_x  # noqa: RET504
-
-
-def gaussian_kernel_1D(w, sigma):  # noqa: N802, D103
-    sigma = sigma  # noqa: PLW0127
-    x = np.linspace(-sigma, sigma, w + 1)
-    kern1d = np.diff(scipy.stats.norm.cdf(x))
-    return kern1d / kern1d.sum()
 
 
 class numpy_data_buffer:  # noqa: N801
