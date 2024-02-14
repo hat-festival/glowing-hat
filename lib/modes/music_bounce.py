@@ -1,5 +1,4 @@
 from multiprocessing import Process
-from time import sleep
 
 from lib.mode import Mode
 from lib.tools import scale_colour
@@ -17,8 +16,8 @@ class MusicBounce(Mode):
         self.reconfigure()
 
         drums = {
-            "high": {"colour": (255, 0, 0), "value": 0, "new_value": 0},
-            "mid": {"colour": (0, 255, 0), "value": 0, "new_value": 0},
+            # "high": {"colour": (255, 0, 0), "value": 0, "new_value": 0},
+            # "mid": {"colour": (0, 255, 0), "value": 0, "new_value": 0},
             "low": {"colour": (0, 0, 255), "value": 0, "new_value": 0},
         }
 
@@ -30,13 +29,14 @@ class MusicBounce(Mode):
                     if process and process.is_alive():
                         process.terminate()
 
-                    process = Process(target=self.punch, args=(data["colour"],))
+                    process = Process(target=self.punch)
                     process.start()
                     data["value"] = data["new_value"]
 
-    def punch(self, colour):
+    def punch(self):
         """Illuminate the hat."""
-        for i in range(100, 50, -10):
+        colour = self.get_colour()
+        for i in range(100, 50, -2):
             colour = scale_colour(colour, i / 100)
             self.hat.fill(colour)
-            sleep(0.01)
+            # sleep(0.     01)

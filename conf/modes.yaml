@@ -1,6 +1,8 @@
 musicbounce:
   prefs:
     axis: y
+    colour-sources:
+      - wheel
 
 cuttlefish:
   jump: 2
