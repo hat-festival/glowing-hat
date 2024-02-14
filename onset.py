@@ -1,4 +1,4 @@
-import datetime
+import uuid
 
 import aubio
 import numpy as np
@@ -32,7 +32,7 @@ while True:
     signal = np.frombuffer(audiobuffer, dtype=np.float32)
 
     if onset_detector(signal):
-        cust.set("low", datetime.datetime.now().timestamp())
+        cust.set("low", str(uuid.uuid4()))
 
 stream.stop_stream()
 stream.close()
