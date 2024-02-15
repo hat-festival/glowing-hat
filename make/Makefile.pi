@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install clean
+setup: apt-installs install system-install fix-alsa clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting your hat..."
@@ -15,13 +15,13 @@ apt-installs:
 	sudo apt install \
 		--no-install-recommends \
 		--yes \
-		python3-pip \
-		python3-dev \
-		redis \
-		libopenjp2-7-dev \
 		libatlas-base-dev \
 		libopenblas-dev \
-		libportaudio2
+		libopenjp2-7-dev \
+		portaudio19-dev \
+		python3-pip \
+		python3-dev \
+		redis
 
 prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
@@ -30,6 +30,10 @@ prepare-logs:
 raspi-config:
 	sudo raspi-config nonint do_serial 1
 	sudo raspi-config nonint do_i2c 0
+
+fix-alsa:
+	sudo sed -i'' "s/\(^pcm.* [^{].*\)/#\1/" /usr/share/alsa/alsa.conf
+	sudo sed -i'' "s/#pcm.cards cards.pcm/pcm.cards cards.pcm/" /usr/share/alsa/alsa.conf
 
 system-install: raspi-config systemd restart-services
 
