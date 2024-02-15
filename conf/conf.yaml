@@ -7,7 +7,7 @@ wheel:
 random-colour:
   hue-distance: 0.2
 
-brightness-factor: 0.15
+brightness-factor: 0.3
 
 webserver-port: 5001
 

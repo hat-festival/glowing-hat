@@ -1,8 +1,24 @@
 musicbounce:
   prefs:
-    axis: y
+    decay:
+      max: 100
+      min: 70
+      step: -1
+      rate: 0.015
+    # set range here?
+    sound:
+      sample-rate: 48000
+      buffer-size: 512
+      device-index: 0
+    onset:
+      # https://aubio.org/manpages/latest/aubioonset.1.html
+      algorithm: hfc
+      threshold: 0.8
+      fft-size: 4096
+    axis: none
     colour-sources:
       - wheel
+      - random
 
 cuttlefish:
   jump: 2
@@ -80,10 +96,10 @@ bigtop:
     invert: False
 
 accelerator:
-  jump: 0.5
+  jump: 0.1
   limits:
-    min: 2
-    max: 50
+    min: 1
+    max: 30
   prefs:
     axis: y
     invert: True
