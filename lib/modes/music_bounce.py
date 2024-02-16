@@ -10,7 +10,7 @@ from lib.tools import scale_colour
 
 
 class MusicBounce(Mode):
-    """Responding to some value in Redis?."""
+    """Dance to the music."""
 
     def reconfigure(self):
         """Configure ourself."""
