@@ -1,4 +1,4 @@
-adafruit-circuitpython-neopixel==6.3.7
+adafruit-circuitpython-neopixel
 adafruit-circuitpython-ssd1306
 aubio
 buttonshim
