@@ -15,6 +15,7 @@ apt-installs:
 	sudo apt install \
 		--no-install-recommends \
 		--yes \
+		aubio-tools \
 		libatlas-base-dev \
 		libopenblas-dev \
 		libopenjp2-7-dev \
@@ -27,15 +28,11 @@ prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
 	sudo chown pi /var/log/hatlights/
 
-raspi-config:
-	sudo raspi-config nonint do_serial 1
-	sudo raspi-config nonint do_i2c 0
-
 fix-alsa:
 	sudo sed -i'' "s/\(^pcm.* [^{].*\)/#\1/" /usr/share/alsa/alsa.conf
 	sudo sed -i'' "s/#pcm.cards cards.pcm/pcm.cards cards.pcm/" /usr/share/alsa/alsa.conf
 
-system-install: raspi-config systemd restart-services
+system-install: systemd restart-services
 
 systemd: prepare-logs
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/colour-wheel.service
@@ -50,13 +47,10 @@ stop-services:
 	sudo service controller stop
 
 install:
-	sudo python -m pip install -r requirements.txt
+	sudo python -m pip install --break-system-packages -r requirements.txt
 
 clean:
 	sudo rm -fr $$(find . -name __pycache__)
-
-webserver: stop-services
-	sudo python webserver.py
 
 wpa:
 	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
