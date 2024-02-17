@@ -47,7 +47,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
 pyftdi==0.54.0
-Pygments==2.13.0
+Pygments==2.15.0
 pyparsing==3.0.9
 pyserial==3.5
 pytest==7.2.0
