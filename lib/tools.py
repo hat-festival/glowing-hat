@@ -1,5 +1,6 @@
 from colorsys import hsv_to_rgb
 from datetime import datetime
+from pathlib import Path
 
 from lib.gamma import gamma
 
@@ -55,3 +56,12 @@ def colour_set_to_colour_list(colour_set, width):
 def colour_from_time():
     """Generate an RGB triple from a hue from sub-seconds."""
     return hue_to_rgb(datetime.now().microsecond / 10**6)  # noqa: DTZ005
+
+
+def is_pi():
+    """Detect if we're on a Pi."""
+    model_file = "/sys/firmware/devicetree/base/model"
+    return (
+        Path(model_file).exists()
+        and "Raspberry Pi" in Path(model_file).read_text()
+    )

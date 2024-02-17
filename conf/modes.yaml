@@ -1,97 +1,119 @@
-cuttlefish:
-  jump: 2
-  steps: 200  # more than 100 please
+accelerator:
+  jump: 0.1
+  limits:
+    min: 1
+    max: 20
   prefs:
     axis: y
-    invert: False
-
-pulsator:
-  steps:
-    min: 32
-    max: 128
-  prefs: 
-    axis: none 
-    invert: False 
+    invert: True
     colour-sources:
       - wheel
-      - redis 
-
-brainwaves:
-  jump: 8
-  steps: 128
-  prefs:
-    axis: y 
-    invert: False 
-    colour-sources:
       - redis
-      - wheel
-    colour-set: white  
-
-rotator:
-  steps: 9
-  offset: 45
-  prefs:
-    axis: y 
-    invert: False
-    colour-sources:
-      - wheel
-      - redis 
 
 bands:
   jump: 5
   width: 50
   prefs:
-    axis: z 
-    invert: True 
-    colour-sources:
-      - redis 
-    colour-set: rgb
-
-larsen:
-  jump: 8
-  steps: 128
-  prefs:
-    axis: x 
-    invert: False
-    colour-sources:
-      - random 
-      - wheel
-      - redis 
-
-sweeper:
-  jump: 25
-  prefs:
-    axis: y 
-    invert: False
-    colour-sources:
-      - wheel
-      - redis 
-
-bigtop:
-  jump: 20
-  prefs:
-    axis: y 
-    invert: False
-
-accelerator:
-  jump: 0.5
-  limits:
-    min: 2
-    max: 50
-  prefs:
-    axis: y 
+    axis: z
     invert: True
     colour-sources:
+      - redis
+    colour-set: rgb
+
+bigtop:
+  jump: 3
+  prefs:
+    axis: y
+    invert: False
+
+brainwaves:
+  jump: 2
+  steps: 150
+  prefs:
+    axis: y
+    invert: False
+    colour-sources:
+      - redis
       - wheel
-      - redis 
+    colour-set: white
 
 crawler:
-  max-jump: 4
+  max-jump: 2
   prefs:
     axis: none
     colour-sources:
       - random
 
-'off': 
+cuttlefish:
+  jump: 1
+  steps: 200 # more than 100 please
+  prefs:
+    axis: y
+    invert: False
+
+larsen:
+  jump: 2
+  steps: 110
+  prefs:
+    axis: x
+    invert: False
+    colour-sources:
+      - random
+      - wheel
+      - redis
+
+musicbounce:
+  prefs:
+    decay:
+      max: 100
+      min: 70
+      step: -1
+      rate: 0.015
+    # set range here?
+    sound:
+      sample-rate: 48000
+      buffer-size: 512
+      device-index: 0
+    onset:
+      # https://aubio.org/manpages/latest/aubioonset.1.html
+      algorithm: hfc
+      threshold: 0.8
+      fft-size: 4096
+    axis: none
+    colour-sources:
+      - wheel
+      - random
+
+pulsator:
+  steps:
+    min: 32
+    max: 128
+  prefs:
+    axis: none
+    invert: False
+    colour-sources:
+      - wheel
+      - redis
+
+rotator:
+  steps: 9
+  offset: 45
+  prefs:
+    axis: y
+    invert: False
+    colour-sources:
+      - wheel
+      - redis
+
+sweeper:
+  jump: 5
+  prefs:
+    axis: y
+    invert: False
+    colour-sources:
+      - wheel
+      - redis
+
+"off":
   prefs:
     axis: none

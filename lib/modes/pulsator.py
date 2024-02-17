@@ -22,7 +22,7 @@ class Pulsator(Mode):
 
     def reconfigure(self):
         """Reconfig some stuff."""
-        self.custodian.set("axis", "none")
+        # self.custodian.set("axis", "none")
 
     def run(self):
         """Do the stuff."""

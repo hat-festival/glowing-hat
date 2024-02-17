@@ -1,8 +1,7 @@
-import platform
-
 from lib.conf import conf
+from lib.tools import is_pi
 
-if "arm" in platform.platform():  # nocov
+if is_pi():  # nocov
     import board
     from neopixel import NeoPixel
 
@@ -14,7 +13,7 @@ class Hat:
         """Construct."""
         self.length = conf["lights"]
 
-        if "arm" in platform.platform():
+        if is_pi():
             self.pixels = NeoPixel(
                 board.D21, self.length, auto_write=False
             )  # nocov

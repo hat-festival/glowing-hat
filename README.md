@@ -9,10 +9,12 @@ https://user-images.githubusercontent.com/885973/168619388-2ef59b61-9f68-4e90-99
 You will need:
 
 - A [hard hat](https://www.ebay.co.uk/itm/262923531316)
-- A [Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/)
+- A [Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)
 - A [button shim](https://thepihut.com/products/button-shim)
 - An [OLED display](https://thepihut.com/products/adafruit-pioled-128x32-monochrome-oled-add-on-for-raspberry-pi-ada3527)
 - 2 [NeoPixel strings](https://shop.pimoroni.com/products/rgb-led-wire?variant=31607418159187)
+- A [USB Microphone](https://www.ebay.co.uk/itm/404669701943)
+- A [USB OTG adapter](https://www.ebay.co.uk/itm/114893009469)
 - A [power bank](https://www.ebay.co.uk/itm/133977636736)
 - Wire
 - Hot glue
@@ -27,13 +29,13 @@ The data line is connected to [pin 21](lib/hat.py#L23) ([physical pin 40](https:
 
 ## Installing the software
 
-From a box-fresh install of [Raspberry Pi Bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/):
+From a box-fresh install of [64-bit Raspberry Pi Debian 12 (bookworm)](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit):
 
 ### Set hostname and enable serial port and i2c
 
 ```bash
 sudo raspi-config nonint do_hostname hatlights
-sudo raspi-config nonint do_serial 1
+sudo raspi-config nonint do_serial_hw 1
 sudo raspi-config nonint do_i2c 0
 sudo reboot
 ```
