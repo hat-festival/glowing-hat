@@ -1,3 +1,67 @@
+accelerator:
+  jump: 0.1
+  limits:
+    min: 1
+    max: 20
+  prefs:
+    axis: y
+    invert: True
+    colour-sources:
+      - wheel
+      - redis
+
+bands:
+  jump: 5
+  width: 50
+  prefs:
+    axis: z
+    invert: True
+    colour-sources:
+      - redis
+    colour-set: rgb
+
+bigtop:
+  jump: 3
+  prefs:
+    axis: y
+    invert: False
+
+brainwaves:
+  jump: 2
+  steps: 150
+  prefs:
+    axis: y
+    invert: False
+    colour-sources:
+      - redis
+      - wheel
+    colour-set: white
+
+crawler:
+  max-jump: 2
+  prefs:
+    axis: none
+    colour-sources:
+      - random
+
+cuttlefish:
+  jump: 1
+  steps: 200 # more than 100 please
+  prefs:
+    axis: y
+    invert: False
+
+larsen:
+  jump: 2
+  steps: 110
+  prefs:
+    axis: x
+    invert: False
+    colour-sources:
+      - random
+      - wheel
+      - redis
+
 musicbounce:
   prefs:
     decay:
@@ -20,13 +84,6 @@ musicbounce:
       - wheel
       - random
 
-cuttlefish:
-  jump: 2
-  steps: 200  # more than 100 please
-  prefs:
-    axis: y
-    invert: False
-
 pulsator:
   steps:
     min: 32
@@ -38,17 +95,6 @@ pulsator:
       - wheel
       - redis
 
-brainwaves:
-  jump: 8
-  steps: 128
-  prefs:
-    axis: y
-    invert: False
-    colour-sources:
-      - redis
-      - wheel
-    colour-set: white
-
 rotator:
   steps: 9
   offset: 45
@@ -59,29 +105,8 @@ rotator:
       - wheel
       - redis
 
-bands:
-  jump: 5
-  width: 50
-  prefs:
-    axis: z
-    invert: True
-    colour-sources:
-      - redis
-    colour-set: rgb
-
-larsen:
-  jump: 8
-  steps: 128
-  prefs:
-    axis: x
-    invert: False
-    colour-sources:
-      - random
-      - wheel
-      - redis
-
 sweeper:
-  jump: 25
+  jump: 5
   prefs:
     axis: y
     invert: False
@@ -89,31 +114,6 @@ sweeper:
       - wheel
       - redis
 
-bigtop:
-  jump: 20
-  prefs:
-    axis: y
-    invert: False
-
-accelerator:
-  jump: 0.1
-  limits:
-    min: 1
-    max: 30
-  prefs:
-    axis: y
-    invert: True
-    colour-sources:
-      - wheel
-      - redis
-
-crawler:
-  max-jump: 4
-  prefs:
-    axis: none
-    colour-sources:
-      - random
-
-'off':
+"off":
   prefs:
     axis: none

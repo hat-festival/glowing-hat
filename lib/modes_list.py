@@ -12,13 +12,13 @@ from lib.modes.sweeper import Sweeper
 modes = {
     "musicbounce": MusicBounce,
     "cuttlefish": Cuttlefish,
-    "accelerator": Accelerator,
     "pulsator": Pulsator,
-    "brainwaves": BrainWaves,
-    "bigtop": BigTop,
+    "accelerator": Accelerator,
     "larsen": Larsen,
-    "sweeper": Sweeper,
+    "bigtop": BigTop,
+    "brainwaves": BrainWaves,
     "crawler": Crawler,
+    "sweeper": Sweeper,
     "off": Off,
 }
 
