@@ -2,7 +2,6 @@ adafruit-circuitpython-neopixel
 adafruit-circuitpython-ssd1306
 aubio
 buttonshim
-flask
 numpy
 pillow
 pyaudio
