@@ -4,7 +4,6 @@ from time import sleep
 from RPi import GPIO
 
 from lib.conf import conf
-from lib.custodian import Custodian
 from lib.gamma import gamma
 
 
@@ -13,7 +12,6 @@ class ColourNormaliser:
 
     def __init__(self):
         """Construct."""
-        self.custodian = Custodian("hat")
         self.max_brightness = conf["max-brightness"]
         self.default_brightness = self.max_brightness / 2
         self.factor = Value("f", self.default_brightness)
