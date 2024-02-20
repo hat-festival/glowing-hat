@@ -7,7 +7,7 @@ wheel:
 random-colour:
   hue-distance: 0.2
 
-brightness-factor: 0.3
+max-brightness: 0.5 # brightest we will ever go
 
 webserver-port: 5001
 
@@ -20,3 +20,9 @@ oled:
     size: 13
   characters:
     separator: "|"
+
+rotary:
+  pins:
+    clk: 24
+    dt: 23
+    sw: 25

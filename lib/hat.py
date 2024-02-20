@@ -1,7 +1,8 @@
+from lib.colour_normaliser import ColourNormaliser
 from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
-from lib.tools import is_pi, normalise
+from lib.tools import is_pi
 
 if is_pi():  # nocov
     import board
@@ -15,6 +16,7 @@ class Hat:
         self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
+        self.normaliser = ColourNormaliser()
 
         self.pixels = list(map(Pixel, self.scaler))
 
@@ -25,11 +27,11 @@ class Hat:
         else:
             self.lights = FakeLights(len(self.pixels))
 
+        self.normaliser.run()
+
     def light_one(self, index, colour, auto_show=True):  # noqa: FBT002
         """Light up a single pixel."""
-        self.lights[index] = normalise(
-            colour, factor=self.conf["brightness-factor"]
-        )
+        self.lights[index] = self.normaliser.normalise(colour)
 
         if auto_show:
             self.show()
@@ -37,9 +39,7 @@ class Hat:
     def colour_indeces(self, indeces, colour, auto_show=True):  # noqa: FBT002
         """Apply a colour to a list of lights."""
         for index in indeces:
-            self.lights[index] = normalise(
-                colour, factor=self.conf["brightness-factor"]
-            )
+            self.lights[index] = self.normaliser.normalise(colour)
 
         if auto_show:
             self.show()
