@@ -75,6 +75,13 @@ class Custodian:
 
         return None
 
+    def get_and_reset(self, key, default=0):
+        """Get a value then set it to some default."""
+        result = self.get(key)
+        self.set(key, default)
+
+        return result
+
     def set(self, key, value):
         """Set a value."""
         self.redis.set(self.make_key(key), str(value))
@@ -82,6 +89,14 @@ class Custodian:
             self.load_colour_set(
                 self.conf["colour-sets"][self.get("colour-set")]
             )
+
+    def increment(self, key):
+        """Attempt to increment a value."""
+        self.redis.incr(self.make_key(key))
+
+    def decrement(self, key):
+        """Attempt to decrement a value."""
+        self.redis.decr(self.make_key(key))
 
     def unset(self, key):
         """Unset something."""

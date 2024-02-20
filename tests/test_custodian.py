@@ -206,3 +206,35 @@ class TestCustodian(TestCase):
 
         cus.rotate_until("animal", "dog")
         self.assertEqual(cus.get("animal"), "dog")  # noqa: PT009
+
+    def test_get_and_reset(self):
+        """Test it gets and resets."""
+        cus = Custodian("test")
+        cus.set("banana", 2)
+        result = cus.get_and_reset("banana")
+
+        self.assertEqual(result, 2)  # noqa: PT009
+        self.assertEqual(cus.get("banana"), 0)  # noqa: PT009
+
+    def test_get_and_reset_with_default(self):
+        """Test it gets and resets to a specified default."""
+        cus = Custodian("test")
+        cus.set("name", "dave")
+        result = cus.get_and_reset("name", "steve")
+
+        self.assertEqual(result, "dave")  # noqa: PT009
+        self.assertEqual(cus.get("name"), "steve")  # noqa: PT009
+
+    def test_increment(self):
+        """Test it increments a value."""
+        cus = Custodian("test")
+        cus.set("score", 3)
+        cus.increment("score")
+        self.assertEqual(cus.get("score"), 4)  # noqa: PT009
+
+    def test_decrement(self):
+        """Test it decrements a value."""
+        cus = Custodian("test")
+        cus.set("score", 0)
+        cus.decrement("score")
+        self.assertEqual(cus.get("score"), -1)  # noqa: PT009
