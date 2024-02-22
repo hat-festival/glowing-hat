@@ -1,5 +1,7 @@
+from collections import deque
 from multiprocessing import Process
 
+from lib.colour_scalers.fourier_transformer import FourierTransformer
 from lib.colour_scalers.rotary_encoder import RotatingScaler
 from lib.conf import conf
 from lib.gamma import gamma
@@ -11,15 +13,24 @@ class ColourNormaliser:
     def __init__(self):
         """Construct."""
         self.max_brightness = conf["max-brightness"]
-        self.default_brightness = self.max_brightness / 2
+        self.default_brightness = self.max_brightness * 0.2
         self.step_size = 0.02
-
-        self.scaler = RotatingScaler(self)
+        self.scaler_proc = None
+        self.scalers = deque(
+            [
+                FourierTransformer(self),
+                RotatingScaler(self),
+            ]
+        )
 
     def run(self):
         """Do the work."""
-        self.scaler_proc = Process(target=self.scaler.run)
+        if self.scaler_proc and self.scaler_proc.is_alive():
+            self.scaler_proc.terminate()
+
+        self.scaler_proc = Process(target=self.scalers[0].run)
         self.scaler_proc.start()
+        self.scalers.rotate()
 
     def normalise(self, triple):
         """Normalise a colour."""

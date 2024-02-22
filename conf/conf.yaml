@@ -26,3 +26,19 @@ rotary:
     clk: 24
     dt: 23
     sw: 25
+
+fourier:
+  sound:
+    sample-rate: 48000
+    buffer-size: 512
+    device-index: 0
+  decay:
+    max: 100
+    min: 70
+    step: -1
+    rate: 0.05
+  onset:
+    # https://aubio.org/manpages/latest/aubioonset.1.html
+    algorithm: hfc
+    threshold: 0.8
+    fft-size: 4096

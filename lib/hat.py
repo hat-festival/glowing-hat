@@ -27,7 +27,8 @@ class Hat:
         else:
             self.lights = FakeLights(len(self.pixels))
 
-        self.normaliser.run()
+        if is_pi():
+            self.normaliser.run()
 
     def light_one(self, index, colour, auto_show=True):  # noqa: FBT002
         """Light up a single pixel."""
