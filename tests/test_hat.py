@@ -32,7 +32,7 @@ class TestHat(TestCase):
                 (0, 0, 0),
                 (0, 0, 0),
                 (0, 0, 0),
-                (25, 0, 0),
+                (38, 0, 0),
             ],
         )
 
@@ -44,14 +44,14 @@ class TestHat(TestCase):
         self.assertEqual(  # noqa: PT009
             self.hat.lights[0:9],
             [
-                (0, 25, 0),
+                (0, 38, 0),
                 (0, 0, 0),
                 (0, 0, 0),
-                (0, 0, 25),
-                (0, 25, 0),
-                (0, 0, 25),
+                (0, 0, 38),
+                (0, 38, 0),
+                (0, 0, 38),
                 (0, 0, 0),
-                (0, 25, 0),
+                (0, 38, 0),
                 (0, 0, 0),
             ],
         )
@@ -79,7 +79,7 @@ class TestHat(TestCase):
         self.hat.sort("x")
         self.hat.illuminate(colours)
 
-        self.assertEqual(self.hat.lights[50], (25, 0, 0))  # noqa: PT009
-        self.assertEqual(self.hat.lights[12], (25, 0, 0))  # noqa: PT009
-        self.assertEqual(self.hat.lights[62], (21, 0, 0))  # noqa: PT009
-        self.assertEqual(self.hat.lights[36], (21, 0, 0))  # noqa: PT009
+        self.assertEqual(self.hat.lights[50], (38, 0, 0))  # noqa: PT009
+        self.assertEqual(self.hat.lights[12], (37, 0, 0))  # noqa: PT009
+        self.assertEqual(self.hat.lights[62], (32, 0, 0))  # noqa: PT009
+        self.assertEqual(self.hat.lights[36], (32, 0, 0))  # noqa: PT009
