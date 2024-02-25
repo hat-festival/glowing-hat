@@ -21,6 +21,7 @@ bands:
     colour-set: rgb
 
 bigtop:
+  fft: True
   jump: 3
   prefs:
     axis: y
@@ -45,6 +46,7 @@ crawler:
       - random
 
 cuttlefish:
+  fft: True
   jump: 1
   steps: 200 # more than 100 please
   prefs:
@@ -62,29 +64,8 @@ larsen:
       - wheel
       - redis
 
-musicbounce:
-  prefs:
-    decay:
-      max: 100
-      min: 70
-      step: -1
-      rate: 0.015
-    # set range here?
-    sound:
-      sample-rate: 48000
-      buffer-size: 512
-      device-index: 0
-    onset:
-      # https://aubio.org/manpages/latest/aubioonset.1.html
-      algorithm: hfc
-      threshold: 0.8
-      fft-size: 4096
-    axis: none
-    colour-sources:
-      - wheel
-      - random
-
 pulsator:
+  fft: True
   steps:
     min: 32
     max: 128

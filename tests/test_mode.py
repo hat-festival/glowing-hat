@@ -20,7 +20,12 @@ class TestFish(TestCase):
         self.assertEqual(fish.name, "cuttlefish")  # noqa: PT009
         self.assertEqual(  # noqa: PT009
             fish.data,
-            {"jump": 1, "prefs": {"axis": "y", "invert": False}, "steps": 200},
+            {
+                "fft": True,
+                "jump": 1,
+                "prefs": {"axis": "y", "invert": False},
+                "steps": 200,
+            },
         )
         self.assertEqual(fish.prefs, {"axis": "y", "invert": False})  # noqa: PT009
 

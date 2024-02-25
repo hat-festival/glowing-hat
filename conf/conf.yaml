@@ -7,7 +7,7 @@ wheel:
 random-colour:
   hue-distance: 0.2
 
-brightness-factor: 0.3
+max-brightness: 0.5 # brightest we will ever go
 
 webserver-port: 5001
 
@@ -20,3 +20,25 @@ oled:
     size: 13
   characters:
     separator: "|"
+
+rotary:
+  pins:
+    clk: 24
+    dt: 23
+    sw: 25
+
+fourier:
+  sound:
+    sample-rate: 48000
+    buffer-size: 1024
+    device-index: 0
+  decay:
+    max: 100
+    min: 70
+    step: -1
+    rate: 0.05
+  onset:
+    # https://aubio.org/manpages/latest/aubioonset.1.html
+    algorithm: hfc
+    threshold: 0.5
+    fft-size: 4096
