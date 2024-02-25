@@ -27,6 +27,8 @@ class TestImageGenerator(TestCase):
         self.cus.set("colour-set", "rgb")
         self.cus.set("colour", [255, 0, 0])
         self.cus.set("mode", "rotator")
+        self.cus.set("brightness", 0.0)
+        self.cus.set("fft-on", False)  # noqa: FBT003
 
     def test_hat_settings(self):
         """Test it generates the hat-settings screen."""
@@ -147,3 +149,48 @@ class TestImageGenerator(TestCase):
 
         self.cus.set("invert", True)  # noqa: FBT003
         self.assertEqual(gen.get_sign(), "-")  # noqa: PT009
+
+    def test_brightness_bar(self):
+        """Test it generates the correct brightness bar."""
+        expectations = (
+            (
+                1.0,
+                "35ff06c0baa64adaf6b910c23f7d9c95efb56caea861f65654213e83bf230a2d",
+            ),
+            (
+                0.5,
+                "13852a56cb521184fc09d16ca345a0300573d782887de7292c27771131f2938c",
+            ),
+            (
+                0.1,
+                "e2f423220a96212c067201a1a07ddb61450f3a278ea5fc8b0d0119f77de8fcba",
+            ),
+            (
+                0.0,
+                "15b87dd71eafa771fc8dc651b3cc2679eacef8086632a5c11af79e1116608bfd",
+            ),
+        )
+
+        for brightness, checksum in expectations:
+            self.cus.set("brightness", brightness)
+            gen = ImageGenerator(self.cus, self.oled_conf)
+            gen.generate(save_to=f"brightness-bar-{brightness}")
+
+            generated = sha256(
+                Path(f"tmp/brightness-bar-{brightness}.png").read_bytes()
+            ).hexdigest()
+            self.assertEqual(  # noqa: PT009
+                checksum, generated
+            )
+
+    def test_with_fft_symbol(self):
+        """Test it generates a little musical note when we are FFTing."""
+        self.cus.set("fft-on", True)  # noqa: FBT003
+        self.cus.set("brightness", 0.0)
+        gen = ImageGenerator(self.cus, self.oled_conf)
+        gen.generate(save_to="with-fft")
+        checksum = sha256(Path("tmp/with-fft.png").read_bytes()).hexdigest()
+        self.assertEqual(  # noqa: PT009
+            checksum,
+            "8876b7fdf2f9afeace80e2b0437786be6a2282396707fcbf399850e1d4efd21f",
+        )

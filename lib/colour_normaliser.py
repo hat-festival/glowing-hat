@@ -5,10 +5,10 @@ from time import sleep
 import numpy as np
 
 from lib.conf import conf
-from lib.gamma import gamma
-from lib.tools import is_pi
 from lib.custodian import Custodian
+from lib.gamma import gamma
 from lib.oled import Oled
+from lib.tools import is_pi
 
 if is_pi():
     import aubio
@@ -35,7 +35,7 @@ class ColourNormaliser:
         self.decay_amount = 0.05
         self.rotary_step_size = 0.05
 
-        self.doing_fft = Value(ctypes.c_bool, True)
+        self.doing_fft = Value(ctypes.c_bool, True)  # noqa: FBT003
 
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
@@ -55,6 +55,8 @@ class ColourNormaliser:
                 self.max_brightness.value = conf["max-brightness"]
 
         self.realign_brightnesses()
+        if is_pi():
+            self.oled.update()
 
     def realign_brightnesses(self):
         """Recalculate brightness."""
@@ -62,6 +64,14 @@ class ColourNormaliser:
             self.max_brightness.value * self.proportion.value, 0.0
         )
         self.factor.value = self.default_brightness.value
+        self.custodian.set(
+            "brightness",
+            (
+                1
+                / (conf["max-brightness"] * self.proportion.value)
+                * self.default_brightness.value
+            ),
+        )
 
     def normalise(self, triple):
         """Normalise a colour."""
@@ -101,11 +111,11 @@ class ColourNormaliser:
             )
             signal = np.frombuffer(audiobuffer, dtype=np.float32)
             new_note = notes_detector(signal)
-            if (new_note[0] != 0):
+            if new_note[0] != 0:
                 # note_str = ' '.join(["%.2f" % i for i in new_note])
                 # print(note_str)
 
-            # if 30 < notes_detector(signal)[2] < 35:
+                # if 30 < notes_detector(signal)[2] < 35:
                 self.factor.value = self.max_brightness.value
 
     def reduce(self):
@@ -149,13 +159,13 @@ class ColourNormaliser:
                 print("click")
                 if self.doing_fft.value:
                     self.doing_fft.value = False
-                    self.custodian.set("fft-on", False)
+                    self.custodian.set("fft-on", False)  # noqa: FBT003
                     self.oled.update()
                     self.max_brightness.value = self.default_brightness.value
                     self.realign_brightnesses()
                 else:
                     self.doing_fft.value = True
-                    self.custodian.set("fft-on", True)
+                    self.custodian.set("fft-on", True)  # noqa: FBT003
                     self.oled.update()
                     self.max_brightness.value = conf["max-brightness"]
                     self.realign_brightnesses()
