@@ -1,3 +1,4 @@
+import ctypes
 from multiprocessing import Process, Value
 from time import sleep
 
@@ -6,7 +7,9 @@ import numpy as np
 from lib.conf import conf
 from lib.gamma import gamma
 from lib.tools import is_pi
-import ctypes
+from lib.custodian import Custodian
+from lib.oled import Oled
+
 if is_pi():
     import aubio
     import pyaudio
@@ -23,7 +26,7 @@ class ColourNormaliser:
     def __init__(self):
         """Construct."""
         self.max_brightness = Value("f", conf["max-brightness"])
-        self.proportion =Value("f", 0.3)
+        self.proportion = Value("f", 0.3)
         self.default_brightness = Value(
             "f", self.max_brightness.value * self.proportion.value
         )
@@ -33,6 +36,9 @@ class ColourNormaliser:
         self.rotary_step_size = 0.05
 
         self.doing_fft = Value(ctypes.c_bool, True)
+
+        self.custodian = Custodian("hat")
+        self.oled = Oled(self.custodian)
 
         self.processes = {}
 
@@ -64,12 +70,6 @@ class ColourNormaliser:
 
     def run(self):
         """Do the work."""
-        # for name, process in self.processes.items():
-        #     if process.is_alive():
-        #         process.terminate()
-        #     self.processes[name] = None
-        #     sleep(1)
-
         self.run_reducer()
         self.run_fourier()
         self.run_rotary()
@@ -91,42 +91,32 @@ class ColourNormaliser:
 
     def fourier(self):
         """Do the work."""
-        # https://github.com/aubio/aubio/issues/78#issuecomment-268632493
         stream = get_stream()
-        onset_detector = get_onset_detector()
-
-        # Aubio's pitch detection.
-        pDetection = aubio.pitch("default", 2048, 1024, 48000)
-        # Set unit.
-        pDetection.set_unit("Hz")
-        pDetection.set_silence(-40)
-
+        # notes_detector = get_notes_detector()
+        notes_detector = aubio.notes("default", 2048, 1024, 48000)
         while True:
             audiobuffer = stream.read(
                 conf["fourier"]["sound"]["buffer-size"],
                 exception_on_overflow=False,
             )
             signal = np.frombuffer(audiobuffer, dtype=np.float32)
-            pitch = pDetection(signal)[0]
-            volume = np.sum(signal**2) / len(signal)
+            new_note = notes_detector(signal)
+            if (new_note[0] != 0):
+                # note_str = ' '.join(["%.2f" % i for i in new_note])
+                # print(note_str)
 
-# https://aubio.org/manual/latest/cli.html#aubionotes seems relevant
-
-            if onset_detector(signal):
+            # if 30 < notes_detector(signal)[2] < 35:
                 self.factor.value = self.max_brightness.value
-            # if pitch < 80  and volume > 0.005:
-            #     print("kick")
-            #     self.factor.value = self.max_brightness.value
-
 
     def reduce(self):
         """Constantly reducing the brightness."""
         while True:
-            if self.doing_fft.value:
-                if self.factor.value > self.default_brightness.value:
-                    self.factor.value -= self.decay_amount
-                    sleep(self.decay_interval)
-
+            if (
+                self.doing_fft.value
+                and self.factor.value > self.default_brightness.value
+            ):
+                self.factor.value -= self.decay_amount
+                sleep(self.decay_interval)
 
     def rotary(self):
         """Run the rotary-encoder."""
@@ -159,12 +149,16 @@ class ColourNormaliser:
                 print("click")
                 if self.doing_fft.value:
                     self.doing_fft.value = False
+                    self.custodian.set("fft-on", False)
+                    self.oled.update()
                     self.max_brightness.value = self.default_brightness.value
                     self.realign_brightnesses()
                 else:
+                    self.doing_fft.value = True
+                    self.custodian.set("fft-on", True)
+                    self.oled.update()
                     self.max_brightness.value = conf["max-brightness"]
                     self.realign_brightnesses()
-                    self.doing_fft.value = True
 
             sw_last_state = new_sw_state
 
@@ -192,17 +186,17 @@ def get_stream():
     )
 
 
-def get_onset_detector():
-    """Get an aubio onset-detector."""
+def get_notes_detector():
+    """Get an aubio notes-detector."""
     win_s = conf["fourier"]["onset"]["fft-size"]
     hop_s = conf["fourier"]["sound"]["buffer-size"]
 
-    detector = aubio.onset(
+    detector = aubio.notes(
         conf["fourier"]["onset"]["algorithm"],
         win_s,
         hop_s,
         conf["fourier"]["sound"]["sample-rate"],
     )
-    detector.set_threshold(conf["fourier"]["onset"]["threshold"])
+    detector.set_silence(-40)
 
     return detector

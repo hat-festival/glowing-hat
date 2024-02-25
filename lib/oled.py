@@ -108,6 +108,10 @@ class ImageGenerator:
             0,
         )
 
+        self.add_text(
+            f"fft: {'on' if self.custodian.get('fft-on') else 'off'}", self.width-72, 16
+        )
+
     def button_config(self):
         """Make the `button-config` image."""
         self.set_image(self.height, self.width)

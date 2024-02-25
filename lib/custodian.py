@@ -34,6 +34,7 @@ class Custodian:
                 self.add_item_to_hoop(name, "colour-set")
 
             self.next("colour-set")
+            self.set("fft-on", True)
 
     def add_item_to_hoop(self, item, hoop):
         """Add an item to a hoop."""
