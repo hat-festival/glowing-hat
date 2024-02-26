@@ -40,7 +40,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/hat-settings.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "15b87dd71eafa771fc8dc651b3cc2679eacef8086632a5c11af79e1116608bfd",
+            "0820629812d9a0645eb134d8d0d5aeed67e103977eeb0b3947d3f775eb2a072c",
         )
 
     def test_hat_settings_with_wheel(self):
@@ -56,7 +56,7 @@ class TestImageGenerator(TestCase):
         ).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "d5df7c667430f066acfa5370f5393f6e6464d110b2db8cf6b91eb798ca63a058",
+            "a4bf8b66bc66a1a4625fa368912e6e71a9ab5750693ed74f320147ae1b23af48",
         )
 
     def test_hat_settings_with_no_axis(self):
@@ -74,7 +74,7 @@ class TestImageGenerator(TestCase):
         ).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "12ac0e23994b774583ab7f47ae2e8a46e3736bf3cbb922807421d9e9eb5ab240",
+            "4bf1fd099e69fafb8570a1bbfca86ec805b8b05a18236d3deeea35a642275ac7",
         )
 
     def test_hat_settings_with_invert(self):
@@ -91,7 +91,7 @@ class TestImageGenerator(TestCase):
         ).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "83dcbc0f01651905874056224ac912d94abc54279f22f63fff174f574d9201e2",
+            "17ceb94646b096e9ad11d14ee80cbd14ac7c542fdca4e49328744d782ed68b81",
         )
 
     def test_button_config(self):
@@ -106,7 +106,7 @@ class TestImageGenerator(TestCase):
         ).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "46755679d44966c448c49a9f39b1fab279f23332b31a3421bf5b36e9be77ad2f",
+            "e632f04f8b86fd36eb9eb09f57f30e4fee84aae1a8d943ef2729880f6d0ca58a",
         )
 
     def test_boot_screen(self):
@@ -119,7 +119,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/boot.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "06fcc3e52988d996d43c6fb8eb9f983edfe4a858e35ae3766c914e0f24c9b148",
+            "c82f8ad6b6123c8963d2af05af63cbdfadf78b8f1579f97caea379429db4d853",
         )
 
     @patch("socket.gethostname")
@@ -137,7 +137,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/ip-address.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "e4fccb2d14ecdd921a8375688ef529e4f0de579dd23837fc7287060e19c43209",
+            "bb50d7df95fdd527693c4a7eaa966cfbe36cc12476588cfe2d8b50e8eaf15079",
         )
 
     def test_get_sign(self):
@@ -155,19 +155,19 @@ class TestImageGenerator(TestCase):
         expectations = (
             (
                 1.0,
-                "35ff06c0baa64adaf6b910c23f7d9c95efb56caea861f65654213e83bf230a2d",
+                "c35c579cae7cb6fbf262cee3edd2b85dda0749dfd98966e56145266000678e0c",
             ),
             (
                 0.5,
-                "13852a56cb521184fc09d16ca345a0300573d782887de7292c27771131f2938c",
+                "8c96cef5fbcf04ca30b1e1299a090cded55ca30eb5a4a88fedec2b2cebb374b9",
             ),
             (
                 0.1,
-                "e2f423220a96212c067201a1a07ddb61450f3a278ea5fc8b0d0119f77de8fcba",
+                "214f89d4fabf118f29085faabf520c3bd535ca85ec4393699e2961c67c7e7927",
             ),
             (
                 0.0,
-                "15b87dd71eafa771fc8dc651b3cc2679eacef8086632a5c11af79e1116608bfd",
+                "0820629812d9a0645eb134d8d0d5aeed67e103977eeb0b3947d3f775eb2a072c",
             ),
         )
 
@@ -192,5 +192,5 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/with-fft.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "8876b7fdf2f9afeace80e2b0437786be6a2282396707fcbf399850e1d4efd21f",
+            "e9cdee8166d47e19b3b528192b915ea45a6b27540beeaf6ca164f5a626503a90",
         )
