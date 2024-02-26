@@ -54,6 +54,7 @@ cuttlefish:
     invert: False
 
 larsen:
+  fft: False
   jump: 2
   steps: 110
   prefs:

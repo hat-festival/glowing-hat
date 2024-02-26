@@ -17,7 +17,7 @@ oled:
     y: 32
   font:
     name: SourceCodePro-Light
-    size: 13
+    size: 11
   characters:
     separator: "|"
 

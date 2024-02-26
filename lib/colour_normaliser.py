@@ -1,4 +1,5 @@
 import ctypes
+import threading
 from multiprocessing import Process, Value
 from time import sleep
 
@@ -7,6 +8,7 @@ import numpy as np
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.gamma import gamma
+from lib.logger import logging
 from lib.oled import Oled
 from lib.tools import is_pi
 
@@ -42,8 +44,16 @@ class ColourNormaliser:
 
         self.processes = {}
 
+    def set_fft_state(self, state):
+        """Set the `doing_fft` state."""
+        logging.info("setting `FFT` to `%s`", state)
+        self.doing_fft.value = state
+        self.custodian.set("fft-on", state)
+        self.oled.update()
+
     def adjust_brightness(self, direction):
         """Adjust brightness."""
+        logging.debug("turning brightness `%s`", direction)
         if direction == "down":
             self.max_brightness.value = max(
                 self.max_brightness.value - self.rotary_step_size, 0
@@ -102,20 +112,41 @@ class ColourNormaliser:
     def fourier(self):
         """Do the work."""
         stream = get_stream()
-        # notes_detector = get_notes_detector()
-        notes_detector = aubio.notes("default", 2048, 1024, 48000)
+
+        detector = aubio.notes(
+            "default",
+            2048,
+            1024,
+            conf["fourier"]["sound"]["sample-rate"],
+        )
+
+        # detector = aubio.tempo(
+        #     "default",
+        #     2048,
+        #     1024,
+        #     conf["fourier"]["sound"]["sample-rate"],
+        # )
+
+        # detector = aubio.onset(
+        #     "default",
+        #     2048,
+        #     1024,
+        #     conf["fourier"]["sound"]["sample-rate"],
+        # )
+        detector.set_silence(-40)
+
         while True:
             audiobuffer = stream.read(
                 conf["fourier"]["sound"]["buffer-size"],
                 exception_on_overflow=False,
             )
-            signal = np.frombuffer(audiobuffer, dtype=np.float32)
-            new_note = notes_detector(signal)
-            if new_note[0] != 0:
-                # note_str = ' '.join(["%.2f" % i for i in new_note])
-                # print(note_str)
 
-                # if 30 < notes_detector(signal)[2] < 35:
+            signal = np.frombuffer(audiobuffer, dtype=np.float32)
+
+            new_note = detector(signal)
+
+            if new_note[0]:
+                print(new_note)
                 self.factor.value = self.max_brightness.value
 
     def reduce(self):
@@ -130,49 +161,56 @@ class ColourNormaliser:
 
     def rotary(self):
         """Run the rotary-encoder."""
-        clk = conf["rotary"]["pins"]["clk"]
-        dt = conf["rotary"]["pins"]["dt"]
-        sw = conf["rotary"]["pins"]["sw"]
+        # https://forums.raspberrypi.com/viewtopic.php?p=929475&sid=ec5d74aaef7cf66029a48b04cbe1a1e1#p929475
+        self.clk = conf["rotary"]["pins"]["clk"]
+        self.dt = conf["rotary"]["pins"]["dt"]
+        self.sw = conf["rotary"]["pins"]["sw"]
+
+        self.current_clk = 1
+        self.current_dt = 1
+        self.lock_rotary = threading.Lock()
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(sw, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.clk, GPIO.IN)
+        GPIO.setup(self.dt, GPIO.IN)
+        GPIO.setup(self.sw, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        clk_last_state = GPIO.input(clk)
-        sw_last_state = GPIO.input(sw)
+        GPIO.add_event_detect(
+            self.clk, GPIO.RISING, callback=self.rotary_interrupt
+        )
+        GPIO.add_event_detect(
+            self.dt, GPIO.RISING, callback=self.rotary_interrupt
+        )
+
+        sw_last_state = GPIO.input(self.sw)
 
         while True:
-            clk_state = GPIO.input(clk)
-            dt_state = GPIO.input(dt)
-
-            if clk_state != clk_last_state:
-                if dt_state != clk_state:
-                    self.adjust_brightness("up")
-                else:
-                    self.adjust_brightness("down")
-
-            clk_last_state = clk_state
-
-            new_sw_state = GPIO.input(sw)
+            new_sw_state = GPIO.input(self.sw)
             if new_sw_state != sw_last_state and new_sw_state == 0:
-                print("click")
-                if self.doing_fft.value:
-                    self.doing_fft.value = False
-                    self.custodian.set("fft-on", False)  # noqa: FBT003
-                    self.oled.update()
-                    self.max_brightness.value = self.default_brightness.value
-                    self.realign_brightnesses()
-                else:
-                    self.doing_fft.value = True
-                    self.custodian.set("fft-on", True)  # noqa: FBT003
-                    self.oled.update()
-                    self.max_brightness.value = conf["max-brightness"]
-                    self.realign_brightnesses()
+                self.set_fft_state(not self.doing_fft.value)
 
             sw_last_state = new_sw_state
 
-            sleep(0.01)
+            sleep(0.1)
+
+    def rotary_interrupt(self, pin):
+        """Rotary interrupt."""
+        switch_clk = GPIO.input(self.clk)
+        switch_dt = GPIO.input(self.dt)
+
+        if self.current_clk == switch_clk and self.current_dt == switch_dt:
+            return
+
+        self.current_clk = switch_clk
+        self.current_dt = switch_dt
+
+        if switch_clk and switch_dt:
+            self.lock_rotary.acquire()
+            if pin == self.dt:
+                self.adjust_brightness("up")
+            else:
+                self.adjust_brightness("down")
+            self.lock_rotary.release()
 
 
 def gamma_correct(triple):
@@ -194,19 +232,3 @@ def get_stream():
         input=True,
         frames_per_buffer=conf["fourier"]["sound"]["buffer-size"],
     )
-
-
-def get_notes_detector():
-    """Get an aubio notes-detector."""
-    win_s = conf["fourier"]["onset"]["fft-size"]
-    hop_s = conf["fourier"]["sound"]["buffer-size"]
-
-    detector = aubio.notes(
-        conf["fourier"]["onset"]["algorithm"],
-        win_s,
-        hop_s,
-        conf["fourier"]["sound"]["sample-rate"],
-    )
-    detector.set_silence(-40)
-
-    return detector

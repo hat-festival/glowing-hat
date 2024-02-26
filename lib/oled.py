@@ -109,24 +109,24 @@ class ImageGenerator:
         )
 
         if bool(self.custodian.get("fft-on")):
-            print("fjidshjfghjhkl")
             self.add_text(
                 "♫",
                 self.width - 16,
-                16,
+                self.height / 2,
             )
 
         self.draw_brightness_bar()
 
     def draw_brightness_bar(self):
         """Draw the brightness meter."""
-        bar_width = 3
+        bar_width = 4
+        step_size = 3
         max_height = self.height - 2
         count = int(max_height * self.custodian.get("brightness"))
-        for i in range(0, count, 2):
+        for i in range(0, count, step_size):
             for j in range(bar_width):
                 self.image.putpixel(
-                    (self.width - (j + 2), (self.height - 2) - i), 255
+                    (self.width - (j + 2), (self.height - step_size) - i), 255
                 )
 
     def button_config(self):
