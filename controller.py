@@ -85,6 +85,9 @@ class Controller:
         self.process = Process(target=self.mode.run)
         self.process.start()
 
+        self.hat.normaliser.set_fft_state(
+            "fft" in self.mode.data and self.mode.data["fft"]
+        )
         logging.info("hat restarted")
         self.oled.update()
 
