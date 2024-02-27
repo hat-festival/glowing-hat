@@ -28,7 +28,8 @@ bigtop:
     invert: False
 
 brainwaves:
-  jump: 2
+  fft: true
+  jump: 1
   steps: 150
   prefs:
     axis: y
@@ -55,7 +56,7 @@ cuttlefish:
 
 larsen:
   fft: False
-  jump: 2
+  jump: 1
   steps: 110
   prefs:
     axis: x

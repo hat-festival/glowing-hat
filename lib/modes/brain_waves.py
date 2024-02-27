@@ -20,6 +20,7 @@ class BrainWaves(Mode):
         """Configure ourself."""
         if self.invert:
             self.jump = 0 - self.jump
+            self.values.reverse()
 
         self.sort_hat()
 
