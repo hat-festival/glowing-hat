@@ -1,0 +1,26 @@
+lights:
+  - index: 0 # top centre
+    x: 16
+    y: 0
+    z: 16
+  - index: 1 # front centre
+    x: 15
+    y: 13
+    z: 32
+  - index: 2 # left centre
+    x: 0
+    y: 14
+    z: 15
+  - index: 3 # rear centre
+    x: 17
+    y: 15
+    z: 0
+  - index: 4 # right centre
+    x: 32
+    y: 16
+    z: 17
+
+centres:
+  x: 16.0
+  y: 16.0
+  z: 16.0

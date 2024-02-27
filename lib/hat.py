@@ -3,7 +3,7 @@ from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
 from lib.tools import is_pi
-
+from math import isclose
 if is_pi():  # nocov
     import board
     from neopixel import NeoPixel
@@ -48,6 +48,19 @@ class Hat:
     def sort(self, axis):
         """Sort our pixels along an axis."""
         self.pixels.sort(key=lambda w: w[axis])
+
+    def sort_from(self, point):
+        """Sort from a point."""
+        # think about a plane passing through a sphere (we're not a sphere but this might be OK)
+        arranged = []
+        for i in range(-1000, 1001, 1):
+            valid = list(filter(lambda p: isclose(p["x"], i / 1000, rel_tol=0.01), self.pixels))
+            if valid:
+                for item in valid:
+                    if item not in arranged:
+                        arranged.append(item)
+
+        self.pixels = arranged
 
     def fill(self, colour):
         """Fill every light with a colour."""
