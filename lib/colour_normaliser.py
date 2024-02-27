@@ -33,7 +33,7 @@ class ColourNormaliser:
             "f", self.max_brightness.value * self.proportion.value
         )
         self.factor = Value("f", self.default_brightness.value)
-        self.decay_interval = 0.03
+        self.decay_interval = 0.05
         self.decay_amount = 0.05
         self.rotary_step_size = 0.05
 
@@ -54,15 +54,19 @@ class ColourNormaliser:
     def adjust_brightness(self, direction):
         """Adjust brightness."""
         logging.debug("turning brightness `%s`", direction)
+        logging.debug("old value: `%f`", self.max_brightness.value)
         if direction == "down":
             self.max_brightness.value = max(
                 self.max_brightness.value - self.rotary_step_size, 0
             )
 
         if direction == "up":
-            self.max_brightness.value += self.rotary_step_size
-            if self.max_brightness.value > conf["max-brightness"]:
-                self.max_brightness.value = conf["max-brightness"]
+            self.max_brightness.value = min(
+                self.max_brightness.value + self.rotary_step_size,
+                conf["max-brightness"],
+            )
+
+        logging.debug("new value: `%f`", self.max_brightness.value)
 
         self.realign_brightnesses()
         if is_pi():
@@ -93,6 +97,7 @@ class ColourNormaliser:
         self.run_reducer()
         self.run_fourier()
         self.run_rotary()
+        logging.debug(self.processes)
 
     def run_reducer(self):
         """Run the reducer."""
@@ -146,18 +151,17 @@ class ColourNormaliser:
             new_note = detector(signal)
 
             if new_note[0]:
-                print(new_note)
                 self.factor.value = self.max_brightness.value
 
     def reduce(self):
         """Constantly reducing the brightness."""
         while True:
-            if (
-                self.doing_fft.value
-                and self.factor.value > self.default_brightness.value
-            ):
-                self.factor.value -= self.decay_amount
-                sleep(self.decay_interval)
+            if self.doing_fft.value:
+                if self.factor.value > self.default_brightness.value:
+                    self.factor.value -= self.decay_amount
+                    sleep(self.decay_interval)
+            else:
+                sleep(1)
 
     def rotary(self):
         """Run the rotary-encoder."""
@@ -191,7 +195,7 @@ class ColourNormaliser:
 
             sw_last_state = new_sw_state
 
-            sleep(0.1)
+            sleep(0.01)
 
     def rotary_interrupt(self, pin):
         """Rotary interrupt."""
