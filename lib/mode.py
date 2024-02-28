@@ -1,6 +1,8 @@
 import pickle
 from pathlib import Path
 
+from redis import Redis
+
 from lib.conf import conf
 
 
@@ -20,6 +22,7 @@ class Mode:
         self.axis = self.custodian.get("axis")
 
         self.frame_sets = self.load_frame_sets()
+        self.redis = Redis()
 
     def reset(self):
         """Reset some things."""

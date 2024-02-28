@@ -12,6 +12,7 @@ from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
+from lib.orderings_to_redis import populate
 
 BUTTONS = {}
 
@@ -31,7 +32,9 @@ class Controller:
         self.hat = Hat()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf, namespace="hat")
-        self.custodian.populate(flush=True)
+        self.custodian.populate(flush=False)
+
+        populate()
 
         # we pre-load all the modes because it takes a long time
         self.modes = modes
