@@ -3,27 +3,35 @@ def circle(axes, interval=0.1):  # , direction="forwards"):
     keys = [start_corner(axes)]
 
     if "z" in axes:
-        count = 0
+        count = 0 # do this as range I think
         while count <= 1:
-            keys.append((keys[-1][0], keys[-1][1], keys[-1][2] + interval))
+            keys.append(
+                (keys[-1][0], keys[-1][1], round(keys[-1][2] + interval, 1))
+            )
             count += interval
 
     if "x" in axes:
         count = 0
         while count <= 1:
-            keys.append((keys[-1][0] + interval, keys[-1][1], keys[-1][2]))
+            keys.append(
+                (round(keys[-1][0] + interval, 1), keys[-1][1], keys[-1][2])
+            )
             count += interval
 
     if "z" in axes:
         count = 1
         while count >= 0:
-            keys.append((keys[-1][0], keys[-1][1], keys[-1][2] - interval))
+            keys.append(
+                (keys[-1][0], keys[-1][1], round(keys[-1][2] - interval, 1))
+            )
             count -= interval
 
     if "x" in axes:
         count = 1
         while count > 0:
-            keys.append((keys[-1][0] - interval, keys[-1][1], keys[-1][2]))
+            keys.append(
+                (round(keys[-1][0] - interval, 1), keys[-1][1], keys[-1][2])
+            )
             count -= interval
 
     return [f"sorts:{x}" for x in keys]
