@@ -15,6 +15,7 @@ from lib.tools import is_pi
 if is_pi():
     import aubio
     import pyaudio
+    import sounddevice  # noqa: F401
 
 if is_pi():  # nocov
     from RPi import GPIO

@@ -12,12 +12,12 @@ if is_pi():  # nocov
 class Hat:
     """Hat with pixels."""
 
-    def __init__(self, locations="conf/locations.yaml", auto_centre=False):  # noqa: FBT002, D107
+    def __init__(self, locations="conf/locations.yaml", auto_centre=False):  # noqa: FBT002
+        """Construct."""
         self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
         self.normaliser = ColourNormaliser()
-
         self.pixels = list(map(Pixel, self.scaler))
 
         if is_pi():

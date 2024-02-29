@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install fix-alsa clean
+setup: apt-installs install system-install clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting your hat..."

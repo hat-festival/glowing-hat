@@ -40,6 +40,15 @@ format: toml-sort ruff
 style:
 	python -m ruff check .
 
+fix:
+	python -m ruff check --fix .
+
+unsafe-fix:
+	python -m ruff check --fix --unsafe-fixes .
+
+noqa:
+	python -m ruff check --add-noqa .
+
 render:
 	python render_renderers.py
 
