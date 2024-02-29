@@ -20,11 +20,9 @@ def populate():
             for j in all_entries(i):
                 for k in all_entries(j):
                     if all_entries(k):
-                        for pickles in all_entries(k):
-                            print(f"loading {pickles}")
+                        for pkl in all_entries(k):
+                            logging.info("loading `%s`", pkl)
                             redis.set(
-                                f"sorts:{tuple(
-                                    map(float, pickles.parts[1:-1])
-                                    )!s}",
-                                pickles.read_bytes(),
+                                f"sorts:{tuple(map(float, pkl.parts[1:-1]))!s}",
+                                pkl.read_bytes(),
                             )
