@@ -2,10 +2,10 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install clean
+setup: apt-installs install system-install unpack-sorts clean
 	@echo "========================================================"
 	@echo
-	@echo "Install complete, rebooting your hat..."
+	@echo "Install complete, rebooting hat..."
 	@echo
 	@echo "========================================================"
 	sudo reboot
@@ -55,3 +55,6 @@ clean:
 wpa:
 	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
 	sudo ln -s $$(pwd)/etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant
+
+unpack-sorts:
+	if [ ! -e sorts ] ; then tar xzvf sorts.tar.gz ; fi
