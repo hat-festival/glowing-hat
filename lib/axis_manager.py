@@ -66,6 +66,10 @@ class AxisManager:
 
         return arranged
 
+    def get_sort(self, key):
+        """Unpickle a `sort`."""
+        return pickle.loads(self.redis.get(key))  # noqa: S301
+
     def random_point(self):
         """Get a random point."""
         # this should know what points it's managing I guess?
