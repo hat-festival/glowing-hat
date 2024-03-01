@@ -1,22 +1,22 @@
-from lib.sorts_generator import SortsGenarator
+from lib.sorts_generator import SortsGenerator
 
 
-class TestSortsGenarator:
-    """Test the SortsGenarator."""
+class TestSortsGenerator:
+    """Test the SortsGenerator."""
 
     def test_live_axes(self):
         """Test it knows which axes are in play."""
-        generator = SortsGenarator(("z", "x"))
+        generator = SortsGenerator("z", "x")
         assert generator.live_indeces == [2, 0]
 
     def test_start_corner(self):
         """Test it works out the starting corner."""
-        generator = SortsGenarator(("z", "x"))
+        generator = SortsGenerator("z", "x")
         assert generator.start_corner.tuple == (-1.0, 0.0, -1.0)
 
     def test_simple_circle(self):
         """Test going round in a circle."""
-        generator = SortsGenarator(("z", "x"), interval=1)
+        generator = SortsGenerator("z", "x", interval=1)
         generator.make_circle()
         assert generator.as_tuples == [
             (-1.0, 0.0, -1.0),  # back left
@@ -31,7 +31,7 @@ class TestSortsGenarator:
 
     def test_richer_circle(self):
         """Test going round in a denser circle."""
-        generator = SortsGenarator(("z", "x"), interval=0.5)
+        generator = SortsGenerator("z", "x", interval=0.5)
         generator.make_circle()
         assert generator.as_keys == [
             "sorts:(-1.0, 0.0, -1.0)",  # back left
@@ -54,7 +54,7 @@ class TestSortsGenarator:
 
     def test_reverse_circle(self):
         """Test going round in a circle the other way."""
-        generator = SortsGenarator(("z", "x"), interval=1)
+        generator = SortsGenerator("z", "x", interval=1)
         generator.make_circle(direction="backwards")
         assert generator.as_keys == [
             "sorts:(-1.0, 0.0, -1.0)",
@@ -69,7 +69,7 @@ class TestSortsGenarator:
 
     def test_y_z_circle(self):
         """Test going round in a circle."""
-        generator = SortsGenarator(("y", "z"), interval=1)
+        generator = SortsGenerator("y", "z", interval=1)
         generator.make_circle()
         assert generator.as_keys == [
             "sorts:(0.0, -1.0, -1.0)",
@@ -84,10 +84,7 @@ class TestSortsGenarator:
 
     def test_with_altitude(self):
         """Test a circle with altitude."""
-        generator = SortsGenarator(
-            ("y", "z"),
-            interval=1,
-        )
+        generator = SortsGenerator("y", "z", interval=1)
         generator.make_circle(altitude=0.5)
         assert generator.as_keys == [
             "sorts:(0.5, -1.0, -1.0)",

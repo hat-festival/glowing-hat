@@ -7,7 +7,7 @@ class SortsGenarator:
     """Generate some axis patterns."""
 
     # TODO can the axes be a splat since we have named args after?
-    def __init__(self, axes, interval=0.1):
+    def __init__(self, *axes, interval=0.1):
         """Construct."""
         self.interval = interval
         self.axes = axes

@@ -27,7 +27,7 @@ class Cuttlefish(Mode):
 
         self.manager = AxisManager()
 
-        self.rotator = SortsGenarator(("x", "z"))
+        self.rotator = SortsGenerator("x", "z")
         self.rotator.make_circle()
 
     def run(self):
