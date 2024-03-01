@@ -47,12 +47,12 @@ class TestFish(TestCase):
         fish = Cuttlefish(Hat(), self.custodian)
         fish.reset()
 
-        self.assertFalse(self.custodian.get("invert"))  # noqa: PT009
-        self.assertFalse(fish.invert)  # noqa: PT009
+        assert not self.custodian.get("invert")
+        assert not fish.invert
 
         self.custodian.rotate_until("invert", True)  # noqa: FBT003
         # self.custodian.set("invert", True)
         fish.reconfigure()
 
-        self.assertTrue(self.custodian.get("invert"))  # noqa: PT009
-        self.assertFalse(fish.invert)  # noqa: PT009
+        assert self.custodian.get("invert")
+        assert not fish.invert

@@ -29,11 +29,11 @@ class Cuttlefish(Mode):
 
         self.rotator = SortsGenarator(("x", "z"))
         self.rotator.make_circle()
-        self.hat.pixels = self.manager.get_sort(self.rotator.next)
 
     def run(self):
         """Do the stuff."""
         self.reconfigure()
+        self.hat.pixels = self.manager.get_sort(self.rotator.next)
 
         count = 0
         while True:
