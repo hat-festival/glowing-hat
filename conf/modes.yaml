@@ -29,7 +29,7 @@ bigtop:
 
 brainwaves:
   fft: true
-  jump: 1
+  jump: 2
   steps: 150
   prefs:
     axis: y
