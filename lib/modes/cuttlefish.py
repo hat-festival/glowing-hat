@@ -2,7 +2,7 @@ from collections import deque
 
 from lib.axis_manager import AxisManager
 from lib.mode import Mode
-from lib.sorts_generator import SortsGenarator
+from lib.sorts_generator import SortsGenerator
 from lib.tools import hue_to_rgb
 
 

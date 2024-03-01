@@ -3,7 +3,7 @@ from collections import deque
 from lib.sort_key import SortKey
 
 
-class SortsGenarator:
+class SortsGenerator:
     """Generate some axis patterns."""
 
     # TODO can the axes be a splat since we have named args after?
