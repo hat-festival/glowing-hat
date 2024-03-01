@@ -24,7 +24,6 @@ class AxisManager:
     def populate_redis(self):
         """Send the sorts data to redis."""
         tar = tarfile.open(self.archive, "r")
-
         for member in tar:
             if not member.isfile():
                 continue
@@ -69,10 +68,6 @@ class AxisManager:
     def get_sort(self, key):
         """Unpickle a `sort`."""
         return pickle.loads(self.redis.get(key))  # noqa: S301
-
-    def random_point(self):
-        """Get a random point."""
-        # this should know what points it's managing I guess?
 
 
 def is_inside_sphere(pixel, centre, radius):
