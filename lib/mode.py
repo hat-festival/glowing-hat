@@ -1,8 +1,7 @@
 import pickle
 from pathlib import Path
 
-from redis import Redis
-
+from lib.axis_manager import AxisManager
 from lib.conf import conf
 
 
@@ -22,7 +21,7 @@ class Mode:
         self.axis = self.custodian.get("axis")
 
         self.frame_sets = self.load_frame_sets()
-        self.redis = Redis()
+        self.manager = AxisManager()
 
     def reset(self):
         """Reset some things."""
@@ -88,3 +87,7 @@ class Mode:
                 pass
 
         return data
+
+    def hat_from_sort(self, sort_key):
+        """Set the hat ordering from a sort_key."""
+        self.hat.pixels = self.manager.get_sort(sort_key)

@@ -1,6 +1,8 @@
 from collections import deque
 
+from lib.axis_manager import AxisManager
 from lib.mode import Mode
+from lib.sorts_generator import SortsGenarator
 from lib.tools import hue_to_rgb
 
 
@@ -23,10 +25,23 @@ class Cuttlefish(Mode):
 
         self.sort_hat()
 
+        self.manager = AxisManager()
+
+        self.rotator = SortsGenarator(("x", "z"))
+        self.rotator.make_circle()
+
     def run(self):
         """Do the stuff."""
         self.reconfigure()
+        self.hat.pixels = self.manager.get_sort(self.rotator.next)
 
+        count = 0
         while True:
-            self.hat.illuminate(list(self.colours)[:100])
+            self.hat.illuminate(list(self.colours)[: self.hat.length])
+            count += 1
+            # TODO move these numbers out to conf
+            if count == 1:
+                self.hat.pixels = self.manager.get_sort(self.rotator.next)
+                count = 0
+
             self.colours.rotate(self.jump)

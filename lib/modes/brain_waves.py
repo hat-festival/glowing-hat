@@ -30,8 +30,6 @@ class BrainWaves(Mode):
 
         while True:
             clr = self.get_colour()
-            rgbs = list(  # noqa: C417
-                map(lambda x: scale_colour(clr, x), list(self.values)[:100])
-            )
+            rgbs = [scale_colour(clr, x) for x in list(self.values)[:100]]
             self.hat.illuminate(rgbs)
             self.values.rotate(self.jump)

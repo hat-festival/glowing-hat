@@ -1,6 +1,8 @@
-from random import choice, randint, random
+from random import randint
 
+from lib.logger import logging
 from lib.mode import Mode
+from lib.sort_key import SortKey
 
 
 class Crawler(Mode):
@@ -9,9 +11,14 @@ class Crawler(Mode):
     def run(self):
         """Do the stuff."""
         while True:
-            self.hat.sort(choice(["x", "y", "z"]))  # noqa: S311
-            if random() < 0.5:  # noqa: S311, PLR2004
-                self.hat.reverse()
+            origin = SortKey(
+                randint(-10, 10) / 10,  # noqa: S311
+                randint(-10, 10) / 10,  # noqa: S311
+                randint(-10, 10) / 10,  # noqa: S311
+            )
+            logging.debug(origin.as_key)
+            self.hat_from_sort(origin.as_key)
+
             step = randint(1, self.data["max-jump"])  # noqa: S311
             clr = self.get_colour()
 
