@@ -1,75 +1,83 @@
-from lib.axis_rotator import circle, live_axes, start_corner
+from lib.axis_rotator import AxisRotator
 
 
-def test_live_axes():
-    """Test it works out the axes in play."""
-    assert live_axes(("z", "x")) == [2, 0]
+class TestAxisRotator:
+    """Test the Rotator."""
 
+    def test_live_axes(self):
+        """Test it knows which axes are in play."""
+        rotator = AxisRotator(("z", "x"))
+        assert rotator.live_axes == [2, 0]
 
-def test_start_corner():
-    """Test it works out the starting corner."""
-    assert start_corner(("z", "x")) == [-1.0, 0.0, -1.0]
+    def test_start_corner(self):
+        """Test it works out the starting corner."""
+        rotator = AxisRotator(("z", "x"))
+        assert rotator.start_corner.tuple == (-1.0, 0.0, -1.0)
 
+    def test_simple_circle(self):
+        """Test going round in a circle."""
+        rotator = AxisRotator(("z", "x"), interval=1)
+        rotator.make_circle()
+        assert rotator.as_tuples == [
+            (-1.0, 0.0, -1.0),  # back left
+            (-1.0, 0.0, 0.0),
+            (-1.0, 0.0, 1.0),  # front left
+            (0.0, 0.0, 1.0),
+            (1.0, 0.0, 1.0),  # front right
+            (1.0, 0.0, 0.0),
+            (1.0, 0.0, -1.0),  # back right
+            (0.0, 0.0, -1.0),
+        ]
 
-def test_simple_circle():
-    """Test going round in a circle."""
-    assert circle(("z", "x"), interval=1) == [
-        "sorts:(-1.0, 0.0, -1.0)",  # back left
-        "sorts:(-1.0, 0.0, 0.0)",
-        "sorts:(-1.0, 0.0, 1.0)",  # front left
-        "sorts:(0.0, 0.0, 1.0)",
-        "sorts:(1.0, 0.0, 1.0)",  # front right
-        "sorts:(1.0, 0.0, 0.0)",
-        "sorts:(1.0, 0.0, -1.0)",  # back right
-        "sorts:(0.0, 0.0, -1.0)",
-    ]
+    def test_richer_circle(self):
+        """Test going round in a denser circle."""
+        rotator = AxisRotator(("z", "x"), interval=0.5)
+        rotator.make_circle()
+        assert rotator.as_keys == [
+            "sorts:(-1.0, 0.0, -1.0)",  # back left
+            "sorts:(-1.0, 0.0, -0.5)",
+            "sorts:(-1.0, 0.0, 0.0)",
+            "sorts:(-1.0, 0.0, 0.5)",
+            "sorts:(-1.0, 0.0, 1.0)",  # front left
+            "sorts:(-0.5, 0.0, 1.0)",
+            "sorts:(0.0, 0.0, 1.0)",
+            "sorts:(0.5, 0.0, 1.0)",
+            "sorts:(1.0, 0.0, 1.0)",  # front right
+            "sorts:(1.0, 0.0, 0.5)",
+            "sorts:(1.0, 0.0, 0.0)",
+            "sorts:(1.0, 0.0, -0.5)",
+            "sorts:(1.0, 0.0, -1.0)",  # back right
+            "sorts:(0.5, 0.0, -1.0)",
+            "sorts:(0.0, 0.0, -1.0)",
+            "sorts:(-0.5, 0.0, -1.0)",
+        ]
 
+    def test_reverse_circle(self):
+        """Test going round in a circle the other way."""
+        rotator = AxisRotator(("z", "x"), interval=1)
+        rotator.make_circle(direction="backwards")
+        assert rotator.as_keys == [
+            "sorts:(-1.0, 0.0, -1.0)",
+            "sorts:(0.0, 0.0, -1.0)",
+            "sorts:(1.0, 0.0, -1.0)",
+            "sorts:(1.0, 0.0, 0.0)",
+            "sorts:(1.0, 0.0, 1.0)",
+            "sorts:(0.0, 0.0, 1.0)",
+            "sorts:(-1.0, 0.0, 1.0)",
+            "sorts:(-1.0, 0.0, 0.0)",
+        ]
 
-def test_richer_circle():
-    """Test going round in a denser circle."""
-    assert circle(("z", "x"), interval=0.5) == [
-        "sorts:(-1.0, 0.0, -1.0)",  # back left
-        "sorts:(-1.0, 0.0, -0.5)",
-        "sorts:(-1.0, 0.0, 0.0)",
-        "sorts:(-1.0, 0.0, 0.5)",
-        "sorts:(-1.0, 0.0, 1.0)",  # front left
-        "sorts:(-0.5, 0.0, 1.0)",
-        "sorts:(0.0, 0.0, 1.0)",
-        "sorts:(0.5, 0.0, 1.0)",
-        "sorts:(1.0, 0.0, 1.0)",  # front right
-        "sorts:(1.0, 0.0, 0.5)",
-        "sorts:(1.0, 0.0, 0.0)",
-        "sorts:(1.0, 0.0, -0.5)",
-        "sorts:(1.0, 0.0, -1.0)",  # back right
-        "sorts:(0.5, 0.0, -1.0)",
-        "sorts:(0.0, 0.0, -1.0)",
-        "sorts:(-0.5, 0.0, -1.0)",
-    ]
-
-
-def test_reverse_circle():
-    """Test going round in a circle the other way."""
-    assert circle(("z", "x"), interval=1, direction="backwards") == [
-        "sorts:(-1.0, 0.0, -1.0)",
-        "sorts:(0.0, 0.0, -1.0)",
-        "sorts:(1.0, 0.0, -1.0)",
-        "sorts:(1.0, 0.0, 0.0)",
-        "sorts:(1.0, 0.0, 1.0)",
-        "sorts:(0.0, 0.0, 1.0)",
-        "sorts:(-1.0, 0.0, 1.0)",
-        "sorts:(-1.0, 0.0, 0.0)",
-    ]
-
-
-def test_y_z_circle():
-    """Test going round in a circle."""
-    assert circle(("y", "z"), interval=1) == [
-        "sorts:(0.0, -1.0, -1.0)",
-        "sorts:(0.0, 0.0, -1.0)",
-        "sorts:(0.0, 1.0, -1.0)",
-        "sorts:(0.0, 1.0, 0.0)",
-        "sorts:(0.0, 1.0, 1.0)",
-        "sorts:(0.0, 0.0, 1.0)",
-        "sorts:(0.0, -1.0, 1.0)",
-        "sorts:(0.0, -1.0, 0.0)",
-    ]
+    def test_y_z_circle(self):
+        """Test going round in a circle."""
+        rotator = AxisRotator(("y", "z"), interval=1)
+        rotator.make_circle()
+        assert rotator.as_keys == [
+            "sorts:(0.0, -1.0, -1.0)",
+            "sorts:(0.0, 0.0, -1.0)",
+            "sorts:(0.0, 1.0, -1.0)",
+            "sorts:(0.0, 1.0, 0.0)",
+            "sorts:(0.0, 1.0, 1.0)",
+            "sorts:(0.0, 0.0, 1.0)",
+            "sorts:(0.0, -1.0, 1.0)",
+            "sorts:(0.0, -1.0, 0.0)",
+        ]

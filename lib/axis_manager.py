@@ -66,6 +66,10 @@ class AxisManager:
 
         return arranged
 
+    def random_point(self):
+        """Get a random point."""
+        # this should know what points it's managing I guess?
+
 
 def is_inside_sphere(pixel, centre, radius):
     """Is this pixel inside this sphere."""
