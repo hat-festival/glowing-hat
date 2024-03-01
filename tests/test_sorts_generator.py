@@ -7,7 +7,7 @@ class TestSortsGenarator:
     def test_live_axes(self):
         """Test it knows which axes are in play."""
         generator = SortsGenarator(("z", "x"))
-        assert generator.live_axes == [2, 0]
+        assert generator.live_indeces == [2, 0]
 
     def test_start_corner(self):
         """Test it works out the starting corner."""
@@ -80,4 +80,22 @@ class TestSortsGenarator:
             "sorts:(0.0, 0.0, 1.0)",
             "sorts:(0.0, -1.0, 1.0)",
             "sorts:(0.0, -1.0, 0.0)",
+        ]
+
+    def test_with_altitude(self):
+        """Test a circle with altitude."""
+        generator = SortsGenarator(
+            ("y", "z"),
+            interval=1,
+        )
+        generator.make_circle(altitude=0.5)
+        assert generator.as_keys == [
+            "sorts:(0.5, -1.0, -1.0)",
+            "sorts:(0.5, 0.0, -1.0)",
+            "sorts:(0.5, 1.0, -1.0)",
+            "sorts:(0.5, 1.0, 0.0)",
+            "sorts:(0.5, 1.0, 1.0)",
+            "sorts:(0.5, 0.0, 1.0)",
+            "sorts:(0.5, -1.0, 1.0)",
+            "sorts:(0.5, -1.0, 0.0)",
         ]
