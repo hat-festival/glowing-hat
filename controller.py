@@ -77,9 +77,7 @@ class Controller:
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        self.mode = self.modes[self.custodian.get("mode")](
-            self.hat, self.custodian
-        )
+        self.mode = self.modes[self.custodian.get("mode")](self.hat, self.custodian)
         # if we're moving to a new mode (rather than just changing the axis or whatever)  # noqa: E501
         if is_mode:
             # we want to set the mode to its preferential configuration
@@ -98,9 +96,7 @@ class Controller:
         """Bump something."""
         logging.info("bumping `%s`", parameter)
         self.custodian.next(parameter)
-        logging.info(
-            "`%s` is now `%s`", parameter, self.custodian.get(parameter)
-        )
+        logging.info("`%s` is now `%s`", parameter, self.custodian.get(parameter))
 
         is_mode = parameter == "mode"
         self.restart_hat(is_mode=is_mode)

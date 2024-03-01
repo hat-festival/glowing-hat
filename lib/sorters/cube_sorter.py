@@ -21,9 +21,7 @@ class CubeSorter:
         save_dir = Path(self.outdir, *map(str, point))
         Path(save_dir).mkdir(exist_ok=True, parents=True)
 
-        Path(save_dir, "sort.pickle").write_bytes(
-            pickle.dumps(self.sort_from(point))
-        )
+        Path(save_dir, "sort.pickle").write_bytes(pickle.dumps(self.sort_from(point)))
 
     def sort_from(self, point):
         """Sort from a point."""

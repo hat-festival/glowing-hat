@@ -88,9 +88,7 @@ class Custodian:
         """Set a value."""
         self.redis.set(self.make_key(key), str(value))
         if key == "colour-set":
-            self.load_colour_set(
-                self.conf["colour-sets"][self.get("colour-set")]
-            )
+            self.load_colour_set(self.conf["colour-sets"][self.get("colour-set")])
 
     def increment(self, key):
         """Attempt to increment a value."""
@@ -141,8 +139,7 @@ class RandomColourSource:
     def colour(self):
         """Get a colour."""
         while (
-            abs(self.hue - self.next_hue)
-            < self.conf["random-colour"]["hue-distance"]
+            abs(self.hue - self.next_hue) < self.conf["random-colour"]["hue-distance"]
         ):
             self.next_hue = random()  # noqa: S311
 

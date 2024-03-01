@@ -9,9 +9,7 @@ class Scaler(list):
     def __init__(self, locations="conf/locations.yaml", auto_centre=False):  # pylint: disable=W0231  # noqa: FBT002
         """Construct."""
         self.locations = locations
-        self.absolutes = yaml.safe_load(
-            Path(locations).read_text(encoding="UTF-8")
-        )
+        self.absolutes = yaml.safe_load(Path(locations).read_text(encoding="UTF-8"))
 
         self.auto_centre = auto_centre
 

@@ -180,12 +180,8 @@ class ColourNormaliser:
         GPIO.setup(self.dt, GPIO.IN)
         GPIO.setup(self.sw, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.add_event_detect(
-            self.clk, GPIO.RISING, callback=self.rotary_interrupt
-        )
-        GPIO.add_event_detect(
-            self.dt, GPIO.RISING, callback=self.rotary_interrupt
-        )
+        GPIO.add_event_detect(self.clk, GPIO.RISING, callback=self.rotary_interrupt)
+        GPIO.add_event_detect(self.dt, GPIO.RISING, callback=self.rotary_interrupt)
 
         sw_last_state = GPIO.input(self.sw)
 

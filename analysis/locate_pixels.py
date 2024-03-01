@@ -24,9 +24,7 @@ for aspect in ["back", "front", "left", "right"]:
     directory = Path("/opt", "analysis", aspect)
     data_files = Path(directory).glob("*[0-9]*json")
     for file in data_files:
-        axes[aspect]["data"][file.stem] = json.loads(
-            file.read_text(encoding="UTF-8")
-        )
+        axes[aspect]["data"][file.stem] = json.loads(file.read_text(encoding="UTF-8"))
 
 # assemble a dict like
 #

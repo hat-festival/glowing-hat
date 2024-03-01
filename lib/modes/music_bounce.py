@@ -49,9 +49,7 @@ class MusicBounce(Mode):
 
         process = None
         while True:
-            audiobuffer = stream.read(
-                self.buffer_size, exception_on_overflow=False
-            )
+            audiobuffer = stream.read(self.buffer_size, exception_on_overflow=False)
             signal = np.frombuffer(audiobuffer, dtype=np.float32)
 
             if onset_detector(signal):
@@ -103,8 +101,6 @@ class MusicBounce(Mode):
                     if process and process.is_alive():
                         process.terminate()
 
-                    process = Process(
-                        target=self.punch
-                    )  # ), args=(data["colour"],))
+                    process = Process(target=self.punch)  # ), args=(data["colour"],))
                     process.start()
                     data["value"] = data["new_value"]

@@ -34,7 +34,7 @@ def make_outdir(colour):  # noqa: ARG001
 def snap(index, colour, shutter_speed=2000, suffix=""):
     """Take a picture of light `i` with colour `colour`."""
     print(
-        f"Capturing light {index} with colour {colour} at shutter-speed {shutter_speed}"  # noqa: E501
+        f"Capturing light {index} with colour {colour} at shutter-speed {shutter_speed}"
     )
 
     outdir = make_outdir(colour)

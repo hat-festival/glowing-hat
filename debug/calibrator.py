@@ -12,9 +12,7 @@ from lib.pixel import Pixel
 axis = sys.argv[1]
 value = int(sys.argv[2])
 
-data = yaml.safe_load(
-    Path("..", "conf", "locations.yaml").read_text(encoding="UTF-8")
-)
+data = yaml.safe_load(Path("..", "conf", "locations.yaml").read_text(encoding="UTF-8"))
 
 lights = []
 for index, point in enumerate(data["lights"]):  # noqa: B007

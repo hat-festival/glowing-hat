@@ -42,9 +42,7 @@ def populate_indeces(data, hat, axis_1, axis_2):
         map(
             lambda x: x["index"],
             filter(
-                lambda pixel: point_on_line(
-                    (pixel[axis_1], pixel[axis_2]), data
-                ),
+                lambda pixel: point_on_line((pixel[axis_1], pixel[axis_2]), data),
                 hat.pixels,
             ),
         )
@@ -69,8 +67,8 @@ def point_on_line(point, line):
     this_end = np.array(line[0])
     that_end = np.array(line[1])
     our_point = np.array(point)
-    distance = np.cross(
-        that_end - this_end, our_point - this_end
-    ) / np.linalg.norm(that_end - this_end)
+    distance = np.cross(that_end - this_end, our_point - this_end) / np.linalg.norm(
+        that_end - this_end
+    )
 
     return abs(distance) <= tolerance

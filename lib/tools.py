@@ -61,7 +61,4 @@ def colour_from_time():
 def is_pi():
     """Detect if we're on a Pi."""
     model_file = "/sys/firmware/devicetree/base/model"
-    return (
-        Path(model_file).exists()
-        and "Raspberry Pi" in Path(model_file).read_text()
-    )
+    return Path(model_file).exists() and "Raspberry Pi" in Path(model_file).read_text()

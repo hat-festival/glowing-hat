@@ -38,10 +38,8 @@ class TestAxisManager(TestCase):
         man.populate_redis()
 
         assert (
-            hashlib.sha256(
-                self.redis.get("sorts:(-0.5, -1.0, 0.5)")
-            ).hexdigest()
-            == "9ede5937c278f4d826b70295cfa845e01b288cc93820a69ec802aee7099d033f"  # noqa: E501
+            hashlib.sha256(self.redis.get("sorts:(-0.5, -1.0, 0.5)")).hexdigest()
+            == "9ede5937c278f4d826b70295cfa845e01b288cc93820a69ec802aee7099d033f"
         )
 
     def test_sort_from(self):

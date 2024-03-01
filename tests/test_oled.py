@@ -44,7 +44,7 @@ class TestImageGenerator(TestCase):
         )
 
     def test_hat_settings_with_wheel(self):
-        """Test it generates the hat-settings screen with the `wheel` colour-source."""  # noqa: E501
+        """Test it generates the hat-settings screen with the `wheel` colour-source."""
         self.cus.set("display-type", "hat-settings")
         self.cus.set("colour-source", "wheel")
 
@@ -69,9 +69,7 @@ class TestImageGenerator(TestCase):
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="hat-settings-no-axis")
 
-        checksum = sha256(
-            Path("tmp/hat-settings-no-axis.png").read_bytes()
-        ).hexdigest()
+        checksum = sha256(Path("tmp/hat-settings-no-axis.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
             "4bf1fd099e69fafb8570a1bbfca86ec805b8b05a18236d3deeea35a642275ac7",
@@ -101,9 +99,7 @@ class TestImageGenerator(TestCase):
         gen = ImageGenerator(self.cus, self.oled_conf)
         gen.generate(save_to="button-config")
 
-        checksum = sha256(
-            Path("tmp/button-config.png").read_bytes()
-        ).hexdigest()
+        checksum = sha256(Path("tmp/button-config.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
             "e632f04f8b86fd36eb9eb09f57f30e4fee84aae1a8d943ef2729880f6d0ca58a",

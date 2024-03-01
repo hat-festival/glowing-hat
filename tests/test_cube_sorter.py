@@ -8,9 +8,7 @@ class TestCubeSorter(TestCase):
 
     def setUp(self):
         """Set things up."""
-        self.sorter = CubeSorter(
-            locations="tests/fixtures/hat/locations/simple.yaml"
-        )
+        self.sorter = CubeSorter(locations="tests/fixtures/hat/locations/simple.yaml")
 
     def test_sorting(self):
         """Try the sorter."""

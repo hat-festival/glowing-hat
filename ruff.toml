@@ -1,5 +1,5 @@
 extend-exclude = []
-line-length = 80
+line-length = 88
 target-version = "py311"
 lint.ignore = [
   "D100", # modules don't need docstrings

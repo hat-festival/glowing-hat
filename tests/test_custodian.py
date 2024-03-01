@@ -120,9 +120,7 @@ class TestCustodian(TestCase):
     def test_populating(self):
         """Test it populates with initial values."""
         conf = yaml.safe_load(
-            Path("tests/fixtures/custodian/defaults.yaml").read_text(
-                encoding="UTF-8"
-            )
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
         )
         cus = Custodian("test", conf=conf)
         cus.populate()
@@ -141,9 +139,7 @@ class TestCustodian(TestCase):
     def test_triggering(self):
         """Test a new colour-set triggers a reload."""
         conf = yaml.safe_load(
-            Path("tests/fixtures/custodian/defaults.yaml").read_text(
-                encoding="UTF-8"
-            )
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
         )
         cus = Custodian("test", conf=conf)
         cus.populate()
@@ -176,9 +172,7 @@ class TestCustodian(TestCase):
     def test_reset_colour_sources(self):
         """Test it resets the colour-sources."""
         conf = yaml.safe_load(
-            Path("tests/fixtures/custodian/defaults.yaml").read_text(
-                encoding="UTF-8"
-            )
+            Path("tests/fixtures/custodian/defaults.yaml").read_text(encoding="UTF-8")
         )
         cus = Custodian("test", conf=conf)
         cus.populate()

@@ -27,9 +27,7 @@ class Sweeper:
                 if direction == "b":
                     rev = True
 
-                data[f"{axis}-{direction}"] = self.populate(
-                    axis_0, axis_1, rev=rev
-                )
+                data[f"{axis}-{direction}"] = self.populate(axis_0, axis_1, rev=rev)
 
         Path("renders/sweeper.pickle").write_bytes(pickle.dumps(data))
 

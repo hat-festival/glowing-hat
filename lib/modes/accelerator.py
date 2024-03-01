@@ -14,9 +14,7 @@ class Accelerator(Sweeper):
         while True:
             for direction in ["faster", "slower"]:
                 while self.condition(step, direction):
-                    self.illuminate(
-                        self.frames[round(i) % 360], self.get_colour()
-                    )
+                    self.illuminate(self.frames[round(i) % 360], self.get_colour())
 
                     i = (i + step) % 360
                     step = self.incdec(step, direction)
