@@ -1,6 +1,3 @@
-import pickle
-from pathlib import Path
-
 from lib.pixel import Pixel
 from lib.scaler import Scaler
 
@@ -8,30 +5,21 @@ from lib.scaler import Scaler
 class CubeSorter:
     """Pre-calculate orderings along many axes."""
 
-    def __init__(self, locations="conf/locations.yaml", outdir="sorts"):
+    def __init__(self, locations="conf/locations.yaml"):
         """Construct."""
         self.locations = locations
-        self.outdir = outdir
         self.scaler = Scaler(locations, auto_centre=False)
         self.pixels = list(map(Pixel, self.scaler))
 
-    def create(self, point):
-        """Save a sorted set."""
-        print(f"Sorting from {point!s}")
-        save_dir = Path(self.outdir, *map(str, point))
-        Path(save_dir).mkdir(exist_ok=True, parents=True)
-
-        Path(save_dir, "sort.pickle").write_bytes(pickle.dumps(self.sort_from(point)))
-
-    def sort_from(self, point):
+    def sort_from(self, *point):
         """Sort from a point."""
         arranged = []
         # body diagonal of a 2x2x2 cube is 2*sqrt(3)
-        for r in range(0, 3500, 1):
+        for r in range(0, 7000, 1):
             radius = r / 1000
             arranged += list(
                 filter(
-                    lambda pixel: is_inside_sphere(pixel, point, radius)
+                    lambda pixel: is_inside_sphere(pixel, point[0], radius)
                     and pixel not in arranged,
                     self.pixels,
                 )
