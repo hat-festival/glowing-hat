@@ -6,7 +6,6 @@ from lib.sort_key import SortKey
 class SortsGenerator:
     """Generate some axis patterns."""
 
-    # TODO can the axes be a splat since we have named args after?
     def __init__(self, *axes, interval=0.1):
         """Construct."""
         self.interval = interval
