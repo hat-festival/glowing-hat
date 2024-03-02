@@ -1,6 +1,7 @@
 import io
 import pickle
 import tarfile
+from pathlib import Path
 
 from redis import Redis
 
@@ -11,7 +12,9 @@ from lib.sorters.cube_sorter import CubeSorter
 class AxisManager:
     """Manage the pre-rendered hat orderings."""
 
-    def __init__(self, archive="sorts.tar.gz", locations="conf/locations.yaml"):
+    def __init__(
+        self, archive="sorts/sorts-1x1.tar.gz", locations="conf/locations.yaml"
+    ):
         """Construct."""
         self.archive = archive
         self.sorter = CubeSorter(locations)
@@ -31,6 +34,7 @@ class AxisManager:
 
     def create_sorts(self, steps=20):
         """Create the sorts archive."""
+        Path("sorts").mkdir(exist_ok=True)
         tar = tarfile.open(self.archive, "w:gz")
         r = range(-steps, steps + 1, 1)
 
