@@ -25,6 +25,7 @@ class TestFish(TestCase):
                 "jump": 1,
                 "prefs": {"axis": "y", "invert": False},
                 "steps": 200,
+                "axis-rotate-at": 2,
             },
         )
         self.assertEqual(fish.prefs, {"axis": "y", "invert": False})  # noqa: PT009

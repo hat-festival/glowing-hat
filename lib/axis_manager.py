@@ -23,13 +23,15 @@ class AxisManager:
 
     def populate_redis(self):
         """Send the sorts data to redis."""
-        tar = tarfile.open(self.archive, "r")
-        for member in tar:
-            if not member.isfile():
-                continue
+        if not self.redis.get("sorts:(1.0, 1.0, 1.0)"):
+            tar = tarfile.open(self.archive, "r")
+            for member in tar:
+                if not member.isfile():
+                    continue
 
-            key = f"sorts:{member.name}"
-            self.redis.set(key, tar.extractfile(member).read())
+                key = f"sorts:{member.name}"
+                logging.debug("loading sort-key `%s`", key)
+                self.redis.set(key, tar.extractfile(member).read())
 
     def create_sorts(self, steps=10):
         """Create the sorts archive."""

@@ -6,13 +6,13 @@ from string import ascii_uppercase
 
 import buttonshim
 
+from lib.axis_manager import AxisManager
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
-from lib.orderings_to_redis import populate
 
 BUTTONS = {}
 
@@ -34,7 +34,8 @@ class Controller:
         self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=False)
 
-        populate()
+        self.axis_manager = AxisManager()
+        self.axis_manager.populate_redis()
 
         # we pre-load all the modes because it takes a long time
         self.modes = modes

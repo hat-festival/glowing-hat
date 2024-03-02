@@ -2,7 +2,7 @@ from collections import deque
 
 from lib.axis_manager import AxisManager
 from lib.mode import Mode
-from lib.sorts_generator import SortsGenarator
+from lib.sorts_generator import SortsGenerator
 from lib.tools import hue_to_rgb
 
 
@@ -27,7 +27,7 @@ class Cuttlefish(Mode):
 
         self.manager = AxisManager()
 
-        self.rotator = SortsGenarator(("x", "z"))
+        self.rotator = SortsGenerator("x", "z")
         self.rotator.make_circle()
 
     def run(self):
@@ -39,8 +39,7 @@ class Cuttlefish(Mode):
         while True:
             self.hat.illuminate(list(self.colours)[: self.hat.length])
             count += 1
-            # TODO move these numbers out to conf
-            if count == 1:
+            if count == self.data["axis-rotate-at"]:
                 self.hat.pixels = self.manager.get_sort(self.rotator.next)
                 count = 0
 

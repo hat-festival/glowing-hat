@@ -3,17 +3,17 @@ from collections import deque
 from lib.sort_key import SortKey
 
 
-class SortsGenarator:
+class SortsGenerator:
     """Generate some axis patterns."""
 
     # TODO can the axes be a splat since we have named args after?
-    def __init__(self, axes, interval=0.1):
+    def __init__(self, *axes, interval=0.1):
         """Construct."""
         self.interval = interval
         self.axes = axes
 
     @property
-    def live_axes(self):
+    def live_indeces(self):
         """Work out which axes are in play."""
         return ["xyz".index(axis) for axis in self.axes]
 
@@ -29,7 +29,7 @@ class SortsGenarator:
 
         return SortKey(point)
 
-    def make_circle(self, direction="forwards"):
+    def make_circle(self, direction="forwards", altitude=None):
         """Get a set of keys to go round and round."""
         if direction == "backwards":
             self.axes = list(self.axes)
@@ -39,8 +39,11 @@ class SortsGenarator:
         self.keys = [self.start_corner]
         operations = ["increment", "decrement"]
 
+        if altitude:
+            self.keys[-1][({0, 1, 2} - set(self.live_indeces)).pop()] = altitude
+
         for operation in operations:
-            for index in self.live_axes:
+            for index in self.live_indeces:
                 for _ in range(-10, 10, int(self.interval * 10)):
                     next_item = self.keys[-1].clone()
                     getattr(next_item, operation)(index, self.interval)
