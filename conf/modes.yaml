@@ -50,7 +50,16 @@ cuttlefish:
   fft: True
   jump: 1
   steps: 200 # more than 100 please
-  axis-rotate-at: 2
+  axis-rotate-at: 3
+  prefs:
+    axis: y
+    invert: False
+
+directiontester:
+  fft: True
+  jump: 1
+  steps: 200 # more than 100 please
+  axis-rotate-at: 1
   prefs:
     axis: y
     invert: False
