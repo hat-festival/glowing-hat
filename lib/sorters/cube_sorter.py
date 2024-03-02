@@ -1,3 +1,5 @@
+from math import sqrt
+
 from lib.pixel import Pixel
 from lib.scaler import Scaler
 
@@ -14,8 +16,11 @@ class CubeSorter:
     def sort_from(self, *point):
         """Sort from a point."""
         arranged = []
-        # body diagonal of a 2x2x2 cube is 2*sqrt(3)
-        for r in range(0, 7000, 1):
+        cube_max = max(list(map(abs, point)))
+        # this guarantees to take us to the opposite corner
+        cube_diagonal = (cube_max * 2) * sqrt(3)
+
+        for r in range(0, int(cube_diagonal * 1000), 2):
             radius = r / 1000
             arranged += list(
                 filter(
