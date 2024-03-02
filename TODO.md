@@ -1,12 +1,9 @@
-* wifi
+wifi
 
-wtf is this now
+Pull as many values as possible into `conf` files
 
-```
-2024-02-17 17:26:16 INFO hat restarted
-Cannot connect to server socket err = No such file or directory
-Cannot connect to server request channel
-jack server is not running or cannot be started
-JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
-JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
-```
+~I think the axes are reversed somewhere~
+
+Move `rotator` and `fourier` into their own things now?
+
+Do `sorts` from -2.0 to 2.0? Gives more subtlety maybe
