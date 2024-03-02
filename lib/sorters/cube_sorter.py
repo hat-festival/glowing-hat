@@ -19,7 +19,7 @@ class CubeSorter:
             radius = r / 1000
             arranged += list(
                 filter(
-                    lambda pixel: is_inside_sphere(pixel, point[0], radius)
+                    lambda pixel: is_inside_sphere(pixel, point, radius)
                     and pixel not in arranged,
                     self.pixels,
                 )

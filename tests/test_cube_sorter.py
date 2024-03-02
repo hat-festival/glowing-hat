@@ -12,19 +12,10 @@ class TestCubeSorter(TestCase):
 
     def test_sorting(self):
         """Try the sorter."""
-        expectations = (
-            # straight line from left to right
-            ((-1, 0, 0), [2, 1, 0, 3, 4]),
-            # bottom to top
-            ((0, -1, 0), [4, 3, 2, 1, 0]),
-            # left back bottom corner
-            ((-1, -1, -1), [2, 3, 0, 4, 1]),
-            # right front top corner
-            ((1, 1, 1), [1, 4, 0, 3, 2]),
-        )
-
-        for point, ordering in expectations:
-            assert just_the_indeces(self.sorter.sort_from(point)) == ordering
+        assert just_the_indeces(self.sorter.sort_from(-1, 0, 0)) == [2, 1, 0, 3, 4]
+        assert just_the_indeces(self.sorter.sort_from(0, -1, 0)) == [4, 3, 2, 1, 0]
+        assert just_the_indeces(self.sorter.sort_from(-1, -1, -1)) == [2, 3, 0, 4, 1]
+        assert just_the_indeces(self.sorter.sort_from(1, 1, 1)) == [1, 4, 0, 3, 2]
 
 
 def just_the_indeces(pixel_list):

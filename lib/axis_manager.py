@@ -44,7 +44,7 @@ class AxisManager:
                     point = (x / steps, y / steps, z / steps)
                     filename = str(point)
                     logging.debug("sorting from `%s`", point)
-                    pkl = pickle.dumps(self.sorter.sort_from(point))
+                    pkl = pickle.dumps(self.sorter.sort_from(*point))
                     info = tarfile.TarInfo(name=filename)
                     info.size = len(pkl)
                     tar.addfile(info, io.BytesIO(pkl))
