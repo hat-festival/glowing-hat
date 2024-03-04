@@ -29,3 +29,6 @@ exec:
 
 ci:
 	docker run --rm ${ID} test
+
+push-code:
+	rsync -av --delete --exclude tmp . pi@hatlights.local:hatlights/
