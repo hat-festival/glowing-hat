@@ -2,20 +2,14 @@ import ctypes
 from multiprocessing import Process, Value
 from time import sleep
 
-import numpy as np
-from lib.normalisers.rotator import Rotator
-
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.gamma import gamma
 from lib.logger import logging
+from lib.normalisers.fourier import Fourier
+from lib.normalisers.rotator import Rotator
 from lib.oled import Oled
 from lib.tools import is_pi
-
-if is_pi():
-    import aubio
-    import pyaudio
-    import sounddevice  # noqa: F401
 
 
 class ColourNormaliser:
@@ -39,6 +33,7 @@ class ColourNormaliser:
         self.oled = Oled(self.custodian)
 
         self.rotator = Rotator(self)
+        self.fourier = Fourier(self)
 
         self.processes = {}
 
@@ -104,52 +99,13 @@ class ColourNormaliser:
 
     def run_fourier(self):
         """Run the Fourier Transformer."""
-        self.processes["fourier"] = Process(target=self.fourier)
+        self.processes["fourier"] = Process(target=self.fourier.transform)
         self.processes["fourier"].start()
 
     def run_rotary(self):
         """Run the rotary."""
         self.processes["rotary"] = Process(target=self.rotator.rotate)
         self.processes["rotary"].start()
-
-    def fourier(self):
-        """Do the work."""
-        stream = get_stream()
-
-        detector = aubio.notes(
-            "default",
-            2048,
-            1024,
-            conf["fourier"]["sound"]["sample-rate"],
-        )
-
-        # detector = aubio.tempo(
-        #     "default",
-        #     2048,
-        #     1024,
-        #     conf["fourier"]["sound"]["sample-rate"],
-        # )
-
-        # detector = aubio.onset(
-        #     "default",
-        #     2048,
-        #     1024,
-        #     conf["fourier"]["sound"]["sample-rate"],
-        # )
-        detector.set_silence(-40)
-
-        while True:
-            audiobuffer = stream.read(
-                conf["fourier"]["sound"]["buffer-size"],
-                exception_on_overflow=False,
-            )
-
-            signal = np.frombuffer(audiobuffer, dtype=np.float32)
-
-            new_note = detector(signal)
-
-            if new_note[0]:
-                self.factor.value = self.max_brightness.value
 
     def reduce(self):
         """Constantly reducing the brightness."""
@@ -165,19 +121,3 @@ class ColourNormaliser:
 def gamma_correct(triple):
     """Gamma-correct a colour."""
     return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417
-
-
-def get_stream():
-    """Get a pyaudio stream."""
-    audio = pyaudio.PyAudio()
-    pyaudio_format = pyaudio.paFloat32
-    n_channels = 1
-
-    return audio.open(
-        input_device_index=conf["fourier"]["sound"]["device-index"],
-        format=pyaudio_format,
-        channels=n_channels,
-        rate=conf["fourier"]["sound"]["sample-rate"],
-        input=True,
-        frames_per_buffer=conf["fourier"]["sound"]["buffer-size"],
-    )
