@@ -39,6 +39,7 @@ class Cuttlefish(Mode):
         while True:
             self.hat.illuminate(list(self.colours)[: self.hat.length])
             count += 1
+            # TODO randomise this
             if count == self.data["axis-rotate-at"]:
                 self.hat.pixels = self.manager.get_sort(self.rotator.next)
                 count = 0

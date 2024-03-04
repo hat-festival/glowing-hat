@@ -28,6 +28,7 @@ class SortsGenerator:
 
         return SortKey(point)
 
+    # TODO let this take a radius for the 1.1x1.1 sort
     def make_circle(self, direction="forwards", altitude=None):
         """Get a set of keys to go round and round."""
         if direction == "backwards":
