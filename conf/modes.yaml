@@ -59,7 +59,7 @@ directiontester:
   fft: True
   jump: 1
   steps: 200 # more than 100 please
-  axis-rotate-at: 1
+  axis-rotate-at: 10
   prefs:
     axis: y
     invert: False
