@@ -3,17 +3,18 @@ from lib.modes.bigtop import BigTop
 from lib.modes.brain_waves import BrainWaves
 from lib.modes.crawler import Crawler
 from lib.modes.cuttlefish import Cuttlefish
-from lib.modes.direction_tester import DirectionTester
+
+# from lib.modes.direction_tester import DirectionTester
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
 from lib.modes.sweeper import Sweeper
 
 modes = {
     "cuttlefish": Cuttlefish,
-    "directiontester": DirectionTester,
+    "brainwaves": BrainWaves,
+    # "directiontester": DirectionTester,
     "sweeper": Sweeper,
     "pulsator": Pulsator,
-    "brainwaves": BrainWaves,
     "larsen": Larsen,
     "crawler": Crawler,
     "accelerator": Accelerator,
