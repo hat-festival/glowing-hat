@@ -34,7 +34,7 @@ class Controller:
         self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=False)
 
-        self.axis_manager = AxisManager()
+        self.axis_manager = AxisManager(cube_radius=1.1)
         self.axis_manager.populate_redis()
 
         # we pre-load all the modes because it takes a long time

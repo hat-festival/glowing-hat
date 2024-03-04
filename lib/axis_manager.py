@@ -13,10 +13,12 @@ class AxisManager:
     """Manage the pre-rendered hat orderings."""
 
     def __init__(
-        self, archive="sorts/sorts-1x1.tar.gz", locations="conf/locations.yaml"
+        self, archive_path="sorts", locations="conf/locations.yaml", cube_radius=1
     ):
         """Construct."""
-        self.archive = archive
+        self.archive_path = archive_path
+        self.cube_radius = cube_radius
+        self.archive = Path(archive_path, f"sorts-{cube_radius}x{cube_radius}.tar.gz")
         self.sorter = CubeSorter(locations)
         self.redis = Redis()
 
@@ -41,7 +43,9 @@ class AxisManager:
         for x in r:
             for y in r:
                 for z in r:
-                    point = (x / steps, y / steps, z / steps)
+                    point = tuple(
+                        round(a * self.cube_radius / steps, 1) for a in (x, y, z)
+                    )
                     filename = str(point)
                     logging.debug("sorting from `%s`", point)
                     pkl = pickle.dumps(self.sorter.sort_from(*point))
