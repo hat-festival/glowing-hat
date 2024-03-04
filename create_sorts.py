@@ -1,15 +1,4 @@
-from lib.sorters.cube_sorter import CubeSorter
+from lib.axis_manager import AxisManager
 
-sorter = CubeSorter()
-
-steps = 10
-
-r = range(-steps, steps + 1, 1)
-
-for x in r:
-    for y in r:
-        for z in r:
-            sorter.create((x / steps, y / steps, z / steps))
-
-
-orderings = {}
+man = AxisManager(cube_radius=1.1)
+man.create_sorts(steps=11)
