@@ -31,6 +31,7 @@ brainwaves:
   fft: true
   jump: 2
   steps: 150
+  axis-rotate-at: 10
   prefs:
     axis: y
     invert: False
