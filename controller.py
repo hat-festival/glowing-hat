@@ -35,7 +35,7 @@ class Controller:
         self.custodian.populate(flush=False)
 
         self.axis_manager = AxisManager(cube_radius=1.1)
-        self.axis_manager.populate_redis()
+        self.axis_manager.populate()
 
         # we pre-load all the modes because it takes a long time
         self.modes = modes
