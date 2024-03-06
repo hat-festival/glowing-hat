@@ -96,6 +96,13 @@ class Controller:
     def bump(self, parameter):
         """Bump something."""
         logging.info("bumping `%s`", parameter)
+        if parameter == "reset":
+            self.custodian.set("display-type", "reset")
+            self.oled.update()
+            logging.info("doing hard reset")
+
+            os.system("/usr/bin/sudo service controller restart")  # noqa: S605
+
         self.custodian.next(parameter)
         logging.info("`%s` is now `%s`", parameter, self.custodian.get(parameter))
 
