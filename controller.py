@@ -1,3 +1,4 @@
+import os
 from collections import deque
 from multiprocessing import Process
 from random import shuffle
@@ -58,13 +59,13 @@ class Controller:
 
         colour = self.custodian.get("colour")
 
-        indeces = deque(list(range(100)))
+        indeces = deque(list(range(len(self.hat))))
         while len(indeces):
             shuffle(indeces)
             victim = indeces.pop()
             self.hat.light_one(victim, colour)
 
-        indeces = deque(list(range(100)))
+        indeces = deque(list(range(len(self.hat))))
         while len(indeces):
             shuffle(indeces)
             victim = indeces.pop()

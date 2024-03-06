@@ -31,5 +31,5 @@ class Bands(Mode):
         self.reconfigure()
 
         while True:
-            self.hat.illuminate(list(self.bands)[:100])
+            self.hat.illuminate(list(self.bands)[: len(self.hat)])
             self.bands.rotate(self.jump)

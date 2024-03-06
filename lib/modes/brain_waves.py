@@ -34,7 +34,7 @@ class BrainWaves(Mode):
         count = 0
         while True:
             clr = self.get_colour()
-            rgbs = [scale_colour(clr, x) for x in list(self.values)[:100]]
+            rgbs = [scale_colour(clr, x) for x in list(self.values)[: len(self.hat)]]
             self.hat.illuminate(rgbs)
             self.values.rotate(self.jump)
             count += 1
