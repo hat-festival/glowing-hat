@@ -1,12 +1,13 @@
-- press: mode 
+- press: mode
   abbreviation: mode
-- press: colour 
-  hold: colour-set 
+- press: colour
+  hold: colour-set
   abbreviation: colr
-- press: colour-source 
+- press: colour-source
   abbreviation: csrc
-- press: axis 
+- press: axis
   hold: invert
   abbreviation: axis
 - press: display-type
+  hold: reset
   abbreviation: disp
