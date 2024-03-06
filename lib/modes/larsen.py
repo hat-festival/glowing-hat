@@ -34,7 +34,7 @@ class Larsen(Mode):
         clr = self.get_colour()
         while True:
             rgbs = list(  # noqa: C417
-                map(lambda x: scale_colour(clr, x), list(self.values)[:100])
+                map(lambda x: scale_colour(clr, x), list(self.values)[: len(self.hat)])
             )
             self.hat.illuminate(rgbs)
             self.values.rotate(self.jump)

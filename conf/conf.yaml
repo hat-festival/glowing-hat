@@ -42,3 +42,7 @@ fourier:
     algorithm: hfc
     threshold: 0.5
     fft-size: 4096
+
+default-mode-prefs:
+    axis: None
+    invert: False

@@ -22,7 +22,7 @@ class AxisManager:
         self.sorter = CubeSorter(locations)
         self.redis = Redis()
 
-    def populate_redis(self):
+    def populate(self):
         """Send the sorts data to redis."""
         if not self.redis.get("sorts:(1.0, 1.0, 1.0)"):
             tar = tarfile.open(self.archive, "r")

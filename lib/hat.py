@@ -17,8 +17,8 @@ class Hat:
         self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
-        self.normaliser = ColourNormaliser()
         self.pixels = list(map(Pixel, self.scaler))
+        self.normaliser = ColourNormaliser()
 
         if is_pi():
             self.lights = NeoPixel(
@@ -74,6 +74,10 @@ class Hat:
     def length(self):
         """How long are we."""
         return len(self.pixels)
+
+    def __len__(self):
+        """Support `len()`."""
+        return self.length
 
     def reverse(self):
         """Turn ourself around."""

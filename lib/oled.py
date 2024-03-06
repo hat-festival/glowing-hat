@@ -167,6 +167,15 @@ class ImageGenerator:
         top = (self.height - 16) / 2
         self.add_text(message, left, top)
 
+    def reset(self):
+        """Reset message."""
+        self.set_image(self.width, self.height)
+
+        message = "Hat is resetting"
+        left = (self.width - (len(message) * 8)) / 2
+        top = (self.height - 16) / 2
+        self.add_text(message, left, top)
+
     def hex_colour(self):
         """Get a hex-colour."""
         colour = ""
@@ -208,6 +217,10 @@ class ImageGenerator:
             f"{self.hex_colour()}"
         )
 
-    def add_text(self, text, across, down):
+    def add_text(self, text, across, down, upper_case=False):  # noqa: FBT002
         """Add some text."""
-        self.draw.text((across, down), text.lower(), font=self.font, fill=255)
+        text = text.lower()
+        if upper_case:
+            text = text.upper()
+
+        self.draw.text((across, down), text, font=self.font, fill=255)

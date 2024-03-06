@@ -1,3 +1,4 @@
+import os
 from collections import deque
 from multiprocessing import Process
 from random import shuffle
@@ -35,7 +36,7 @@ class Controller:
         self.custodian.populate(flush=False)
 
         self.axis_manager = AxisManager(cube_radius=1.1)
-        self.axis_manager.populate_redis()
+        self.axis_manager.populate()
 
         # we pre-load all the modes because it takes a long time
         self.modes = modes
@@ -58,13 +59,13 @@ class Controller:
 
         colour = self.custodian.get("colour")
 
-        indeces = deque(list(range(100)))
+        indeces = deque(list(range(len(self.hat))))
         while len(indeces):
             shuffle(indeces)
             victim = indeces.pop()
             self.hat.light_one(victim, colour)
 
-        indeces = deque(list(range(100)))
+        indeces = deque(list(range(len(self.hat))))
         while len(indeces):
             shuffle(indeces)
             victim = indeces.pop()
@@ -96,6 +97,13 @@ class Controller:
     def bump(self, parameter):
         """Bump something."""
         logging.info("bumping `%s`", parameter)
+        if parameter == "reset":
+            self.custodian.set("display-type", "reset")
+            self.oled.update()
+            logging.info("doing hard reset")
+
+            os.system("/usr/bin/sudo service controller restart")  # noqa: S605
+
         self.custodian.next(parameter)
         logging.info("`%s` is now `%s`", parameter, self.custodian.get(parameter))
 

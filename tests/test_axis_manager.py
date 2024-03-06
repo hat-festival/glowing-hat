@@ -35,7 +35,7 @@ class TestAxisManager(TestCase):
             archive_path="tmp",
         )
         man.create_sorts(steps=2)
-        man.populate_redis()
+        man.populate()
 
         assert (
             hashlib.sha256(self.redis.get("sorts:(-0.5, -1.0, 0.5)")).hexdigest()

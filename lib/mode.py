@@ -15,7 +15,7 @@ class Mode:
         self.custodian = custodian
         self.conf = conf
         self.data = self.conf["modes"][self.name]
-        self.prefs = self.data["prefs"]
+        self.prefs = self.data.get("prefs", conf["default-mode-prefs"])
 
         self.invert = self.custodian.get("invert")
         self.axis = self.custodian.get("axis")

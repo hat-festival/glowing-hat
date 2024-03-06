@@ -7,18 +7,20 @@ from lib.modes.cuttlefish import Cuttlefish
 # from lib.modes.direction_tester import DirectionTester
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
+from lib.modes.subtle_roller import SubtleRoller
 from lib.modes.sweeper import Sweeper
 
 modes = {
+    "subtleroller": SubtleRoller,
+    "bigtop": BigTop,
     "cuttlefish": Cuttlefish,
+    "crawler": Crawler,
     "brainwaves": BrainWaves,
     # "directiontester": DirectionTester,
     "sweeper": Sweeper,
     "pulsator": Pulsator,
     "larsen": Larsen,
-    "crawler": Crawler,
     "accelerator": Accelerator,
-    "bigtop": BigTop,
 }
 
 

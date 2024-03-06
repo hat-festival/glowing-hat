@@ -10,11 +10,12 @@ class Crawler(Mode):
 
     def run(self):
         """Do the stuff."""
+        cube_size = 11
         while True:
             origin = SortKey(
-                randint(-10, 10) / 10,  # noqa: S311
-                randint(-10, 10) / 10,  # noqa: S311
-                randint(-10, 10) / 10,  # noqa: S311
+                randint(-cube_size, cube_size) / 10,  # noqa: S311
+                randint(-cube_size, cube_size) / 10,  # noqa: S311
+                randint(-cube_size, cube_size) / 10,  # noqa: S311
             )
             logging.debug(origin.as_key)
             self.hat_from_sort(origin.as_key)
