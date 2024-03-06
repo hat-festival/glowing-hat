@@ -10,15 +10,15 @@ accelerator:
       - wheel
       - redis
 
-bands:
-  jump: 5
-  width: 50
-  prefs:
-    axis: z
-    invert: True
-    colour-sources:
-      - redis
-    colour-set: rgb
+# bands:
+#   jump: 5
+#   width: 50
+#   prefs:
+#     axis: z
+#     invert: True
+#     colour-sources:
+#       - redis
+#     colour-set: rgb
 
 bigtop:
   fft: True
@@ -56,14 +56,14 @@ cuttlefish:
     axis: y
     invert: False
 
-directiontester:
-  fft: True
-  jump: 1
-  steps: 200 # more than 100 please
-  axis-rotate-at: 10
-  prefs:
-    axis: y
-    invert: False
+# directiontester:
+#   fft: True
+#   jump: 1
+#   steps: 200 # more than 100 please
+#   axis-rotate-at: 10
+#   prefs:
+#     axis: y
+#     invert: False
 
 larsen:
   fft: False
@@ -89,15 +89,23 @@ pulsator:
       - wheel
       - redis
 
-rotator:
-  steps: 9
-  offset: 45
+# rotator:
+#   steps: 9
+#   offset: 45
+#   prefs:
+#     axis: y
+#     invert: False
+#     colour-sources:
+#       - wheel
+#       - redis
+
+subtleroller:
+  fft: True
+  length-multiplier: 3  # how many times the hat length to make our deque
+  roll-sorter-at: 7  # move to the next sort after this many iterations
   prefs:
     axis: y
     invert: False
-    colour-sources:
-      - wheel
-      - redis
 
 sweeper:
   jump: 5
@@ -108,6 +116,6 @@ sweeper:
       - wheel
       - redis
 
-"off":
-  prefs:
-    axis: none
+# "off":
+#   prefs:
+#     axis: none
