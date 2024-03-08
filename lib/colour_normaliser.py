@@ -31,6 +31,7 @@ class ColourNormaliser:
 
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
+        self.realign_brightnesses()
 
         self.rotator = Rotator(self)
         self.fourier = Fourier(self)

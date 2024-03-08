@@ -1,9 +1,8 @@
 import json
-from random import random
 
 import redis
 
-from lib.conf import conf
+from lib.random_colour_source import RandomColourSource
 from lib.tools import hue_to_rgb
 
 
@@ -125,22 +124,22 @@ class Custodian:
         return f"{self.namespace}:{key}"
 
 
-class RandomColourSource:
-    """Generate spaced-out random colours."""
+# class RandomColourSource:
+#     """Generate spaced-out random colours."""
 
-    def __init__(self):
-        """Construct."""
-        self.conf = conf
-        self.hue = self.next_hue = random()  # noqa: S311
+#     def __init__(self):
+#         """Construct."""
+#         self.conf = conf
+#         self.hue = self.next_hue = random()
 
-    @property
-    def colour(self):
-        """Get a colour."""
-        while (
-            abs(self.hue - self.next_hue) < self.conf["random-colour"]["hue-distance"]
-        ):
-            self.next_hue = random()  # noqa: S311
+#     @property
+#     def colour(self):
+#         """Get a colour."""
+#         while (
+#             abs(self.hue - self.next_hue) < self.conf["random-colour"]["hue-distance"]
+#         ):
+#             self.next_hue = random()
 
-        self.hue = self.next_hue
+#         self.hue = self.next_hue
 
-        return hue_to_rgb(self.hue)
+#         return hue_to_rgb(self.hue)

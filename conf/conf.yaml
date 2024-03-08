@@ -44,5 +44,5 @@ fourier:
     fft-size: 4096
 
 default-mode-prefs:
-    axis: None
+    axis: none
     invert: False
