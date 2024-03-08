@@ -1,5 +1,6 @@
 import pickle
 from collections import deque
+from operator import itemgetter
 from pathlib import Path
 from random import randint
 
@@ -12,45 +13,35 @@ CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())  # noqa: 
 class Pulsator(Mode):
     """A huge pulsating brain."""
 
-    def __init__(self, hat, custodian):
-        """Construct."""
-        super().__init__(hat, custodian)
-
+    def configure(self):
+        """Reconfig some stuff."""
         self.throbbers = []
         for _ in range(self.hat.length):
-            self.throbbers.append(Throbber())
-
-    def reconfigure(self):
-        """Reconfig some stuff."""
-        # self.custodian.set("axis", "none")
+            self.throbbers.append(Throbber(self.data["steps"]))
 
     def run(self):
         """Do the stuff."""
-        self.reconfigure()
+        self.configure()
 
         while True:
             colour = self.get_colour()
-            self.hat.illuminate(
-                list(  # noqa: C417
-                    map(
-                        lambda throbber: scale_colour(colour, throbber.next()),
-                        self.throbbers,
-                    )
-                )
+            self.from_list(
+                [scale_colour(colour, throbber.next()) for throbber in self.throbbers]
             )
 
 
 class Throbber:
     """Cos renderer."""
 
-    def __init__(self):  # pylint: disable=W0231
+    def __init__(self, minmax):
         """Construct."""
         self.values = deque()
+        self.min, self.max = itemgetter("min", "max")(minmax)
 
     def next(self):
         """Get the next value."""
         if len(self.values) == 0:
-            key = randint(16, 255)  # noqa: S311
+            key = randint(self.min, self.max)  # noqa: S311
             self.values = deque(CURVES[key])
 
         value = self.values.popleft()

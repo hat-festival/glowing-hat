@@ -2,7 +2,7 @@ from random import randint
 
 from lib.logger import logging
 from lib.mode import Mode
-from lib.sort_key import SortKey
+from lib.random_colour_source import RandomColourSource
 
 
 class Crawler(Mode):
@@ -10,18 +10,25 @@ class Crawler(Mode):
 
     def run(self):
         """Do the stuff."""
+        self.source = RandomColourSource()
+
         cube_size = 11
         while True:
-            origin = SortKey(
+            # origin = SortKey(
+            #     randint(-cube_size, cube_size) / 10,
+            #     randint(-cube_size, cube_size) / 10,
+            #     randint(-cube_size, cube_size) / 10,
+            # )
+            origin = (
                 randint(-cube_size, cube_size) / 10,  # noqa: S311
                 randint(-cube_size, cube_size) / 10,  # noqa: S311
                 randint(-cube_size, cube_size) / 10,  # noqa: S311
             )
-            logging.debug(origin.as_key)
-            self.hat_from_sort(origin.as_key)
+            logging.debug(origin)
+            self.from_sort(origin)
 
             step = randint(1, self.data["max-jump"])  # noqa: S311
-            clr = self.get_colour()
+            clr = self.source.colour
 
             for index, pixel in enumerate(self.hat.pixels):
                 self.hat.light_one(pixel["index"], clr, auto_show=False)
