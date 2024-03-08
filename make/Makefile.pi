@@ -43,7 +43,7 @@ restart-services:
 	sudo service controller restart
 
 stop-services:
-	sudo service colour-wheel stop
+	#sudo service colour-wheel stop
 	sudo service controller stop
 
 install:

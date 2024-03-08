@@ -6,6 +6,7 @@ from pathlib import Path
 from redis import Redis
 
 from lib.logger import logging
+from lib.sort_key import SortKey
 from lib.sorters.cube_sorter import CubeSorter
 
 
@@ -57,4 +58,6 @@ class AxisManager:
 
     def get_sort(self, key):
         """Unpickle a `sort`."""
+        if type(key).__name__ == "tuple":
+            key = SortKey(key).as_key
         return pickle.loads(self.redis.get(key))  # noqa: S301

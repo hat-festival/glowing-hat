@@ -1,14 +1,14 @@
-accelerator:
-  jump: 0.1
-  limits:
-    min: 1
-    max: 20
-  prefs:
-    axis: y
-    invert: True
-    colour-sources:
-      - wheel
-      - redis
+# accelerator:
+#   jump: 0.1
+#   limits:
+#     min: 1
+#     max: 20
+#   prefs:
+#     axis: y
+#     invert: True
+#     colour-sources:
+#       - wheel
+#       - redis
 
 # bands:
 #   jump: 5
@@ -43,18 +43,17 @@ brainwaves:
 crawler:
   max-jump: 2
   prefs:
-    axis: none
     colour-sources:
       - random
 
-cuttlefish:
-  fft: True
-  jump: 1
-  steps: 200 # more than 100 please
-  axis-rotate-at: 3
-  prefs:
-    axis: y
-    invert: False
+# cuttlefish:
+#   fft: True
+#   jump: 1
+#   steps: 200 # more than 100 please
+#   axis-rotate-at: 3
+#   prefs:
+#     axis: y
+#     invert: False
 
 # directiontester:
 #   fft: True
@@ -68,26 +67,21 @@ cuttlefish:
 larsen:
   fft: False
   jump: 1
-  steps: 110
-  prefs:
-    axis: x
-    invert: False
-    colour-sources:
-      - random
-      - wheel
-      - redis
+  steps: 100
+  # prefs:
+  #   axis: x
+  #   invert: False
+  #   colour-sources:
+  #     - random
+  #     - wheel
+  #     - redis
 
 pulsator:
   fft: True
   steps:
     min: 32
-    max: 128
-  prefs:
-    axis: none
-    invert: False
-    colour-sources:
-      - wheel
-      - redis
+    max: 255
+
 
 # rotator:
 #   steps: 9
@@ -103,18 +97,18 @@ subtleroller:
   fft: True
   length-multiplier: 3  # how many times the hat length to make our deque
   roll-sorter-at: 7  # move to the next sort after this many iterations
-  prefs:
-    axis: y
-    invert: False
+  # prefs:
+  #   axis: none
+  #   invert: false
 
-sweeper:
-  jump: 5
-  prefs:
-    axis: y
-    invert: False
-    colour-sources:
-      - wheel
-      - redis
+# sweeper:
+#   jump: 5
+#   prefs:
+#     axis: y
+#     invert: False
+#     colour-sources:
+#       - wheel
+#       - redis
 
 # "off":
 #   prefs:
