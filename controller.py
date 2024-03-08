@@ -48,8 +48,7 @@ class Controller:
         self.process = None
 
         self.boot_hat()
-
-        self.restart_hat(is_mode=True)
+        self.restart_hat()
 
     def boot_hat(self):
         """Boot the hat."""
@@ -57,19 +56,20 @@ class Controller:
         self.custodian.rotate_until("colour-source", "wheel")
         self.oled.update()
 
-        colour = self.custodian.get("colour")
+        if os.environ.get("LOGLEVEL") != "debug":
+            colour = self.custodian.get("colour")
 
-        indeces = deque(list(range(len(self.hat))))
-        while len(indeces):
-            shuffle(indeces)
-            victim = indeces.pop()
-            self.hat.light_one(victim, colour)
+            indeces = deque(list(range(len(self.hat))))
+            while len(indeces):
+                shuffle(indeces)
+                victim = indeces.pop()
+                self.hat.light_one(victim, colour)
 
-        indeces = deque(list(range(len(self.hat))))
-        while len(indeces):
-            shuffle(indeces)
-            victim = indeces.pop()
-            self.hat.light_one(victim, [0, 0, 0])
+            indeces = deque(list(range(len(self.hat))))
+            while len(indeces):
+                shuffle(indeces)
+                victim = indeces.pop()
+                self.hat.light_one(victim, [0, 0, 0])
 
         self.custodian.rotate_until("display-type", "hat-settings")
 
