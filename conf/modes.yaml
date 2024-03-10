@@ -66,15 +66,9 @@ crawler:
 
 larsen:
   fft: False
-  jump: 1
-  steps: 100
-  # prefs:
-  #   axis: x
-  #   invert: False
-  #   colour-sources:
-  #     - random
-  #     - wheel
-  #     - redis
+  jump: 2
+  head-width: 0.2
+  tail-proportion: 0.5
 
 pulsator:
   fft: True
