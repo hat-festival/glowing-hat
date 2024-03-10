@@ -38,7 +38,7 @@ smbus==1.1.post2
 smbus2==0.4.2
 sounddevice==0.4.6
 spidev==3.5
-ssh-import-id==5.10
+ssh-import-id==5.11
 sysv-ipc==1.1.0
 toml==0.10.2
 typing_extensions==4.10.0
