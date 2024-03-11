@@ -9,8 +9,6 @@ random-colour:
 
 max-brightness: 0.5 # brightest we will ever go
 
-webserver-port: 5001
-
 oled:
   size:
     x: 128
