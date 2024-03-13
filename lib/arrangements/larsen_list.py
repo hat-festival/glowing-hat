@@ -1,5 +1,7 @@
 from collections import deque
 
+# TODO: take a `speed` parameter to have more or less steps?
+
 
 class LarsenList:
     """Intensity values for a Larsen Scanner."""
@@ -11,14 +13,30 @@ class LarsenList:
         self.head_width = head_width
         self.head_steps = int(self.head_width * self.hat_length)
         self.prepare_template()
-        self.intensities = deque(self.populate() + self.populate(inverted=True))
 
-    def next(self, steps=1):
-        """Keep sending frames."""
-        frame = self.intensities[0]
-        self.intensities.rotate(0 - steps)
+        self.sections = {
+            "right": {
+                "lead": self.create_lead(),
+                "chaser": self.create_chaser(),
+                "complete": self.create_lead() + self.create_chaser(),
+            },
+            "left": {
+                "lead": self.create_lead(inverted=True),
+                "chaser": self.create_chaser(inverted=True),
+                "complete": self.create_lead(inverted=True)
+                + self.create_chaser(inverted=True),
+            },
+            "both": {
+                "complete": self.create_lead()
+                + self.create_chaser()
+                + self.create_lead(inverted=True)
+                + self.create_chaser(inverted=True),
+            },
+        }
 
-        return frame
+    def get_iterator(self, direction, piece, infinite=False):  # noqa: FBT002
+        """Get an iterator for a piece."""
+        return LarsenIterator(self.sections[direction][piece], infinite)
 
     def prepare_template(self):
         """Prepare the full snake."""
@@ -36,8 +54,8 @@ class LarsenList:
         tail.reverse()
         self.template["tail"] = tail
 
-    def populate(self, inverted=False):  # noqa: FBT002
-        """Prepare our data."""
+    def create_lead(self, inverted=False):  # noqa: FBT002
+        """Create the lead portion."""
         intensities = []
 
         snake = self.lead_snake()
@@ -48,7 +66,12 @@ class LarsenList:
             )
             snake.rotate(1)
 
-        # second phase
+        return intensities
+
+    def create_chaser(self, inverted=False):  # noqa: FBT002
+        """Create the chase portion."""
+        intensities = []
+
         snake = self.chaser_snake(inverted)
 
         for _ in range(len(self.template["tail"])):
@@ -66,6 +89,10 @@ class LarsenList:
             intensities.append(chunk)
 
         return intensities
+
+    def populate(self, inverted=False):  # noqa: FBT002
+        """Prepare our data."""
+        return self.create_lead(inverted) + self.create_chaser(inverted)
 
     def lead_snake(self):
         """Make the lead snake."""
@@ -85,6 +112,45 @@ class LarsenList:
             snake.reverse()
 
         return snake
+
+
+class LarsenIterator:
+    """Iterate over a piece."""
+
+    def __init__(self, section, infinite=False):  # noqa: FBT002
+        """Construct."""
+        self.section = section
+        self.infinite = infinite
+        self.index = 0
+
+    def __iter__(self):
+        """Be an iterator."""
+        return self
+
+    def __next__(self):
+        """Get `next`."""
+        if self.has_next():
+            frame = self.section[self.index]
+            self.index += 1
+            return frame
+
+        if self.infinite:
+            self.index = 0
+            return self.section[self.index]
+
+        raise StopIteration
+
+    def __getitem__(self, index):
+        """Get by `[index]`."""
+        return self.section[index]
+
+    def has_next(self):
+        """Do we have more items."""
+        return self.index < len(self.section)
+
+    def reset(self):
+        """Start again."""
+        self.index = 0
 
 
 def slice_from_start(iterable, start, length):

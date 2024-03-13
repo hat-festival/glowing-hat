@@ -3,14 +3,14 @@ from lib.arrangements.larsen_list import LarsenList, slice_from_end, slice_from_
 
 def test_constructor():
     """Test it gets the right data."""
-    ll = LarsenList(10)
-    assert ll.hat_length == 10  # noqa: PLR2004
+    larsen_list = LarsenList(10)
+    assert larsen_list.hat_length == 10  # noqa: PLR2004
 
 
 def test_template():
     """Test it has the right template."""
-    ll = LarsenList(10)
-    assert ll.template == {
+    larsen_list = LarsenList(10)
+    assert larsen_list.template == {
         "head": [1.0],
         "tail": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
     }
@@ -18,9 +18,9 @@ def test_template():
 
 def test_shorter_tail():
     """Test it can make a shorter tail."""
-    ll = LarsenList(10, tail_proportion=0.5)
-    assert ll.template == {"head": [1.0], "tail": [0.2, 0.4, 0.6, 0.8]}
-    assert ll.populate() == [
+    larsen_list = LarsenList(10, tail_proportion=0.5)
+    assert larsen_list.template == {"head": [1.0], "tail": [0.2, 0.4, 0.6, 0.8]}
+    assert larsen_list.populate() == [
         [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.8, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.6, 0.8, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -40,8 +40,8 @@ def test_shorter_tail():
 
 def test_populating():
     """Test it gets the correct frasmes."""
-    ll = LarsenList(10)
-    assert ll.populate()[0:3] == [
+    larsen_list = LarsenList(10)
+    assert larsen_list.populate()[0:3] == [
         [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.8, 0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -50,8 +50,8 @@ def test_populating():
 
 def test_bunching():
     """Test it bunches at the end."""
-    ll = LarsenList(10)
-    assert ll.populate() == [
+    larsen_list = LarsenList(10)
+    assert larsen_list.populate() == [
         [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.8, 0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -76,8 +76,8 @@ def test_bunching():
 
 def test_reversing():
     """Test it reverses correctly."""
-    ll = LarsenList(10)
-    assert ll.populate(inverted=True) == [
+    larsen_list = LarsenList(10)
+    assert larsen_list.populate(inverted=True) == [
         [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
         [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.9],
         [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.9, 0.8],
@@ -100,15 +100,81 @@ def test_reversing():
     ]
 
 
+def test_pieces():
+    """Test it creates the individual pieces."""
+    larsen_list = LarsenList(10)
+    assert larsen_list.create_lead() == [
+        [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.8, 0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.7, 0.8, 0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.6, 0.7, 0.8, 0.9, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 0.0, 0.0, 0.0, 0.0],
+        [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 0.0, 0.0, 0.0],
+        [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 0.0, 0.0],
+        [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 0.0],
+        [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    ]
+
+    assert larsen_list.create_chaser() == [
+        [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0],
+        [0.0, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 1.0],
+        [0.0, 0.0, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 0.3, 0.4, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 0.3, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.2, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
+    ]
+
+    assert larsen_list.create_lead(inverted=True) == [
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.9],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.9, 0.8],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.9, 0.8, 0.7],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.9, 0.8, 0.7, 0.6],
+        [0.0, 0.0, 0.0, 0.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5],
+        [0.0, 0.0, 0.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4],
+        [0.0, 0.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3],
+        [0.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],
+        [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1],
+    ]
+
+    assert larsen_list.create_chaser(inverted=True) == [
+        [1.0, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0],
+        [1.0, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0],
+        [1.0, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0],
+        [1.0, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0],
+        [1.0, 0.4, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [1.0, 0.3, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [1.0, 0.2, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [1.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    ]
+
+
+def test_iterator():
+    """Test it gives us an iterator."""
+    larsen_list = LarsenList(10)
+    i = larsen_list.get_iterator("right", "lead")
+    assert next(i) == [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    for _ in range(8):
+        next(i)
+    assert i.has_next()
+    assert next(i) == [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    assert not i.has_next()
+
+
 def test_with_thicker_head():
     """Test it can carry a broader head."""
-    ll = LarsenList(10, head_width=0.2)
-    assert ll.template == {
+    larsen_list = LarsenList(10, head_width=0.2)
+    assert larsen_list.template == {
         "head": [1.0, 1.0],
         "tail": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
     }
 
-    assert ll.populate() == [
+    assert larsen_list.populate() == [
         [1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.9, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         [0.8, 0.9, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -132,8 +198,8 @@ def test_with_thicker_head():
 
 def test_with_bigger_hat():
     """Test it does something sensible for a bigger hat."""
-    ll = LarsenList(20)
-    assert ll.template == {
+    larsen_list = LarsenList(20)
+    assert larsen_list.template == {
         "head": [1.0, 1.0],
         "tail": [
             0.05,
@@ -161,8 +227,8 @@ def test_with_bigger_hat():
 
 def test_with_real_hat():
     """Test it does something sensible for a realistic hat."""
-    ll = LarsenList(100)
-    assert len(ll.populate()) == 190  # noqa: PLR2004
+    larsen_list = LarsenList(100)
+    assert len(larsen_list.populate()) == 190  # noqa: PLR2004
 
 
 def test_slice_from_start():

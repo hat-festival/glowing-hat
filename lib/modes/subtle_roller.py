@@ -11,9 +11,9 @@ class SubtleRoller(Mode):
     def configure(self):
         """Configure ourself."""
         self.lights_length = len(self.hat) * self.data["length-multiplier"]
-        self.lights = deque(
-            [hue_to_rgb(x / self.lights_length) for x in range(self.lights_length)]
-        )
+        self.hues = [(x / self.lights_length) for x in range(self.lights_length)]
+        self.lights = deque([hue_to_rgb(x) for x in self.hues])
+
         self.circle = Circle(self.hat, "x", "z")
 
     def run(self):

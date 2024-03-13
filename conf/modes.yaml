@@ -67,8 +67,11 @@ crawler:
 larsen:
   fft: False
   jump: 2
-  head-width: 0.2
-  tail-proportion: 0.5
+  head-width: 0.3
+  tail-proportion: 1.0
+  axes:
+    movement: x
+    fade: z
 
 pulsator:
   fft: True
