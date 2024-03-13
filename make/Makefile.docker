@@ -23,7 +23,29 @@ test:
 		--capture no \
 		--failed-first \
 		--cov \
+		--exitfirst \
+		-m "not not_ci"
+
+test-full:
+	PYTHONDONTWRITEBYTECODE=1 \
+		python -m pytest \
+		--random-order \
+		--verbose \
+		--capture no \
+		--failed-first \
+		--cov \
 		--exitfirst
+
+test-ci:
+	PYTHONDONTWRITEBYTECODE=1 \
+		python -m pytest \
+		--random-order \
+		--verbose \
+		--capture no \
+		--failed-first \
+		--cov \
+		--exitfirst \
+		-m "not not_ci"
 
 clean:
 	@rm -fr $$(find . -name __pycache__)

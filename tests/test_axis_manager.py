@@ -3,11 +3,13 @@ import pickle
 import tarfile
 from unittest import TestCase
 
+import pytest
 from redis import Redis
 
 from lib.axis_manager import AxisManager
 
 
+@pytest.mark.not_ci()
 class TestAxisManager(TestCase):
     """Test the AxisManager."""
 
