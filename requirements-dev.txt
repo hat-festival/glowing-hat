@@ -4,7 +4,7 @@ decorator==5.1.1
 executing==2.0.1
 iniconfig==2.0.0
 ipdb==0.13.13
-ipython==8.22.1
+ipython==8.22.2
 jedi==0.19.1
 matplotlib-inline==0.1.6
 numpy==1.26.4
