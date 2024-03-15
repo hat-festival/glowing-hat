@@ -5,7 +5,7 @@ from lib.mode import Mode
 from lib.tools import hue_to_rgb
 
 
-class SubtleRoller(Mode):
+class Roller(Mode):
     """Subtly rolling."""
 
     def configure(self):

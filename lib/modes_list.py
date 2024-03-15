@@ -2,12 +2,12 @@ from lib.modes.brain_waves import BrainWaves
 from lib.modes.crawler import Crawler
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
-from lib.modes.subtle_roller import SubtleRoller
+from lib.modes.roller import Roller
 from lib.modes.sweeper import Sweeper
 
 modes = {
-    "subtleroller": SubtleRoller,
     "sweeper": Sweeper,
+    "roller": Roller,
     "larsen": Larsen,
     "crawler": Crawler,
     # "eye": Eye,
