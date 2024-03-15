@@ -5,11 +5,12 @@ from lib.modes.pulsator import Pulsator
 from lib.modes.subtle_roller import SubtleRoller
 
 modes = {
-    "larsen": Larsen,
-    "brainwaves": BrainWaves,
-    "crawler": Crawler,
-    "pulsator": Pulsator,
     "subtleroller": SubtleRoller,
+    "larsen": Larsen,
+    "crawler": Crawler,
+    # "eye": Eye,
+    "brainwaves": BrainWaves,
+    "pulsator": Pulsator,
     # "bigtop": BigTop,
     # "cuttlefish": Cuttlefish,
     # # "directiontester": DirectionTester,
