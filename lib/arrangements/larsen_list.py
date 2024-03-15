@@ -1,6 +1,7 @@
 from collections import deque
 
 # TODO: take a `speed` parameter to have more or less steps?
+# TODO: support a tail longer than the hat
 
 
 class LarsenList:
@@ -44,9 +45,8 @@ class LarsenList:
         self.template = {"head": [start_value] * self.head_steps, "tail": []}
 
         tail = []
-        for value in range(
-            100, 0, 0 - int(1 / self.tail_proportion * 100 / self.hat_length)
-        ):
+        step_size = int(100 / (self.tail_proportion * self.hat_length))
+        for value in range(100, 0, 0 - step_size):
             intensity = value * start_value / 100
             if intensity != start_value:
                 tail.append(intensity)
