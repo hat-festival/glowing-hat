@@ -14,7 +14,7 @@ class Fourier:
 
     def __init__(self, normaliser):
         """Construct."""
-        self.normaliser = normaliser
+        self.owner = normaliser
 
     def transform(self):
         """Do the work."""
@@ -53,7 +53,7 @@ class Fourier:
             new_note = detector(signal)
 
             if new_note[0]:
-                self.normaliser.factor.value = self.normaliser.max_brightness.value
+                self.owner.trigger()
 
 
 def get_stream():
