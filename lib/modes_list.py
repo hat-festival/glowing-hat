@@ -3,9 +3,11 @@ from lib.modes.crawler import Crawler
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
 from lib.modes.subtle_roller import SubtleRoller
+from lib.modes.sweeper import Sweeper
 
 modes = {
     "subtleroller": SubtleRoller,
+    "sweeper": Sweeper,
     "larsen": Larsen,
     "crawler": Crawler,
     # "eye": Eye,
