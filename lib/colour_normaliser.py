@@ -4,9 +4,9 @@ from time import sleep
 
 from lib.conf import conf
 from lib.custodian import Custodian
+from lib.fourier import Fourier
 from lib.gamma import gamma
 from lib.logger import logging
-from lib.normalisers.fourier import Fourier
 from lib.normalisers.rotator import Rotator
 from lib.oled import Oled
 from lib.tools import is_pi
@@ -37,6 +37,10 @@ class ColourNormaliser:
         self.fourier = Fourier(self)
 
         self.processes = {}
+
+    def trigger(self):
+        """Flash the brightness. We expect some owned class to call this."""
+        self.factor.value = self.max_brightness.value
 
     def set_fft_state(self, state):
         """Set the `doing_fft` state."""
