@@ -42,6 +42,9 @@ sweeper:
   fft: False
   jump: 3
   blip-move-threshold: 0.5
+  colours:
+    main: [0, 200, 0]
+    blip: [255, 0, 0]
 
 # accelerator:
 #   jump: 0.1

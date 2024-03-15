@@ -28,7 +28,7 @@ class Sweeper(Mode):
 
             for frame in self.frames:
                 if count % self.jump == 0:
-                    self.illuminate(frame, [0, 255, 0])
+                    self.illuminate(frame, self.data["colours"]["main"])
 
                 count += 1  # noqa: SIM113
 
@@ -40,6 +40,6 @@ class Sweeper(Mode):
         lights = [self.colour(clr, x[1]) for x in frame]
         if self.blip_index:
             lights[self.blip_index] = self.colour(
-                [255, 0, 0], frame[self.blip_index][1]
+                self.data["colours"]["blip"], frame[self.blip_index][1]
             )
         self.from_list(lights)
