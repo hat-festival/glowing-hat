@@ -67,7 +67,7 @@ crawler:
 larsen:
   fft: False
   jump: 2
-  head-width: 0.3
+  head-width: 0.15
   tail-proportion: 1.0
   axes:
     movement: x
@@ -94,9 +94,10 @@ subtleroller:
   fft: True
   length-multiplier: 3  # how many times the hat length to make our deque
   roll-sorter-at: 7  # move to the next sort after this many iterations
-  # prefs:
-  #   axis: none
-  #   invert: false
+  rotate-amount: 2
+
+eye:
+  fft: True
 
 # sweeper:
 #   jump: 5
