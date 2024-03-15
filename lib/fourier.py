@@ -12,39 +12,25 @@ if is_pi():
 class Fourier:
     """Fourier transformer."""
 
-    def __init__(self, normaliser):
+    def __init__(self, owner):
         """Construct."""
-        self.owner = normaliser
+        self.owner = owner
 
     def transform(self):
         """Do the work."""
         stream = get_stream()
 
-        detector = aubio.notes(
+        detector = aubio.onset(
             "default",
-            2048,
-            1024,
-            conf["fourier"]["sound"]["sample-rate"],
+            conf["fourier"]["buffer-size"],
+            conf["fourier"]["buffer-size"],
+            conf["fourier"]["sample-rate"],
         )
-
-        # detector = aubio.tempo(
-        #     "default",
-        #     2048,
-        #     1024,
-        #     conf["fourier"]["sound"]["sample-rate"],
-        # )
-
-        # detector = aubio.onset(
-        #     "default",
-        #     2048,
-        #     1024,
-        #     conf["fourier"]["sound"]["sample-rate"],
-        # )
-        detector.set_silence(-40)
+        detector.set_silence(conf["fourier"]["silence-threshold"])
 
         while True:
             audiobuffer = stream.read(
-                conf["fourier"]["sound"]["buffer-size"],
+                conf["fourier"]["buffer-size"],
                 exception_on_overflow=False,
             )
 
@@ -63,10 +49,10 @@ def get_stream():
     n_channels = 1
 
     return audio.open(
-        input_device_index=conf["fourier"]["sound"]["device-index"],
+        input_device_index=conf["fourier"]["device-index"],
         format=pyaudio_format,
         channels=n_channels,
-        rate=conf["fourier"]["sound"]["sample-rate"],
+        rate=conf["fourier"]["sample-rate"],
         input=True,
-        frames_per_buffer=conf["fourier"]["sound"]["buffer-size"],
+        frames_per_buffer=conf["fourier"]["buffer-size"],
     )
