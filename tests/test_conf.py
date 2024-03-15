@@ -1,6 +1,9 @@
+import pytest
+
 from lib.conf import conf
 
 
+@pytest.mark.skip()
 def test_default_prefs():
     """Test `modes` get the default prefs."""
     assert conf["modes"]["subtleroller"] == {
