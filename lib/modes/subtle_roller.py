@@ -10,10 +10,10 @@ class SubtleRoller(Mode):
 
     def configure(self):
         """Configure ourself."""
+        self.rotate_amount = self.data["rotate-amount"]
         self.lights_length = len(self.hat) * self.data["length-multiplier"]
         self.hues = [(x / self.lights_length) for x in range(self.lights_length)]
         self.lights = deque([hue_to_rgb(x) for x in self.hues])
-
         self.circle = Circle(self.hat, "x", "z")
 
     def run(self):
@@ -22,9 +22,9 @@ class SubtleRoller(Mode):
 
         count = 0
         while True:
-            if count == self.data["roll-sorter-at"]:
+            if count % self.data["roll-sorter-at"] == 0:
                 self.circle.next()
                 count = 0
             self.from_list(self.lights)
-            self.lights.rotate()
+            self.lights.rotate(self.rotate_amount)
             count += 1
