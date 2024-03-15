@@ -32,6 +32,10 @@ class Mode:
         """Set the hat ordering from a sort_key."""
         self.hat.pixels = self.manager.get_sort(sort_key)
 
+    def sort_hat(self, axis):
+        """Sort the hat."""
+        self.hat.sort(axis)
+
         # if "prefs" in self.data:
         #     self.prefs = self.data["prefs"]
         # else:
@@ -76,10 +80,6 @@ class Mode:
     # if "colour-set" in self.prefs:
     #     self.custodian.set("colour-set", self.prefs["colour-set"])
     #     self.custodian.next("colour")
-
-    # def sort_hat(self):
-    #     """Sort the hat."""
-    #     self.hat.sort(self.axis)
 
     def load_frame_sets(self):
         """Load the frame data."""

@@ -1,3 +1,51 @@
+brainwaves:
+  fft: true
+  jump: 2
+  steps: 150
+  axis-rotate-at: 10
+  prefs:
+    axis: y
+    invert: False
+    colour-sources:
+      - redis
+      - wheel
+    colour-set: white
+
+crawler:
+  max-jump: 2
+  prefs:
+    colour-sources:
+      - random
+
+larsen:
+  fft: False
+  jump: 2
+  head-width: 0.15
+  tail-proportion: 1.0
+  axes:
+    movement: x
+    fade: z
+
+pulsator:
+  fft: True
+  steps:
+    min: 32
+    max: 255
+
+roller:
+  fft: True
+  length-multiplier: 3 # how many times the hat length to make our deque
+  roll-sorter-at: 7 # move to the next sort after this many iterations
+  rotate-amount: 2
+
+sweeper:
+  fft: False
+  jump: 3
+  blip-move-threshold: 0.5
+  colours:
+    main: [0, 200, 0]
+    blip: [255, 0, 0]
+
 # accelerator:
 #   jump: 0.1
 #   limits:
@@ -20,31 +68,24 @@
 #       - redis
 #     colour-set: rgb
 
-bigtop:
-  fft: True
-  jump: 3
-  prefs:
-    axis: y
-    invert: False
+# bigtop:
+#   fft: True
+#   jump: 3
+#   prefs:
+#     axis: y
 
-brainwaves:
-  fft: true
-  jump: 2
-  steps: 150
-  axis-rotate-at: 10
-  prefs:
-    axis: y
-    invert: False
-    colour-sources:
-      - redis
-      - wheel
-    colour-set: white
+# rotator:
+#   steps: 9
+#   offset: 45
+#   prefs:
+#     axis: y
+#     invert: False
+#     colour-sources:
+#       - wheel
+#       - redis
 
-crawler:
-  max-jump: 2
-  prefs:
-    colour-sources:
-      - random
+# eye:
+#   fft: True
 
 # cuttlefish:
 #   fft: True
@@ -63,51 +104,4 @@ crawler:
 #   prefs:
 #     axis: y
 #     invert: False
-
-larsen:
-  fft: False
-  jump: 2
-  head-width: 0.15
-  tail-proportion: 1.0
-  axes:
-    movement: x
-    fade: z
-
-pulsator:
-  fft: True
-  steps:
-    min: 32
-    max: 255
-
-
-# rotator:
-#   steps: 9
-#   offset: 45
-#   prefs:
-#     axis: y
 #     invert: False
-#     colour-sources:
-#       - wheel
-#       - redis
-
-subtleroller:
-  fft: True
-  length-multiplier: 3  # how many times the hat length to make our deque
-  roll-sorter-at: 7  # move to the next sort after this many iterations
-  rotate-amount: 2
-
-eye:
-  fft: True
-
-# sweeper:
-#   jump: 5
-#   prefs:
-#     axis: y
-#     invert: False
-#     colour-sources:
-#       - wheel
-#       - redis
-
-# "off":
-#   prefs:
-#     axis: none
