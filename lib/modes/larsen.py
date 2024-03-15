@@ -10,6 +10,7 @@ class Larsen(Mode):
 
     def configure(self):
         """Configure ourself."""
+        self.jump = self.data["jump"]
         self.values = deque()
         self.larsen_list = LarsenList(
             len(self.hat),
@@ -19,18 +20,26 @@ class Larsen(Mode):
 
         self.hat.sort(self.data["axes"]["movement"])
         self.iterator = self.larsen_list.get_iterator("both", "complete", infinite=True)
+        self.colour = [255, 0, 0]
 
     def run(self):
         """Do the stuff."""
         self.configure()
 
+        count = 0
+        frame = None
         while True:
-            clr = self.get_colour()
-            colours = list(  # noqa: C417
-                map(lambda x: scale_colour(clr, x), next(self.iterator))
-            )
-            for index, pixel in enumerate(self.hat.pixels):
-                colours[index] = scale_colour(
-                    colours[index], ((pixel[self.data["axes"]["fade"]] + 1) / 2)
+            if count % self.jump == 0:
+                for _ in range(self.jump):
+                    frame = next(self.iterator)
+                colours = list(  # noqa: C417
+                    map(lambda x: scale_colour(self.colour, x), frame)
                 )
-            self.from_list(colours)
+                # for index, pixel in enumerate(self.hat.pixels):
+                #     colours[index] = scale_colour(
+                #         colours[index], ((pixel[self.data["axes"]["fade"]] + 1) / 2)
+                #     )
+                self.from_list(colours)
+                count = 0
+
+            count += 1
