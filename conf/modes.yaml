@@ -33,10 +33,16 @@ pulsator:
     max: 255
 
 roller:
-  fft: True
   length-multiplier: 3 # how many times the hat length to make our deque
   roll-sorter-at: 7 # move to the next sort after this many iterations
   rotate-amount: 2
+
+  decay:
+    amount: 0.02
+    interval: 0.02
+  brightness:
+    default: 0.4
+    max: 1.0
 
 sweeper:
   fft: False

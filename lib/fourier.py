@@ -1,7 +1,6 @@
 import numpy as np
 
 from lib.conf import conf
-from lib.logger import logging
 from lib.tools import is_pi
 
 if is_pi():
@@ -40,7 +39,6 @@ class Fourier:
             new_note = detector(signal)
 
             if new_note[0]:
-                logging.debug("triggered")
                 self.owner.trigger()
 
 

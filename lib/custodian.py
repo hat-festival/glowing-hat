@@ -122,24 +122,3 @@ class Custodian:
     def make_key(self, key):
         """Make compound key."""
         return f"{self.namespace}:{key}"
-
-
-# class RandomColourSource:
-#     """Generate spaced-out random colours."""
-
-#     def __init__(self):
-#         """Construct."""
-#         self.conf = conf
-#         self.hue = self.next_hue = random()
-
-#     @property
-#     def colour(self):
-#         """Get a colour."""
-#         while (
-#             abs(self.hue - self.next_hue) < self.conf["random-colour"]["hue-distance"]
-#         ):
-#             self.next_hue = random()
-
-#         self.hue = self.next_hue
-
-#         return hue_to_rgb(self.hue)

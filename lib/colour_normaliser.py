@@ -1,6 +1,4 @@
-import ctypes
 from multiprocessing import Process, Value
-from time import sleep
 
 from lib.conf import conf
 from lib.custodian import Custodian
@@ -10,6 +8,7 @@ from lib.normalisers.rotator import Rotator
 from lib.oled import Oled
 from lib.tools import is_pi
 
+# TODO: this is now massively engineered for what it needs
 
 class ColourNormaliser:
     """Normalises colours."""
@@ -26,27 +25,17 @@ class ColourNormaliser:
         self.decay_amount = 0.05
         self.rotary_step_size = 0.05
 
-        self.doing_fft = Value(ctypes.c_bool, True)  # noqa: FBT003
-
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
         self.realign_brightnesses()
 
         self.rotator = Rotator(self)
-        # self.fourier = Fourier(self)
 
         self.processes = {}
 
     def trigger(self):
         """Flash the brightness. We expect some owned class to call this."""
         self.factor.value = self.max_brightness.value
-
-    def set_fft_state(self, state):
-        """Set the `doing_fft` state."""
-        logging.info("setting `FFT` to `%s`", state)
-        self.doing_fft.value = state
-        self.custodian.set("fft-on", state)
-        self.oled.update()
 
     def adjust_brightness(self, direction):
         """Adjust brightness."""
@@ -91,35 +80,13 @@ class ColourNormaliser:
 
     def run(self):
         """Do the work."""
-        # self.run_fourier()
-        self.run_reducer()
         self.run_rotary()
-        logging.debug(self.processes)
-
-    def run_reducer(self):
-        """Run the reducer."""
-        self.processes["reduce"] = Process(target=self.reduce)
-        self.processes["reduce"].start()
-
-    def run_fourier(self):
-        """Run the Fourier Transformer."""
-        self.processes["fourier"] = Process(target=self.fourier.transform)
-        self.processes["fourier"].start()
 
     def run_rotary(self):
         """Run the rotary."""
-        self.processes["rotary"] = Process(target=self.rotator.rotate)
-        self.processes["rotary"].start()
-
-    def reduce(self):
-        """Constantly reducing the brightness."""
-        while True:
-            if self.doing_fft.value:
-                if self.factor.value > self.default_brightness.value:
-                    self.factor.value -= self.decay_amount
-                    sleep(self.decay_interval)
-            else:
-                sleep(1)
+        if "rotary" not in self.processes:
+            self.processes["rotary"] = Process(target=self.rotator.rotate)
+            self.processes["rotary"].start()
 
 
 def gamma_correct(triple):

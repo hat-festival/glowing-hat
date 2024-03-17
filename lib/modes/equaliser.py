@@ -1,4 +1,4 @@
-from multiprocessing import Process, Value
+import concurrent.futures
 from time import sleep
 
 from lib.fourier import Fourier
@@ -16,15 +16,19 @@ class Equaliser(Mode):
         self.decay_interval = self.data["decay"]["interval"]
 
         self.max_y = self.data["y"]["max"]
-        self.default_y = Value("f", self.data["y"]["default"])
-        self.active_y = Value("f", self.default_y.value)
+        self.default_y = self.data["y"]["default"]
+        self.active_y = self.default_y
 
         self.fft = Fourier(self)
-        self.fft_proc = Process(target=self.fft.transform)
-        self.reducer_proc = Process(target=self.reduce)
 
-        self.reducer_proc.start()
-        self.fft_proc.start()
+        self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+        self.pool.submit(self.fft.transform)
+        self.pool.submit(self.reduce)
+        # self.fft_proc = Process(target=self.fft.transform)
+        # self.reducer_proc = Process(target=self.reduce)
+
+        # self.reducer_proc.start()
+        # self.fft_proc.start()
 
     def run(self):
         """Do the sork."""
@@ -42,7 +46,7 @@ class Equaliser(Mode):
             lights = []
             for pixel in self.hat.pixels:
                 colour = hue_to_rgb(pixel["hue"])
-                if pixel["y"] < self.active_y.value:
+                if pixel["y"] < self.active_y:
                     lights.append(colour)
                 else:
                     lights.append(scale_colour(colour, self.data["scale-factor"]))
@@ -51,11 +55,11 @@ class Equaliser(Mode):
 
     def trigger(self):
         """Spike our `y`. Called by our FFT."""
-        self.active_y.value = self.max_y
+        self.active_y = self.max_y
 
     def reduce(self):
         """Constantly reducing the `y`."""
         while True:
-            if self.active_y.value > self.default_y.value:
-                self.active_y.value -= self.decay_amount
+            if self.active_y > self.default_y:
+                self.active_y -= self.decay_amount
                 sleep(self.decay_interval)
