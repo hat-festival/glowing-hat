@@ -1,5 +1,4 @@
 brainwaves:
-  fft: true
   jump: 2
   steps: 150
   axis-rotate-at: 10
@@ -18,7 +17,6 @@ crawler:
       - random
 
 larsen:
-  fft: False
   jump: 2
   head-width: 0.15
   tail-proportion: 1.0
@@ -27,7 +25,6 @@ larsen:
     fade: z
 
 pulsator:
-  fft: True
   steps:
     min: 32
     max: 255
@@ -45,15 +42,11 @@ roller:
     max: 1.0
 
 sweeper:
-  fft: False
   jump: 3
   blip-move-threshold: 0.5
   colours:
     main: [0, 200, 0]
     blip: [255, 0, 0]
-
-riser:
-  fft: False
 
 equaliser:
   decay:
