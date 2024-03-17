@@ -8,8 +8,8 @@ from lib.modes.sweeper import Sweeper
 
 modes = {
     "equaliser": Equaliser,
-    "sweeper": Sweeper,
     "roller": Roller,
+    "sweeper": Sweeper,
     "larsen": Larsen,
     "crawler": Crawler,
     # "eye": Eye,

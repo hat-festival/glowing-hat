@@ -4,7 +4,6 @@ from time import sleep
 
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.fourier import Fourier
 from lib.gamma import gamma
 from lib.logger import logging
 from lib.normalisers.rotator import Rotator
@@ -34,7 +33,7 @@ class ColourNormaliser:
         self.realign_brightnesses()
 
         self.rotator = Rotator(self)
-        self.fourier = Fourier(self)
+        # self.fourier = Fourier(self)
 
         self.processes = {}
 
@@ -92,8 +91,8 @@ class ColourNormaliser:
 
     def run(self):
         """Do the work."""
+        # self.run_fourier()
         self.run_reducer()
-        self.run_fourier()
         self.run_rotary()
         logging.debug(self.processes)
 

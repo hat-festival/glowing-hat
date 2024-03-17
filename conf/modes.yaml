@@ -50,8 +50,14 @@ riser:
   fft: False
 
 equaliser:
-  fft: False
-
+  decay:
+    amount: 0.02
+    interval: 0.02
+  y:
+    default: 0.4
+    max: 1.0
+  rotation: 3
+  scale-factor: 0.5
 
 # accelerator:
 #   jump: 0.1

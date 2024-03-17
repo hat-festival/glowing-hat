@@ -27,6 +27,10 @@ class Hat:
         else:
             self.lights = FakeLights(len(self.pixels))
 
+        self.restart_normaliser()
+
+    def restart_normaliser(self):
+        """Restart the normaliser."""
         if is_pi():
             self.normaliser.run()
 
