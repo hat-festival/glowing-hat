@@ -34,10 +34,6 @@ class ColourNormaliser:
 
         self.processes = {}
 
-    def trigger(self):
-        """Flash the brightness. We expect some owned class to call this."""
-        self.factor.value = self.max_brightness.value
-
     def adjust_brightness(self, direction):
         """Adjust brightness."""
         logging.debug("turning brightness `%s`", direction)
