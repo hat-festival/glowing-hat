@@ -46,6 +46,13 @@ sweeper:
     main: [0, 200, 0]
     blip: [255, 0, 0]
 
+riser:
+  fft: False
+
+equaliser:
+  fft: False
+
+
 # accelerator:
 #   jump: 0.1
 #   limits:
