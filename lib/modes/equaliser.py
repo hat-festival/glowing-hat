@@ -1,7 +1,6 @@
-import concurrent.futures
 from time import sleep
 
-from lib.fourier import Fourier
+from lib.fft_pool import FFTPool
 from lib.mode import Mode
 from lib.renderers.sweeper import angle  # TODO rehome this to tools?
 from lib.tools import hue_to_rgb, scale_colour
@@ -19,16 +18,7 @@ class Equaliser(Mode):
         self.default_y = self.data["y"]["default"]
         self.active_y = self.default_y
 
-        self.fft = Fourier(self)
-
-        self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
-        self.pool.submit(self.fft.transform)
-        self.pool.submit(self.reduce)
-        # self.fft_proc = Process(target=self.fft.transform)
-        # self.reducer_proc = Process(target=self.reduce)
-
-        # self.reducer_proc.start()
-        # self.fft_proc.start()
+        self.fft_pool = FFTPool(self)
 
     def run(self):
         """Do the sork."""

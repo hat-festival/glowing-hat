@@ -10,6 +10,7 @@ from lib.tools import is_pi
 
 # TODO: this is now massively engineered for what it needs
 
+
 class ColourNormaliser:
     """Normalises colours."""
 

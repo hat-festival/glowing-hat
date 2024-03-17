@@ -1,11 +1,8 @@
-import concurrent.futures
 from collections import deque
-
-# from multiprocessing import Value
 from time import sleep
 
 from lib.arrangements.circle import Circle
-from lib.fourier import Fourier
+from lib.fft_pool import FFTPool
 from lib.logger import logging
 from lib.mode import Mode
 from lib.tools import hue_to_rgb, scale_colour
@@ -23,11 +20,7 @@ class Roller(Mode):
         self.default_brightness = self.data["brightness"]["default"]
         self.brightness_factor = self.default_brightness
 
-        self.fft = Fourier(self)
-
-        self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
-        self.pool.submit(self.fft.transform)
-        self.pool.submit(self.reduce)
+        self.fft_pool = FFTPool(self)
 
         self.rotate_amount = self.data["rotate-amount"]
         self.lights_length = len(self.hat) * self.data["length-multiplier"]
@@ -63,5 +56,3 @@ class Roller(Mode):
             if self.brightness_factor > self.default_brightness:
                 self.brightness_factor -= self.decay_amount
                 sleep(self.decay_interval)
-        # else:
-        #     sleep(1)
