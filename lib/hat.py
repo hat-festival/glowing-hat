@@ -2,7 +2,7 @@ from lib.colour_normaliser import ColourNormaliser
 from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
-from lib.tools import is_pi
+from lib.tools import angle_to_point, is_pi
 
 if is_pi():  # nocov
     import board
@@ -86,6 +86,19 @@ class Hat:
     def reverse(self):
         """Turn ourself around."""
         self.pixels.reverse()
+
+    def apply_angles(self, axis_0, axis_1, rotation=0):
+        """Apply angles to pixels."""
+        for pixel in self.pixels:
+            pixel["angle"] = (
+                angle_to_point(pixel[axis_0], pixel[axis_1]) - rotation
+            ) % 360
+
+    def hues_from_angles(self, axis_0, axis_1, rotation=0):
+        """Assign hues from pixel angles."""
+        self.apply_angles(axis_0, axis_1, rotation=rotation)
+        for pixel in self.pixels:
+            pixel["hue"] = pixel["angle"] / 360
 
 
 class FakeLights(list):
