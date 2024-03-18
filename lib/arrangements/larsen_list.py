@@ -1,8 +1,5 @@
 from collections import deque
 
-# TODO: take a `speed` parameter to have more or less steps?
-# TODO: support a tail longer than the hat
-
 
 class LarsenList:
     """Intensity values for a Larsen Scanner."""
