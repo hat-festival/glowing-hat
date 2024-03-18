@@ -2,8 +2,7 @@ from time import sleep
 
 from lib.fft_pool import FFTPool
 from lib.mode import Mode
-from lib.renderers.sweeper import angle  # TODO rehome this to tools?
-from lib.tools import hue_to_rgb, scale_colour
+from lib.tools import brighten_pixels_less_than_y
 
 
 class Equaliser(Mode):
@@ -26,9 +25,7 @@ class Equaliser(Mode):
 
         rotation = 90
         while True:
-            for pixel in self.hat.pixels:  # TODO abstract this out for general use?
-                pixel["angle"] = (angle(pixel["x"], pixel["z"]) - rotation) % 360
-                pixel["hue"] = pixel["angle"] / 360
+            self.hat.hues_from_angles("x", "z", rotation=rotation)
             rotation = (rotation + self.data["rotation"]) % 360
 
             self.from_list(
@@ -47,17 +44,3 @@ class Equaliser(Mode):
             if self.active_y > self.default_y:
                 self.active_y -= self.decay_amount
                 sleep(self.decay_interval)
-
-
-# TODO find new general home for this
-def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
-    """Colour-scale some pixels."""
-    lights = []
-    for pixel in pixels:
-        colour = hue_to_rgb(pixel["hue"])
-        if pixel["y"] < y_value:
-            lights.append(colour)
-        else:
-            lights.append(scale_colour(colour, scale_factor))
-
-    return lights

@@ -1,5 +1,6 @@
 from lib.hat import Hat
-from lib.renderers.sweeper import Sweeper, angle
+from lib.renderers.sweeper import Sweeper
+from lib.tools import angle_to_point
 
 
 def test_construct():
@@ -125,10 +126,10 @@ def test_make_reversed_frame():
 
 def test_angle():
     """Test it gets the angle from an (x, y) pair."""
-    assert angle(1, 0) == 360  # noqa: PLR2004
-    assert angle(0, 1) == 90  # noqa: PLR2004
-    assert angle(-1, 0) == 180  # noqa: PLR2004
-    assert angle(0, -1) == 270  # noqa: PLR2004
+    assert angle_to_point(1, 0) == 360  # noqa: PLR2004
+    assert angle_to_point(0, 1) == 90  # noqa: PLR2004
+    assert angle_to_point(-1, 0) == 180  # noqa: PLR2004
+    assert angle_to_point(0, -1) == 270  # noqa: PLR2004
 
-    assert angle(1, 1) == 45  # noqa: PLR2004
-    assert angle(-1, 1) == 135  # noqa: PLR2004
+    assert angle_to_point(1, 1) == 45  # noqa: PLR2004
+    assert angle_to_point(-1, 1) == 135  # noqa: PLR2004
