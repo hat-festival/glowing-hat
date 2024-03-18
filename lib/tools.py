@@ -77,3 +77,16 @@ def angle_to_point(axis_0, axis_1):
         ang = 360
 
     return ang
+
+
+def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
+    """Colour-scale some pixels."""
+    lights = []
+    for pixel in pixels:
+        colour = hue_to_rgb(pixel["hue"])
+        if pixel["y"] < y_value:
+            lights.append(colour)
+        else:
+            lights.append(scale_colour(colour, scale_factor))
+
+    return lights

@@ -2,7 +2,7 @@ from time import sleep
 
 from lib.fft_pool import FFTPool
 from lib.mode import Mode
-from lib.tools import angle_to_point, hue_to_rgb, scale_colour
+from lib.tools import angle_to_point, brighten_pixels_less_than_y
 
 
 class Equaliser(Mode):
@@ -48,17 +48,3 @@ class Equaliser(Mode):
             if self.active_y > self.default_y:
                 self.active_y -= self.decay_amount
                 sleep(self.decay_interval)
-
-
-# TODO find new general home for this
-def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
-    """Colour-scale some pixels."""
-    lights = []
-    for pixel in pixels:
-        colour = hue_to_rgb(pixel["hue"])
-        if pixel["y"] < y_value:
-            lights.append(colour)
-        else:
-            lights.append(scale_colour(colour, scale_factor))
-
-    return lights
