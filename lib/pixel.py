@@ -34,16 +34,6 @@ class Pixel:
         except KeyError:
             return None
 
-    # def is_inside_slice(self):
-    # this is a prism with very large ends
-
-    # def is_inside_cuboid(self):
-    # this is a special case of the prism
-
-    # def is_inside_sphere(self):
-
-    # def is_inside_prism(self):
-    # https://en.wikipedia.org/wiki/Prism_(geometry)
-    # need face-corners, and angle?
-
-    # def is_inside_tetrahedron(self):
+    def __setitem__(self, key, value):
+        """Implement foo['bar'] = baz."""
+        self.data[key] = value
