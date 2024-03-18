@@ -1,9 +1,8 @@
 import pickle
-from math import atan2, degrees
 from pathlib import Path
 
 from lib.hat import Hat
-from lib.tools import remove_axis
+from lib.tools import angle_to_point, remove_axis
 
 
 class Sweeper:
@@ -46,7 +45,7 @@ class Sweeper:
         """Make a single frame."""
         frame = []
         for pix in self.hat.pixels:
-            point_angle = (angle(pix[axis_0], pix[axis_1]) + offset) % 360
+            point_angle = (angle_to_point(pix[axis_0], pix[axis_1]) + offset) % 360
 
             if rev:
                 point_angle = 360 - point_angle
@@ -59,17 +58,3 @@ class Sweeper:
             frame.append((pix["index"], factor))
 
         return frame
-
-
-# https://stackoverflow.com/a/62482938
-def angle(axis_0, axis_1):
-    """Get the angle of this line with the horizontal axis."""
-    theta = atan2(axis_1, axis_0)
-    ang = degrees(theta)
-    if ang < 0:
-        ang = 360 + ang
-
-    if ang == 0:
-        ang = 360
-
-    return ang

@@ -2,8 +2,7 @@ from time import sleep
 
 from lib.fft_pool import FFTPool
 from lib.mode import Mode
-from lib.renderers.sweeper import angle  # TODO rehome this to tools?
-from lib.tools import hue_to_rgb, scale_colour
+from lib.tools import angle_to_point, hue_to_rgb, scale_colour
 
 
 class Equaliser(Mode):
@@ -27,7 +26,9 @@ class Equaliser(Mode):
         rotation = 90
         while True:
             for pixel in self.hat.pixels:  # TODO abstract this out for general use?
-                pixel["angle"] = (angle(pixel["x"], pixel["z"]) - rotation) % 360
+                pixel["angle"] = (
+                    angle_to_point(pixel["x"], pixel["z"]) - rotation
+                ) % 360
                 pixel["hue"] = pixel["angle"] / 360
             rotation = (rotation + self.data["rotation"]) % 360
 

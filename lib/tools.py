@@ -1,5 +1,6 @@
 from colorsys import hsv_to_rgb
 from datetime import datetime
+from math import atan2, degrees
 from pathlib import Path
 
 from lib.gamma import gamma
@@ -62,3 +63,17 @@ def is_pi():
     """Detect if we're on a Pi."""
     model_file = "/sys/firmware/devicetree/base/model"
     return Path(model_file).exists() and "Raspberry Pi" in Path(model_file).read_text()
+
+
+# https://stackoverflow.com/a/62482938
+def angle_to_point(axis_0, axis_1):
+    """Get the angle of this line with the horizontal axis."""
+    theta = atan2(axis_1, axis_0)
+    ang = degrees(theta)
+    if ang < 0:
+        ang = 360 + ang
+
+    if ang == 0:
+        ang = 360
+
+    return ang
