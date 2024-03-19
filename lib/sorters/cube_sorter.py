@@ -1,6 +1,5 @@
 from math import sqrt
 
-from lib.pixel import Pixel
 from lib.scaler import Scaler
 
 
@@ -11,7 +10,7 @@ class CubeSorter:
         """Construct."""
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=False)
-        self.pixels = [Pixel.from_dict(x) for x in self.scaler]
+        self.pixels = self.scaler.as_pixels()
 
     def sort_from(self, *point):
         """Sort from a point."""

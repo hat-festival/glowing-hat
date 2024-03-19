@@ -39,6 +39,7 @@ class Scaler(list):
                         scaled_light[axis] = 0 - scaled_light[axis]
                 self.append(scaled_light)
 
+    # TODO make this the default
     def as_pixels(self):
         """Return as a list of `Pixels`."""
         return [

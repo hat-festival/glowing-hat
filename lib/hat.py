@@ -1,6 +1,5 @@
 from lib.colour_normaliser import ColourNormaliser
 from lib.conf import conf
-from lib.pixel import Pixel
 from lib.scaler import Scaler
 from lib.tools import angle_to_point, hue_to_rgb, is_pi
 
@@ -17,7 +16,7 @@ class Hat:
         self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
-        self.pixels = [Pixel.from_dict(x) for x in self.scaler]
+        self.pixels = self.scaler.as_pixels()
         self.normaliser = ColourNormaliser()
 
         if is_pi():
