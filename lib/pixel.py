@@ -4,12 +4,12 @@ from dataclasses import dataclass
 import deprecation
 
 
-@dataclass
+@dataclass(order=True)
 class Pixel:
     """Class representing a single NeoPixel."""
 
     index: int = 0
-    x: float = 0.0
+    x: float = 0.0  # TODO: should these be `field`s?
     y: float = 0.0
     z: float = 0.0
 
@@ -80,6 +80,7 @@ class Pixel:
 
     angle: float = 0
 
+    # TODO: see https://gist.github.com/robert-lucente/2179145cda7b99c278a5d0d8aacc6975#file-sorting_by_multiplefieldspythonsivji-py-L59
     @deprecation.deprecated(details="Prefer the `dataclass` interface")
     def __getitem__(self, key):
         """Implement foo['bar']."""
