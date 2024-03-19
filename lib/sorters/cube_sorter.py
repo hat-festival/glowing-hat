@@ -11,7 +11,7 @@ class CubeSorter:
         """Construct."""
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=False)
-        self.pixels = list(map(Pixel, self.scaler))
+        self.pixels = [Pixel.from_dict(x) for x in self.scaler]
 
     def sort_from(self, *point):
         """Sort from a point."""

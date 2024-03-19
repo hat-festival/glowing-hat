@@ -2,7 +2,7 @@ from lib.colour_normaliser import ColourNormaliser
 from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
-from lib.tools import angle_to_point, is_pi
+from lib.tools import angle_to_point, hue_to_rgb, is_pi
 
 if is_pi():  # nocov
     import board
@@ -17,7 +17,7 @@ class Hat:
         self.conf = conf
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
-        self.pixels = list(map(Pixel, self.scaler))
+        self.pixels = [Pixel.from_dict(x) for x in self.scaler]
         self.normaliser = ColourNormaliser()
 
         if is_pi():
@@ -87,6 +87,8 @@ class Hat:
         """Turn ourself around."""
         self.pixels.reverse()
 
+    # TODO: break these up so we can selectively apply, but have
+    # "hues from angles" check for angles first etc
     def apply_angles(self, axis_0, axis_1, rotation=0):
         """Apply angles to pixels."""
         for pixel in self.pixels:
@@ -99,6 +101,18 @@ class Hat:
         self.apply_angles(axis_0, axis_1, rotation=rotation)
         for pixel in self.pixels:
             pixel["hue"] = pixel["angle"] / 360
+
+    def rgbs_from_angles(self, axis_0, axis_1, rotation=0):
+        """Assign rgbs from pixel angles."""
+        self.hues_from_angles(axis_0, axis_1, rotation=rotation)
+        for pixel in self.pixels:
+            pixel["rgb"] = hue_to_rgb(pixel["hue"])
+
+    def light_up(self):
+        """Light ourselves up based on our RGBs."""
+        for index, pixel in enumerate(self.pixels):
+            self.lights[index] = pixel["rgb"]
+        self.lights.show()
 
 
 class FakeLights(list):
