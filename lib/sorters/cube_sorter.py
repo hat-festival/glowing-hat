@@ -36,7 +36,7 @@ def is_inside_sphere(pixel, centre, radius):
     """Is this pixel inside this sphere."""
     # https://math.stackexchange.com/a/3118250
     return (
-        (pixel["x"] - centre[0]) ** 2
-        + (pixel["y"] - centre[1]) ** 2
-        + (pixel["z"] - centre[2]) ** 2
+        (pixel.x - centre[0]) ** 2
+        + (pixel.y - centre[1]) ** 2
+        + (pixel.z - centre[2]) ** 2
     ) < radius**2
