@@ -77,7 +77,6 @@ class ImageGenerator:
 
     def generate(self, save_to=None):
         """Make the picture."""
-        # map redis value to method name
         getattr(self, self.custodian.get("display-type").replace("-", "_"))()
 
         if save_to:
@@ -85,65 +84,24 @@ class ImageGenerator:
 
         return self.image
 
-    def hat_settings(self):
-        """Make the `hat-settings` image."""
+    def show_mode(self):
+        """Make the `show-mode` image."""
         self.set_image(self.width, self.height)
-
-        self.add_text(self.custodian.get("mode"), 0, 0)
-
-        source = self.custodian.get("colour-source")
-        if source == "redis":
-            self.add_text(
-                self.colour_text(),
-                0,
-                self.height / 2,
-            )
-
-        elif source != "none":
-            self.add_text(source, 0, self.height / 2)
-
-        self.add_text(
-            self.axis_invert(),
-            self.width - 24,  # align this to the right
-            0,
-        )
-
-        if bool(self.custodian.get("fft-on")):
-            self.add_text(
-                "♫",
-                self.width - 16,
-                self.height / 2,
-            )
-
+        self.add_text(self.custodian.get("mode"), 4, 4)
         self.draw_brightness_bar()
 
     def draw_brightness_bar(self):
         """Draw the brightness meter."""
         bar_width = 4
-        step_size = 3
+        step_size = 2
         max_height = self.height - 2
         count = int(max_height * self.custodian.get("brightness"))
         for i in range(0, count, step_size):
-            for j in range(bar_width):
+            for j in range(int(bar_width)):
                 self.image.putpixel(
                     (self.width - (j + 2), (self.height - step_size) - i), 255
                 )
-
-    def button_config(self):
-        """Make the `button-config` image."""
-        self.set_image(self.height, self.width)
-
-        items = (
-            len(conf["buttons"]) * 2
-        ) - 1  # number of buttons, with a divider between each
-        step_size = round(self.width / items)
-
-        for index, abbreviation in enumerate(
-            reversed(list(map(lambda x: x["abbreviation"], conf["buttons"])))  # noqa: C417
-        ):
-            self.add_button(abbreviation, index, step_size)
-
-        self.image = self.image.rotate(270, expand=True)
+            bar_width = bar_width + 1
 
     def ip_address(self):
         """Make the `ip-address` image."""
@@ -156,71 +114,34 @@ class ImageGenerator:
         ipaddress = sock.getsockname()[0]
 
         self.add_text(hostname, 0, 0)
-        self.add_text(ipaddress, 0, self.height / 2)
+        self.add_text(ipaddress, 0, self.height / 2, font_adjust=3)
 
     def boot(self):
         """Boot-time message."""
         self.set_image(self.width, self.height)
 
-        message = "Hat is booting"
-        left = (self.width - (len(message) * 8)) / 2
-        top = (self.height - 16) / 2
-        self.add_text(message, left, top)
+        message = "booting"
+        self.add_text(message, 4, 4)
 
     def reset(self):
         """Reset message."""
         self.set_image(self.width, self.height)
 
-        message = "Hat is resetting"
-        left = (self.width - (len(message) * 8)) / 2
-        top = (self.height - 16) / 2
-        self.add_text(message, left, top)
+        message = "resetting"
 
-    def hex_colour(self):
-        """Get a hex-colour."""
-        colour = ""
-        for byte in self.custodian.get("colour"):
-            colour += f"{byte:02x}"
-        return f"#{colour}"
+        self.add_text(message, 4, 4)
 
-    def get_sign(self):
-        """Get the sign of the inversion."""
-        return "-" if self.custodian.get("invert") else "+"
-
-    def axis_invert(self):
-        """Construct the axis-inversion string."""
-        axisless_modes = list(
-            dict(
-                filter(
-                    lambda x: x[1].get("prefs").get("axis") == "none",
-                    conf.get("modes").items(),
-                )
-            ).keys()
-        )
-        if self.custodian.get("mode") in axisless_modes:
-            return ""
-
-        return f"{self.get_sign()}{self.custodian.get('axis')}"
-
-    def add_button(self, text, index, step_size):
-        """Add button marker."""
-        y_pos = index * step_size * 2
-        self.add_text(text, 0, y_pos)
-        # https://www.compart.com/en/unicode/U+2015
-        self.add_text("――――", 0, y_pos + step_size)
-
-    def colour_text(self):
-        """Get the colour-set/hex text."""
-        return (
-            f"{self.custodian.get('colour-set')}"
-            f"{self.conf['characters']['separator']}"
-            f"{self.hex_colour()}"
-        )
-
-    def add_text(self, text, across, down, upper_case=False):  # noqa: FBT002
+    def add_text(self, text, across, down, upper_case=False, font_adjust=None):  # noqa: FBT002, PLR0913
         """Add some text."""
         text = text.lower()
         if upper_case:
             text = text.upper()
 
-        self.draw.text((across, down), text, font=self.font, fill=255)
+        font = self.font
+        if font_adjust:
+            font = ImageFont.truetype(
+                font=f"fonts/{self.conf['font']['name']}.ttf",
+                size=self.conf["font"]["size"] - font_adjust,
+            )
+
+        self.draw.text((across, down), text, font=font, fill=255)

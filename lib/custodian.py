@@ -2,6 +2,7 @@ import json
 
 import redis
 
+from lib.logger import logging
 from lib.random_colour_source import RandomColourSource
 from lib.tools import hue_to_rgb
 
@@ -21,19 +22,6 @@ class Custodian:
         if flush:
             self.redis.flushall()
 
-        if self.conf:
-            for name, values in self.conf["hoops"].items():
-                for value in values:
-                    self.add_item_to_hoop(value, name)
-
-            for name in self.conf["hoops"].keys():  # noqa: SIM118
-                self.next(name)
-
-            for name, _ in self.conf["colour-sets"].items():  # noqa: PERF102
-                self.add_item_to_hoop(name, "colour-set")
-
-            self.next("colour-set")
-
     def add_item_to_hoop(self, item, hoop):
         """Add an item to a hoop."""
         key = self.make_key(f"hoop:{hoop}")
@@ -46,13 +34,14 @@ class Custodian:
     def next(self, thing):
         """Move the `next` item to the appropriate key."""
         hoop_key = self.make_key(f"hoop:{thing}")
+        logging.debug(hoop_key)
         next_item = self.redis.rpop(hoop_key).decode()
         self.set(thing, next_item)
         self.add_item_to_hoop(next_item, f"{thing}")
 
     def get(self, key):
         """Get a value."""
-        if key == "colour" and self.get("colour-source") == "wheel":
+        if key == "colour":
             hue = self.get("hue")
             if not hue:
                 hue = 1.0
@@ -74,26 +63,9 @@ class Custodian:
 
         return None
 
-    def get_and_reset(self, key, default=0):
-        """Get a value then set it to some default."""
-        result = self.get(key)
-        self.set(key, default)
-
-        return result
-
     def set(self, key, value):
         """Set a value."""
         self.redis.set(self.make_key(key), str(value))
-        if key == "colour-set":
-            self.load_colour_set(self.conf["colour-sets"][self.get("colour-set")])
-
-    def increment(self, key):
-        """Attempt to increment a value."""
-        self.redis.incr(self.make_key(key))
-
-    def decrement(self, key):
-        """Attempt to decrement a value."""
-        self.redis.decr(self.make_key(key))
 
     def unset(self, key):
         """Unset something."""
@@ -103,21 +75,6 @@ class Custodian:
         """Rotate a hoop until the desired value is selected."""
         while self.get(hoop) != value:
             self.next(hoop)
-
-    def load_colour_set(self, colours):
-        """Load-in a colour-set."""
-        key = self.make_key("hoop:colour")
-        self.redis.delete(key)
-        for triple in colours.values():
-            self.add_item_to_hoop(json.dumps(triple), "colour")
-
-        self.next("colour")
-
-    def reset_colour_sources(self, sources):
-        """Load-in a list of valid colour-sources."""
-        self.unset("hoop:colour-source")
-        for source in sources:
-            self.add_item_to_hoop(source, "colour-source")
 
     def make_key(self, key):
         """Make compound key."""

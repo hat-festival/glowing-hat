@@ -8,12 +8,12 @@ from lib.modes.sweeper import Sweeper
 
 modes = {
     "equaliser": Equaliser,
+    "pulsator": Pulsator,
     "roller": Roller,
     "sweeper": Sweeper,
     "larsen": Larsen,
     "crawler": Crawler,
     "brainwaves": BrainWaves,
-    "pulsator": Pulsator,
     # "eye": Eye,
     # "bigtop": BigTop,
     # "cuttlefish": Cuttlefish,

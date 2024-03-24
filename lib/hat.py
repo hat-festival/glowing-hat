@@ -1,4 +1,4 @@
-from lib.colour_normaliser import ColourNormaliser
+from lib.brightness_control import BrightnessControl
 from lib.conf import conf
 from lib.pixel import Pixel
 from lib.scaler import Scaler
@@ -18,7 +18,7 @@ class Hat:
         self.locations = locations
         self.scaler = Scaler(locations, auto_centre=auto_centre)
         self.pixels = list(map(Pixel, self.scaler))
-        self.normaliser = ColourNormaliser()
+        self.brightness_control = BrightnessControl()
 
         if is_pi():
             self.lights = NeoPixel(
@@ -27,16 +27,16 @@ class Hat:
         else:
             self.lights = FakeLights(len(self.pixels))
 
-        self.restart_normaliser()
+        self.restart_brightness_controller()
 
-    def restart_normaliser(self):
-        """Restart the normaliser."""
+    def restart_brightness_controller(self):
+        """Restart the brightness_controller."""
         if is_pi():
-            self.normaliser.run()
+            self.brightness_control.run()
 
     def light_one(self, index, colour, auto_show=True):  # noqa: FBT002
         """Light up a single pixel."""
-        self.lights[index] = self.normaliser.normalise(colour)
+        self.lights[index] = self.brightness_control.normalise(colour)
 
         if auto_show:
             self.show()
@@ -44,7 +44,7 @@ class Hat:
     def colour_indeces(self, indeces, colour, auto_show=True):  # noqa: FBT002
         """Apply a colour to a list of lights."""
         for index in indeces:
-            self.lights[index] = self.normaliser.normalise(colour)
+            self.lights[index] = self.brightness_control.normalise(colour)
 
         if auto_show:
             self.show()

@@ -1,40 +1,41 @@
 from unittest import TestCase
 
-from lib.colour_normaliser import ColourNormaliser
+from lib.brightness_control import BrightnessControl
 from lib.tools import close_enough
 
 
 class TestColourNormaliser(TestCase):
-    """Test the normaliser."""
+    """Test the brightness_controller."""
 
-    def test_init(self):
-        """Test the constructor."""
-        norm = ColourNormaliser()
-        assert norm.max_brightness.value == 0.5  # noqa: PLR2004
-        assert close_enough(norm.default_brightness.value, 0.15)
+    def test_initialisation(self):
+        """Test it starts at 50%."""
+        norm = BrightnessControl()
+        assert norm.factor.value == 0.5  # noqa: PLR2004
+        assert norm.max_brightness.value == 1.0
 
-    def test_recalculate_brightness_down(self):
-        """Test the brightness recalculator."""
-        norm = ColourNormaliser()
-        norm.adjust_brightness("down")
-        assert close_enough(norm.max_brightness.value, 0.45, tolerance=0.000001)
+    def test_turn_brightness_down(self):
+        """Test turning brightness down."""
+        norm = BrightnessControl()
+        norm.adjust("down")
+        assert close_enough(norm.factor.value, 0.40, tolerance=0.000001)
 
-    def test_recalculate_brightness_up(self):
-        """Test the brightness recalculator."""
-        norm = ColourNormaliser()
-        norm.max_brightness.value = 0.1
-        norm.adjust_brightness("up")
-        assert close_enough(norm.max_brightness.value, 0.15, tolerance=0.000001)
+    def test_turn_brightness_up(self):
+        """Test turning brightness up."""
+        norm = BrightnessControl()
+        norm.factor.value = 0.1
+        norm.adjust("up")
+        assert close_enough(norm.factor.value, 0.20, tolerance=0.000001)
 
-    def test_recalculate_brightness_down_at_limit(self):
-        """Test the brightness recalculator."""
-        norm = ColourNormaliser()
-        norm.max_brightness.value = 0.05
-        norm.adjust_brightness("down")
-        assert close_enough(norm.max_brightness.value, 0.0, tolerance=0.000001)
+    def test_turn_brightness_down_at_limit(self):
+        """Test turning brightness down at limit."""
+        norm = BrightnessControl()
+        norm.factor.value = 0.05
+        norm.adjust("down")
+        assert close_enough(norm.factor.value, 0.0, tolerance=0.000001)
 
-    def test_recalculate_brightness_up_at_limit(self):
-        """Test the brightness recalculator."""
-        norm = ColourNormaliser()
-        norm.adjust_brightness("up")
-        assert close_enough(norm.max_brightness.value, 0.5, tolerance=0.000001)
+    def test_turn_brightness_up_at_limit(self):
+        """Test turning brightness up at limit."""
+        norm = BrightnessControl()
+        norm.factor.value = 0.95
+        norm.adjust("up")
+        assert close_enough(norm.factor.value, 1.0, tolerance=0.000001)

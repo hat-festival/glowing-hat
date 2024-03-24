@@ -27,7 +27,6 @@ class Equaliser(Mode):
         while True:
             self.hat.hues_from_angles("x", "z", rotation=rotation)
             rotation = (rotation + self.data["rotation"]) % 360
-
             self.from_list(
                 brighten_pixels_less_than_y(
                     self.hat.pixels, self.active_y, self.data["scale-factor"]
