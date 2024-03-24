@@ -68,6 +68,11 @@ class Pixel:
         """Get our hue from our angle."""
         self["hue"] = ((self["angles"][axis] + offset) % 360) / 360
 
+    @property
+    def as_dict(self):
+        """Represent ourself."""
+        return self.data
+
 
 # https://stackoverflow.com/a/62482938
 def angle_to_point(axis_0, axis_1):
