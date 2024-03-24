@@ -75,15 +75,7 @@ def test_brighten_pixels_less_than_y():
     """Test it dims the correct pixels."""
     pixels = [Pixel(real_data) for real_data in equaliser_data["pixels"]]
 
-    # for index, hue in enumerate(equaliser_data["hues"]):
-    #     pixels[index]["hue"] = hue
-
-    # for index, y in enumerate(equaliser_data["ys"]):
-    #     pixels[index]["y"] = y
-
-    assert (
-        brighten_pixels_less_than_y(
-            pixels, equaliser_data["active-y"], equaliser_data["scale-factor"]
-        )
-        == equaliser_data["colours"]
+    result = brighten_pixels_less_than_y(
+        pixels, equaliser_data["active-y"], equaliser_data["scale-factor"]
     )
+    assert [pixel["rgb"] for pixel in result] == equaliser_data["colours"]

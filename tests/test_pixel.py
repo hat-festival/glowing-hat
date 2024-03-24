@@ -14,7 +14,7 @@ class TestPixel(TestCase):
             "x": 1,
             "y": 2,
             "z": -3.5,
-            "hue": 1.0,
+            "hue": 0.0,
             "saturation": 1.0,
             "value": 1.0,
             "rgb": (255, 0, 0),
@@ -41,7 +41,7 @@ class TestPixel(TestCase):
         """Test that some fields are immutable."""
         pix = Pixel({"index": 0, "x": 1, "y": 2, "z": -3.5})
         assert pix["x"] == 1
-        assert pix["hue"] == 1.0
+        assert pix["hue"] == 0.0
 
         pix["hue"] = 0.5
         assert pix["hue"] == 0.5  # noqa: PLR2004
@@ -68,3 +68,15 @@ class TestPixel(TestCase):
         pix.reset()
         assert pix["hue"] == 0.4  # noqa: PLR2004
         assert pix["value"] == 1.0
+
+    def test_hue_from_angle(self):
+        """Test it knows how to get a hue from an angle."""
+        data = {"index": 0, "x": 0.0, "y": 1.0, "z": 1.0}
+        pix = Pixel(data)
+        assert pix["angles"]["y"] == 360  # noqa: PLR2004
+
+        pix.hue_from_angle()
+        assert pix["hue"] == 0.0
+
+        pix.hue_from_angle(offset=90)
+        assert pix["hue"] == 0.25  # noqa: PLR2004

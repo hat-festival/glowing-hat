@@ -64,5 +64,4 @@ def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
         if pixel["y"] >= y_value:
             pixel["value"] *= scale_factor
 
-    # TODO return pixels, decode in client?
-    return [pixel["rgb"] for pixel in pixels]
+    return pixels

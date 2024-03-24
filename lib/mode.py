@@ -28,6 +28,10 @@ class Mode:
         """Illuminate our hat from a list of RGBs."""
         self.hat.illuminate(list(lights)[: len(self.hat)])
 
+    def from_pixels(self, pixels):
+        """Illuminate our hat from a set of pixels."""
+        self.hat.illuminate([pixel["rgb"] for pixel in pixels])
+
     def from_sort(self, sort_key):
         """Set the hat ordering from a sort_key."""
         self.hat.pixels = self.manager.get_sort(sort_key)

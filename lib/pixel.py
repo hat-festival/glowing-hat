@@ -2,8 +2,6 @@ from collections import deque
 from colorsys import hsv_to_rgb
 from math import atan2, degrees
 
-# TODO make some os these fields immutable
-
 IMMUTABLE_FIELDS = ["x", "y", "z"]
 
 
@@ -20,9 +18,9 @@ class Pixel:
 
     def populate_hsv(self):
         """Populate the HSV components with defaults as required."""
-        for component in ["hue", "saturation", "value"]:
+        for component, value in {"hue": 0.0, "saturation": 1.0, "value": 1.0}.items():
             if component not in self.data:
-                self[component] = 1.0
+                self[component] = value
 
     def calculate_rgb(self):
         """Calculate our RGB triple."""
@@ -65,6 +63,10 @@ class Pixel:
     def reset(self):
         """Reset our `s` and `v`."""
         self["saturation"] = self["value"] = 1.0
+
+    def hue_from_angle(self, axis="y", offset=0):
+        """Get our hue from our angle."""
+        self["hue"] = ((self["angles"][axis] + offset) % 360) / 360
 
 
 # https://stackoverflow.com/a/62482938
