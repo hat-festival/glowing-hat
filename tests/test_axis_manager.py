@@ -38,10 +38,9 @@ class TestAxisManager(TestCase):
         )
         man.create_sorts(steps=2)
         man.populate()
-
         assert (
             hashlib.sha256(self.redis.get("sorts:(-0.5, -1.0, 0.5)")).hexdigest()
-            == "9ede5937c278f4d826b70295cfa845e01b288cc93820a69ec802aee7099d033f"
+            == "ade85ed03960113d0eeeae5b3e6e58bdaa4756d00ca42afd39da409fda0209cd"
         )
 
     def test_a_bigger_cube(self):

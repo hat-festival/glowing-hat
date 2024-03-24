@@ -2,7 +2,7 @@ include make/Makefile.common
 
 PUSHHOST ?= ${HATHOST}
 
-default: format style test freeze clean
+default: format style test-full freeze clean
 
 push-code: clean
 	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure && make clean"
@@ -22,7 +22,6 @@ test:
 		--verbose \
 		--capture no \
 		--failed-first \
-		--cov \
 		--exitfirst \
 		-m "not not_ci"
 
