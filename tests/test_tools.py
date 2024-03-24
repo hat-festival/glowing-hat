@@ -1,12 +1,13 @@
+from lib.pixel import Pixel
 from lib.tools import (
+    brighten_pixels_less_than_y,
     close_enough,
     colour_set_to_colour_list,
-    gamma_correct,
     hue_to_rgb,
-    normalise,
     remove_axis,
     scale_colour,
 )
+from tests.fixtures.equaliser_data.expectations import equaliser_data
 
 
 def test_hue_to_rgb():
@@ -18,28 +19,6 @@ def test_hue_to_rgb():
 
     for hue, rgb in cases:
         assert hue_to_rgb(hue) == rgb
-
-
-def test_gamma_correction():
-    """Test it gamma-corrects correctly."""
-    cases = (
-        ([0, 0, 0], (0, 0, 0)),
-        ([255, 255, 255], (255, 255, 255)),
-        ([255, 0, 255], (255, 0, 255)),
-        ([12, 34, 56], (0, 1, 4)),
-        ([112, 134, 156], (25, 42, 64)),
-        ([250, 251, 252], (241, 244, 247)),
-        ([250.8, 251.43214321, 252.43214], (241, 244, 247)),
-    )
-
-    for colour, corrected in cases:
-        assert gamma_correct(colour) == corrected
-
-
-def test_normalise():
-    """Test it normalises a colour."""
-    assert normalise([255, 255, 255]) == (255, 255, 255)
-    assert normalise([255, 255, 255], factor=0.5) == (127, 127, 127)
 
 
 def test_close_enough():
@@ -90,3 +69,13 @@ def test_colour_set_to_colour_list():
         [255, 0, 255],
         [255, 0, 255],
     ]
+
+
+def test_brighten_pixels_less_than_y():
+    """Test it dims the correct pixels."""
+    pixels = [Pixel(real_data) for real_data in equaliser_data["pixels"]]
+
+    result = brighten_pixels_less_than_y(
+        pixels, equaliser_data["active-y"], equaliser_data["scale-factor"]
+    )
+    assert [pixel["rgb"] for pixel in result] == equaliser_data["colours"]

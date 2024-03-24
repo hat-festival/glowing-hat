@@ -28,6 +28,10 @@ class Mode:
         """Illuminate our hat from a list of RGBs."""
         self.hat.illuminate(list(lights)[: len(self.hat)])
 
+    def from_pixels(self, pixels):
+        """Illuminate our hat from a set of pixels."""
+        self.hat.illuminate([pixel["rgb"] for pixel in pixels])
+
     def from_sort(self, sort_key):
         """Set the hat ordering from a sort_key."""
         self.hat.pixels = self.manager.get_sort(sort_key)
@@ -35,51 +39,6 @@ class Mode:
     def sort_hat(self, axis):
         """Sort the hat."""
         self.hat.sort(axis)
-
-        # if "prefs" in self.data:
-        #     self.prefs = self.data["prefs"]
-        # else:
-        #     self.prefs = conf["default-mode-prefs"]
-
-        # self.invert = self.custodian.get("invert")
-        # self.axis = self.custodian.get("axis")
-
-    # def reset(self):
-    #     """Reset some things."""
-    # self.set_preferred_axis()
-    # self.set_preferred_invert()
-    # self.reset_colour_sources()
-
-    # def set_preferred_invert(self):
-    #     """Rotate to preferred inversion for this mode."""
-    #     if "invert" in self.prefs:
-    #         self.custodian.rotate_until("invert", self.prefs["invert"])
-    #         self.invert = self.custodian.get("invert")
-
-    # def set_preferred_axis(self):
-    #     """Rotate to preferred axis for this mode."""
-    #     if "axis" in self.prefs:
-    #         if self.prefs["axis"] == "none":
-    #             self.custodian.set("axis", "none")
-
-    #         else:
-    #             self.custodian.rotate_until("axis", self.prefs["axis"])
-
-    #         self.axis = self.custodian.get("axis")
-
-    # def reset_colour_sources(self):
-    #     """Load acceptable colour-sources for this mode."""
-    #     if "colour-sources" in self.prefs:
-    #         self.custodian.reset_colour_sources(self.prefs["colour-sources"])
-
-    #     else:
-    #         self.custodian.reset_colour_sources(["none"])
-
-    #     self.custodian.next("colour-source")
-
-    # if "colour-set" in self.prefs:
-    #     self.custodian.set("colour-set", self.prefs["colour-set"])
-    #     self.custodian.next("colour")
 
     def load_frame_sets(self):
         """Load the frame data."""

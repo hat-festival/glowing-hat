@@ -3,26 +3,19 @@ from collections import deque
 from multiprocessing import Process
 from random import shuffle
 from signal import pause
-from string import ascii_uppercase
+from time import sleep
 
 import buttonshim
 
 from lib.axis_manager import AxisManager
+
+# from lib.clicker import Clicker
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
-
-BUTTONS = {}
-
-for index, data in enumerate(conf["buttons"]):
-    BUTTONS[index] = data
-    BUTTONS[index]["name"] = ascii_uppercase[index]
-    BUTTONS[index]["held"] = False
-
-BUTTON_IDS = list(BUTTONS.keys())
 
 
 class Controller:
@@ -34,9 +27,6 @@ class Controller:
         self.conf = conf
         self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=False)
-
-        self.axis_manager = AxisManager(cube_radius=1.1)
-        self.axis_manager.populate()
 
         # we pre-load all the modes because it takes a long time
         self.modes = modes
@@ -53,7 +43,6 @@ class Controller:
     def boot_hat(self):
         """Boot the hat."""
         self.custodian.set("display-type", "boot")
-        self.custodian.rotate_until("colour-source", "wheel")
         self.oled.update()
 
         if os.environ.get("LOGLEVEL") != "debug":
@@ -71,7 +60,8 @@ class Controller:
                 victim = indeces.pop()
                 self.hat.light_one(victim, [0, 0, 0])
 
-        self.custodian.rotate_until("display-type", "hat-settings")
+        self.custodian.set("display-type", "show-mode")
+        self.oled.update()
 
     def restart_hat(self):
         """Restart the hat."""
@@ -84,85 +74,56 @@ class Controller:
         self.process = Process(target=self.mode.run)
         self.process.start()
 
-        self.hat.restart_normaliser()
+        self.hat.restart_brightness_controller()
         logging.info("hat restarted")
         self.oled.update()
 
-    def bump(self, parameter):
-        """Bump something."""
-        logging.info("bumping `%s`", parameter)
-        if parameter == "reset":
-            self.custodian.set("display-type", "reset")
-            self.oled.update()
-            logging.info("doing hard reset")
-
-            os.system("/usr/bin/sudo service controller restart")  # noqa: S605
-
-        self.custodian.next(parameter)
-        logging.info("`%s` is now `%s`", parameter, self.custodian.get(parameter))
+    def next_mode(self):
+        """Bump to next mode."""
+        self.custodian.next("mode")
+        logging.info("`mode` is now `%s`", self.custodian.get("mode"))
 
         self.restart_hat()
 
+    def show_ip(self):
+        """Show our IP."""
+        self.custodian.set("display-type", "ip-address")
+        self.oled.update()
+        sleep(5)
+        self.custodian.set("display-type", "show-mode")
+        self.oled.update()
 
-c = Controller()
+    def hard_reset(self):
+        """Reset when we get stuck."""
+        self.custodian.set("display-type", "reset")
+        self.oled.update()
+        logging.info("doing hard reset")
 
-
-@buttonshim.on_release(BUTTON_IDS)
-def release_handler(button, _):
-    """Handle button release."""
-    logging.debug(
-        "button `%s` held-status: `%s`",
-        BUTTONS[button]["name"],
-        BUTTONS[button]["held"],
-    )
-    logging.debug("button `%s` released", BUTTONS[button]["name"])
-    if not BUTTONS[button]["held"]:
-        green()
-        c.bump(BUTTONS[button]["press"])
-
-    else:
-        BUTTONS[button]["held"] = False
-
-    off()
+        os.system("/usr/bin/sudo service controller restart")  # noqa: S605
 
 
-@buttonshim.on_hold(BUTTON_IDS, hold_time=1)
-def held_handler(button):
-    """Handle button hold."""
-    logging.debug(
-        "button `%s` held-status: `%s`",
-        BUTTONS[button]["name"],
-        BUTTONS[button]["held"],
-    )
-    logging.debug("button `%s` held", BUTTONS[button]["name"])
-    if "hold" in BUTTONS[button]:
-        blue()
-        c.bump(BUTTONS[button]["hold"])
-
-    else:
-        red()
-
-    BUTTONS[button]["held"] = True
+controller = Controller()
 
 
-def red():
-    """LED red."""
-    buttonshim.set_pixel(255, 0, 0)
+@buttonshim.on_release(buttonshim.BUTTON_A)
+def button_a_handler(_, __):
+    """Handle button A release."""
+    logging.debug("button A released")
+    controller.next_mode()
 
 
-def green():
-    """LED green."""
-    buttonshim.set_pixel(0, 255, 0)
+@buttonshim.on_release(buttonshim.BUTTON_D)
+def button_d_handler(_, __):
+    """Handle button D release."""
+    logging.debug("button D released")
+    controller.show_ip()
 
 
-def blue():
-    """LED blue."""
-    buttonshim.set_pixel(0, 0, 255)
-
-
-def off():
-    """LED off."""
-    buttonshim.set_pixel(0, 0, 0)
+@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=1)
+def button_e_handler(_):
+    """Handle button E hold."""
+    logging.debug("button E held")
+    controller.hard_reset()
 
 
 def manage():
@@ -171,4 +132,6 @@ def manage():
 
 
 if __name__ == "__main__":
+    axis_manager = AxisManager(cube_radius=1.1)
+    axis_manager.populate()
     manage()

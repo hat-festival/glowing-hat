@@ -7,7 +7,10 @@ wheel:
 random-colour:
   hue-distance: 0.2
 
-max-brightness: 0.5 # brightest we will ever go
+max-brightness: 0.5
+brightness:
+  max: 1.0
+  default: 0.5
 
 oled:
   size:
@@ -15,7 +18,7 @@ oled:
     y: 32
   font:
     name: SourceCodePro-Light
-    size: 11
+    size: 16
   characters:
     separator: "|"
 
