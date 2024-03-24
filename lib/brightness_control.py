@@ -3,10 +3,9 @@ from multiprocessing import Process, Value
 from lib.brightness_controllers.rotator import Rotator
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.gamma import gamma
 from lib.logger import logging
 from lib.oled import Oled
-from lib.tools import is_pi
+from lib.tools import gamma_correct, is_pi
 
 
 class BrightnessControl:
@@ -48,6 +47,7 @@ class BrightnessControl:
         if is_pi():
             self.oled.update()
 
+    # TODO I think this is redundant now
     def normalise(self, triple):
         """Normalise a colour."""
         factor = max(self.factor.value, 0)
@@ -64,6 +64,6 @@ class BrightnessControl:
             self.processes["rotary"].start()
 
 
-def gamma_correct(triple):
-    """Gamma-correct a colour."""
-    return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417
+# def gamma_correct(triple):
+#     """Gamma-correct a colour."""
+#     return tuple(map(lambda n: gamma[int(n)], triple))

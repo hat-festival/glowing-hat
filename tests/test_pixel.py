@@ -80,3 +80,14 @@ class TestPixel(TestCase):
 
         pix.hue_from_angle(offset=90)
         assert pix["hue"] == 0.25  # noqa: PLR2004
+
+    def test_scaling(self):
+        """Test we can scale the `value`."""
+        data = {"index": 0, "x": 0.0, "y": 1.0, "z": 1.0}
+        pix = Pixel(data)
+
+        assert pix["rgb"] == (255, 0, 0)
+
+        pix.scale(0.5)
+        assert pix["value"] == 0.5  # noqa: PLR2004
+        assert pix["rgb"] == (36, 0, 0)

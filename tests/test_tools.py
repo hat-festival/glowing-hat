@@ -78,4 +78,5 @@ def test_brighten_pixels_less_than_y():
     result = brighten_pixels_less_than_y(
         pixels, equaliser_data["active-y"], equaliser_data["scale-factor"]
     )
+
     assert [pixel["rgb"] for pixel in result] == equaliser_data["colours"]

@@ -2,6 +2,8 @@ from collections import deque
 from colorsys import hsv_to_rgb
 from math import atan2, degrees
 
+from lib.tools import gamma_correct
+
 IMMUTABLE_FIELDS = ["x", "y", "z"]
 
 
@@ -24,10 +26,12 @@ class Pixel:
 
     def calculate_rgb(self):
         """Calculate our RGB triple."""
-        self["rgb"] = tuple(
-            int(x * 255)
-            for x in hsv_to_rgb(
-                self.get("hue"), self.get("saturation"), self.get("value")
+        self["rgb"] = gamma_correct(
+            tuple(
+                int(x * 255)
+                for x in hsv_to_rgb(
+                    self.get("hue"), self.get("saturation"), self.get("value")
+                )
             )
         )
 
@@ -67,6 +71,10 @@ class Pixel:
     def hue_from_angle(self, axis="y", offset=0):
         """Get our hue from our angle."""
         self["hue"] = ((self["angles"][axis] + offset) % 360) / 360
+
+    def scale(self, factor):
+        """Scale our `value`."""
+        self["value"] *= factor
 
     @property
     def as_dict(self):

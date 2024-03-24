@@ -22,6 +22,16 @@ def test_constructor():
     }
 
 
+def test_rescaling():
+    """Test we can trigger a full re-scale."""
+    pix_list = PixelList(locations="tests/fixtures/hat/locations.yaml")
+    assert pix_list[99]["rgb"] == (255, 0, 0)
+
+    pix_list.brightness_control.factor = 0.7
+    pix_list.trigger_rescale()
+    assert pix_list[99]["rgb"] == (93, 0, 0)
+
+
 def test_lighting():
     """Test it lights up the lights."""
     pix_list = PixelList(locations="tests/fixtures/hat/locations.yaml")
@@ -32,4 +42,4 @@ def test_lighting():
     assert pix_list[50]["rgb"] == (0, 255, 255)
 
     pix_list.light_up()
-    assert pix_list.lights[60] == (0, 102, 255)
+    assert pix_list.lights[60] == (0, 20, 255)

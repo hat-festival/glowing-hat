@@ -2,6 +2,8 @@ from colorsys import hsv_to_rgb
 from math import atan2, degrees
 from pathlib import Path
 
+from lib.gamma import gamma
+
 
 def hue_to_rgb(hue):
     """Generate a GRB triple from a hue."""
@@ -65,3 +67,8 @@ def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
             pixel["value"] *= scale_factor
 
     return pixels
+
+
+def gamma_correct(triple):
+    """Gamma-correct a colour."""
+    return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417
