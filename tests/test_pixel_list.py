@@ -21,7 +21,6 @@ def test_constructor():
     }
 
 
-
 def test_lighting():
     """Test it lights up the lights."""
     pix_list = PixelList(locations="tests/fixtures/hat/locations.yaml")
@@ -33,9 +32,12 @@ def test_lighting():
     pix_list.light_up()
     assert pix_list.lights[60] == (0, 20, 255)
 
+
 def test_sorting_by_indeces():
     """Test we can order ourself by some arbitrary indeces."""
     pix_list = PixelList(locations="tests/fixtures/hat/locations/simple.yaml")
-    pix_list.sort_by_indeces([4,2,1,3,0])
+    pix_list[0]["hue"] = 0.5
+    pix_list.sort_by_indeces([4, 2, 1, 3, 0])
 
-    assert [pixel["index"] for pixel in pix_list] == [4,2,1,3,0]
+    assert pix_list[4]["hue"] == 0.5  # noqa: PLR2004
+    assert [pixel["index"] for pixel in pix_list] == [4, 2, 1, 3, 0]

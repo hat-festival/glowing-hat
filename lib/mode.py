@@ -20,7 +20,6 @@ class Mode:
         self.frame_sets = self.load_frame_sets()
         self.axis = self.custodian.get("axis")
 
-
     def get_colour(self):
         """Retrieve the colour from Redis."""
         return self.custodian.get("colour")

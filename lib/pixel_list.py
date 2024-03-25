@@ -1,9 +1,9 @@
+from colorsys import hsv_to_rgb
+
 from lib.brightness_control import BrightnessControl
 from lib.pixel import Pixel
 from lib.scaler import Scaler
-from lib.tools import is_pi
-from lib.tools import gamma_correct
-from colorsys import hsv_to_rgb
+from lib.tools import gamma_correct, is_pi
 
 if is_pi():  # nocov
     import board
@@ -49,15 +49,10 @@ class PixelList:
 
     def sort_by_indeces(self, indeces):
         """Sort by some arbitrary indeces."""
-        new_order = []
-        for index in indeces:
-            new_order.append(next(filter(lambda x: x["index"] == index, self.pixels)))
-
-        self.pixels = new_order
-
-
-
-
+        self.pixels = [
+            next(filter(lambda x: x["index"] == index, self.pixels))
+            for index in indeces
+        ]
 
     def __getitem__(self, index):
         """Implement `foo[bar]`."""
@@ -94,8 +89,10 @@ class FakeBrightnessControl:
         """Construct."""
         self.factor = FakeFactor(1.0)
 
+
 class FakeFactor:
     """Fake value thing."""
 
     def __init__(self, value):
-        self.value  = value
+        """Construct."""
+        self.value = value

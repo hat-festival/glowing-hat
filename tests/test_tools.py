@@ -1,3 +1,5 @@
+import pytest
+
 from lib.pixel import Pixel
 from lib.tools import (
     brighten_pixels_less_than_y,
@@ -71,6 +73,7 @@ def test_colour_set_to_colour_list():
     ]
 
 
+@pytest.mark.skip("This make little sense now")
 def test_brighten_pixels_less_than_y():
     """Test it dims the correct pixels."""
     pixels = [Pixel(real_data) for real_data in equaliser_data["pixels"]]

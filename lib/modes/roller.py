@@ -3,9 +3,7 @@ from time import sleep
 
 from lib.arrangements.circle import Circle
 from lib.fft_pool import FFTPool
-from lib.logger import logging
 from lib.mode import Mode
-from lib.tools import hue_to_rgb, scale_colour
 
 
 class Roller(Mode):
@@ -32,20 +30,16 @@ class Roller(Mode):
         self.configure()
 
         count = 0
-        indeces = []
         while True:
             # if count % self.data["roll-sorter-at"] == 0:
             #     indeces = self.circle.next()
             #     count = 0
 
-
             # for pixel in enumerate(self.hat.pixels):
             #     pixel["hue"] = self.hues[index]
             #     pixel["value"] = self.brightness_factor
 
-
             self.hat.light_up()
-
 
             self.hues.rotate(self.rotate_amount)
             count += 1

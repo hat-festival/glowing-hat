@@ -17,25 +17,12 @@ class TestPixel(TestCase):
             "hue": 0.0,
             "saturation": 1.0,
             "value": 1.0,
-            "rgb": (255, 0, 0),
             "angles": {
                 "x": 299.7448812969422,
                 "z": 63.43494882292201,
                 "y": 164.05460409907712,
             },
         }
-
-    def test_recalculating_rgb(self):
-        """Test it recalcs RGB when required."""
-        pix = Pixel({"index": 0, "x": 1, "y": 2, "z": -3.5})
-        assert pix["rgb"] == (255, 0, 0)
-
-        pix["hue"] = 1 / 3
-        assert pix["rgb"] == (0, 255, 0)
-
-        pix["hue"] = 1.0
-        pix["rgb"] = (0, 255, 255)
-        assert pix["rgb"] == (0, 255, 255)
 
     def test_immutability(self):
         """Test that some fields are immutable."""
@@ -80,14 +67,3 @@ class TestPixel(TestCase):
 
         pix.hue_from_angle(offset=90)
         assert pix["hue"] == 0.25  # noqa: PLR2004
-
-    def test_scaling(self):
-        """Test we can scale the `value`."""
-        data = {"index": 0, "x": 0.0, "y": 1.0, "z": 1.0}
-        pix = Pixel(data)
-
-        assert pix["rgb"] == (255, 0, 0)
-
-        pix.scale(0.5)
-        assert pix["value"] == 0.5  # noqa: PLR2004
-        assert pix["rgb"] == (36, 0, 0)

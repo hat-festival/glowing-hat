@@ -1,8 +1,5 @@
 from collections import deque
-from colorsys import hsv_to_rgb
 from math import atan2, degrees
-from lib.conf import conf
-from lib.tools import gamma_correct
 
 IMMUTABLE_FIELDS = ["x", "y", "z"]
 
@@ -16,7 +13,6 @@ class Pixel:
     def __init__(self, data):
         """Construct."""
         self.data = data
-
 
         self.populate_hsv()
         self.calculate_angles()
@@ -46,7 +42,6 @@ class Pixel:
         """Implement foo['bar'] = baz."""
         if key not in IMMUTABLE_FIELDS:
             self.data[key] = value
-
 
     def get(self, key):
         """Return a default if we need it."""
