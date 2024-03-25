@@ -39,9 +39,6 @@ class Fourier:
             new_note = detector(signal)
 
             if new_note[0]:
-                from lib.logger import logging
-
-                logging.debug("trigger")
                 self.owner.trigger()
 
 

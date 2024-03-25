@@ -55,7 +55,7 @@ equaliser:
   y:
     default: 0.4
     max: 1.0
-  rotation: 3
+  rotation: 2
   scale-factor: 0.5
 
 # accelerator:

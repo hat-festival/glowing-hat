@@ -23,9 +23,8 @@ class Roller(Mode):
         self.fft_pool = FFTPool(self)
 
         self.rotate_amount = self.data["rotate-amount"]
-        self.lights_length = len(self.hat) * self.data["length-multiplier"]
-        self.hues = [(x / self.lights_length) for x in range(self.lights_length)]
-        self.lights = deque([hue_to_rgb(x) for x in self.hues])
+        self.hues_length = len(self.hat) * self.data["length-multiplier"]
+        self.hues = deque([(x / self.hues_length) for x in range(self.hues_length)])
         self.circle = Circle(self.hat, "x", "z")
 
     def run(self):
@@ -33,21 +32,26 @@ class Roller(Mode):
         self.configure()
 
         count = 0
+        indeces = []
         while True:
-            if count % self.data["roll-sorter-at"] == 0:
-                self.circle.next()
-                count = 0
-            self.from_list(
-                [scale_colour(x, self.brightness_factor) for x in self.lights][
-                    0 : len(self.hat) - 1
-                ]
-            )
-            self.lights.rotate(self.rotate_amount)
+            # if count % self.data["roll-sorter-at"] == 0:
+            #     indeces = self.circle.next()
+            #     count = 0
+
+
+            # for pixel in enumerate(self.hat.pixels):
+            #     pixel["hue"] = self.hues[index]
+            #     pixel["value"] = self.brightness_factor
+
+
+            self.hat.light_up()
+
+
+            self.hues.rotate(self.rotate_amount)
             count += 1
 
     def trigger(self):
         """We are triggered."""
-        logging.debug("triggering")
         self.brightness_factor = self.max_brightness
 
     def reduce(self):

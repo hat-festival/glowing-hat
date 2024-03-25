@@ -1,10 +1,13 @@
 from collections import deque
 from colorsys import hsv_to_rgb
 from math import atan2, degrees
-
+from lib.conf import conf
 from lib.tools import gamma_correct
 
 IMMUTABLE_FIELDS = ["x", "y", "z"]
+
+# TODO: should have setters with optional `update_rgb`
+# TODO: rgb to hsv?
 
 
 class Pixel:
@@ -14,8 +17,8 @@ class Pixel:
         """Construct."""
         self.data = data
 
+
         self.populate_hsv()
-        self.calculate_rgb()
         self.calculate_angles()
 
     def populate_hsv(self):
@@ -23,17 +26,6 @@ class Pixel:
         for component, value in {"hue": 0.0, "saturation": 1.0, "value": 1.0}.items():
             if component not in self.data:
                 self[component] = value
-
-    def calculate_rgb(self):
-        """Calculate our RGB triple."""
-        self["rgb"] = gamma_correct(
-            tuple(
-                int(x * 255)
-                for x in hsv_to_rgb(
-                    self.get("hue"), self.get("saturation"), self.get("value")
-                )
-            )
-        )
 
     def calculate_angles(self):
         """Set our angles."""
@@ -55,8 +47,6 @@ class Pixel:
         if key not in IMMUTABLE_FIELDS:
             self.data[key] = value
 
-            if key in ["hue", "saturation", "value"]:
-                self.calculate_rgb()
 
     def get(self, key):
         """Return a default if we need it."""
@@ -71,10 +61,6 @@ class Pixel:
     def hue_from_angle(self, axis="y", offset=0):
         """Get our hue from our angle."""
         self["hue"] = ((self["angles"][axis] + offset) % 360) / 360
-
-    def scale(self, factor):
-        """Scale our `value`."""
-        self["value"] *= factor
 
     @property
     def as_dict(self):

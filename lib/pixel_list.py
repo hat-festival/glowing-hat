@@ -2,6 +2,8 @@ from lib.brightness_control import BrightnessControl
 from lib.pixel import Pixel
 from lib.scaler import Scaler
 from lib.tools import is_pi
+from lib.tools import gamma_correct
+from colorsys import hsv_to_rgb
 
 if is_pi():  # nocov
     import board
@@ -9,7 +11,7 @@ if is_pi():  # nocov
 
 
 # TODO: sort_by sets the default axis, which then sets the current "angle" on the pixels
-# TODO: have the normaliser trigger a full rescaling when it adjusts?
+# TODO: implement something like `map` to apply a list of things to the whole list
 
 
 class PixelList:
@@ -24,6 +26,7 @@ class PixelList:
                 board.D21, len(self.pixels), auto_write=False
             )  # nocov
             self.brightness_control = BrightnessControl()
+            self.brightness_control.run()
 
         else:
             self.lights = FakeLights(len(self.pixels))
@@ -31,18 +34,38 @@ class PixelList:
 
     def light_up(self):
         """Light up our lights."""
-        self.lights = [pixel["rgb"] for pixel in self.pixels]
+        for pixel in self.pixels:
+            self.lights[pixel["index"]] = gamma_correct(
+                tuple(
+                    int(x * 255)
+                    for x in hsv_to_rgb(
+                        pixel["hue"],
+                        1,
+                        pixel["value"] * self.brightness_control.factor.value,
+                    )
+                )
+            )
+        self.lights.show()
+
+    def sort_by_indeces(self, indeces):
+        """Sort by some arbitrary indeces."""
+        new_order = []
+        for index in indeces:
+            new_order.append(next(filter(lambda x: x["index"] == index, self.pixels)))
+
+        self.pixels = new_order
+
+
+
+
 
     def __getitem__(self, index):
         """Implement `foo[bar]`."""
         return self.pixels[index]
 
-    def trigger_rescale(self):
-        """Called by brightness_controller."""  # noqa: D401
-        for pixel in self.pixels:
-            pixel.scale(
-                self.brightness_control.factor
-            )  # this might need to be a `Value`
+    def __len__(self):
+        """Implement `len()`."""
+        return len(self.pixels)
 
 
 class FakeLights(list):
@@ -69,9 +92,10 @@ class FakeBrightnessControl:
 
     def __init__(self):
         """Construct."""
-        self.factor = 0.5
+        self.factor = FakeFactor(1.0)
 
-    # def normalise(self, triple):
-    #     """Normalise a colour."""
-    #     factor = max(self.factor, 0)
-    #     return tuple(int(x * factor) for x in triple)
+class FakeFactor:
+    """Fake value thing."""
+
+    def __init__(self, value):
+        self.value  = value

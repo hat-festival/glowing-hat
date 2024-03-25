@@ -12,10 +12,10 @@ from lib.axis_manager import AxisManager
 # from lib.clicker import Clicker
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
+from lib.pixel_list import PixelList
 
 
 class Controller:
@@ -23,7 +23,8 @@ class Controller:
 
     def __init__(self):
         """Construct."""
-        self.hat = Hat()
+        # self.hat = Hat()
+        self.hat = PixelList()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=False)
@@ -74,7 +75,6 @@ class Controller:
         self.process = Process(target=self.mode.run)
         self.process.start()
 
-        self.hat.restart_brightness_controller()
         logging.info("hat restarted")
         self.oled.update()
 

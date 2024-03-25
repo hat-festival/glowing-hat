@@ -61,12 +61,14 @@ def angle_to_point(axis_0, axis_1):
 
 def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
     """Colour-scale some pixels."""
+    values = []
     for pixel in pixels:
-        pixel.reset()
         if pixel["y"] >= y_value:
-            pixel["value"] *= scale_factor
+            values.append(scale_factor)
+        else:
+            values.append(1.0)
 
-    return pixels
+    return values
 
 
 def gamma_correct(triple):

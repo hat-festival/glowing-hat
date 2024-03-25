@@ -11,7 +11,6 @@ def test_constructor():
         "y": -0.3249075215782984,
         "z": 0.5043156596794082,
         "hue": 0.0,
-        "rgb": (255, 0, 0),
         "saturation": 1.0,
         "value": 1.0,
         "angles": {
@@ -22,15 +21,6 @@ def test_constructor():
     }
 
 
-def test_rescaling():
-    """Test we can trigger a full re-scale."""
-    pix_list = PixelList(locations="tests/fixtures/hat/locations.yaml")
-    assert pix_list[99]["rgb"] == (255, 0, 0)
-
-    pix_list.brightness_control.factor = 0.7
-    pix_list.trigger_rescale()
-    assert pix_list[99]["rgb"] == (93, 0, 0)
-
 
 def test_lighting():
     """Test it lights up the lights."""
@@ -39,7 +29,13 @@ def test_lighting():
         pixel["hue"] = index / 100
 
     assert pix_list[50]["hue"] == 0.5  # noqa: PLR2004
-    assert pix_list[50]["rgb"] == (0, 255, 255)
 
     pix_list.light_up()
     assert pix_list.lights[60] == (0, 20, 255)
+
+def test_sorting_by_indeces():
+    """Test we can order ourself by some arbitrary indeces."""
+    pix_list = PixelList(locations="tests/fixtures/hat/locations/simple.yaml")
+    pix_list.sort_by_indeces([4,2,1,3,0])
+
+    assert [pixel["index"] for pixel in pix_list] == [4,2,1,3,0]

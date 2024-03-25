@@ -5,7 +5,6 @@ from pathlib import Path
 from random import randint
 
 from lib.mode import Mode
-from lib.tools import scale_colour
 
 CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())  # noqa: S301
 
@@ -16,7 +15,7 @@ class Pulsator(Mode):
     def configure(self):
         """Reconfig some stuff."""
         self.throbbers = []
-        for _ in range(self.hat.length):
+        for _ in range(len(self.hat)):
             self.throbbers.append(Throbber(self.data["steps"]))
 
     def run(self):
@@ -24,10 +23,12 @@ class Pulsator(Mode):
         self.configure()
 
         while True:
-            colour = self.get_colour()
-            self.from_list(
-                [scale_colour(colour, throbber.next()) for throbber in self.throbbers]
-            )
+            hue = self.custodian.get("hue")
+            for pixel in self.hat.pixels:
+                pixel["hue"] = hue
+                pixel["value"] = self.throbbers[pixel["index"]].next()
+
+            self.hat.light_up()
 
 
 class Throbber:

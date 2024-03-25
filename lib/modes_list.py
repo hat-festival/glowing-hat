@@ -7,19 +7,13 @@ from lib.modes.roller import Roller
 from lib.modes.sweeper import Sweeper
 
 modes = {
+    "roller": Roller,
     "equaliser": Equaliser,
     "pulsator": Pulsator,
-    "roller": Roller,
-    "sweeper": Sweeper,
-    "larsen": Larsen,
-    "crawler": Crawler,
-    "brainwaves": BrainWaves,
-    # "eye": Eye,
-    # "bigtop": BigTop,
-    # "cuttlefish": Cuttlefish,
-    # # "directiontester": DirectionTester,
     # "sweeper": Sweeper,
-    # "accelerator": Accelerator,
+    # "larsen": Larsen,
+    # "crawler": Crawler,
+    # "brainwaves": BrainWaves,
 }
 
 

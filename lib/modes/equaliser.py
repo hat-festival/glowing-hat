@@ -25,14 +25,21 @@ class Equaliser(Mode):
 
         rotation = 90
         while True:
-            # TODO this is on the `Pixel` now
-            self.hat.hues_from_angles("x", "z", rotation=rotation)
+            for pixel in self.hat.pixels:
+                pixel.hue_from_angle(offset=rotation)
+
             rotation = (rotation + self.data["rotation"]) % 360
-            self.from_pixels(
-                brighten_pixels_less_than_y(
-                    self.hat.pixels, self.active_y, self.data["scale-factor"]
-                )
+
+            values = brighten_pixels_less_than_y(
+                self.hat.pixels, self.active_y, self.data["scale-factor"]
             )
+
+            for index, value in enumerate(values):
+                self.hat.pixels[index]["value"] = value
+
+            self.hat.light_up()
+
+            rotation += self.data["rotation"]
 
     def trigger(self):
         """Spike our `y`. Called by our FFT."""

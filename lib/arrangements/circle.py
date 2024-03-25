@@ -12,6 +12,8 @@ class Circle:
         self.rotator = SortsGenerator(*axes)
         self.rotator.make_circle()
 
+# TODO: this should return indeces only
     def next(self):
         """Set the hat to the next entry and rotate the deque."""
-        self.hat.pixels = self.manager.get_sort(self.rotator.next)
+        return tuple(x["index"] for x in self.manager.get_sort(self.rotator.next))
+        # self.hat.pixels = self.manager.get_sort(self.rotator.next)
