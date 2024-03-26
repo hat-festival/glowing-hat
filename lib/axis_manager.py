@@ -56,7 +56,6 @@ class AxisManager:
 
         tar.close()
 
-    # TODO: this should return indeces only
     def get_sort(self, key):
         """Unpickle a `sort`."""
         if type(key).__name__ == "tuple":

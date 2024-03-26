@@ -31,13 +31,12 @@ class Roller(Mode):
 
         count = 0
         while True:
-            # if count % self.data["roll-sorter-at"] == 0:
-            #     indeces = self.circle.next()
-            #     count = 0
+            if count % self.data["roll-sorter-at"] == 0:
+                self.hat.sort_by_indeces(self.circle.next())
+                count = 0
 
-            # for pixel in enumerate(self.hat.pixels):
-            #     pixel["hue"] = self.hues[index]
-            #     pixel["value"] = self.brightness_factor
+            self.hat.apply_hues(self.hues)
+            self.hat.apply_value(self.brightness_factor)
 
             self.hat.light_up()
 

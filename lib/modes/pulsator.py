@@ -14,19 +14,18 @@ class Pulsator(Mode):
 
     def configure(self):
         """Reconfig some stuff."""
-        self.throbbers = []
-        for _ in range(len(self.hat)):
-            self.throbbers.append(Throbber(self.data["steps"]))
+        self.throbbers = [Throbber(self.data["steps"]) for _ in range(len(self.hat))]
 
     def run(self):
         """Do the stuff."""
         self.configure()
 
         while True:
+            # TODO: this should be some generic object that just gives the hue.
+            # Or maybe the PixelList gets it
             hue = self.custodian.get("hue")
-            for pixel in self.hat.pixels:
-                pixel["hue"] = hue
-                pixel["value"] = self.throbbers[pixel["index"]].next()
+            self.hat.apply_hue(hue)
+            self.hat.apply_values([throbber.next() for throbber in self.throbbers])
 
             self.hat.light_up()
 

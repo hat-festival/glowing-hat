@@ -3,9 +3,9 @@ from lib.modes.pulsator import Pulsator
 from lib.modes.roller import Roller
 
 modes = {
-    "roller": Roller,
     "equaliser": Equaliser,
     "pulsator": Pulsator,
+    "roller": Roller,
     # "sweeper": Sweeper,
     # "larsen": Larsen,
     # "crawler": Crawler,

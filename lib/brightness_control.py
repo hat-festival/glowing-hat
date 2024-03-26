@@ -5,7 +5,7 @@ from lib.conf import conf
 from lib.custodian import Custodian
 from lib.logger import logging
 from lib.oled import Oled
-from lib.tools import gamma_correct, is_pi
+from lib.tools import is_pi
 
 
 class BrightnessControl:
@@ -45,13 +45,7 @@ class BrightnessControl:
         """Update the brightness-bar."""
         self.custodian.set("brightness", self.factor.value)
         if is_pi():
-            self.oled.update()
-
-    # TODO I think this is redundant now
-    def normalise(self, triple):
-        """Normalise a colour."""
-        factor = max(self.factor.value, 0)
-        return tuple(int(x * factor) for x in gamma_correct(triple))
+            self.oled.update()  # nocov
 
     def run(self):
         """Do the work."""
@@ -59,11 +53,7 @@ class BrightnessControl:
 
     def run_rotary(self):
         """Run the rotary."""
+        # TODO: this could be just a single process now
         if "rotary" not in self.processes:
             self.processes["rotary"] = Process(target=self.rotator.rotate)
             self.processes["rotary"].start()
-
-
-# def gamma_correct(triple):
-#     """Gamma-correct a colour."""
-#     return tuple(map(lambda n: gamma[int(n)], triple))

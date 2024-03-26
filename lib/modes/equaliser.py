@@ -2,7 +2,6 @@ from time import sleep
 
 from lib.fft_pool import FFTPool
 from lib.mode import Mode
-from lib.tools import brighten_pixels_less_than_y
 
 
 class Equaliser(Mode):
@@ -25,18 +24,12 @@ class Equaliser(Mode):
 
         rotation = 90
         while True:
-            for pixel in self.hat.pixels:
-                pixel.hue_from_angle(offset=rotation)
-
+            self.hat.update_hues_from_angles(offset=rotation)
             rotation = (rotation + self.data["rotation"]) % 360
 
-            values = brighten_pixels_less_than_y(
-                self.hat.pixels, self.active_y, self.data["scale-factor"]
+            self.hat.dim_pixels_greater_than_foo(
+                self.data["scale-factor"], self.active_y, axis="y"
             )
-
-            for index, value in enumerate(values):
-                self.hat.pixels[index]["value"] = value
-
             self.hat.light_up()
 
             rotation += self.data["rotation"]

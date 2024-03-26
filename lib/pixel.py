@@ -3,9 +3,6 @@ from math import atan2, degrees
 
 IMMUTABLE_FIELDS = ["x", "y", "z"]
 
-# TODO: should have setters with optional `update_rgb`
-# TODO: rgb to hsv?
-
 
 class Pixel:
     """Class representing a single NeoPixel."""
@@ -38,16 +35,17 @@ class Pixel:
         except KeyError:
             return None
 
+    # TODO: ensure hsv is in range 0-1
     def __setitem__(self, key, value):
         """Implement foo['bar'] = baz."""
         if key not in IMMUTABLE_FIELDS:
             self.data[key] = value
 
-    def get(self, key):
-        """Return a default if we need it."""
-        if key in self.data:
-            return self[key]
-        return 1.0
+    # def get(self, key):
+    #     """Return a default if we need it."""
+    #     if key in self.data:
+    #         return self[key]
+    #     return 1.0
 
     def reset(self):
         """Reset our `s` and `v`."""

@@ -59,6 +59,7 @@ def angle_to_point(axis_0, axis_1):
     return ang
 
 
+# TODO: does this belong here or elsewhere?
 def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
     """Colour-scale some pixels."""
     values = []

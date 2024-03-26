@@ -43,6 +43,14 @@ class TestAxisManager(TestCase):
             == "289c29690d0c54808a8f3f18fab3f899fd7789b95ed74ae182351f76088f2be3"
         )
 
+        assert tuple(x["index"] for x in man.get_sort((-0.5, -1.0, 0.5))) == (
+            2,
+            1,
+            4,
+            3,
+            0,
+        )
+
     def test_a_bigger_cube(self):
         """Test it generates sorts for a larger cube."""
         man = AxisManager(

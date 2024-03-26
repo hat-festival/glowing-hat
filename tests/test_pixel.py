@@ -36,6 +36,11 @@ class TestPixel(TestCase):
         pix["x"] = 0.5
         assert pix["x"] == 1
 
+    def test_it_gives_only_good_data(self):
+        """Test it knows when it doesn't have something."""
+        pix = Pixel({"index": 0, "x": 1, "y": 2, "z": -3.5})
+        assert not pix["banana"]
+
     def test_richer_construction(self):
         """Test we can provide additional constructor data."""
         data = {"index": 0, "x": 0.5, "y": 2, "z": -3.5, "hue": 0.4}
