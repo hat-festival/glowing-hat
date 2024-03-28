@@ -10,8 +10,8 @@ class DirectionTester(Mode):
     def __init__(self, hat, custodian):
         """Construct."""
         super().__init__(hat, custodian)
-        self.jump = self.data["jump"]
-        self.steps = self.data["steps"]
+        self.jump = self.conf["jump"]
+        self.steps = self.conf["steps"]
         self.colours = [[255, 0, 255]] * 5 + [[0, 0, 0]] * 95
 
     def reconfigure(self):
@@ -32,7 +32,7 @@ class DirectionTester(Mode):
         while True:
             self.hat.illuminate(list(self.colours))
             count += 1
-            if count == self.data["axis-rotate-at"]:
+            if count == self.conf["axis-rotate-at"]:
                 key = self.rotator.next
                 logging.debug(key)
                 self.hat.pixels = self.manager.get_sort(key)

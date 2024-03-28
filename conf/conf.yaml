@@ -7,7 +7,9 @@ wheel:
 random-colour:
   hue-distance: 0.2
 
-max-brightness: 0.5
+random-hue:
+  distance: 0.3
+
 brightness:
   max: 1.0
   default: 0.5

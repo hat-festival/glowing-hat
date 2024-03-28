@@ -41,16 +41,6 @@ class Pixel:
         if key not in IMMUTABLE_FIELDS:
             self.data[key] = value
 
-    # def get(self, key):
-    #     """Return a default if we need it."""
-    #     if key in self.data:
-    #         return self[key]
-    #     return 1.0
-
-    def reset(self):
-        """Reset our `s` and `v`."""
-        self["saturation"] = self["value"] = 1.0
-
     def hue_from_angle(self, axis="y", offset=0):
         """Get our hue from our angle."""
         self["hue"] = ((self["angles"][axis] + offset) % 360) / 360

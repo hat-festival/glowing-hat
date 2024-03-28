@@ -77,7 +77,11 @@ class ImageGenerator:
 
     def generate(self, save_to=None):
         """Make the picture."""
-        getattr(self, self.custodian.get("display-type").replace("-", "_"))()
+        display_type = self.custodian.get("display-type")
+        if not display_type:
+            display_type = "boot"
+
+        getattr(self, display_type.replace("-", "_"))()
 
         if save_to:
             self.image.save(f"tmp/{save_to}.png")

@@ -1,12 +1,10 @@
-import pickle
 from collections import deque
+from math import pi, sin
 from operator import itemgetter
-from pathlib import Path
 from random import randint
 
+from lib.hue_sources.time_based_hue_source import TimeBasedHueSource
 from lib.mode import Mode
-
-CURVES = pickle.loads(Path("renders", "pulsator.pickle").read_bytes())  # noqa: S301
 
 
 class Pulsator(Mode):
@@ -14,16 +12,17 @@ class Pulsator(Mode):
 
     def configure(self):
         """Reconfig some stuff."""
-        self.throbbers = [Throbber(self.data["steps"]) for _ in range(len(self.hat))]
+        self.hue_source = TimeBasedHueSource(
+            seconds_per_rotation=self.conf["hue-seconds-per-rotation"]
+        )
+        self.throbbers = [Throbber(self.conf["steps"]) for _ in range(len(self.hat))]
 
     def run(self):
         """Do the stuff."""
         self.configure()
 
         while True:
-            # TODO: this should be some generic object that just gives the hue.
-            # Or maybe the PixelList gets it
-            hue = self.custodian.get("hue")
+            hue = self.hue_source.hue()
             self.hat.apply_hue(hue)
             self.hat.apply_values([throbber.next() for throbber in self.throbbers])
 
@@ -41,9 +40,21 @@ class Throbber:
     def next(self):
         """Get the next value."""
         if len(self.values) == 0:
-            key = randint(self.min, self.max)  # noqa: S311
-            self.values = deque(CURVES[key])
+            self.refresh()
 
         value = self.values.popleft()
-
         return value  # noqa: RET504
+
+    def refresh(self):
+        """Generate a sin-curve."""
+        self.values = deque([])
+        accumulator = -1
+        interval = (1 / randint(self.min, self.max)) * 2  # noqa: S311
+
+        while accumulator < 1:
+            actual = sin(accumulator * pi)
+            offset = actual + 1
+            normalised = offset / 2
+            rounded = round(normalised, 3)
+            self.values.append(rounded)
+            accumulator += interval

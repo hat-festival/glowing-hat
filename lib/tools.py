@@ -1,8 +1,5 @@
 from colorsys import hsv_to_rgb
-from math import atan2, degrees
 from pathlib import Path
-
-from lib.gamma import gamma
 
 
 def hue_to_rgb(hue):
@@ -42,36 +39,3 @@ def is_pi():
     """Detect if we're on a Pi."""
     model_file = "/sys/firmware/devicetree/base/model"
     return Path(model_file).exists() and "Raspberry Pi" in Path(model_file).read_text()
-
-
-# TODO this is maybe redundant here now?
-# https://stackoverflow.com/a/62482938
-def angle_to_point(axis_0, axis_1):
-    """Get the angle of this line with the horizontal axis."""
-    theta = atan2(axis_1, axis_0)
-    ang = degrees(theta)
-    if ang < 0:
-        ang = 360 + ang
-
-    if ang == 0:
-        ang = 360
-
-    return ang
-
-
-# TODO: does this belong here or elsewhere?
-def brighten_pixels_less_than_y(pixels, y_value, scale_factor):
-    """Colour-scale some pixels."""
-    values = []
-    for pixel in pixels:
-        if pixel["y"] >= y_value:
-            values.append(scale_factor)
-        else:
-            values.append(1.0)
-
-    return values
-
-
-def gamma_correct(triple):
-    """Gamma-correct a colour."""
-    return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417

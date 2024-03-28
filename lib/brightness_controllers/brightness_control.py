@@ -20,7 +20,7 @@ class BrightnessControl:
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
         self.rotator = Rotator(self)
-        self.processes = {}
+        self.process = Process(target=self.rotator.rotate)
 
         self.update_display()
 
@@ -53,7 +53,4 @@ class BrightnessControl:
 
     def run_rotary(self):
         """Run the rotary."""
-        # TODO: this could be just a single process now
-        if "rotary" not in self.processes:
-            self.processes["rotary"] = Process(target=self.rotator.rotate)
-            self.processes["rotary"].start()
+        self.process.start()

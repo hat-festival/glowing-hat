@@ -1,85 +1,116 @@
-# from unittest import TestCase
-# from unittest.mock import patch
-
-# from lib.conf import conf
-# from lib.hat import Hat
+from lib.hat import Hat
 
 
-# @patch.dict(conf, {"brightness-factor": 1.0})
-# class TestHat(TestCase):
-#     """Test the Hat."""
+def test_constructor():
+    """Test it constructs."""
+    hat = Hat(locations="tests/fixtures/hat/locations.yaml")
 
-#     def setUp(self):
-#         self.hat = Hat(locations="tests/fixtures/hat/locations.yaml")
+    assert hat[10].as_dict == {
+        "index": 10,
+        "x": -0.016029593094944512,
+        "y": -0.3249075215782984,
+        "z": 0.5043156596794082,
+        "hue": 0.0,
+        "saturation": 1.0,
+        "value": 1.0,
+        "angles": {
+            "x": 122.79183214885639,
+            "z": 267.17555335782856,
+            "y": 358.1794756662044,
+        },
+    }
 
-#     def test_init(self):
-#         """Test it gets the correct data."""
-#         self.assertEqual(self.hat.pixels[0]["index"], 0)
-#         self.assertEqual(self.hat.pixels[97]["index"], 97)
 
-#     def test_light_one(self):
-#         """Test it lights a light."""
-#         self.hat.light_one(8, [255, 0, 0])
+def test_lighting():
+    """Test it lights up the lights."""
+    hat = Hat(locations="tests/fixtures/hat/locations.yaml")
+    for index, pixel in enumerate(hat):
+        pixel["hue"] = index / 100
 
-#         self.assertEqual(
-#             self.hat.lights[0:9],
-#             [
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (127, 0, 0),
-#             ],
-#         )
+    assert hat[50]["hue"] == 0.5  # noqa: PLR2004
 
-#     def test_colour_indeces(self):
-#         """Test it lights a bunch of lights."""
-#         self.hat.colour_indeces([0, 7, 4], [0, 255, 0])
-#         self.hat.colour_indeces([3, 5], [0, 0, 255])
+    hat.light_up()
+    assert hat.lights[60] == (0, 20, 255)
 
-#         self.assertEqual(
-#             self.hat.lights[0:9],
-#             [
-#                 (0, 127, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 0),
-#                 (0, 0, 127),
-#                 (0, 127, 0),
-#                 (0, 0, 127),
-#                 (0, 0, 0),
-#                 (0, 127, 0),
-#                 (0, 0, 0),
-#             ],
-#         )
 
-#     def test_hat_sorting(self):
-#         """Test sorting the hat along an axis."""
-#         self.hat.sort("x")
+def test_sorting_by_indeces():
+    """Test we can order ourself by some arbitrary indeces."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    hat[0]["hue"] = 0.5
+    hat.sort_by_indeces([4, 2, 1, 3, 0])
 
-#         self.assertEqual(
-#             list(map(lambda x: x["index"], self.hat.pixels))[0:16],
-#             [50, 12, 70, 85, 77, 5, 11, 24, 91, 25, 84, 78, 63, 30, 62, 36],
-#         )
-#         for i in range(len(self.hat.pixels) - 1):
-#             self.assertLessEqual(
-#                 self.hat.pixels[i]["x"], self.hat.pixels[i + 1]["x"]
-#             )
+    assert hat[4]["hue"] == 0.5  # noqa: PLR2004
+    assert [pixel["index"] for pixel in hat] == [4, 2, 1, 3, 0]
 
-#     def test_illuminate(self):
-#         """Test it applies a whole set of colours."""
-#         # create list from `[255, 0, 0]` down to `[156, 0, 0]`
-#         colours = []
-#         for i in range(255, 155, -1):
-#             colours.append([i, 0, 0])
 
-#         self.hat.sort("x")
-#         self.hat.illuminate(colours)
+def test_applying_hues():
+    """Test we can apply a list of hues to ourself."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    hues = [0.1, 1.0, 0.34, 0.55, 0.02]
 
-#         self.assertEqual(self.hat.lights[50], (127, 0, 0))
-#         self.assertEqual(self.hat.lights[12], (126, 0, 0))
-#         self.assertEqual(self.hat.lights[62], (109, 0, 0))
-#         self.assertEqual(self.hat.lights[36], (107, 0, 0))
+    hat.apply_hues(hues)
+    assert [pixel["hue"] for pixel in hat] == [0.1, 1.0, 0.34, 0.55, 0.02]
+
+
+def test_applying_values():
+    """Test we can apply a list of hues to ourself."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    values = [0.02, 0.55, 0.34, 1.0, 0.1]
+
+    hat.apply_values(values)
+    assert [pixel["value"] for pixel in hat] == [0.02, 0.55, 0.34, 1.0, 0.1]
+
+
+def test_updating_hues_from_angles():
+    """Test we can update our hues-from-angles."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    assert [pixel["angles"]["y"] for pixel in hat] == [
+        360,
+        356.4236656250026,
+        266.4236656250026,
+        176.42366562500266,
+        86.42366562500266,
+    ]
+    assert [pixel["hue"] for pixel in hat] == [0.0, 0.0, 0.0, 0.0, 0.0]
+
+    hat.update_hues_from_angles(offset=45)
+    assert [pixel["hue"] for pixel in hat] == [
+        0.125,
+        0.11506573784722952,
+        0.8650657378472295,
+        0.6150657378472296,
+        0.3650657378472296,
+    ]
+
+
+def test_applying_hue():
+    """Test we can apply one hue to all the pixels."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    assert [pixel["hue"] for pixel in hat] == [0.0, 0.0, 0.0, 0.0, 0.0]
+
+    hat.apply_hue(0.2)
+    assert [pixel["hue"] for pixel in hat] == [0.2, 0.2, 0.2, 0.2, 0.2]
+
+
+def test_applying_value():
+    """Test we can apply one value to all the pixels."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    assert [pixel["value"] for pixel in hat] == [1.0, 1.0, 1.0, 1.0, 1.0]
+
+    hat.apply_value(0.75)
+    assert [pixel["value"] for pixel in hat] == [0.75, 0.75, 0.75, 0.75, 0.75]
+
+
+def test_dimming_pixels_greater_than_foo():
+    """Test we can dim some pixels."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    assert [pixel["value"] for pixel in hat] == [1.0, 1.0, 1.0, 1.0, 1.0]
+
+    hat.dim_pixels_greater_than_foo(0.1, 0.2)
+    assert [pixel["value"] for pixel in hat] == [0.1, 1.0, 1.0, 1.0, 1.0]
+
+
+def test_we_support_len():
+    """Test out list supports `len()`."""
+    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
+    assert len(hat) == 5  # noqa: PLR2004

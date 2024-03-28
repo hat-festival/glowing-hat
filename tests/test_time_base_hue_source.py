@@ -2,7 +2,7 @@
 from unittest.mock import patch  # noqa: I001
 import time
 
-from lib.time_based_hue_source import TimeBasedHueSource
+from lib.hue_sources.time_based_hue_source import TimeBasedHueSource
 
 
 def test_one_per():

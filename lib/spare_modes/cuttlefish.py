@@ -11,8 +11,8 @@ class Cuttlefish(Mode):
     def __init__(self, hat, custodian):
         """Construct."""
         super().__init__(hat, custodian)
-        self.jump = self.data["jump"]
-        self.steps = self.data["steps"]
+        self.jump = self.conf["jump"]
+        self.steps = self.conf["steps"]
         self.colours = deque()
         self.circle = Circle(self.hat, "x", "z")
         for i in range(self.steps):
@@ -34,6 +34,6 @@ class Cuttlefish(Mode):
             self.colours.rotate(self.jump)
 
             count += 1
-            if count == self.data["axis-rotate-at"]:
+            if count == self.conf["axis-rotate-at"]:
                 self.circle.next()
                 count = 0

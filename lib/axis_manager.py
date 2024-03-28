@@ -61,3 +61,8 @@ class AxisManager:
         if type(key).__name__ == "tuple":
             key = SortKey(key).as_key
         return pickle.loads(self.redis.get(key))  # noqa: S301
+
+    # TODO: this should be the default, the rest is redundant
+    def get_sort_indeces(self, key):
+        """Get just the indeces from a sort."""
+        return tuple(x["index"] for x in self.get_sort(key))

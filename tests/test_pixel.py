@@ -48,19 +48,6 @@ class TestPixel(TestCase):
         assert pix["x"] == 0.5  # noqa: PLR2004
         assert pix["hue"] == 0.4  # noqa: PLR2004
 
-    def test_resetting(self):
-        """Test we can reset a pixels s and v."""
-        data = {"index": 0, "x": 0.5, "y": 2, "z": -3.5, "hue": 0.4}
-        pix = Pixel(data)
-
-        pix["value"] = 0.5
-        assert pix["hue"] == 0.4  # noqa: PLR2004
-        assert pix["value"] == 0.5  # noqa: PLR2004
-
-        pix.reset()
-        assert pix["hue"] == 0.4  # noqa: PLR2004
-        assert pix["value"] == 1.0
-
     def test_hue_from_angle(self):
         """Test it knows how to get a hue from an angle."""
         data = {"index": 0, "x": 0.0, "y": 1.0, "z": 1.0}

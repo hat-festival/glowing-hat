@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.brightness_control import BrightnessControl
+from lib.brightness_controllers.brightness_control import BrightnessControl
 from lib.tools import close_enough
 
 

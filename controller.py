@@ -1,21 +1,18 @@
 import os
-from collections import deque
 from multiprocessing import Process
-from random import shuffle
 from signal import pause
 from time import sleep
 
 import buttonshim
 
 from lib.axis_manager import AxisManager
-
-# from lib.clicker import Clicker
+from lib.boot_sequence import boot_hat
 from lib.conf import conf
 from lib.custodian import Custodian
+from lib.hat import Hat
 from lib.logger import logging
 from lib.modes_list import load_modes, modes
 from lib.oled import Oled
-from lib.pixel_list import PixelList
 
 
 class Controller:
@@ -23,8 +20,6 @@ class Controller:
 
     def __init__(self):
         """Construct."""
-        # self.hat = Hat()
-        self.hat = PixelList()
         self.conf = conf
         self.custodian = Custodian(conf=self.conf, namespace="hat")
         self.custodian.populate(flush=False)
@@ -34,35 +29,13 @@ class Controller:
         load_modes(self.custodian)
         self.custodian.next("mode")
 
+        self.hat = Hat()
         self.oled = Oled(self.custodian)
 
         self.process = None
 
-        self.boot_hat()
+        boot_hat(self.custodian, self.oled, self.hat)
         self.restart_hat()
-
-    def boot_hat(self):
-        """Boot the hat."""
-        self.custodian.set("display-type", "boot")
-        self.oled.update()
-
-        if os.environ.get("LOGLEVEL") != "debug":
-            colour = self.custodian.get("colour")
-
-            indeces = deque(list(range(len(self.hat))))
-            while len(indeces):
-                shuffle(indeces)
-                victim = indeces.pop()
-                self.hat.light_one(victim, colour)
-
-            indeces = deque(list(range(len(self.hat))))
-            while len(indeces):
-                shuffle(indeces)
-                victim = indeces.pop()
-                self.hat.light_one(victim, [0, 0, 0])
-
-        self.custodian.set("display-type", "show-mode")
-        self.oled.update()
 
     def restart_hat(self):
         """Restart the hat."""
@@ -70,7 +43,7 @@ class Controller:
         if self.process and self.process.is_alive():
             self.process.terminate()
 
-        self.mode = self.modes[self.custodian.get("mode")](self.hat, self.custodian)
+        self.mode = self.modes[self.custodian.get("mode")](self.hat)
 
         self.process = Process(target=self.mode.run)
         self.process.start()
@@ -102,6 +75,8 @@ class Controller:
         os.system("/usr/bin/sudo service controller restart")  # noqa: S605
 
 
+axis_manager = AxisManager(cube_radius=1.1)
+axis_manager.populate()
 controller = Controller()
 
 
@@ -132,6 +107,4 @@ def manage():
 
 
 if __name__ == "__main__":
-    axis_manager = AxisManager(cube_radius=1.1)
-    axis_manager.populate()
     manage()

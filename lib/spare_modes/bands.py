@@ -10,8 +10,8 @@ class Bands(Mode):
     def __init__(self, hat, custodian):
         """Construct."""
         super().__init__(hat, custodian)
-        self.jump = self.data["jump"]
-        self.width = self.data["width"]
+        self.jump = self.conf["jump"]
+        self.width = self.conf["width"]
 
     def reconfigure(self):
         """Configure ourself."""

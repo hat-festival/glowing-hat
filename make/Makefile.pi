@@ -35,15 +35,12 @@ fix-alsa:
 system-install: systemd restart-services
 
 systemd: prepare-logs
-	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/colour-wheel.service
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/controller.service
 
 restart-services:
-	sudo service colour-wheel restart
 	sudo service controller restart
 
 stop-services:
-	#sudo service colour-wheel stop
 	sudo service controller stop
 
 install:

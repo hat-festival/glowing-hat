@@ -1,15 +1,19 @@
+from lib.modes.brain_waves import BrainWaves
+from lib.modes.crawler import Crawler
 from lib.modes.equaliser import Equaliser
+from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
 from lib.modes.roller import Roller
+from lib.modes.sweeper import Sweeper
 
 modes = {
-    "equaliser": Equaliser,
+    "sweeper": Sweeper,
+    "crawler": Crawler,
     "pulsator": Pulsator,
+    "brainwaves": BrainWaves,
+    "equaliser": Equaliser,
+    "larsen": Larsen,
     "roller": Roller,
-    # "sweeper": Sweeper,
-    # "larsen": Larsen,
-    # "crawler": Crawler,
-    # "brainwaves": BrainWaves,
 }
 
 
