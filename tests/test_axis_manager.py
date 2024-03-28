@@ -6,7 +6,7 @@ from unittest import TestCase
 import pytest
 from redis import Redis
 
-from lib.axis_manager import AxisManager
+from lib.sorters.axis_manager import AxisManager
 
 
 @pytest.mark.not_ci()

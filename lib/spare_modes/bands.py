@@ -1,7 +1,7 @@
 from collections import deque
 
 from lib.mode import Mode
-from lib.tools import colour_set_to_colour_list
+from lib.tools.utils import colour_set_to_colour_list
 
 
 class Bands(Mode):

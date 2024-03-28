@@ -3,9 +3,9 @@ from multiprocessing import Process, Value
 from lib.brightness_controllers.rotator import Rotator
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.logger import logging
-from lib.oled import Oled
-from lib.tools import is_pi
+from lib.tools.logger import logging
+from lib.tools.oled import Oled
+from lib.tools.utils import is_pi
 
 
 class BrightnessControl:

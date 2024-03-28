@@ -1,6 +1,6 @@
 from collections import deque
 
-from lib.sort_key import SortKey
+from lib.sorters.sort_key import SortKey
 
 
 class SortsGenerator:

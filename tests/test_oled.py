@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.oled import ImageGenerator
+from lib.tools.oled import ImageGenerator
 
 
 class TestImageGenerator(TestCase):

@@ -35,13 +35,13 @@ fix-alsa:
 system-install: systemd restart-services
 
 systemd: prepare-logs
-	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/controller.service
+	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/manager.service
 
 restart-services:
-	sudo service controller restart
+	sudo service manager restart
 
 stop-services:
-	sudo service controller stop
+	sudo service manager stop
 
 install:
 	sudo python -m pip install --break-system-packages -r requirements.txt

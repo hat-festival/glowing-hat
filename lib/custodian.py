@@ -2,8 +2,6 @@ import json
 
 import redis
 
-from lib.logger import logging
-
 
 class Custodian:
     """State manager."""
@@ -31,7 +29,6 @@ class Custodian:
     def next(self, thing):
         """Move the `next` item to the appropriate key."""
         hoop_key = self.make_key(f"hoop:{thing}")
-        logging.debug(hoop_key)
         next_item = self.redis.rpop(hoop_key).decode()
         self.set(thing, next_item)
         self.add_item_to_hoop(next_item, f"{thing}")

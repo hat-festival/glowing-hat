@@ -1,4 +1,4 @@
-from lib.sorts_generator import SortsGenerator
+from lib.sorters.sorts_generator import SortsGenerator
 
 
 class TestSortsGenerator:

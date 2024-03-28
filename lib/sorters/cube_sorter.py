@@ -1,7 +1,7 @@
 from math import sqrt
 
 from lib.pixel import Pixel
-from lib.scaler import Scaler
+from lib.tools.scaler import Scaler
 
 
 class CubeSorter:

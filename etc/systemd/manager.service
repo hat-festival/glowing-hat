@@ -5,11 +5,11 @@ Description=Hat Controller
 User=pi
 WorkingDirectory=/home/pi/hatlights
 Environment=PYTHONDONTWRITEBYTECODE=1
-ExecStart=/bin/bash -lc 'sudo python controller.py'
+ExecStart=/bin/bash -lc 'sudo python manager.py'
 Restart=always
 StandardInput=null
-StandardOutput=file:/var/log/hatlights/controller.log
-StandardError=file:/var/log/hatlights/controller.err
+StandardOutput=file:/var/log/hatlights/manager.log
+StandardError=file:/var/log/hatlights/manager.err
 KillMode=mixed
 TimeoutStopSec=5
 

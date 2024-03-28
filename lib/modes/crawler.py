@@ -1,8 +1,8 @@
 from random import randint
 
-from lib.axis_manager import AxisManager
 from lib.hue_sources.random_hue_source import RandomHueSource
 from lib.mode import Mode
+from lib.sorters.axis_manager import AxisManager
 
 
 class Crawler(Mode):

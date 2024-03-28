@@ -1,7 +1,7 @@
 from collections import deque
 
 from lib.mode import Mode
-from lib.tools import scale_colour
+from lib.tools.utils import scale_colour
 
 
 class Rotator(Mode):

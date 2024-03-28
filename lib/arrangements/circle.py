@@ -1,5 +1,5 @@
-from lib.axis_manager import AxisManager
-from lib.sorts_generator import SortsGenerator
+from lib.sorters.axis_manager import AxisManager
+from lib.sorters.sorts_generator import SortsGenerator
 
 
 class Circle:

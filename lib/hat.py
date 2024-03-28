@@ -1,10 +1,10 @@
 from colorsys import hsv_to_rgb
 
 from lib.brightness_controllers.brightness_control import BrightnessControl
-from lib.gamma import gamma
 from lib.pixel import Pixel
-from lib.scaler import Scaler
-from lib.tools import is_pi
+from lib.tools.gamma import gamma
+from lib.tools.scaler import Scaler
+from lib.tools.utils import is_pi
 
 if is_pi():  # nocov
     import board
@@ -12,6 +12,7 @@ if is_pi():  # nocov
 
 
 # TODO: sort_by sets the default axis, which then sets the current "angle" on the pixels
+# TODO: `apply_thing_to_one_pixel()`?
 
 
 class Hat:

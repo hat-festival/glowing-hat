@@ -3,7 +3,7 @@ import socket
 from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
-from lib.tools import is_pi
+from lib.tools.utils import is_pi
 
 if is_pi():  # nocov
     import adafruit_ssd1306

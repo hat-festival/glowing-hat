@@ -5,9 +5,9 @@ from pathlib import Path
 
 from redis import Redis
 
-from lib.logger import logging
-from lib.sort_key import SortKey
 from lib.sorters.cube_sorter import CubeSorter
+from lib.sorters.sort_key import SortKey
+from lib.tools.logger import logging
 
 
 class AxisManager:

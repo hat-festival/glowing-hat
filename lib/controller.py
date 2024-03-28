@@ -1,18 +1,14 @@
 import os
 from multiprocessing import Process
-from signal import pause
 from time import sleep
 
-import buttonshim
-
-from lib.axis_manager import AxisManager
 from lib.boot_sequence import boot_hat
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.hat import Hat
-from lib.logger import logging
 from lib.modes_list import load_modes, modes
-from lib.oled import Oled
+from lib.tools.logger import logging
+from lib.tools.oled import Oled
 
 
 class Controller:
@@ -73,38 +69,3 @@ class Controller:
         logging.info("doing hard reset")
 
         os.system("/usr/bin/sudo service controller restart")  # noqa: S605
-
-
-axis_manager = AxisManager(cube_radius=1.1)
-axis_manager.populate()
-controller = Controller()
-
-
-@buttonshim.on_release(buttonshim.BUTTON_A)
-def button_a_handler(_, __):
-    """Handle button A release."""
-    logging.debug("button A released")
-    controller.next_mode()
-
-
-@buttonshim.on_release(buttonshim.BUTTON_D)
-def button_d_handler(_, __):
-    """Handle button D release."""
-    logging.debug("button D released")
-    controller.show_ip()
-
-
-@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=1)
-def button_e_handler(_):
-    """Handle button E hold."""
-    logging.debug("button E held")
-    controller.hard_reset()
-
-
-def manage():
-    """Loop forever."""
-    pause()
-
-
-if __name__ == "__main__":
-    manage()

@@ -1,10 +1,10 @@
 from time import sleep
 
 from lib.arrangements.larsen_list import LarsenList
-from lib.axis_manager import AxisManager
 from lib.mode import Mode
-from lib.sort_key import SortKey
-from lib.tools import scale_colour
+from lib.sorters.axis_manager import AxisManager
+from lib.sorters.sort_key import SortKey
+from lib.tools.utils import scale_colour
 
 
 class Eye(Mode):

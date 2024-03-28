@@ -2,7 +2,7 @@ from collections import deque
 
 from lib.arrangements.circle import Circle
 from lib.mode import Mode
-from lib.tools import hue_to_rgb
+from lib.tools.utils import hue_to_rgb
 
 
 class Cuttlefish(Mode):
