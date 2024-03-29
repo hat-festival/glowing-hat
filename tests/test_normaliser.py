@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from lib.brightness_control import BrightnessControl
-from lib.tools import close_enough
+from lib.brightness_controllers.brightness_control import BrightnessControl
+from lib.tools.utils import close_enough
 
 
 class TestColourNormaliser(TestCase):

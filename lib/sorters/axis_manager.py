@@ -5,9 +5,9 @@ from pathlib import Path
 
 from redis import Redis
 
-from lib.logger import logging
-from lib.sort_key import SortKey
 from lib.sorters.cube_sorter import CubeSorter
+from lib.sorters.sort_key import SortKey
+from lib.tools.logger import logging
 
 
 class AxisManager:
@@ -61,3 +61,8 @@ class AxisManager:
         if type(key).__name__ == "tuple":
             key = SortKey(key).as_key
         return pickle.loads(self.redis.get(key))  # noqa: S301
+
+    # TODO: this should be the default, the rest is redundant
+    def get_sort_indeces(self, key):
+        """Get just the indeces from a sort."""
+        return tuple(x["index"] for x in self.get_sort(key))

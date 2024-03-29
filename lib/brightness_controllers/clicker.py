@@ -2,8 +2,8 @@ import threading
 from time import sleep, time
 
 from lib.conf import conf
-from lib.logger import logging
-from lib.tools import is_pi
+from lib.tools.logger import logging
+from lib.tools.utils import is_pi
 
 if is_pi():  # nocov
     from RPi import GPIO

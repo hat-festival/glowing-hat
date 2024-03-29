@@ -1,13 +1,10 @@
-from lib.pixel import Pixel
-from lib.tools import (
-    brighten_pixels_less_than_y,
+from lib.tools.utils import (
     close_enough,
     colour_set_to_colour_list,
     hue_to_rgb,
     remove_axis,
     scale_colour,
 )
-from tests.fixtures.equaliser_data.expectations import equaliser_data
 
 
 def test_hue_to_rgb():
@@ -69,13 +66,3 @@ def test_colour_set_to_colour_list():
         [255, 0, 255],
         [255, 0, 255],
     ]
-
-
-def test_brighten_pixels_less_than_y():
-    """Test it dims the correct pixels."""
-    pixels = [Pixel(real_data) for real_data in equaliser_data["pixels"]]
-
-    result = brighten_pixels_less_than_y(
-        pixels, equaliser_data["active-y"], equaliser_data["scale-factor"]
-    )
-    assert [pixel["rgb"] for pixel in result] == equaliser_data["colours"]

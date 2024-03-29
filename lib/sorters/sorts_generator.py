@@ -1,6 +1,6 @@
 from collections import deque
 
-from lib.sort_key import SortKey
+from lib.sorters.sort_key import SortKey
 
 
 class SortsGenerator:
@@ -28,7 +28,6 @@ class SortsGenerator:
 
         return SortKey(point)
 
-    # TODO let this take a radius for the 1.1x1.1 sort
     def make_circle(self, direction="forwards", altitude=None):
         """Get a set of keys to go round and round."""
         if direction == "backwards":

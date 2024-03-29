@@ -6,7 +6,7 @@ import numpy as np
 import pyaudio
 
 from lib.mode import Mode
-from lib.tools import scale_colour
+from lib.tools.utils import scale_colour
 
 
 class MusicBounce(Mode):

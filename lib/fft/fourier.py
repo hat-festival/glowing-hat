@@ -1,7 +1,7 @@
 import numpy as np
 
 from lib.conf import conf
-from lib.tools import is_pi
+from lib.tools.utils import is_pi
 
 if is_pi():
     import aubio
@@ -39,9 +39,6 @@ class Fourier:
             new_note = detector(signal)
 
             if new_note[0]:
-                from lib.logger import logging
-
-                logging.debug("trigger")
                 self.owner.trigger()
 
 

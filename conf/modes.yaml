@@ -1,119 +1,51 @@
 brainwaves:
-  jump: 2
-  steps: 150
   axis-rotate-at: 10
-  prefs:
-    axis: y
-    invert: False
-    colour-sources:
-      - redis
-      - wheel
-    colour-set: white
+  hue-seconds-per-rotation: 1
+  jump: 2
+  steps: 100
 
 crawler:
   max-jump: 2
-  prefs:
-    colour-sources:
-      - random
-
-larsen:
-  jump: 2
-  head-width: 0.15
-  tail-proportion: 1.0
-  axes:
-    movement: x
-    fade: z
-
-pulsator:
-  steps:
-    min: 32
-    max: 255
-
-roller:
-  length-multiplier: 3 # how many times the hat length to make our deque
-  roll-sorter-at: 7 # move to the next sort after this many iterations
-  rotate-amount: 2
-
-  decay:
-    amount: 0.02
-    interval: 0.02
-  brightness:
-    default: 0.4
-    max: 1.0
-
-sweeper:
-  jump: 3
-  blip-move-threshold: 0.5
-  colours:
-    main: [0, 200, 0]
-    blip: [255, 0, 0]
+  cube-size: 10 # for 1x1 sort set
 
 equaliser:
   decay:
     amount: 0.02
     interval: 0.02
+  rotation: 2
+  scale-factor: 0.5
   y:
     default: 0.4
     max: 1.0
-  rotation: 3
-  scale-factor: 0.5
 
-# accelerator:
-#   jump: 0.1
-#   limits:
-#     min: 1
-#     max: 20
-#   prefs:
-#     axis: y
-#     invert: True
-#     colour-sources:
-#       - wheel
-#       - redis
+larsen:
+  axes:
+    movement: x
+  head-width: 0.15
+  hue: 1.0
+  jump: 2
+  tail-proportion: 1.0
 
-# bands:
-#   jump: 5
-#   width: 50
-#   prefs:
-#     axis: z
-#     invert: True
-#     colour-sources:
-#       - redis
-#     colour-set: rgb
+pulsator:
+  hue-seconds-per-rotation: 5
+  steps:
+    max: 255
+    min: 48
 
-# bigtop:
-#   fft: True
-#   jump: 3
-#   prefs:
-#     axis: y
+roller:
+  brightness:
+    default: 0.7
+    max: 1.0
+  decay:
+    amount: 0.02
+    interval: 0.02
+  length-multiplier: 3
+  roll-sorter-at: 7
+  rotate-amount: 2
 
-# rotator:
-#   steps: 9
-#   offset: 45
-#   prefs:
-#     axis: y
-#     invert: False
-#     colour-sources:
-#       - wheel
-#       - redis
-
-# eye:
-#   fft: True
-
-# cuttlefish:
-#   fft: True
-#   jump: 1
-#   steps: 200 # more than 100 please
-#   axis-rotate-at: 3
-#   prefs:
-#     axis: y
-#     invert: False
-
-# directiontester:
-#   fft: True
-#   jump: 1
-#   steps: 200 # more than 100 please
-#   axis-rotate-at: 10
-#   prefs:
-#     axis: y
-#     invert: False
-#     invert: False
+sweeper:
+  blip-move-threshold: 0.9
+  hues:
+    blip: 1.0
+    main: 0.333333
+  jump: 4

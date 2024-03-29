@@ -1,8 +1,8 @@
 from random import randint
 
-from lib.logger import logging
+from lib.hue_sources.random_hue_source import RandomHueSource
 from lib.mode import Mode
-from lib.random_colour_source import RandomColourSource
+from lib.sorters.axis_manager import AxisManager
 
 
 class Crawler(Mode):
@@ -10,29 +10,39 @@ class Crawler(Mode):
 
     def run(self):
         """Do the stuff."""
-        self.source = RandomColourSource()
+        self.hue_source = RandomHueSource()
+        self.manager = AxisManager()
 
-        cube_size = 11
         while True:
-            # origin = SortKey(
-            #     randint(-cube_size, cube_size) / 10,
-            #     randint(-cube_size, cube_size) / 10,
-            #     randint(-cube_size, cube_size) / 10,
-            # )
-            origin = (
-                randint(-cube_size, cube_size) / 10,  # noqa: S311
-                randint(-cube_size, cube_size) / 10,  # noqa: S311
-                randint(-cube_size, cube_size) / 10,  # noqa: S311
+            self.hat.sort_by_indeces(
+                get_random_sort(self.conf["cube-size"], len(self.hat), self.manager)
             )
-            logging.debug(origin)
-            self.from_sort(origin)
 
-            step = randint(1, self.data["max-jump"])  # noqa: S311
-            clr = self.source.colour
+            step = randint(1, self.conf["max-jump"])  # noqa: S311
+            hue = self.hue_source.hue()
 
             for index, pixel in enumerate(self.hat.pixels):
-                self.hat.light_one(pixel["index"], clr, auto_show=False)
+                pixel["hue"] = hue
+                pixel["value"] = 1.0
+                self.hat.light_one(pixel)
                 if index % step == 0:
                     self.hat.show()
 
             self.hat.show()
+
+
+def get_random_sort(cube_size, hat_length, manager):
+    """Get a random `sort`."""
+    indeces = []
+    while len(indeces) < hat_length:
+        origin = [
+            randint(-cube_size, cube_size) / 10,  # noqa: S311
+            randint(-cube_size, cube_size) / 10,  # noqa: S311
+            randint(-cube_size, cube_size) / 10,  # noqa: S311
+        ]
+
+        # at least one point must be `1.0` or the sorts can be shorter than 100
+        origin[randint(0, 2)] = 1.0  # noqa: S311
+        indeces = manager.get_sort_indeces(tuple(origin))
+
+    return indeces

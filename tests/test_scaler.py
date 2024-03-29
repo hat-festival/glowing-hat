@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.scaler import Scaler, deconstruct, find_largest_span, normalise_list
+from lib.tools.scaler import Scaler, deconstruct, find_largest_span, normalise_list
 
 
 class TestScaler(TestCase):

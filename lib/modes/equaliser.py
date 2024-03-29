@@ -1,8 +1,7 @@
 from time import sleep
 
-from lib.fft_pool import FFTPool
+from lib.fft.fft_pool import FFTPool
 from lib.mode import Mode
-from lib.tools import brighten_pixels_less_than_y
 
 
 class Equaliser(Mode):
@@ -10,13 +9,7 @@ class Equaliser(Mode):
 
     def configure(self):
         """Configure ourself."""
-        self.decay_amount = self.data["decay"]["amount"]
-        self.decay_interval = self.data["decay"]["interval"]
-
-        self.max_y = self.data["y"]["max"]
-        self.default_y = self.data["y"]["default"]
-        self.active_y = self.default_y
-
+        self.active_y = self.conf["y"]["default"]
         self.fft_pool = FFTPool(self)
 
     def run(self):
@@ -25,22 +18,23 @@ class Equaliser(Mode):
 
         rotation = 90
         while True:
-            # TODO this is on the `Pixel` now
-            self.hat.hues_from_angles("x", "z", rotation=rotation)
-            rotation = (rotation + self.data["rotation"]) % 360
-            self.from_pixels(
-                brighten_pixels_less_than_y(
-                    self.hat.pixels, self.active_y, self.data["scale-factor"]
-                )
+            self.hat.update_hues_from_angles(offset=rotation)
+            rotation = (rotation + self.conf["rotation"]) % 360
+
+            self.hat.dim_pixels_greater_than_foo(
+                self.conf["scale-factor"], self.active_y, axis="y"
             )
+            self.hat.light_up()
+
+            rotation += self.conf["rotation"]
 
     def trigger(self):
         """Spike our `y`. Called by our FFT."""
-        self.active_y = self.max_y
+        self.active_y = self.conf["y"]["max"]
 
     def reduce(self):
         """Constantly reducing the `y`."""
         while True:
-            if self.active_y > self.default_y:
-                self.active_y -= self.decay_amount
-                sleep(self.decay_interval)
+            if self.active_y > self.conf["y"]["default"]:
+                self.active_y -= self.conf["decay"]["amount"]
+                sleep(self.conf["decay"]["interval"])

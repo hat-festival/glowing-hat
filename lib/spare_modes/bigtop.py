@@ -1,5 +1,5 @@
 from lib.modes.sweeper import Sweeper
-from lib.tools import hue_to_rgb
+from lib.tools.utils import hue_to_rgb
 
 
 class BigTop(Sweeper):

@@ -1,7 +1,7 @@
 from collections import deque
 
 from lib.mode import Mode
-from lib.tools import colour_set_to_colour_list
+from lib.tools.utils import colour_set_to_colour_list
 
 
 class Bands(Mode):
@@ -10,8 +10,8 @@ class Bands(Mode):
     def __init__(self, hat, custodian):
         """Construct."""
         super().__init__(hat, custodian)
-        self.jump = self.data["jump"]
-        self.width = self.data["width"]
+        self.jump = self.conf["jump"]
+        self.width = self.conf["width"]
 
     def reconfigure(self):
         """Configure ourself."""

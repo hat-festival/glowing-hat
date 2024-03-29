@@ -6,3 +6,4 @@ tmp/
 etc/wpa_supplicant/wpa_supplicant.conf
 TODO.md
 SYSTEM.md
+htmlcov/

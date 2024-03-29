@@ -1,7 +1,7 @@
 from collections import deque
 
 from lib.mode import Mode
-from lib.tools import scale_colour
+from lib.tools.utils import scale_colour
 
 
 class Rotator(Mode):
@@ -17,7 +17,7 @@ class Rotator(Mode):
         self.lead_data = deque(frames)
         self.tail_data = deque(frames)
 
-        self.tail_data.rotate(self.data["offset"])
+        self.tail_data.rotate(self.conf["offset"])
 
     def run(self):
         """Do the work."""
@@ -25,7 +25,7 @@ class Rotator(Mode):
 
         while True:
             for index, lights in enumerate(self.lead_data):
-                if index % self.data["steps"] == 0:
+                if index % self.conf["steps"] == 0:
                     colour = self.get_colour()
                     tail_colour = scale_colour(colour, 0.1)
                     self.hat.colour_indeces(

@@ -1,5 +1,5 @@
 from lib.conf import conf
-from lib.tools import is_pi
+from lib.tools.utils import is_pi
 
 if is_pi():  # nocov
     import board

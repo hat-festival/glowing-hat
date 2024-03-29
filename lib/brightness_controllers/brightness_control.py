@@ -3,10 +3,9 @@ from multiprocessing import Process, Value
 from lib.brightness_controllers.rotator import Rotator
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.gamma import gamma
-from lib.logger import logging
 from lib.oled import Oled
-from lib.tools import is_pi
+from lib.tools.logger import logging
+from lib.tools.utils import is_pi
 
 
 class BrightnessControl:
@@ -21,7 +20,7 @@ class BrightnessControl:
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
         self.rotator = Rotator(self)
-        self.processes = {}
+        self.process = Process(target=self.rotator.rotate)
 
         self.update_display()
 
@@ -46,12 +45,7 @@ class BrightnessControl:
         """Update the brightness-bar."""
         self.custodian.set("brightness", self.factor.value)
         if is_pi():
-            self.oled.update()
-
-    def normalise(self, triple):
-        """Normalise a colour."""
-        factor = max(self.factor.value, 0)
-        return tuple(int(x * factor) for x in gamma_correct(triple))
+            self.oled.update()  # nocov
 
     def run(self):
         """Do the work."""
@@ -59,11 +53,4 @@ class BrightnessControl:
 
     def run_rotary(self):
         """Run the rotary."""
-        if "rotary" not in self.processes:
-            self.processes["rotary"] = Process(target=self.rotator.rotate)
-            self.processes["rotary"].start()
-
-
-def gamma_correct(triple):
-    """Gamma-correct a colour."""
-    return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417
+        self.process.start()

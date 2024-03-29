@@ -1,7 +1,7 @@
 from time import sleep
 
 from lib.conf import conf
-from lib.tools import is_pi
+from lib.tools.utils import is_pi
 
 if is_pi():  # nocov
     from RPi import GPIO
@@ -18,7 +18,7 @@ class Rotator:
         """Construct."""
         self.brightness_control = brightness_controller
 
-    def rotate(self):
+    def rotate(self):  # nocov
         """Run the rotary-encoder."""
         # https://forums.raspberrypi.com/viewtopic.php?p=929475&sid=ec5d74aaef7cf66029a48b04cbe1a1e1#p929475
         self.clk = conf["rotary"]["pins"]["clk"]
@@ -38,7 +38,7 @@ class Rotator:
         while True:
             sleep(0.01)
 
-    def rotary_interrupt(self, pin):
+    def rotary_interrupt(self, pin):  # nocov
         """Rotary interrupt."""
         switch_clk = GPIO.input(self.clk)
         switch_dt = GPIO.input(self.dt)

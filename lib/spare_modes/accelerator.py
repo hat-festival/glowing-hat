@@ -6,7 +6,7 @@ class Accelerator(Sweeper):
 
     def run(self):
         """Do the work."""
-        self.reconfigure()
+        self.configure()
 
         i = 0
         step = 0
@@ -22,13 +22,13 @@ class Accelerator(Sweeper):
     def condition(self, step, direction):
         """Conditional condition."""
         if direction == "faster":
-            return step < self.data["limits"]["max"]
+            return step < self.conf["limits"]["max"]
 
-        return step > self.data["limits"]["min"]
+        return step > self.conf["limits"]["min"]
 
     def incdec(self, step, direction):
         """Increment or decrement."""
         if direction == "faster":
-            return step + self.jump
+            return step + self.conf["jump"]
 
-        return step - self.jump
+        return step - self.conf["jump"]

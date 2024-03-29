@@ -1,6 +1,6 @@
 import concurrent.futures
 
-from lib.fourier import Fourier
+from lib.fft.fourier import Fourier
 
 
 class FFTPool:

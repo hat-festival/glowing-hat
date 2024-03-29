@@ -2,7 +2,7 @@ include make/Makefile.common
 
 PUSHHOST ?= ${HATHOST}
 
-default: format style test freeze clean
+default: format style test-full freeze clean
 
 push-code: clean
 	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure && make clean"
@@ -16,36 +16,30 @@ push-code: clean
 	ssh pi@${PUSHHOST} "cd ${PROJECT} && ./configure"
 
 test:
-	PYTHONDONTWRITEBYTECODE=1 \
-		python -m pytest \
-		--random-order \
-		--verbose \
-		--capture no \
-		--failed-first \
-		--cov \
-		--exitfirst \
+	${BASE_TEST} \
 		-m "not not_ci"
 
 test-full:
-	PYTHONDONTWRITEBYTECODE=1 \
-		python -m pytest \
-		--random-order \
-		--verbose \
-		--capture no \
-		--failed-first \
+	${BASE_TEST} \
+		--cov
+
+test-cov: format
+	${BASE_TEST} \
 		--cov \
-		--exitfirst
+		--cov-report html
 
 test-ci:
-	PYTHONDONTWRITEBYTECODE=1 \
+	${BASE_TEST} \
+		--cov \
+		-m "not not_ci"
+
+BASE_TEST = PYTHONDONTWRITEBYTECODE=1 \
 		python -m pytest \
 		--random-order \
 		--verbose \
 		--capture no \
 		--failed-first \
-		--cov \
-		--exitfirst \
-		-m "not not_ci"
+		--exitfirst
 
 clean:
 	@rm -fr $$(find . -name __pycache__)
