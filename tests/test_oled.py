@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from lib.conf import conf
 from lib.custodian import Custodian
-from lib.tools.oled import ImageGenerator
+from lib.oled import ImageGenerator
 
 
 class TestImageGenerator(TestCase):
@@ -21,14 +21,8 @@ class TestImageGenerator(TestCase):
         self.cus = Custodian(namespace="test", conf=self.conf)
         self.cus.populate(flush=True)
 
-        self.cus.set("axis", "y")
-        self.cus.set("invert", False)  # noqa: FBT003
-        self.cus.set("colour-source", "redis")
-        self.cus.set("colour-set", "rgb")
-        self.cus.set("colour", [255, 0, 0])
-        self.cus.set("mode", "rotator")
+        self.cus.set("mode", "brainwaves")
         self.cus.set("brightness", 0.0)
-        self.cus.set("fft-on", False)  # noqa: FBT003
 
     def test_hat_settings(self):
         """Test it generates the show-mode screen."""
@@ -40,7 +34,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/show-mode.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "824f206e0d0f7372dc3be37cb5d9ee8c6d5eed339192c987c74095c2ad88bfe9",
+            "9a534ddce6645291ca589409e3bca80c9b771dcc9ac8fc320be5c2960a1e40ce",
         )
 
     def test_boot_screen(self):
@@ -53,7 +47,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/boot.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "ec0c59e4f6476bedad734792e92969286f2aca14af4712ab1ee946ba831acfea",
+            "909b98b2028d9b7d70071eea538d2c97ba0e067bcb9668683b50b283a8852266",
         )
 
     @patch("socket.gethostname")
@@ -71,7 +65,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/ip-address.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "13078980af2e141573c88eddaa84d2db024f5275abb08f2852df4b1694bafbd2",
+            "2e5cd1badf53fe5d8742d64b56261e5ba3a791ec3e06dd75b061a9b9a8ca089b",
         )
 
     def test_brightness_bar(self):
@@ -80,19 +74,19 @@ class TestImageGenerator(TestCase):
         expectations = (
             (
                 1.0,
-                "b7a8c8a690a4e1e34ef3641b658f041fe13aef073ccecd91ca9ba9b780392e03",
+                "cbd5c1918f8da381d7762cf541aaca280200060873f1a9101ba63cc3f9474d50",
             ),
             (
                 0.5,
-                "ecfd7b02ef717c106eaae0b6973fce9689d8f952220f6d4e3ab5fa7af98b44df",
+                "0f735146962a60866e51e8cff44daa172c14d794454b52c1f671691d2a5656ab",
             ),
             (
                 0.1,
-                "2717d5cf1fae89add3dacabb3f53275f477277ec8c9bf3a760bf6e7ae6be8c32",
+                "add71c07d42ab645148f0203f89a66d40ffd6358911b9dcb0a5a6a6177444488",
             ),
             (
                 0.0,
-                "824f206e0d0f7372dc3be37cb5d9ee8c6d5eed339192c987c74095c2ad88bfe9",
+                "9a534ddce6645291ca589409e3bca80c9b771dcc9ac8fc320be5c2960a1e40ce",
             ),
         )
 
@@ -105,5 +99,6 @@ class TestImageGenerator(TestCase):
                 Path(f"tmp/brightness-bar-{brightness}.png").read_bytes()
             ).hexdigest()
             self.assertEqual(  # noqa: PT009
-                checksum, generated
+                generated,
+                checksum,
             )

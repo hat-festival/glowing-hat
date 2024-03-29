@@ -61,6 +61,7 @@ class ImageGenerator:
         self.conf = conf
         self.width = self.conf["size"]["x"]
         self.height = self.conf["size"]["y"]
+        self.offsets = self.conf["offsets"]
 
         self.font = ImageFont.truetype(
             font=f"fonts/{self.conf['font']['name']}.ttf",
@@ -91,21 +92,8 @@ class ImageGenerator:
     def show_mode(self):
         """Make the `show-mode` image."""
         self.set_image(self.width, self.height)
-        self.add_text(self.custodian.get("mode"), 4, 4)
+        self.add_text(self.custodian.get("mode"), self.offsets["x"], self.offsets["y"])
         self.draw_brightness_bar()
-
-    def draw_brightness_bar(self):
-        """Draw the brightness meter."""
-        bar_width = 4
-        step_size = 2
-        max_height = self.height - 2
-        count = int(max_height * self.custodian.get("brightness"))
-        for i in range(0, count, step_size):
-            for j in range(int(bar_width)):
-                self.image.putpixel(
-                    (self.width - (j + 2), (self.height - step_size) - i), 255
-                )
-            bar_width = bar_width + 1
 
     def ip_address(self):
         """Make the `ip-address` image."""
@@ -118,14 +106,14 @@ class ImageGenerator:
         ipaddress = sock.getsockname()[0]
 
         self.add_text(hostname, 0, 0)
-        self.add_text(ipaddress, 0, self.height / 2, font_adjust=3)
+        self.add_text(ipaddress, 0, self.height / 2, font_adjust=6)
 
     def boot(self):
         """Boot-time message."""
         self.set_image(self.width, self.height)
 
         message = "booting"
-        self.add_text(message, 4, 4)
+        self.add_text(message, self.offsets["x"], self.offsets["y"])
 
     def reset(self):
         """Reset message."""
@@ -133,7 +121,7 @@ class ImageGenerator:
 
         message = "resetting"
 
-        self.add_text(message, 4, 4)
+        self.add_text(message, self.offsets["x"], self.offsets["y"])
 
     def add_text(self, text, across, down, upper_case=False, font_adjust=None):  # noqa: FBT002, PLR0913
         """Add some text."""
@@ -149,3 +137,16 @@ class ImageGenerator:
             )
 
         self.draw.text((across, down), text, font=font, fill=255)
+
+    def draw_brightness_bar(self):
+        """Draw the brightness meter."""
+        bar_width = 4
+        step_size = 2
+        max_height = self.height - 2
+        count = int(max_height * self.custodian.get("brightness"))
+        for i in range(0, count, step_size):
+            for j in range(int(bar_width)):
+                self.image.putpixel(
+                    (self.width - (j + 2), (self.height - step_size) - i), 255
+                )
+            bar_width = bar_width + 1
