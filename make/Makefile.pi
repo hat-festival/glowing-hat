@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install unpack-sorts clean
+setup: apt-installs install system-install unpack-sorts load-sorts clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting hat..."
@@ -55,3 +55,6 @@ wpa:
 
 unpack-sorts:
 	if [ ! -e sorts ] ; then tar xzvf sorts.tar.gz ; fi
+
+load-sorts:
+	@LOGLEVEL=debug python sorts_loader.py
