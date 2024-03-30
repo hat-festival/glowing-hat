@@ -1,11 +1,11 @@
 from signal import pause
 
-from lib.control_manager import start
+from lib.controller import Controller
 
 
 def manage():
     """Loop forever."""
-    start()
+    Controller()
     pause()
 
 

@@ -3,6 +3,7 @@ from multiprocessing import Process
 from time import sleep
 
 from lib.boot_sequence import boot_hat
+from lib.button_bindings import controller_bindings
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.hat import Hat
@@ -27,6 +28,8 @@ class Controller:
 
         self.hat = Hat()
         self.oled = Oled(self.custodian)
+
+        controller_bindings(self)
 
         self.process = None
 
