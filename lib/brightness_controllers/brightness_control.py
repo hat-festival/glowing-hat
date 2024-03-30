@@ -1,6 +1,7 @@
 from multiprocessing import Process, Value
 
 from lib.brightness_controllers.rotator import Rotator
+from lib.button_bindings import brightness_bindings
 from lib.conf import conf
 from lib.custodian import Custodian
 from lib.oled import Oled
@@ -21,6 +22,8 @@ class BrightnessControl:
         self.oled = Oled(self.custodian)
         self.rotator = Rotator(self)
         self.process = Process(target=self.rotator.rotate)
+
+        brightness_bindings(self)
 
         self.update_display()
 
