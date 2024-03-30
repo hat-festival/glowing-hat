@@ -28,7 +28,7 @@ exec:
         bash
 
 ci:
-	docker run --rm ${ID} test
+	docker run --rm ${ID} test-ci
 
 push-code:
 	rsync -av --delete --exclude tmp . pi@hatlights.local:hatlights/

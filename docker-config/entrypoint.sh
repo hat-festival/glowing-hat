@@ -19,6 +19,10 @@ test)
   make --makefile make/Makefile.docker
   ;;
 
+test-ci)
+  make --makefile make/Makefile.docker test-ci
+  ;;
+
 *)
   exec "$@"
   ;;
