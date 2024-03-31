@@ -1,6 +1,6 @@
-import io
-import pickle
-import tarfile
+import gzip
+import json
+import shutil
 from pathlib import Path
 
 from redis import Redis
@@ -19,26 +19,22 @@ class AxisManager:
         """Construct."""
         self.archive_path = archive_path
         self.cube_radius = cube_radius
-        self.archive = Path(archive_path, f"sorts-{cube_radius}x{cube_radius}.tar.gz")
+        self.archive = Path(archive_path, f"sorts-{cube_radius}x{cube_radius}.json.gz")
         self.sorter = CubeSorter(locations)
         self.redis = Redis()
 
     def populate(self):
         """Send the sorts data to redis."""
         if not self.redis.get("sorts:(1.0, 1.0, 1.0)"):
-            tar = tarfile.open(self.archive, "r")
-            for member in tar:
-                if not member.isfile():
-                    continue
-
-                key = f"sorts:{member.name}"
+            archive = json.loads(gzip.open(self.archive).read().decode())
+            for key, value in archive.items():
                 logging.debug("loading sort-key `%s`", key)
-                self.redis.set(key, tar.extractfile(member).read())
+                self.redis.set(key, str(value))
 
     def create_sorts(self, steps=20):
         """Create the sorts archive."""
         Path("sorts").mkdir(exist_ok=True)
-        tar = tarfile.open(self.archive, "w:gz")
+        self.sorts = {}
         r = range(-steps, steps + 1, 1)
 
         for x in r:
@@ -47,22 +43,22 @@ class AxisManager:
                     point = tuple(
                         round(a * self.cube_radius / steps, 1) for a in (x, y, z)
                     )
-                    filename = str(point)
                     logging.debug("sorting from `%s`", point)
-                    pkl = pickle.dumps(self.sorter.sort_from(*point))
-                    info = tarfile.TarInfo(name=filename)
-                    info.size = len(pkl)
-                    tar.addfile(info, io.BytesIO(pkl))
+                    self.sorts[SortKey(point).as_key] = self.sorter.sort_from(*point)
 
-        tar.close()
+        temp_file = Path("/tmp", "foo.json")  # noqa: S108
+        Path(temp_file).write_text(json.dumps(self.sorts))
+
+        with (
+            Path.open(temp_file, "rb") as f_in,
+            gzip.open(self.archive, "wb") as f_out,
+        ):
+            shutil.copyfileobj(f_in, f_out)
+
+        temp_file.unlink()
 
     def get_sort(self, key):
         """Unpickle a `sort`."""
         if type(key).__name__ == "tuple":
             key = SortKey(key).as_key
-        return pickle.loads(self.redis.get(key))  # noqa: S301
-
-    # TODO: this should be the default, the rest is redundant
-    def get_sort_indeces(self, key):
-        """Get just the indeces from a sort."""
-        return tuple(x["index"] for x in self.get_sort(key))
+        return tuple(json.loads(self.redis.get(key).decode()))
