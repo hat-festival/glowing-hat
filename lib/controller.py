@@ -1,5 +1,6 @@
 import os
 from multiprocessing import Process
+from pathlib import Path
 from time import sleep
 
 from lib.boot_sequence import boot_hat
@@ -71,4 +72,5 @@ class Controller:
         self.oled.update()
         logging.info("doing hard reset")
 
-        os.system("/usr/bin/sudo service controller restart")  # noqa: S605
+        service = next(Path("etc", "systemd").glob("*")).parts[-1].split(".")[0]
+        os.system(f"/usr/bin/sudo service {service} restart")  # noqa: S605

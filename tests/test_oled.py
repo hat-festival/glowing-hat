@@ -34,7 +34,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/show-mode.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "9a534ddce6645291ca589409e3bca80c9b771dcc9ac8fc320be5c2960a1e40ce",
+            "3f8fa825bed87234dd0c3cf4a8e1703f1d1a6385a894c2bb6e0633d618fd6e43",
         )
 
     def test_boot_screen(self):
@@ -47,7 +47,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/boot.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "909b98b2028d9b7d70071eea538d2c97ba0e067bcb9668683b50b283a8852266",
+            "0f6c8013d499e4bde4bf5a881e7a495ad4002051c53600f4fe515cfd8c60d4c1",
         )
 
     @patch("socket.gethostname")
@@ -65,7 +65,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/ip-address.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "2e5cd1badf53fe5d8742d64b56261e5ba3a791ec3e06dd75b061a9b9a8ca089b",
+            "ee75f82ad78abdf2e1c66aef90483b42966be13c5e7a10f4f194668f8d286be1",
         )
 
     def test_brightness_bar(self):
@@ -74,19 +74,19 @@ class TestImageGenerator(TestCase):
         expectations = (
             (
                 1.0,
-                "cbd5c1918f8da381d7762cf541aaca280200060873f1a9101ba63cc3f9474d50",
+                "5ac0a7a268eb7f237dfc0b095f988cdc6f36478ea382c08611360a7de84ca433",
             ),
             (
                 0.5,
-                "0f735146962a60866e51e8cff44daa172c14d794454b52c1f671691d2a5656ab",
+                "50d343980e35ad2142b6033519b3ff812672a1bf4d9da4acbb3eb7f078cdefad",
             ),
             (
                 0.1,
-                "add71c07d42ab645148f0203f89a66d40ffd6358911b9dcb0a5a6a6177444488",
+                "b447358f6885182ab18246af3be9082b46ace0cf9cc95215f3c4d962f128466e",
             ),
             (
                 0.0,
-                "9a534ddce6645291ca589409e3bca80c9b771dcc9ac8fc320be5c2960a1e40ce",
+                "3f8fa825bed87234dd0c3cf4a8e1703f1d1a6385a894c2bb6e0633d618fd6e43",
             ),
         )
 
