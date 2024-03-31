@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install unpack-sorts load-sorts clean
+setup: apt-installs install system-install load-sorts clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting hat..."
@@ -52,9 +52,6 @@ clean:
 wpa:
 	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
 	sudo ln -s $$(pwd)/etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant
-
-unpack-sorts:
-	if [ ! -e sorts ] ; then tar xzvf sorts.tar.gz ; fi
 
 load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py
