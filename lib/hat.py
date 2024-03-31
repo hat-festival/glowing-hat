@@ -52,6 +52,11 @@ class Hat:
         """Sort our pixels along an axis."""
         self.pixels.sort(key=lambda w: w[axis])
 
+    # TODO: needs a proper name
+    def sort_plain(self):
+        """Sort by our indeces."""
+        self.pixels.sort(key=lambda x: x["index"])
+
     def sort_by_indeces(self, indeces):
         """Sort by some arbitrary indeces."""
         self.pixels = [
