@@ -112,6 +112,7 @@ class ImageGenerator:
         """Boot-time message."""
         self.set_image(self.width, self.height)
 
+        # TODO: move these to a conf file?
         message = "booting"
         self.add_text(message, self.offsets["x"], self.offsets["y"])
 
@@ -125,7 +126,7 @@ class ImageGenerator:
 
     def add_text(self, text, across, down, upper_case=False, font_adjust=None):  # noqa: FBT002, PLR0913
         """Add some text."""
-        text = text.lower()
+        text = text.title()
         if upper_case:
             text = text.upper()
 
