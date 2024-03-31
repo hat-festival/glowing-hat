@@ -1,5 +1,4 @@
-import time
-from random import randint
+from random import choice, random
 
 from lib.hue_sources.time_based_hue_source import TimeBasedHueSource
 from lib.mode import Mode
@@ -9,39 +8,57 @@ from lib.sorters.axis_manager import AxisManager
 class Spots(Mode):
     """Spots."""
 
-    def run(self):
-        """Do the stuff."""
+    def configure(self):
+        """Configure."""
         self.hue_source = TimeBasedHueSource()
         self.manager = AxisManager()
+        self.axes = {"x": 1.0, "y": 1.0, "z": 1.0}
+
+        self.favoured_axis = "x"
+        self.favoured_increment = 0.1 # positive
+
+        self.weighting = 0.9  # conf this
+    def run(self):
+        """Do the stuff."""
+        self.configure()
 
         while True:
-            sort = get_random_sort(10, len(self.hat), self.manager)
+            sort = self.get_next_sort()
 
             hue = self.hue_source.hue()
 
-            for index in sort[0:10]:
+            self.hat.apply_value(0.5)
+            for index in sort[0:50]:
                 pixel = self.hat.pixels[index]
                 pixel["hue"] = hue
                 pixel["value"] = 1.0
                 self.hat.light_one(pixel)
 
-            self.hat.show()
+            self.hat.light_up()
 
-            time.sleep(1.7)
+    def get_next_sort(self):
+        """Get a random `sort`."""
+        # TODO can we map this to a `sin` curve or sth?
+        # TODO we can drive this with tests
+        # if random() > self.weighting:
+        #     self.favoured_axis = choice(tuple(self.axes.keys()))
 
+        # if random() > self.weighting:
+        #     self.favoured_increment = choice([-0.1, 0.1])
 
-def get_random_sort(cube_size, hat_length, manager):
-    """Get a random `sort`."""
-    indeces = []
-    while len(indeces) < hat_length:
-        origin = [
-            randint(-cube_size, cube_size) / 10,  # noqa: S311
-            randint(-cube_size, cube_size) / 10,  # noqa: S311
-            randint(-cube_size, cube_size) / 10,  # noqa: S311
-        ]
+        # if self.axes[self.favoured_axis] == 1.0 and self.favoured_increment == 0.1 or self.axes[self.favoured_axis] == -1.0 and self.favoured_increment == -0.1:
+        #     self.favoured_axis = choice(tuple(self.axes.keys()))
 
-        # at least one point must be `1.0` or the sorts can be shorter than 100
-        origin[randint(0, 2)] = 1.0  # noqa: S311
-        indeces = manager.get_sort_indeces(tuple(origin))
+        # self.axes[self.favoured_axis] = round(self.axes[self.favoured_axis] + self.favoured_increment, 1)
+        # from lib.tools.logger import logging
+        # logging.debug(self.axes)
 
-    return indeces
+        axis = choice(tuple(self.axes.keys()))  # noqa: S311
+        if self.axes[axis] == 1.0:
+            self.axes[axis] = 0.9
+        elif self.axes[axis] == -1.0:
+            self.axes[axis] = -0.9
+        else:
+            self.axes[axis] = round(self.axes[axis] +  choice([-0.1, 0.1]), 1)
+
+        return self.manager.get_sort(tuple(self.axes.values()))
