@@ -30,7 +30,7 @@ class CubeSorter:
                 )
             )
 
-        return arranged
+        return tuple([pix["index"] for pix in arranged])
 
 
 def is_inside_sphere(pixel, centre, radius):

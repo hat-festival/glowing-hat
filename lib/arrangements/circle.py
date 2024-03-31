@@ -13,4 +13,4 @@ class Circle:
 
     def next(self):
         """Set the hat to the next entry and rotate the deque."""
-        return self.manager.get_sort_indeces(self.rotator.next)
+        return self.manager.get_sort(self.rotator.next)

@@ -43,6 +43,6 @@ def get_random_sort(cube_size, hat_length, manager):
 
         # at least one point must be `1.0` or the sorts can be shorter than 100
         origin[randint(0, 2)] = 1.0  # noqa: S311
-        indeces = manager.get_sort_indeces(tuple(origin))
+        indeces = manager.get_sort(tuple(origin))
 
     return indeces

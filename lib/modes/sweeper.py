@@ -6,6 +6,7 @@ from lib.mode import Mode
 
 # TODO: have a wandering axis_manager spot?
 
+
 class Sweeper(Mode):
     """Sweeper mode."""
 
