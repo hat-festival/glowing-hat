@@ -21,6 +21,12 @@ def controller_bindings(controller):
             logging.debug("button D released")
             controller.show_ip()
 
+        @buttonshim.on_hold(buttonshim.BUTTON_D, hold_time=1)
+        def button_d_handler(_):
+            """Handle button D hold."""
+            logging.debug("button D held")
+            controller.rediscover_wifi()
+
         @buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=1)
         def button_e_handler(_):
             """Handle button E hold."""

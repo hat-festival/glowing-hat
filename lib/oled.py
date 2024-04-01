@@ -1,7 +1,7 @@
 import socket
 
 from PIL import Image, ImageDraw, ImageFont
-
+import subprocess
 from lib.conf import conf
 from lib.tools.utils import is_pi
 
@@ -105,8 +105,9 @@ class ImageGenerator:
         hostname = socket.gethostname()
         ipaddress = sock.getsockname()[0]
 
-        self.add_text(hostname, 0, 0)
-        self.add_text(ipaddress, 0, self.height / 2, font_adjust=6)
+        ssid = subprocess.check_output("nmcli --terse --field name connection".split(" ")).decode().split("\n")[0]
+        self.add_text(ssid, 0, 0, font_adjust=3)
+        self.add_text(ipaddress, 0, self.height / 2, font_adjust=3)
 
     def boot(self):
         """Boot-time message."""
@@ -121,6 +122,14 @@ class ImageGenerator:
         self.set_image(self.width, self.height)
 
         message = "resetting"
+
+        self.add_text(message, self.offsets["x"], self.offsets["y"])
+
+    def wifi_reload(self):
+        """Reload the wifi."""
+        self.set_image(self.width, self.height)
+
+        message = "wifi reload"
 
         self.add_text(message, self.offsets["x"], self.offsets["y"])
 

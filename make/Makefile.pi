@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install load-sorts clean
+setup: apt-installs install system-install unpack-sorts load-sorts network-manager clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting hat..."
@@ -28,9 +28,9 @@ prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
 	sudo chown pi /var/log/hatlights/
 
-fix-alsa:
-	sudo sed -i'' "s/\(^pcm.* [^{].*\)/#\1/" /usr/share/alsa/alsa.conf
-	sudo sed -i'' "s/#pcm.cards cards.pcm/pcm.cards cards.pcm/" /usr/share/alsa/alsa.conf
+# fix-alsa:
+# 	sudo sed -i'' "s/\(^pcm.* [^{].*\)/#\1/" /usr/share/alsa/alsa.conf
+# 	sudo sed -i'' "s/#pcm.cards cards.pcm/pcm.cards cards.pcm/" /usr/share/alsa/alsa.conf
 
 system-install: systemd restart-services
 
@@ -49,9 +49,12 @@ install:
 clean:
 	sudo rm -fr $$(find . -name __pycache__)
 
-wpa:
-	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
-	sudo ln -s $$(pwd)/etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant
+network-manager:
+	sudo rm -f /etc/NetworkManager/system-connections/preconfigured.nmconnection
+	sudo ln -s $$(pwd)/etc/NetworkManager/system-connections/preconfigured.nmconnection /etc/NetworkManager/system-connections/
+
+	sudo rm -f /etc/NetworkManager/system-connections/G6_2145.nmconnection
+	sudo ln -s $$(pwd)/etc/NetworkManager/system-connections/G6_2145.nmconnection /etc/NetworkManager/system-connections/
 
 load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py
