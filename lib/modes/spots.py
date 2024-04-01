@@ -15,9 +15,10 @@ class Spots(Mode):
         self.axes = {"x": 1.0, "y": 1.0, "z": 1.0}
 
         self.favoured_axis = "x"
-        self.favoured_increment = 0.1 # positive
+        self.favoured_increment = 0.1  # positive
 
         self.weighting = 0.9  # conf this
+
     def run(self):
         """Do the stuff."""
         self.configure()
@@ -59,6 +60,6 @@ class Spots(Mode):
         elif self.axes[axis] == -1.0:
             self.axes[axis] = -0.9
         else:
-            self.axes[axis] = round(self.axes[axis] +  choice([-0.1, 0.1]), 1)
+            self.axes[axis] = round(self.axes[axis] + choice([-0.1, 0.1]), 1)
 
         return self.manager.get_sort(tuple(self.axes.values()))
