@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install load-sorts network-manager clean
+setup: i2c apt-installs install system-install load-sorts network-manager clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting hat..."
@@ -24,6 +24,9 @@ apt-installs:
 		python3-dev \
 		redis
 
+i2c:
+	sudo raspi-config nonint do_i2c 0
+
 prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
 	sudo chown pi /var/log/hatlights/
@@ -33,10 +36,10 @@ system-install: systemd restart-services
 systemd: prepare-logs
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/manager.service
 
-restart-services:
+restart:
 	sudo service manager restart
 
-stop-services:
+stop:
 	sudo service manager stop
 
 install:

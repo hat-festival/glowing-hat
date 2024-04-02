@@ -35,7 +35,6 @@ From a box-fresh install of [64-bit Raspberry Pi Debian 12 (bookworm)](https://w
 
 ```bash
 sudo raspi-config nonint do_hostname hatlights
-sudo raspi-config nonint do_i2c 0
 sudo reboot
 ```
 
