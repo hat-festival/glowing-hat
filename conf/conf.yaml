@@ -12,11 +12,11 @@ oled:
     x: 128
     y: 32
   font:
-    name: sinclair
+    name: SourceCodePro-Light
     size: 16
   offsets:
     x: 4
-    y: 10
+    y: 6
 
 rotary:
   pins:
@@ -30,3 +30,7 @@ fourier:
   sample-rate: 48000
   hop-size: 1024
   silence-threshold: -40
+
+wifi:
+  ssids:
+    phone: G6_2145

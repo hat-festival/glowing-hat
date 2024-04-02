@@ -34,7 +34,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/show-mode.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "3f8fa825bed87234dd0c3cf4a8e1703f1d1a6385a894c2bb6e0633d618fd6e43",
+            "1439d1740ead7dd324cec13ce7d9406c603368759291bb6542b2963aaf78ef05",
         )
 
     def test_boot_screen(self):
@@ -47,15 +47,15 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/boot.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "0f6c8013d499e4bde4bf5a881e7a495ad4002051c53600f4fe515cfd8c60d4c1",
+            "53d1f298e37f10bb218e70d81484de987265727ebb7ac00d44008a26597467ff",
         )
 
-    @patch("socket.gethostname")
+    @patch("subprocess.check_output")
     @patch("socket.socket")
     def test_ip_address(self, mocked, mocked_method):
         """Test it generates the ip-address screen."""
         mocked.return_value.getsockname.return_value = ["192.168.168.111"]
-        mocked_method.return_value = "testhost"
+        mocked_method.return_value = b"GCHQ\nlo\n"
 
         self.cus.set("display-type", "ip-address")
 
@@ -65,7 +65,7 @@ class TestImageGenerator(TestCase):
         checksum = sha256(Path("tmp/ip-address.png").read_bytes()).hexdigest()
         self.assertEqual(  # noqa: PT009
             checksum,
-            "ee75f82ad78abdf2e1c66aef90483b42966be13c5e7a10f4f194668f8d286be1",
+            "96382afe746ea88b24ebaa5441a07ce207a9eff684841052e4e09af0ebda7d1e",
         )
 
     def test_brightness_bar(self):
@@ -74,19 +74,19 @@ class TestImageGenerator(TestCase):
         expectations = (
             (
                 1.0,
-                "5ac0a7a268eb7f237dfc0b095f988cdc6f36478ea382c08611360a7de84ca433",
+                "5b8efb713c806876da94cfdfe9653715f3b814ac56bb589f340a5ad6a0a1303d",
             ),
             (
                 0.5,
-                "50d343980e35ad2142b6033519b3ff812672a1bf4d9da4acbb3eb7f078cdefad",
+                "d800fa77430878ab6f564a4c3e549ef70cbfca60d25ffaf84e4c079042c9f25d",
             ),
             (
                 0.1,
-                "b447358f6885182ab18246af3be9082b46ace0cf9cc95215f3c4d962f128466e",
+                "c95f691b79627576b052274af36d5459ce4a4b66555e1dfaeb07a6a9612dbc14",
             ),
             (
                 0.0,
-                "3f8fa825bed87234dd0c3cf4a8e1703f1d1a6385a894c2bb6e0633d618fd6e43",
+                "1439d1740ead7dd324cec13ce7d9406c603368759291bb6542b2963aaf78ef05",
             ),
         )
 

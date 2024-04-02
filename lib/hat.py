@@ -1,10 +1,7 @@
-from colorsys import hsv_to_rgb
-
 from lib.brightness_controllers.brightness_control import BrightnessControl
 from lib.pixel import Pixel
-from lib.tools.gamma import gamma
 from lib.tools.scaler import Scaler
-from lib.tools.utils import is_pi
+from lib.tools.utils import is_pi, rgb_from_hsv
 
 if is_pi():  # nocov
     import board
@@ -119,21 +116,9 @@ class Hat:
 
 def rgb_for(pixel, brightness_factor):
     """Make the RGB value from a pixel's state."""
-    return gamma_correct(
-        tuple(
-            int(x * 255)
-            for x in hsv_to_rgb(
-                pixel["hue"],
-                pixel["saturation"],
-                pixel["value"] * brightness_factor,
-            )
-        )
+    return rgb_from_hsv(
+        pixel["hue"], pixel["saturation"], pixel["value"] * brightness_factor
     )
-
-
-def gamma_correct(triple):
-    """Gamma-correct a colour."""
-    return tuple(map(lambda n: gamma[int(n)], triple))  # noqa: C417
 
 
 class FakeLights(list):

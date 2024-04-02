@@ -66,21 +66,19 @@ class Controller:
         self.custodian.set("display-type", "show-mode")
         self.oled.update()
 
-    def hard_reset(self):
+    def reset_hat(self):
         """Reset when we get stuck."""
         self.custodian.set("display-type", "reset")
         self.oled.update()
-        logging.info("doing hard reset")
+        logging.info("resetting hat")
 
         service = next(Path("etc", "systemd").glob("*")).parts[-1].split(".")[0]
         os.system(f"/usr/bin/sudo service {service} restart")  # noqa: S605
 
-    def rediscover_wifi(self):
-        """Force the wifi to restart to find a new network."""
-        self.custodian.set("display-type", "wifi-reload")
+    def reboot(self):
+        """If we get really stuck."""
+        self.custodian.set("display-type", "reboot")
         self.oled.update()
-        logging.info("reconfiguring wifi")
+        logging.info("rebooting pi")
 
-        os.system("/usr/bin/sudo nmcli radio wifi off && /usr/bin/sudo nmcli radio wifi on")  # noqa: S605
-        self.custodian.set("display-type", "display-mode")
-        self.oled.update()
+        os.system("/usr/sbin/reboot")  # noqa: S605
