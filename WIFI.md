@@ -34,3 +34,5 @@ It seems to connect to the highest-priority network I can see when it boots - yo
 ```
 sudo wpa_cli -i wlan0 reconfigure
 ```
+
+https://forums.raspberrypi.com/viewtopic.php?t=360175

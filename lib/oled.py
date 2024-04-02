@@ -3,7 +3,7 @@ import socket
 from PIL import Image, ImageDraw, ImageFont
 
 from lib.conf import conf
-from lib.tools.utils import is_pi
+from lib.tools.utils import current_ssid, is_pi
 
 if is_pi():  # nocov
     import adafruit_ssd1306
@@ -102,11 +102,12 @@ class ImageGenerator:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.connect(("8.8.8.8", 80))
 
-        hostname = socket.gethostname()
         ipaddress = sock.getsockname()[0]
 
-        self.add_text(hostname, 0, 0)
-        self.add_text(ipaddress, 0, self.height / 2, font_adjust=6)
+        self.add_text(
+            current_ssid(), self.offsets["x"], 0, font_adjust=3, upper_case=True
+        )
+        self.add_text(ipaddress, self.offsets["x"], 16, font_adjust=3)
 
     def boot(self):
         """Boot-time message."""
@@ -114,6 +115,14 @@ class ImageGenerator:
 
         # TODO: move these to a conf file?
         message = "booting"
+        self.add_text(message, self.offsets["x"], self.offsets["y"])
+
+    def reboot(self):
+        """Reboot message."""
+        self.set_image(self.width, self.height)
+
+        # TODO: move these to a conf file?
+        message = "rebooting"
         self.add_text(message, self.offsets["x"], self.offsets["y"])
 
     def reset(self):
@@ -124,9 +133,17 @@ class ImageGenerator:
 
         self.add_text(message, self.offsets["x"], self.offsets["y"])
 
+    def wifi_switch(self):
+        """Reload the wifi."""
+        self.set_image(self.width, self.height)
+
+        message = "switching wifi"
+
+        self.add_text(message, self.offsets["x"], self.offsets["y"])
+
     def add_text(self, text, across, down, upper_case=False, font_adjust=None):  # noqa: FBT002, PLR0913
         """Add some text."""
-        text = text.title()
+        text = text.lower()
         if upper_case:
             text = text.upper()
 

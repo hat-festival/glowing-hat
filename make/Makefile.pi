@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: apt-installs install system-install load-sorts clean
+setup: apt-installs install system-install load-sorts network-manager clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting hat..."
@@ -28,10 +28,6 @@ prepare-logs:
 	sudo mkdir -p /var/log/hatlights/
 	sudo chown pi /var/log/hatlights/
 
-fix-alsa:
-	sudo sed -i'' "s/\(^pcm.* [^{].*\)/#\1/" /usr/share/alsa/alsa.conf
-	sudo sed -i'' "s/#pcm.cards cards.pcm/pcm.cards cards.pcm/" /usr/share/alsa/alsa.conf
-
 system-install: systemd restart-services
 
 systemd: prepare-logs
@@ -49,9 +45,11 @@ install:
 clean:
 	sudo rm -fr $$(find . -name __pycache__)
 
-wpa:
-	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
-	sudo ln -s $$(pwd)/etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant
+network-manager:
+	# TODO: try these as symlinks
+	sudo cp $$(pwd)/etc/NetworkManager/system-connections/* /etc/NetworkManager/system-connections/
+	sudo chmod 0600 /etc/NetworkManager/system-connections/*
+	sudo nmcli connection reload
 
 load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py

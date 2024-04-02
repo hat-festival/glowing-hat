@@ -66,11 +66,19 @@ class Controller:
         self.custodian.set("display-type", "show-mode")
         self.oled.update()
 
-    def hard_reset(self):
+    def reset_hat(self):
         """Reset when we get stuck."""
         self.custodian.set("display-type", "reset")
         self.oled.update()
-        logging.info("doing hard reset")
+        logging.info("resetting hat")
 
         service = next(Path("etc", "systemd").glob("*")).parts[-1].split(".")[0]
         os.system(f"/usr/bin/sudo service {service} restart")  # noqa: S605
+
+    def reboot(self):
+        """If we get really stuck."""
+        self.custodian.set("display-type", "reboot")
+        self.oled.update()
+        logging.info("rebooting pi")
+
+        os.system("/usr/sbin/reboot")  # noqa: S605
