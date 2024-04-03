@@ -28,10 +28,10 @@ i2c:
 	sudo raspi-config nonint do_i2c 0
 
 prepare-logs:
-	sudo mkdir -p /var/log/hatlights/
-	sudo chown pi /var/log/hatlights/
+	sudo mkdir -p /var/log/${PROJECT}/
+	sudo chown pi /var/log/${PROJECT}/
 
-system-install: systemd restart-services
+system-install: systemd restart
 
 systemd: prepare-logs
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/manager.service
@@ -56,3 +56,6 @@ network-manager:
 
 load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py
+
+foreground:
+	LOGLEVEL=debug python manager.py

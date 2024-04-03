@@ -31,7 +31,7 @@ The data line is connected to [pin 21](lib/hat.py#L23) ([physical pin 40](https:
 
 From a box-fresh install of [64-bit Raspberry Pi Debian 12 (bookworm)](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit) (Note: I turned off device-filtering in the [Raspberry Pi imager](https://www.raspberrypi.com/software/) because it didn't want to let me have Bookworm for my Zero):
 
-### Set hostname and enable i2c
+### Set hostname
 
 ```bash
 sudo raspi-config nonint do_hostname hatlights
