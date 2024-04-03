@@ -4,9 +4,11 @@ from lib.modes.equaliser import Equaliser
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
 from lib.modes.roller import Roller
+from lib.modes.spotlights import Spotlights
 from lib.modes.sweeper import Sweeper
 
 modes = {
+    "spotlights": Spotlights,
     "sweeper": Sweeper,
     "crawler": Crawler,
     "pulsator": Pulsator,

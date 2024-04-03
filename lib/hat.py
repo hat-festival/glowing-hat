@@ -52,6 +52,11 @@ class Hat:
         """Sort our pixels along an axis."""
         self.pixels.sort(key=lambda w: w[axis])
 
+    # TODO: needs a proper name
+    def sort_plain(self):
+        """Sort by our indeces."""
+        self.pixels.sort(key=lambda x: x["index"])
+
     def sort_by_indeces(self, indeces):
         """Sort by some arbitrary indeces."""
         self.pixels = [
@@ -93,6 +98,10 @@ class Hat:
         """Apply one `value` to all pixels."""
         self.apply_singular_thing(value, "value")
 
+    def apply_saturation(self, value):
+        """Apply one `saturation` to all pixels."""
+        self.apply_singular_thing(value, "saturation")
+
     ###
 
     def dim_pixels_greater_than_foo(self, scale_factor, value, axis="y"):
@@ -102,6 +111,11 @@ class Hat:
                 pixel["value"] = scale_factor
             else:
                 pixel["value"] = 1.0
+
+    def off(self):
+        """Make it dark."""
+        self.apply_value(0)
+        self.light_up()
 
     ###
 

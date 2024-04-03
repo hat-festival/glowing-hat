@@ -1,3 +1,4 @@
+import os
 from collections import deque
 from random import shuffle
 
@@ -10,13 +11,15 @@ def boot_hat(custodian, oled, hat):
     custodian.set("display-type", "boot")
     oled.update()
 
-    hue_source = TimeBasedHueSource(seconds_per_rotation=5)
-    for i in range(10, 3, -1):
-        hue = hue_source.hue()
-        colour_from_hue(hue)
-        populate_hat(hat, hue=hue, value=i / 10)
+    if "LOGLEVEL" not in os.environ:
+        hue_source = TimeBasedHueSource(seconds_per_rotation=5)
+        for i in range(10, 3, -1):
+            hue = hue_source.hue()
+            colour_from_hue(hue)
+            populate_hat(hat, hue=hue, value=i / 10)
 
-    off()
+        off()
+
     custodian.set("display-type", "show-mode")
     oled.update()
 

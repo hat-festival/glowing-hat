@@ -31,4 +31,15 @@ ci:
 	docker run --rm ${ID} test-ci
 
 push-code:
-	rsync -av --delete --exclude tmp . pi@hatlights.local:hatlights/
+	rsync \
+		--archive \
+		--verbose \
+		--delete \
+		--exclude tmp \
+		--exclude .git \
+		--exclude assets \
+		--exclude analysis \
+		--exclude camera \
+		--exclude debug \
+		--exclude htmlcov \
+		. pi@hatlights.local:hatlights/
