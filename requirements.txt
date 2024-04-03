@@ -22,7 +22,7 @@ idna==3.6
 lgpio==0.2.2.0
 numpy==1.26.4
 pigpio==1.78
-pillow==10.2.0
+pillow==10.3.0
 PyAudio==0.2.14
 pyftdi==0.55.0
 pyserial==3.5
