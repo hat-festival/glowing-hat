@@ -36,6 +36,8 @@ system-install: systemd restart
 systemd: prepare-logs
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/manager.service
 
+start: restart
+
 restart:
 	sudo service manager restart
 
@@ -58,4 +60,4 @@ load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py
 
 foreground:
-	LOGLEVEL=debug python manager.py
+	sudo LOGLEVEL=debug python manager.py

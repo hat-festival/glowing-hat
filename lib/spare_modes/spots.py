@@ -1,4 +1,4 @@
-from random import choice, random
+from random import choice
 
 from lib.hue_sources.time_based_hue_source import TimeBasedHueSource
 from lib.mode import Mode
@@ -47,10 +47,10 @@ class Spots(Mode):
         # if random() > self.weighting:
         #     self.favoured_increment = choice([-0.1, 0.1])
 
-        # if self.axes[self.favoured_axis] == 1.0 and self.favoured_increment == 0.1 or self.axes[self.favoured_axis] == -1.0 and self.favoured_increment == -0.1:
+        # if self.axes[self.favoured_axis] == 1.0 and self.favoured_increment == 0.1 or self.axes[self.favoured_axis] == -1.0 and self.favoured_increment == -0.1:  # noqa: E501
         #     self.favoured_axis = choice(tuple(self.axes.keys()))
 
-        # self.axes[self.favoured_axis] = round(self.axes[self.favoured_axis] + self.favoured_increment, 1)
+        # self.axes[self.favoured_axis] = round(self.axes[self.favoured_axis] + self.favoured_increment, 1)  # noqa: E501
         # from lib.tools.logger import logging
         # logging.debug(self.axes)
 
@@ -60,6 +60,6 @@ class Spots(Mode):
         elif self.axes[axis] == -1.0:
             self.axes[axis] = -0.9
         else:
-            self.axes[axis] = round(self.axes[axis] + choice([-0.1, 0.1]), 1)
+            self.axes[axis] = round(self.axes[axis] + choice([-0.1, 0.1]), 1)  # noqa: S311
 
         return self.manager.get_sort(tuple(self.axes.values()))
