@@ -6,7 +6,7 @@ adafruit-circuitpython-neopixel==6.3.11
 adafruit-circuitpython-pixelbuf==2.0.4
 adafruit-circuitpython-requests==3.2.2
 adafruit-circuitpython-ssd1306==2.12.17
-adafruit-circuitpython-typing==1.10.2
+adafruit-circuitpython-typing==1.10.3
 Adafruit-PlatformDetect==3.62.0
 Adafruit-PureIO==1.1.11
 async-timeout==4.0.3
