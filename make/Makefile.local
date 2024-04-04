@@ -42,4 +42,5 @@ push-code:
 		--exclude camera \
 		--exclude debug \
 		--exclude htmlcov \
+		--exclude presentations \
 		. pi@hatlights.local:hatlights/
