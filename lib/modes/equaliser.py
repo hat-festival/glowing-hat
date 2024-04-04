@@ -21,9 +21,12 @@ class Equaliser(Mode):
             self.hat.update_hues_from_angles(offset=rotation)
             rotation = (rotation + self.conf["rotation"]) % 360
 
-            self.hat.dim_pixels_greater_than_foo(
-                self.conf["scale-factor"], self.active_y, axis="y"
-            )
+            for pixel in self.hat.pixels:
+                if pixel["y"] >= self.active_y:
+                    pixel["value"] = self.conf["scale-factor"]
+                else:
+                    pixel["value"] = 1.0
+
             self.hat.light_up()
 
             rotation += self.conf["rotation"]

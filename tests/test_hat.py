@@ -101,15 +101,6 @@ def test_applying_value():
     assert [pixel["value"] for pixel in hat] == [0.75, 0.75, 0.75, 0.75, 0.75]
 
 
-def test_dimming_pixels_greater_than_foo():
-    """Test we can dim some pixels."""
-    hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")
-    assert [pixel["value"] for pixel in hat] == [1.0, 1.0, 1.0, 1.0, 1.0]
-
-    hat.dim_pixels_greater_than_foo(0.1, 0.2)
-    assert [pixel["value"] for pixel in hat] == [0.1, 1.0, 1.0, 1.0, 1.0]
-
-
 def test_we_support_len():
     """Test out list supports `len()`."""
     hat = Hat(locations="tests/fixtures/hat/locations/simple.yaml")

@@ -38,5 +38,6 @@ class Sweeper(Mode):
 
                 count += 1  # noqa: SIM113
 
+            # TODO: detect when the crest is passing over before showing
             if not self.blip_index:
                 self.blip_index = randint(0, 99)  # noqa: S311
