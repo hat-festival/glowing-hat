@@ -58,3 +58,8 @@ spotlights:
   axes:
     - x
     - z
+
+breather:
+  scale-factor: 0.6
+  step: 2
+  pause-time: 1.0

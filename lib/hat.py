@@ -78,7 +78,7 @@ class Hat:
         """Apply a list of values to our pixels."""
         self.apply_list(values, "value")
 
-    def update_hues_from_angles(self, offset):
+    def update_hues_from_angles(self, offset=0):
         """Update hues given an offset."""
         for pixel in self.pixels:
             pixel.hue_from_angle(offset=offset)
@@ -101,16 +101,6 @@ class Hat:
     def apply_saturation(self, value):
         """Apply one `saturation` to all pixels."""
         self.apply_singular_thing(value, "saturation")
-
-    ###
-
-    def dim_pixels_greater_than_foo(self, scale_factor, value, axis="y"):
-        """Colour-scale some of our pixels."""
-        for pixel in self.pixels:
-            if pixel[axis] >= value:
-                pixel["value"] = scale_factor
-            else:
-                pixel["value"] = 1.0
 
     def off(self):
         """Make it dark."""

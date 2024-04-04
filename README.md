@@ -41,7 +41,7 @@ sudo reboot
 ### Install `git`
 
 ```bash
-sudo apt -y update && sudo apt install -y git
+sudo apt --yes update && sudo apt install --no-install-recommends --yes git
 ```
 
 ### Get this repo
