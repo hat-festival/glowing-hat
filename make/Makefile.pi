@@ -51,7 +51,6 @@ clean:
 	sudo rm -fr $$(find . -name __pycache__)
 
 network-manager:
-	# TODO: try these as symlinks
 	sudo cp $$(pwd)/etc/NetworkManager/system-connections/* /etc/NetworkManager/system-connections/
 	sudo chmod 0600 /etc/NetworkManager/system-connections/*
 	sudo nmcli connection reload

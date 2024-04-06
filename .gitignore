@@ -7,4 +7,4 @@ etc/wpa_supplicant/wpa_supplicant.conf
 TODO.md
 SYSTEM.md
 htmlcov/
-etc/NetworkManager/system-connections/
+etc/NetworkManager/system-connections/*

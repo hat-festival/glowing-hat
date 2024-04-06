@@ -21,7 +21,6 @@ class Breather(Mode):
             self.breathe(less_than, hue, "-")
             self.breathe(greater_than, hue, "-")
 
-            hue = self.source.hue()
             self.breathe(greater_than, hue)
             self.breathe(less_than, hue)
 
