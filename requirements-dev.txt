@@ -9,7 +9,7 @@ jedi==0.19.1
 matplotlib-inline==0.1.6
 numpy==1.26.4
 packaging==24.0
-parso==0.8.3
+parso==0.8.4
 pexpect==4.9.0
 pillow==10.3.0
 pluggy==1.4.0
