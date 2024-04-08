@@ -13,8 +13,7 @@ class TestAxisManager(TestCase):
 
     def setUp(self):
         """Do some setup."""
-        self.redis = Redis()
-        self.redis.flushall()
+        Path("tmp").mkdir(exist_ok=True)
 
     def test_archive_creation(self):
         """Test it creates an archive of `sorts`."""
