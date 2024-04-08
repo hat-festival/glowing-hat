@@ -30,7 +30,7 @@ class Pulsator(Mode):
 
 
 class Throbber:
-    """Cos renderer."""
+    """Sin renderer."""
 
     def __init__(self, minmax):
         """Construct."""

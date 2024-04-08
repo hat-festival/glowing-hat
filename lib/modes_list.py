@@ -8,8 +8,8 @@ from lib.modes.roller import Roller
 from lib.modes.sweeper import Sweeper
 
 modes = {
-    "breather": Breather,
     "brainwaves": BrainWaves,
+    "breather": Breather,
     "crawler": Crawler,
     "equaliser": Equaliser,
     "larsen": Larsen,
