@@ -26,9 +26,9 @@ class Breather(Mode):
 
             sleep(self.conf["pause-time"])
 
-    def breathe(self, method, hue, offset="+"):
+    def breathe(self, method, hue, direction="+"):
         """Take a breath."""
-        angle_offset = 90 if offset == "+" else -90
+        angle_offset = 90 if direction == "+" else -90
 
         for angle in range(0, 180, self.conf["step"]):
             sin = normalised_sin(angle + angle_offset)

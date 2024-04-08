@@ -4,6 +4,11 @@ brainwaves:
   jump: 2
   steps: 100
 
+breather:
+  scale-factor: 0.6
+  step: 3
+  pause-time: 1.0
+
 crawler:
   max-jump: 2
   cube-size: 10 # for 1x1 sort set
@@ -43,13 +48,6 @@ roller:
   roll-sorter-at: 7
   rotate-amount: 2
 
-sweeper:
-  blip-move-threshold: 0.9
-  hues:
-    blip: 1.0
-    main: 0.333333
-  jump: 4
-
 spotlights:
   spots: 3
   spot-size: 20
@@ -59,7 +57,9 @@ spotlights:
     - x
     - z
 
-breather:
-  scale-factor: 0.6
-  step: 3
-  pause-time: 1.0
+sweeper:
+  blip-move-threshold: 0.9
+  hues:
+    blip: 1.0
+    main: 0.333333
+  jump: 4

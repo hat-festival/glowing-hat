@@ -35,14 +35,15 @@ def get_random_sort(cube_size, hat_length, manager):
     """Get a random `sort`."""
     indeces = []
     while len(indeces) < hat_length:
-        origin = [
-            randint(-cube_size, cube_size) / 10,  # noqa: S311
-            randint(-cube_size, cube_size) / 10,  # noqa: S311
-            randint(-cube_size, cube_size) / 10,  # noqa: S311
-        ]
+        origin = [random_position(cube_size)] * 3
 
         # at least one point must be `1.0` or the sorts can be shorter than 100
         origin[randint(0, 2)] = 1.0  # noqa: S311
         indeces = manager.get_sort(tuple(origin))
 
     return indeces
+
+
+def random_position(cube_size):
+    """Get a random position."""
+    return randint(-cube_size, cube_size) / 10  # noqa: S311
