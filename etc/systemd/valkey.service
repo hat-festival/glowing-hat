@@ -1,0 +1,16 @@
+[Unit]
+Description=Key-Val store
+
+[Service]
+User=root
+WorkingDirectory=/home/pi/
+ExecStart=/usr/local/bin/valkey-server
+Restart=always
+StandardInput=null
+StandardOutput=file:/var/log/valkey/valkey.log
+StandardError=file:/var/log/valkey/valkey.err
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
