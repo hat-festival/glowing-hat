@@ -51,9 +51,11 @@ clean:
 	sudo rm -fr $$(find . -name __pycache__)
 
 network-manager:
-	sudo cp $$(pwd)/etc/NetworkManager/system-connections/* /etc/NetworkManager/system-connections/
-	sudo chmod 0600 /etc/NetworkManager/system-connections/*
-	sudo nmcli connection reload
+	test -f ./etc/NetworkManager/system-connections/preconfigured.nmconnection && \
+	sudo cp $$(pwd)/etc/NetworkManager/system-connections/* /etc/NetworkManager/system-connections/ && \
+	sudo chmod 0600 /etc/NetworkManager/system-connections/* && \
+	sudo nmcli connection reload || \
+	echo
 
 load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py
