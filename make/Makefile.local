@@ -43,4 +43,12 @@ push-code:
 		--exclude debug \
 		--exclude htmlcov \
 		--exclude presentations \
+		--exclude Makefile \
 		. pi@hatlights.local:hatlights/
+
+push-wifi:
+	rsync \
+		--archive \
+		--verbose \
+		--delete \
+		etc/NetworkManager/ pi@hatlights.local:hatlights/etc/NetworkManager/
