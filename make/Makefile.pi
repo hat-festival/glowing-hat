@@ -2,7 +2,7 @@ include make/Makefile.common
 
 default: setup
 
-setup: i2c apt-installs install system-install load-sorts network-manager clean
+setup: i2c apt-installs build-valkey install system-install load-sorts network-manager clean
 	@echo "========================================================"
 	@echo
 	@echo "Install complete, rebooting hat..."
@@ -16,13 +16,13 @@ apt-installs:
 		--no-install-recommends \
 		--yes \
 		aubio-tools \
+		git \
 		libatlas-base-dev \
 		libopenblas-dev \
 		libopenjp2-7-dev \
 		portaudio19-dev \
 		python3-pip \
-		python3-dev \
-		redis
+		python3-dev
 
 i2c:
 	sudo raspi-config nonint do_i2c 0
@@ -31,10 +31,17 @@ prepare-logs:
 	sudo mkdir -p /var/log/${PROJECT}/
 	sudo chown pi /var/log/${PROJECT}/
 
-system-install: systemd restart
+	sudo mkdir -p /var/log/valkey/
+	sudo chown pi /var/log/valkey/
+
+valkey:
+	sudo service valkey start
+
+system-install: systemd valkey restart
 
 systemd: prepare-logs
 	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/manager.service
+	sudo systemctl enable -f /home/pi/${PROJECT}/etc/systemd/valkey.service
 
 start: restart
 
@@ -62,3 +69,10 @@ load-sorts:
 
 foreground: stop
 	sudo LOGLEVEL=debug python manager.py
+
+build-valkey:
+	cd /tmp && \
+	git clone https://github.com/valkey-io/valkey.git && \
+	cd /tmp/valkey && \
+	make && \
+	sudo make install
