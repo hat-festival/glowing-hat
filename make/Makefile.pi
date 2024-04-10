@@ -35,6 +35,7 @@ prepare-logs:
 	sudo chown pi /var/log/valkey/
 
 valkey:
+	sudo mkdir -p /var/lib/valkey
 	sudo service valkey start
 
 system-install: systemd valkey restart
@@ -71,8 +72,10 @@ foreground: stop
 	sudo LOGLEVEL=debug python manager.py
 
 build-valkey:
-	cd /tmp && \
+	sudo mkdir -p /opt/vendor
+	sudo chown pi:pi /opt/vendor
+	cd /opt/vendor && \
 	git clone https://github.com/valkey-io/valkey.git && \
-	cd /tmp/valkey && \
+	cd /opt/vendor/valkey && \
 	make && \
 	sudo make install

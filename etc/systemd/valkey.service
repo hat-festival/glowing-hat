@@ -3,7 +3,7 @@ Description=Key-Val store
 
 [Service]
 User=root
-WorkingDirectory=/home/pi/
+WorkingDirectory=/var/lib/valkey
 ExecStart=/usr/local/bin/valkey-server
 Restart=always
 StandardInput=null
