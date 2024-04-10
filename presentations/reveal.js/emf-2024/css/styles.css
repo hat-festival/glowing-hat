@@ -1,0 +1,24 @@
+@import"https://fonts.googleapis.com/css2?family=Titan One";
+@import"https://fonts.googleapis.com/css2?family=Quicksand";
+
+:root {
+    --pale-green: rgb(175, 201, 68);
+    --mid-green: rgb(82, 131, 41);
+    --dark-green: rgb(33, 48, 24);
+    --yellow: rgb(249, 226, 0);
+    --orange: rgb(246, 127, 2);
+    --pink: rgb(245, 80, 137);
+    --blue: rgb(46, 173, 217);
+
+    --r-background-color: var(--dark-green);
+    --r-heading-color: var(--yellow);
+    --r-main-color: var(--pale-green);
+    --r-link-color: var(--pink);
+
+    --r-heading-font: "Titan One";
+    --r-main-font: "Quicksand";
+}
+
+hr {
+    border-color: var(--orange);
+}
