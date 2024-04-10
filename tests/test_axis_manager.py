@@ -2,7 +2,6 @@ from pathlib import Path
 from unittest import TestCase
 
 import pytest
-from redis import Redis
 
 from lib.sorters.axis_manager import AxisManager
 
