@@ -9,17 +9,23 @@
 
 	<link rel="stylesheet" href="dist/reset.css">
 	<link rel="stylesheet" href="dist/reveal.css">
-	<link rel="stylesheet" href="dist/theme/moon.css">
+	<link rel="stylesheet" href="dist/theme/simple.css">
 
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+	<link rel="stylesheet" href="emf-2024/css/styles.css">
 </head>
 
 <body>
 	<div class="reveal">
 		<div class="slides">
-			<section data-markdown="slides/hello.md"></section>
-			<section data-markdown="slides/hello.md"></section>
+			<section
+				data-background-image="emf-2024/assets/logomark.svg"
+				data-background-size="2rem"
+				data-background-position="bottom 1rem right 1rem"
+				data-markdown="emf-2024/slides/slides.md">
+			</section>
 		</div>
 	</div>
 
@@ -35,6 +41,7 @@
 			hash: true,
 			controls: false,
 			progress: false,
+			transition: "convex",
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 		});
