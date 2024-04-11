@@ -58,7 +58,7 @@ spotlights:
     - z
 
 sweeper:
-  blip-move-threshold: 0.8
+  blip-move-threshold: 0.9
   hues:
     blip: 1.0
     main: 0.333333

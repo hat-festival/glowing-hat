@@ -24,6 +24,11 @@ def test_sweeping():
             hat.brightness_control.factor.value = 0.5
             swp = Sweeper(hat)
             swp.max_laps = 6
+
+            swp.conf["hues"]["blip"] = 1.0
+            swp.conf["hues"]["main"] = 0.333333
+            swp.conf["jump"] = 4
+
             swp.run()
 
             assert hat.lights.record == fixture
