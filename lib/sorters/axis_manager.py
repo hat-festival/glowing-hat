@@ -1,5 +1,6 @@
 import gzip
 import json
+import platform
 import shutil
 from pathlib import Path
 from random import randint
@@ -14,13 +15,14 @@ from lib.tools.logger import logging
 class AxisManager:
     """Manage the pre-rendered hat orderings."""
 
-    def __init__(
-        self, archive_path="sorts", locations="conf/locations.yaml", cube_radius=1
-    ):
+    def __init__(self, archive_path="sorts", locations=None, cube_radius=1):
         """Construct."""
         self.archive_path = archive_path
         self.cube_radius = cube_radius
         self.archive = Path(archive_path, f"sorts-{cube_radius}x{cube_radius}.json.gz")
+
+        if not locations:
+            locations = f"conf/{platform.node()}/locations.yaml"
         self.sorter = CubeSorter(locations)
         self.redis = Redis()
 

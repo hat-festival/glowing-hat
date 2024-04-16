@@ -1,0 +1,10 @@
+lights: 100
+
+data-pin: 21
+
+fourier:
+  device-index: 0
+  buffer-size: 1024
+  sample-rate: 48000
+  hop-size: 1024
+  silence-threshold: -40

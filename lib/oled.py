@@ -19,14 +19,16 @@ class Oled:
         self.conf = conf["oled"]
         self.custodian = custodian
 
+        self.display = FakeDisplay()
         if is_pi():
-            i2c = busio.I2C(SCL, SDA)
-            self.display = adafruit_ssd1306.SSD1306_I2C(
-                self.conf["size"]["x"], self.conf["size"]["y"], i2c
-            )
+            try:
+                i2c = busio.I2C(SCL, SDA)
+                self.display = adafruit_ssd1306.SSD1306_I2C(
+                    self.conf["size"]["x"], self.conf["size"]["y"], i2c
+                )
 
-        else:
-            self.display = FakeDisplay()
+            except ValueError:
+                pass
 
         self.gen = ImageGenerator(self.custodian, self.conf)
 

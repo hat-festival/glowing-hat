@@ -1,13 +1,36 @@
-import os
+import contextlib
+import platform
+from collections import UserDict
 from pathlib import Path
 
 import yaml
 
-CONF_PATH = os.environ.get("CONF_PATH", "conf")
 
-conf = yaml.safe_load(Path(CONF_PATH, "conf.yaml").read_text(encoding="UTF-8"))
+class HatConf(UserDict):
+    """Some conf."""
 
-exclusions = ["conf", "locations"]
+    def __init__(self, conf_root="conf"):
+        """Construct."""
+        self.conf_root = conf_root
+        self.data = yaml.safe_load(
+            Path(self.conf_root, "conf.yaml").read_text(encoding="UTF-8")
+        )
 
-for conf_file in filter(lambda x: x.stem not in exclusions, Path("conf").glob("*")):
-    conf[conf_file.stem] = yaml.safe_load(Path(conf_file).read_text(encoding="UTF-8"))
+        with contextlib.suppress(FileNotFoundError):
+            self.per_hat_data = yaml.safe_load(
+                Path(self.conf_root, platform.node(), "conf.yaml").read_text(
+                    encoding="UTF-8"
+                )
+            )
+
+            self.data.update(self.per_hat_data)
+
+        with contextlib.suppress(FileNotFoundError):
+            self.data["modes"] = yaml.safe_load(
+                Path(self.conf_root, platform.node(), "modes.yaml").read_text(
+                    encoding="utf-8"
+                )
+            )
+
+
+conf = HatConf()
