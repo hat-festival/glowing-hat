@@ -1,3 +1,4 @@
+from lib.conf import conf
 from lib.modes.breather import Breather
 from lib.modes.crawler import Crawler
 from lib.modes.equaliser import Equaliser
@@ -6,7 +7,7 @@ from lib.modes.pulsator import Pulsator
 from lib.modes.roller import Roller
 from lib.modes.sweeper import Sweeper
 
-modes = {
+lookups = {
     "sweeper": Sweeper,
     "breather": Breather,
     "crawler": Crawler,
@@ -15,6 +16,11 @@ modes = {
     "pulsator": Pulsator,
     "roller": Roller,
 }
+
+
+modes = {}
+for key in list(conf["modes"].keys()):
+    modes[key] = lookups[key]
 
 
 def load_modes(custodian):

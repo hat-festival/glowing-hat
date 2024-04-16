@@ -1,4 +1,7 @@
+import platform
+
 from lib.brightness_controllers.brightness_control import BrightnessControl
+from lib.conf import conf
 from lib.pixel import Pixel
 from lib.tools.scaler import Scaler
 from lib.tools.utils import is_pi, rgb_from_hsv
@@ -15,13 +18,18 @@ if is_pi():  # nocov
 class Hat:
     """A list of Pixels."""
 
-    def __init__(self, locations="conf/locations.yaml"):
+    def __init__(self, locations=None):
         """Construct."""
+        if not locations:
+            locations = f"conf/{platform.node()}/locations.yaml"
+
         self.pixels = list(map(Pixel, Scaler(locations)))
 
         if is_pi():
             self.lights = NeoPixel(
-                board.D21, len(self.pixels), auto_write=False
+                getattr(board, f"D{conf['data-pin']}"),
+                len(self.pixels),
+                auto_write=False,
             )  # nocov
             self.brightness_control = BrightnessControl()
             self.brightness_control.run()

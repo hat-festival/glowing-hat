@@ -1,0 +1,16 @@
+lights: 100
+
+data-pin: 21
+
+rotary:
+  pins:
+    clk: 24
+    dt: 23
+    sw: 25
+
+fourier:
+  device-index: 0
+  buffer-size: 1024
+  sample-rate: 48000
+  hop-size: 1024
+  silence-threshold: -40

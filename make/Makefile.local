@@ -46,6 +46,22 @@ push-code:
 		--exclude Makefile \
 		. pi@hatlights.local:hatlights/
 
+push-string:
+	rsync \
+		--archive \
+		--verbose \
+		--delete \
+		--exclude tmp \
+		--exclude .git \
+		--exclude assets \
+		--exclude analysis \
+		--exclude camera \
+		--exclude debug \
+		--exclude htmlcov \
+		--exclude presentations \
+		--exclude Makefile \
+		. pi@lightstring.local:hatlights/
+
 push-wifi:
 	rsync \
 		--archive \

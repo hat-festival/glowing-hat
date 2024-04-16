@@ -1,8 +1,8 @@
-brainwaves:
-  axis-rotate-at: 10
-  hue-seconds-per-rotation: 1
-  jump: 2
-  steps: 100
+# brainwaves:
+#   axis-rotate-at: 10
+#   hue-seconds-per-rotation: 1
+#   jump: 2
+#   steps: 100
 
 breather:
   scale-factor: 0.6
@@ -48,14 +48,14 @@ roller:
   roll-sorter-at: 7
   rotate-amount: 2
 
-spotlights:
-  spots: 3
-  spot-size: 20
-  queue-length: 10
-  step-size: 1
-  axes:
-    - x
-    - z
+# spotlights:
+#   spots: 3
+#   spot-size: 20
+#   queue-length: 10
+#   step-size: 1
+#   axes:
+#     - x
+#     - z
 
 sweeper:
   blip-move-threshold: 0.9

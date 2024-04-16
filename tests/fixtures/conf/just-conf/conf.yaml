@@ -1,0 +1,6 @@
+lights: 100
+
+data-pin: 21
+
+random-hue:
+  distance: 0.3
