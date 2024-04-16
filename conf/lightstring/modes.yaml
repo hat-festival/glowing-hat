@@ -1,0 +1,13 @@
+larsen:
+  axes:
+    movement: x
+  head-width: 0.15
+  hue: 1.0
+  jump: 2
+  tail-proportion: 1.0
+
+pulsator:
+  hue-seconds-per-rotation: 5
+  steps:
+    max: 255
+    min: 48

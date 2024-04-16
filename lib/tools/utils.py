@@ -2,6 +2,7 @@ import subprocess
 from colorsys import hsv_to_rgb
 from pathlib import Path
 
+from lib.conf import conf
 from lib.tools.gamma import gamma
 
 
@@ -60,6 +61,11 @@ def gamma_correct(triple):
 
 def rgb_from_hsv(hue, saturation=1, value=1):
     """Make the RGB value from a pixel's state."""
-    return gamma_correct(
+    colour = gamma_correct(
         tuple(int(x * 255) for x in hsv_to_rgb(hue, saturation, value))
     )
+
+    if "grb" in conf:
+        colour = [colour[1], colour[0], colour[2]]
+
+    return colour

@@ -30,7 +30,9 @@ exec:
 ci:
 	docker run --rm ${ID} test-ci
 
-push-code:
+push-code: push-hat push-string
+
+push-hat:
 	rsync \
 		--archive \
 		--verbose \
@@ -44,7 +46,7 @@ push-code:
 		--exclude htmlcov \
 		--exclude presentations \
 		--exclude Makefile \
-		. pi@hatlights.local:hatlights/
+		. pi@hatlights.local:hatlights/ || true
 
 push-string:
 	rsync \

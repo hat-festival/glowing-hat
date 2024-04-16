@@ -1,6 +1,5 @@
-from multiprocessing import Process, Value
+from multiprocessing import Value
 
-from lib.brightness_controllers.rotator import Rotator
 from lib.button_bindings import brightness_bindings
 from lib.conf import conf
 from lib.custodian import Custodian
@@ -20,8 +19,6 @@ class BrightnessControl:
 
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
-        self.rotator = Rotator(self)
-        self.process = Process(target=self.rotator.rotate)
 
         brightness_bindings(self)
 
@@ -49,11 +46,3 @@ class BrightnessControl:
         self.custodian.set("brightness", self.factor.value)
         if is_pi():
             self.oled.update()  # nocov
-
-    def run(self):
-        """Do the work."""
-        self.run_rotary()
-
-    def run_rotary(self):
-        """Run the rotary."""
-        self.process.start()

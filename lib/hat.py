@@ -32,7 +32,6 @@ class Hat:
                 auto_write=False,
             )  # nocov
             self.brightness_control = BrightnessControl()
-            self.brightness_control.run()
 
         else:
             self.lights = FakeLights(len(self.pixels))
