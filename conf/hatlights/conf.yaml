@@ -2,10 +2,6 @@ lights: 100
 
 data-pin: 21
 
-brightness:
-  max: 1.0
-  default: 0.5
-
 fourier:
   device-index: 0
   buffer-size: 1024
