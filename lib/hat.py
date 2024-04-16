@@ -134,8 +134,11 @@ class FakeLights(list):
         for _ in range(self.length):
             self.append((0, 0, 0))
 
+        self.record = []
+
     def show(self):
         """Pretend to show the lights."""
+        self.record.append(self[:])
 
 
 class FakeBrightnessControl:

@@ -2,6 +2,7 @@ import gzip
 import json
 import shutil
 from pathlib import Path
+from random import randint
 
 from redis import Redis
 
@@ -62,3 +63,15 @@ class AxisManager:
         if type(key).__name__ == "tuple":
             key = SortKey(key).as_key
         return tuple(json.loads(self.redis.get(key).decode()))
+
+    def get_random_sort(self):
+        """Get a random `sort`."""
+        origin = [self.random_position()] * 3
+
+        # at least one point must be `1.0` or the sorts can be shorter than 100
+        origin[randint(0, 2)] = 1.0  # noqa: S311
+        return self.get_sort(tuple(origin))
+
+    def random_position(self):
+        """Get a random position."""
+        return randint(-self.cube_radius * 10, self.cube_radius * 10) / 10  # noqa: S311

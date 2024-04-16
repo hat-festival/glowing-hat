@@ -1,4 +1,3 @@
-from lib.modes.brain_waves import BrainWaves
 from lib.modes.breather import Breather
 from lib.modes.crawler import Crawler
 from lib.modes.equaliser import Equaliser
@@ -8,14 +7,13 @@ from lib.modes.roller import Roller
 from lib.modes.sweeper import Sweeper
 
 modes = {
-    "brainwaves": BrainWaves,
+    "sweeper": Sweeper,
     "breather": Breather,
     "crawler": Crawler,
     "equaliser": Equaliser,
     "larsen": Larsen,
     "pulsator": Pulsator,
     "roller": Roller,
-    "sweeper": Sweeper,
 }
 
 
