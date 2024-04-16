@@ -4,17 +4,19 @@ from lib.modes.crawler import Crawler
 from lib.modes.equaliser import Equaliser
 from lib.modes.larsen import Larsen
 from lib.modes.pulsator import Pulsator
+from lib.modes.rainbow import Rainbow
 from lib.modes.roller import Roller
 from lib.modes.sweeper import Sweeper
 
 lookups = {
-    "sweeper": Sweeper,
     "breather": Breather,
     "crawler": Crawler,
     "equaliser": Equaliser,
     "larsen": Larsen,
     "pulsator": Pulsator,
+    "rainbow": Rainbow,
     "roller": Roller,
+    "sweeper": Sweeper,
 }
 
 

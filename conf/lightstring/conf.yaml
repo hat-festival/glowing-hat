@@ -1,3 +1,7 @@
 lights: 50
 data-pin: 12
 grb: True
+
+brightness:
+  max: 1.0
+  default: 0.9

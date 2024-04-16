@@ -1,9 +1,20 @@
+rainbow:
+  axis: x
+  length-multiplier: 4
+  pause-time: 0.02
+
+breather:
+  scale-factor: 0.6
+  step: 1
+  pause-time: 0
+  movement-axis: x
+
 larsen:
   axes:
     movement: x
   head-width: 0.15
   hue: 1.0
-  jump: 2
+  jump: 1
   tail-proportion: 1.0
 
 pulsator:

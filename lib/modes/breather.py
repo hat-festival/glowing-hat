@@ -33,7 +33,7 @@ class Breather(Mode):
         for angle in range(0, 180, self.conf["step"]):
             sin = normalised_sin(angle + angle_offset)
             for pixel in self.hat.pixels:
-                if method(pixel["y"], sin):
+                if method(pixel[self.conf["movement-axis"]], sin):
                     pixel["value"] = 1.0
                     pixel["hue"] = hue
                 else:

@@ -2,11 +2,9 @@ lights: 100
 
 data-pin: 21
 
-rotary:
-  pins:
-    clk: 24
-    dt: 23
-    sw: 25
+brightness:
+  max: 1.0
+  default: 0.5
 
 fourier:
   device-index: 0

@@ -8,6 +8,7 @@ breather:
   scale-factor: 0.6
   step: 3
   pause-time: 1.0
+  movement-axis: y
 
 crawler:
   max-jump: 2
