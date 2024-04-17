@@ -21,10 +21,15 @@ class Clock(Mode):
         self.accumulator = 0
 
         self.draw_divider()
-
         for key in reversed(self.binaries):
             self.draw_section(key)
             self.draw_divider()
+
+        for pixel in self.hat.pixels[0:21]:
+            other_index = (len(self.hat) - 1) - pixel["index"]
+            self.hat.apply_hue_to_one_pixel(other_index, pixel["hue"])
+            self.hat.apply_value_to_one_pixel(other_index, pixel["value"])
+            self.hat.apply_saturation_to_one_pixel(other_index, pixel["saturation"])
 
         self.hat.light_up()
 
