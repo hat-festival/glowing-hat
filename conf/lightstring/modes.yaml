@@ -1,3 +1,9 @@
+clock:
+  hues:
+    hours: 0.666666
+    minutes: 0.333333
+    seconds: 1.0
+
 rainbow:
   axis: x
   length-multiplier: 4

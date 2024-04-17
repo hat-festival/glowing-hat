@@ -1,4 +1,5 @@
 from lib.conf import conf
+from lib.modes.binary_clock import Clock
 from lib.modes.breather import Breather
 from lib.modes.crawler import Crawler
 from lib.modes.equaliser import Equaliser
@@ -10,6 +11,7 @@ from lib.modes.sweeper import Sweeper
 
 lookups = {
     "breather": Breather,
+    "clock": Clock,
     "crawler": Crawler,
     "equaliser": Equaliser,
     "larsen": Larsen,

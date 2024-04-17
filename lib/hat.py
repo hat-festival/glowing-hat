@@ -105,14 +105,32 @@ class Hat:
         """Apply one `value` to all pixels."""
         self.apply_singular_thing(value, "value")
 
-    def apply_saturation(self, value):
+    def apply_saturation(self, saturation):
         """Apply one `saturation` to all pixels."""
-        self.apply_singular_thing(value, "saturation")
+        self.apply_singular_thing(saturation, "saturation")
 
     def off(self):
         """Make it dark."""
         self.apply_value(0)
         self.light_up()
+
+    ###
+
+    def apply_thing_to_one_pixel(self, index, singluar, key):
+        """Apply one `whatever` to one pixel."""
+        self.pixels[index][key] = singluar
+
+    def apply_hue_to_one_pixel(self, index, hue):
+        """Apply `hue` to one pixel."""
+        self.apply_thing_to_one_pixel(index, hue, "hue")
+
+    def apply_value_to_one_pixel(self, index, value):
+        """Apply `value` to one pixel."""
+        self.apply_thing_to_one_pixel(index, value, "value")
+
+    def apply_saturation_to_one_pixel(self, index, saturation):
+        """Apply `saturation` to one pixel."""
+        self.apply_thing_to_one_pixel(index, saturation, "saturation")
 
     ###
 
