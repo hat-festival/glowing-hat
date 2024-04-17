@@ -12,42 +12,31 @@ class Clock(Mode):
         self.hat.off()
 
         while True:
-            binaries = binary_hms(datetime.now())  # noqa: DTZ005
-            self.accumulator = 0
-
-            self.draw_divider()
-
-            seconds = list(reversed(bin_string_to_values(binaries["seconds"])))
-            for index in range(len(seconds)):
-                self.hat.apply_hue_to_one_pixel(self.accumulator, self.conf["hues"]["seconds"])
-                self.hat.apply_value_to_one_pixel(self.accumulator, seconds[index])
-                self.accumulator += 1
-
-            self.draw_divider()
-
-            minutes = list(reversed(bin_string_to_values(binaries["minutes"])))
-            for index in range(len(minutes)):
-                self.hat.apply_hue_to_one_pixel(
-                    self.accumulator, self.conf["hues"]["minutes"]
-                )
-                self.hat.apply_value_to_one_pixel(self.accumulator, minutes[index])
-                self.accumulator += 1
-
-            self.draw_divider()
-
-            hours = list(reversed(bin_string_to_values(binaries["hours"])))
-            for index in range(len(hours)):
-                self.hat.apply_hue_to_one_pixel(
-                    self.accumulator, self.conf["hues"]["hours"]
-                )
-                self.hat.apply_value_to_one_pixel(self.accumulator, hours[index])
-                self.accumulator += 1
-
-            self.draw_divider()
-
-            self.hat.light_up()
-
+            self.write_time(datetime.now())  # noqa: DTZ005
             sleep(0.1)
+
+    def write_time(self, timestamp):
+        """Display the time."""
+        self.binaries = binary_hms(timestamp)
+        self.accumulator = 0
+
+        self.draw_divider()
+
+        for key in reversed(self.binaries):
+            self.draw_section(key)
+            self.draw_divider()
+
+        self.hat.light_up()
+
+    def draw_section(self, section):
+        """Draw a section."""
+        vals = list(reversed(bin_string_to_values(self.binaries[section])))
+        for index in range(len(vals)):
+            self.hat.apply_hue_to_one_pixel(
+                self.accumulator, self.conf["hues"][section]
+            )
+            self.hat.apply_value_to_one_pixel(self.accumulator, vals[index])
+            self.accumulator += 1
 
     def draw_divider(self, width=1):
         """Draw a divider."""

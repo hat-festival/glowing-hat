@@ -8,4 +8,7 @@ class Mode:
         """Construct."""
         self.hat = hat
         self.name = type(self).__name__.lower()
-        self.conf = conf.get("modes").get(self.name)
+        try:
+            self.conf = conf.get("modes").get(self.name)
+        except AttributeError:
+            self.conf = {}
