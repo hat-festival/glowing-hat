@@ -22,3 +22,16 @@
 hr {
     border-color: var(--orange);
 }
+
+img {
+    border: 0.2rem solid var(--orange);
+    height: 60vh;
+}
+
+.reveal {
+    background-image: url(https://placebear.com/200/300);
+    background-image: url(/emf-2024/assets/logomark.svg);
+    background-repeat: no-repeat;
+    background-position: bottom 1rem right 1rem;
+    background-size: 2rem;
+}
