@@ -3,7 +3,7 @@
 
 import sys
 
-from lib.hat import Hat
+from glowing_hat.hat import Hat
 
 index = int(sys.argv[1])
 

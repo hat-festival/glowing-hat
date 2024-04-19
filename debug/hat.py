@@ -1,5 +1,5 @@
-from lib.conf import conf
-from lib.tools.utils import is_pi
+from glowing_hat.conf import conf
+from glowing_hat.tools.utils import is_pi
 
 if is_pi():  # nocov
     import board

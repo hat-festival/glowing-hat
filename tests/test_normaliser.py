@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from lib.brightness_controllers.brightness_control import BrightnessControl
-from lib.tools.utils import close_enough
+from glowing_hat.brightness_controllers.brightness_control import BrightnessControl
+from glowing_hat.tools.utils import close_enough
 
 
 class TestColourNormaliser(TestCase):

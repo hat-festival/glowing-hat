@@ -3,9 +3,9 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch
 
-from lib.conf import conf
-from lib.custodian import Custodian
-from lib.oled import ImageGenerator
+from glowing_hat.conf import conf
+from glowing_hat.custodian import Custodian
+from glowing_hat.oled import ImageGenerator
 
 
 class TestImageGenerator(TestCase):

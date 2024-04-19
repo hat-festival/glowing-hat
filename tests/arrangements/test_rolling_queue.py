@@ -1,4 +1,4 @@
-from lib.arrangements.rolling_queue import RollingQueue
+from glowing_hat.arrangements.rolling_queue import RollingQueue
 
 
 def test_constructor():

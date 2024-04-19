@@ -1,4 +1,4 @@
-from lib.tools.utils import (
+from glowing_hat.tools.utils import (
     close_enough,
     colour_set_to_colour_list,
     hue_to_rgb,

@@ -1,9 +1,9 @@
 from unittest.mock import patch
 
-from lib.arrangements.riser_list import RiserList
+from glowing_hat.arrangements.riser_list import RiserList
 
 
-@patch("lib.arrangements.riser_list.random")
+@patch("glowing_hat.arrangements.riser_list.random")
 def test_easy_case(mock_random):
     """Test the simple case."""
     mock_random.return_value = 0.5

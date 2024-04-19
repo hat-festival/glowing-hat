@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import redis
 
-from lib.custodian import Custodian
+from glowing_hat.custodian import Custodian
 
 
 class TestCustodian(TestCase):

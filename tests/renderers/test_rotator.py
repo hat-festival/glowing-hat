@@ -1,6 +1,6 @@
 # from math import sqrt
 
-# from lib.renderers.rotator import line, point_on_line
+# from glowing_hat.renderers.rotator import line, point_on_line
 
 
 # def test_flat_line():

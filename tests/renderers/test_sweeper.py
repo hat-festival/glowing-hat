@@ -1,5 +1,5 @@
-# from lib.hat import Hat
-# from lib.renderers.sweeper import Sweeper, angle_to_point
+# from glowing_hat.hat import Hat
+# from glowing_hat.renderers.sweeper import Sweeper, angle_to_point
 
 
 # def test_construct():

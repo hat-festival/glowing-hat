@@ -1,4 +1,4 @@
-from lib.sorters.axis_manager import AxisManager
+from glowing_hat.sorters.axis_manager import AxisManager
 
 
 def load_sorts():

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.renderers.larsen import Larsen, middle_member, range_finder
+from glowing_hat.renderers.larsen import Larsen, middle_member, range_finder
 
 
 class TestLarsen(TestCase):

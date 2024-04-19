@@ -1,7 +1,7 @@
 import platform
 from unittest.mock import patch
 
-from lib.conf import HatConf
+from glowing_hat.conf import HatConf
 
 
 def test_populating():
