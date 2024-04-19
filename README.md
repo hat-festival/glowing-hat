@@ -34,7 +34,7 @@ From a box-fresh install of [64-bit Raspberry Pi Debian 12 (bookworm)](https://w
 ### Set hostname
 
 ```bash
-sudo raspi-config nonint do_hostname hatlights
+sudo raspi-config nonint do_hostname glowing-hat
 sudo reboot
 ```
 
@@ -47,13 +47,13 @@ sudo apt --yes update && sudo apt install --no-install-recommends --yes git
 ### Get this repo
 
 ```bash
-git clone https://github.com/hat-festival/hatlights
+git clone https://github.com/hat-festival/glowing-hat
 ```
 
 ### Install everything
 
 ```bash
-cd hatlights
+cd glowing-hat
 ./configure
 make
 ```

@@ -46,7 +46,7 @@ push-hat:
 		--exclude htmlcov \
 		--exclude presentations \
 		--exclude Makefile \
-		. pi@hatlights.local:hatlights/ || true
+		. pi@glowing-hat.local:glowing-hat/ || true
 
 push-string:
 	rsync \
@@ -62,11 +62,11 @@ push-string:
 		--exclude htmlcov \
 		--exclude presentations \
 		--exclude Makefile \
-		. pi@lightstring.local:hatlights/
+		. pi@lightstring.local:glowing-hat/
 
 push-wifi:
 	rsync \
 		--archive \
 		--verbose \
 		--delete \
-		etc/NetworkManager/ pi@hatlights.local:hatlights/etc/NetworkManager/
+		etc/NetworkManager/ pi@glowing-hat.local:glowing-hat/etc/NetworkManager/

@@ -1,6 +1,6 @@
 FROM python:3.11
 
-ENV PROJECT hatlights
+ENV PROJECT glowing-hat
 ENV PLATFORM docker
 WORKDIR /opt/${PROJECT}
 
