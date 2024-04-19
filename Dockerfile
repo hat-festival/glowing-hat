@@ -1,6 +1,6 @@
 FROM python:3.11
 
-ENV PROJECT hatlights
+ARG PROJECT
 ENV PLATFORM docker
 WORKDIR /opt/${PROJECT}
 
