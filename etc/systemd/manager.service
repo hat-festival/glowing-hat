@@ -3,13 +3,13 @@ Description=Hat Controller
 
 [Service]
 User=pi
-WorkingDirectory=/home/pi/hatlights
+WorkingDirectory=/home/pi/glowing-hat
 Environment=PYTHONDONTWRITEBYTECODE=1
 ExecStart=/bin/bash -lc 'sudo python manager.py'
 Restart=always
 StandardInput=null
-StandardOutput=file:/var/log/hatlights/manager.log
-StandardError=file:/var/log/hatlights/manager.err
+StandardOutput=file:/var/log/glowing-hat/manager.log
+StandardError=file:/var/log/glowing-hat/manager.err
 KillMode=mixed
 TimeoutStopSec=5
 

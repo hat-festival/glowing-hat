@@ -126,7 +126,7 @@ Once you're done, `ctrl-c` the streaming script.
 Everything is now set for taking the photos. Presuming you have the front of the hat facing the camera, on the Camera Pi, do
 
 ```bash
-cd hatlights/camera
+cd glowing-hat/camera
 make front
 ```
 

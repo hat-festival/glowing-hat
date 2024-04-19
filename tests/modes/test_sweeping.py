@@ -19,7 +19,7 @@ def test_sweeping():
 
     with patch.object(random, "randint", return_value=33):  # noqa: SIM117
         with patch.object(random, "random", return_value=1.0):
-            with patch.object(platform, "node", return_value="hatlights"):
+            with patch.object(platform, "node", return_value="glowing-hat"):
                 hat = Hat()
                 hat.brightness_control.factor.value = 0.5
                 swp = Sweeper(hat)
