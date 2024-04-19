@@ -25,3 +25,5 @@
 
 * Also this maps to other things
   * Behold, a Hat
+
+Be aware that I understood very little of this before I started, and there are almost certainly better ways to do everything here

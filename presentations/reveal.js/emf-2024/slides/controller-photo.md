@@ -1,4 +1,4 @@
-![photo of hat](emf-2024/assets/controller.jpg)
+![photo of controller](emf-2024/assets/controller.jpg)
 
 Notes:
 
