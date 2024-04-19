@@ -64,50 +64,14 @@ Once everything is assembled, you need to [take lots of photos](camera/README.md
 
 ## Controls
 
-The five buttons are [mapped in `conf/buttons.yaml`](conf/buttons.yaml):
+The five buttons are are mapped as follows:
 
-| button | press to cycle                    | hold to cycle               |
-| ------ | --------------------------------- | --------------------------- |
-| A      | [modes](#modes)                   |                             |
-| B      | colours                           | [colour-sets](#colour-sets) |
-| C      | [colour-sources](#colour-sources) |                             |
-| D      | [axes](#axes)                     | invert                      |
-| E      | [display modes](#display-modes)   |                             |
+* A: cycle through the available `modes`
+* B and C: turn the brightness up and down
+* D: display the hat's IP address (if an Oled screen is available)
+* E: _hold_ for one second to restart the `systemd` service
+* A and D: _hold_ both of these for three seconds to reboot the whole Pi (sometimes things get really stuck)
 
 ## Modes
 
-A [`mode`](lib/modes/cuttlefish.py) needs to inherit from [`Mode`](lib/mode.py), and should expose a [`run`](lib/modes/cuttlefish.py#L26) method, which loops forever and does something with the lights, and a [`reconfigure`](lib/modes/cuttlefish.py#L19) method, which resets the hat to the mode's preferences.
-
-The ordering of the modes is [defined in this list](lib/modes_list.py#L8-L15), and the modes' preferences are defined in [conf/modes.yaml](conf/modes.yaml).
-
-Some of the modes involve some pretty intense maths which, if done in real-time, will slow everything down to a crawl. In these cases, it's [sensible to pre-render the set of states](lib/renderers/rotator.py). A `mode` named `foo` will attempt to [deserialise a file at `renders/foo.pickle`](lib/mode.py#L67) into an instance attribute called `frame_sets`.
-
-## Colour-sets
-
-Colour sets are defined in [conf/colour-sets.yaml](conf/colour-sets.yaml) - pressing the `colours` button will step through the colours in a set, while holding the same button will step through the sets themselves. It's up to a mode if it actually makes use of these settings.
-
-## Colour sources
-
-There are three kinds of colour-source:
-
-- Redis: this (poorly-named) source means "use whatever colour is currently defined at `hat:colour` in Redis". This is the colour that gets set by the `colour` button
-- Wheel: the [ColourWheel](lib/colour_wheel.py) is running as a daemon, and populating the `hat:hue` key in Redis with a constantly-rotating value between 0 and 1, using a step-size and interval defined in [conf/conf.yaml](conf/conf.yaml#L23-L25). Calling `get("colour")` on the [`Custodian`](lib/custodian.py) (which is mostly a wrapper around Redis) will, if the `colour-source` is `wheel`, return an [RGB triple based on that `hue` value](lib/tools.py#L7-L9)
-- Random: uses a random hue between 0 and 1 to [generate an RGB triple](lib/tools.py#L7-L9)
-
-## Axes
-
-If you're looking at the hat square-on from the front, then
-
-- `x` goes from -1 on the left to +1 on the right
-- `y` goes from 0 at the bottom to +1 at the top (this makes sense if you think about the hat as the top half of a sphere)
-- `z` goes from -1 at the back to +1 at the front
-
-For most of the modes, it makes sense for them to orient themselves with respect to an axis, and pressing the `axis` button will cycle through `x`, `y` and `z`. Holding this button will invert the direction of movement along or around that axis.
-
-## Display modes
-
-Pressing the `display modes` button cycles through the three modes for the OLED screen:
-
-- Hat settings: shows the hat mode, and if relevant, the axis/inversion state and the colour and colour-set
-- Button config: shows the `abbreviation` fields from the button-mappings. They don't quite line up, but it's good enough
-- IP address: shows the hat's current IP address
+A [`mode`](lib/modes/cuttlefish.py) needs to inherit from [`Mode`](lib/mode.py), and should expose a [`run`](lib/modes/cuttlefish.py#L26) method, which loops forever and does something with the lights. A mode needs to be included in [this list](lib/modes_list.py) in order to be eligible, and then the mode ordering and per-mode preferences are defined [per hat](conf/glowing-hat/modes.yaml) - here, `glowing-hat` is the hostname to which this list will be applied.
