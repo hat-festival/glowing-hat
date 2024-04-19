@@ -1,4 +1,5 @@
 from glowing_hat.conf import conf
+from glowing_hat.modes.address import Address
 from glowing_hat.modes.binary_clock import Clock
 from glowing_hat.modes.breather import Breather
 from glowing_hat.modes.crawler import Crawler
@@ -10,6 +11,7 @@ from glowing_hat.modes.roller import Roller
 from glowing_hat.modes.sweeper import Sweeper
 
 lookups = {
+    "address": Address,
     "breather": Breather,
     "clock": Clock,
     "crawler": Crawler,

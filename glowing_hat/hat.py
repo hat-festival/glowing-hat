@@ -116,9 +116,9 @@ class Hat:
 
     ###
 
-    def apply_thing_to_one_pixel(self, index, singluar, key):
+    def apply_thing_to_one_pixel(self, index, singular, key):
         """Apply one `whatever` to one pixel."""
-        self.pixels[index][key] = singluar
+        self.pixels[index][key] = singular
 
     def apply_hue_to_one_pixel(self, index, hue):
         """Apply `hue` to one pixel."""

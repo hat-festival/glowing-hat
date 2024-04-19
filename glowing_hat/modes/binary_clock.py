@@ -43,13 +43,6 @@ class Clock(Mode):
             self.hat.apply_value_to_one_pixel(self.accumulator, vals[index])
             self.accumulator += 1
 
-    def draw_divider(self, width=1):
-        """Draw a divider."""
-        for _ in range(width):
-            self.hat.apply_value_to_one_pixel(self.accumulator, 1.0)
-            self.hat.apply_saturation_to_one_pixel(self.accumulator, 0.0)
-            self.accumulator += 1
-
 
 def bin_string_to_values(string):
     """Convert a binary-string to some values."""
