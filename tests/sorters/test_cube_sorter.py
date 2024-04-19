@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.sorters.cube_sorter import CubeSorter
+from glowing_hat.sorters.cube_sorter import CubeSorter
 
 
 class TestCubeSorter(TestCase):

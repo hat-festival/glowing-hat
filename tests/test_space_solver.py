@@ -1,4 +1,4 @@
-from lib.sorters.space_solver import SpaceSolver
+from glowing_hat.sorters.space_solver import SpaceSolver
 
 
 def test_easy_case():

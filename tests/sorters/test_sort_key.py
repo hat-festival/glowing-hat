@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.sorters.sort_key import SortKey
+from glowing_hat.sorters.sort_key import SortKey
 
 
 class TestSortKey(TestCase):

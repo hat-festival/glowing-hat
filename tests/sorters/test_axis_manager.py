@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import pytest
 
-from lib.sorters.axis_manager import AxisManager
+from glowing_hat.sorters.axis_manager import AxisManager
 
 
 @pytest.mark.not_ci()

@@ -4,8 +4,8 @@ import random
 from pathlib import Path
 from unittest.mock import patch
 
-from lib.hat import Hat
-from lib.modes.sweeper import Sweeper
+from glowing_hat.hat import Hat
+from glowing_hat.modes.sweeper import Sweeper
 
 
 def test_sweeping():

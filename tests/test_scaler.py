@@ -1,6 +1,11 @@
 from unittest import TestCase
 
-from lib.tools.scaler import Scaler, deconstruct, find_largest_span, normalise_list
+from glowing_hat.tools.scaler import (
+    Scaler,
+    deconstruct,
+    find_largest_span,
+    normalise_list,
+)
 
 
 class TestScaler(TestCase):

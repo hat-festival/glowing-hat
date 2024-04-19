@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from lib.pixel import Pixel
+from glowing_hat.pixel import Pixel
 
 
 class TestPixel(TestCase):

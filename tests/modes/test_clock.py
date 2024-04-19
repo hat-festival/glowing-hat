@@ -2,8 +2,8 @@ import platform
 from datetime import datetime
 from unittest.mock import patch
 
-from lib.hat import Hat
-from lib.modes.binary_clock import Clock, bin_string_to_values, binary_hms
+from glowing_hat.hat import Hat
+from glowing_hat.modes.binary_clock import Clock, bin_string_to_values, binary_hms
 
 
 def test_easy_binary_hms():

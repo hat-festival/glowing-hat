@@ -6,7 +6,7 @@ import time
 from hat import Hat
 
 hat = Hat()
-from lib.conf import conf
+from glowing_hat.conf import conf
 
 hat.off()
 

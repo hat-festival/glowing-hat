@@ -1,4 +1,4 @@
-from lib.hat import Hat
+from glowing_hat.hat import Hat
 
 
 def test_constructor():

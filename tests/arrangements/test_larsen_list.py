@@ -1,4 +1,8 @@
-from lib.arrangements.larsen_list import LarsenList, slice_from_end, slice_from_start
+from glowing_hat.arrangements.larsen_list import (
+    LarsenList,
+    slice_from_end,
+    slice_from_start,
+)
 
 
 def test_constructor():

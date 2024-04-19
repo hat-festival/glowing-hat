@@ -1,6 +1,6 @@
 from signal import pause
 
-from lib.controller import Controller
+from glowing_hat.controller import Controller
 
 
 def manage():

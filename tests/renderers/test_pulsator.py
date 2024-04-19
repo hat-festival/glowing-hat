@@ -1,4 +1,4 @@
-from lib.renderers.pulsator import populate
+from glowing_hat.renderers.pulsator import populate
 
 
 def test_easy_populate():

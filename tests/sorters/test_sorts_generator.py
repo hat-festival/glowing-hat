@@ -1,4 +1,4 @@
-from lib.sorters.sorts_generator import SortsGenerator
+from glowing_hat.sorters.sorts_generator import SortsGenerator
 
 
 class TestSortsGenerator:
