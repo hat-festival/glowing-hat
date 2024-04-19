@@ -1,5 +1,6 @@
 @import"https://fonts.googleapis.com/css2?family=Titan One";
 @import"https://fonts.googleapis.com/css2?family=Quicksand";
+@import"https://fonts.googleapis.com/css2?family=Kode Mono";
 
 :root {
     --pale-green: rgb(175, 201, 68);
@@ -17,6 +18,9 @@
 
     --r-heading-font: "Titan One";
     --r-main-font: "Quicksand";
+    --r-code-font: "Kode Mono";
+
+    --r-heading2-size: 3.5rem;
 }
 
 hr {
@@ -25,7 +29,11 @@ hr {
 
 img {
     border: 0.2rem solid var(--orange);
-    height: 60vh;
+    height: 50vh;
+}
+
+code, pre {
+    color: var(--pink)
 }
 
 .reveal {

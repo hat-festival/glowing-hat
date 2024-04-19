@@ -4,6 +4,6 @@
 
 https://sam.pikesley.org
 
-Note:
+Notes:
 
-This is some notes
+Hello
