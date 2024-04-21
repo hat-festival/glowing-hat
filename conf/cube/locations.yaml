@@ -1,0 +1,114 @@
+lights:
+  - index: 0
+    x: 0
+    y: 0
+    z: 2
+  - index: 1
+    x: 1
+    y: 0
+    z: 2
+  - index: 2
+    x: 2
+    y: 0
+    z: 2
+  - index: 3
+    x: 2
+    y: 0
+    z: 1
+  - index: 4
+    x: 1
+    y: 0
+    z: 1
+  - index: 5
+    x: 0
+    y: 0
+    z: 1
+  - index: 6
+    x: 0
+    y: 0
+    z: 0
+  - index: 7
+    x: 1
+    y: 0
+    z: 0
+  - index: 8
+    x: 2
+    y: 0
+    z: 0
+  - index: 9
+    x: 2
+    y: 1
+    z: 0
+  - index: 10
+    x: 2
+    y: 1
+    z: 1
+  - index: 11
+    x: 2
+    y: 1
+    z: 2
+  - index: 12
+    x: 1
+    y: 1
+    z: 2
+  - index: 13
+    x: 1
+    y: 1
+    z: 1
+  - index: 14
+    x: 1
+    y: 1
+    z: 0
+  - index: 15
+    x: 0
+    y: 1
+    z: 0
+  - index: 16
+    x: 0
+    y: 1
+    z: 1
+  - index: 17
+    x: 0
+    y: 1
+    z: 2
+  - index: 18
+    x: 0
+    y: 2
+    z: 2
+  - index: 19
+    x: 1
+    y: 2
+    z: 2
+  - index: 20
+    x: 2
+    y: 2
+    z: 2
+  - index: 21
+    x: 2
+    y: 2
+    z: 1
+  - index: 22
+    x: 1
+    y: 2
+    z: 1
+  - index: 23
+    x: 0
+    y: 2
+    z: 1
+  - index: 24
+    x: 0
+    y: 2
+    z: 0
+  - index: 25
+    x: 1
+    y: 2
+    z: 0
+  - index: 26
+    x: 2
+    y: 2
+    z: 0
+
+centres:
+  x: 1
+  y: 0  # shift it to the bottom
+  z: 1

@@ -31,29 +31,23 @@ exec:
 ci:
 	docker run --rm ${ID} test-ci
 
-push-code: push-hat push-string
+push-code: push-hat push-string push-cube
 
 push-hat:
-	rsync \
-		--archive \
-		--verbose \
-		--delete \
-		--exclude tmp \
-		--exclude .git \
-		--exclude assets \
-		--exclude analysis \
-		--exclude camera \
-		--exclude debug \
-		--exclude htmlcov \
-		--exclude presentations \
-		--exclude Makefile \
+	${PUSH} \
 		. pi@glowing-hat.local:glowing-hat/ || true
 
 push-string:
-	rsync \
+	${PUSH} \
+		. pi@lightstring.local:glowing-hat/ || true
+
+push-cube:
+	${PUSH} \
+		. pi@cube.local:glowing-hat/ || true
+
+PUSH = rsync \
 		--archive \
 		--verbose \
-		--delete \
 		--exclude tmp \
 		--exclude .git \
 		--exclude assets \
@@ -62,8 +56,7 @@ push-string:
 		--exclude debug \
 		--exclude htmlcov \
 		--exclude presentations \
-		--exclude Makefile \
-		. pi@lightstring.local:glowing-hat/
+		--exclude Makefile
 
 push-wifi:
 	rsync \
