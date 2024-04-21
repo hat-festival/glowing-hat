@@ -17,6 +17,7 @@
   * OpenCV
 
 * Also this maps to other things
+  * When all you have is a hat
   * Behold, a Hat
 
 * Sound into light
@@ -24,7 +25,7 @@
   * I assumed if I pretended to understand FFTs for long enough, eventually I would
 
 * The NeoPixels default to RGB
-  * Show demo code
+  * Show demo code - lights[0] = (255, 0, 0)
   * But it's more intuitive (and easier to math) with HSV
   * Go to RGB as late as possible, like a compiled artefact
 
