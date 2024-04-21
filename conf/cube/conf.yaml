@@ -1,0 +1,7 @@
+lights: 27
+
+data-pin: 18
+
+brightness:
+  max: 1.0
+  default: 0.2

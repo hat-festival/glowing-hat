@@ -20,7 +20,10 @@ class BrightnessControl:
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
 
-        brightness_bindings(self)
+        try:
+            brightness_bindings(self)
+        except OSError:
+            pass
 
         self.update_display()
 

@@ -1,0 +1,34 @@
+# equaliser:
+#   decay:
+#     amount: 0.02
+#     interval: 0.02
+#   rotation: 2
+#   scale-factor: 0.5
+#   y:
+#     default: 0.4
+#     max: 1.0
+
+# rainbow:
+#   axis: x
+#   length-multiplier: 4
+#   pause-time: 0.02
+
+pulsator:
+  hue-seconds-per-rotation: 5
+  steps:
+    max: 4096
+    min: 1024
+
+# larsen:
+#   axes:
+#     movement: x
+#   head-width: 0.15
+#   hue: 1.0
+#   jump: 1
+#   tail-proportion: 1.0
+
+# pulsator:
+#   hue-seconds-per-rotation: 5
+#   steps:
+#     max: 255
+#     min: 48
