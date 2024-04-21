@@ -1,0 +1,6 @@
+lights: 256
+data-pin: 12
+
+brightness:
+  max: 1.0
+  default: 0.5

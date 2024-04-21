@@ -31,7 +31,7 @@ exec:
 ci:
 	docker run --rm ${ID} test-ci
 
-push-code: push-hat push-string push-cube
+push-code: push-hat push-string push-cube push-panel
 
 push-hat:
 	${PUSH} \
@@ -45,6 +45,10 @@ push-cube:
 	${PUSH} \
 		. pi@cube.local:glowing-hat/ || true
 
+push-panel:
+	${PUSH} \
+		. pi@panel.local:glowing-hat/ || true
+
 PUSH = rsync \
 		--archive \
 		--verbose \
@@ -56,7 +60,8 @@ PUSH = rsync \
 		--exclude debug \
 		--exclude htmlcov \
 		--exclude presentations \
-		--exclude Makefile
+		--exclude Makefile \
+		. pi@glowing-hat.local:glowing-hat/ || true
 
 push-wifi:
 	rsync \

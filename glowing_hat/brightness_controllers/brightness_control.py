@@ -1,3 +1,4 @@
+import contextlib
 from multiprocessing import Value
 
 from glowing_hat.button_bindings import brightness_bindings
@@ -20,10 +21,8 @@ class BrightnessControl:
         self.custodian = Custodian("hat")
         self.oled = Oled(self.custodian)
 
-        try:
+        with contextlib.suppress(OSError):
             brightness_bindings(self)
-        except OSError:
-            pass
 
         self.update_display()
 
