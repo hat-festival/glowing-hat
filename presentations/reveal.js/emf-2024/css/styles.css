@@ -1,4 +1,5 @@
-@import"https://fonts.googleapis.com/css2?family=Titan One";
+/* @import"https://fonts.googleapis.com/css2?family=Titan One"; */
+@import"https://fonts.googleapis.com/css2?family=Lilita One";
 @import"https://fonts.googleapis.com/css2?family=Quicksand";
 @import"https://fonts.googleapis.com/css2?family=Kode Mono";
 
@@ -16,7 +17,7 @@
     --r-main-color: var(--pale-green);
     --r-link-color: var(--pink);
 
-    --r-heading-font: "Titan One";
+    --r-heading-font: "Lilita One";
     --r-main-font: "Quicksand";
     --r-code-font: "Kode Mono";
 
