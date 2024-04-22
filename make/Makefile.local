@@ -1,5 +1,11 @@
 include make/Makefile.common
 
+HATS = \
+	glowing-hat \
+	lightstring \
+	cube \
+	panel \
+
 ID = hatvillage/${PROJECT}
 
 build:
@@ -31,25 +37,16 @@ exec:
 ci:
 	docker run --rm ${ID} test-ci
 
-push-code: push-hat push-string push-cube push-panel
+push-wifi:
+	rsync \
+		--archive \
+		--verbose \
+		--delete \
+		etc/NetworkManager/ pi@glowing-hat.local:glowing-hat/etc/NetworkManager/
 
-push-hat:
-	${PUSH} \
-		. pi@glowing-hat.local:glowing-hat/ || true
-
-push-string:
-	${PUSH} \
-		. pi@lightstring.local:glowing-hat/ || true
-
-push-cube:
-	${PUSH} \
-		. pi@cube.local:glowing-hat/ || true
-
-push-panel:
-	${PUSH} \
-		. pi@panel.local:glowing-hat/ || true
-
-PUSH = rsync \
+push-to:
+	rsync \
+		--dry-run \
 		--archive \
 		--verbose \
 		--exclude tmp \
@@ -61,11 +58,21 @@ PUSH = rsync \
 		--exclude htmlcov \
 		--exclude presentations \
 		--exclude Makefile \
-		. pi@glowing-hat.local:glowing-hat/ || true
+		. pi@${HAT}.local:${PROJECT}/ || true
 
-push-wifi:
-	rsync \
-		--archive \
-		--verbose \
-		--delete \
-		etc/NetworkManager/ pi@glowing-hat.local:glowing-hat/etc/NetworkManager/
+push-code:
+	for name in ${HATS}; do \
+		HAT=$${name} make push-to; \
+	done
+
+push-cube:
+	HAT=cube make push-to
+
+push-hat:
+	HAT=glowing-hat make push-to
+
+push-lightstring:
+	HAT=lightstring make push-to
+
+push-panel:
+	HAT=panel make push-to
