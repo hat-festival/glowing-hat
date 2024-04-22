@@ -1,6 +1,6 @@
 ## Mapping the lights
 
-![photo of hat](/emf-2024/assets/lit-hat.jpg)
+![photo of hat](/emf-2024/photos/lit-hat.jpg)
 
 Notes:
 

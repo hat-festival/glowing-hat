@@ -1,6 +1,6 @@
 ## Turning sound into light
 
-![photo of hat](/emf-2024/assets/dazzler.jpg)
+![photo of hat](/emf-2024/photos/dazzler.jpg)
 
 Notes:
 

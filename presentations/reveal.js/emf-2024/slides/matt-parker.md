@@ -1,6 +1,6 @@
 ## Matt Parker's Christmas tree
 
-![photo of hat](/emf-2024/assets/matt-parker.jpg)
+![Matt Parker's Christmas tree](/emf-2024/photos/matt-parker.jpg)
 
 Notes:
 
