@@ -38,11 +38,13 @@ ci:
 	docker run --rm ${ID} test-ci
 
 push-wifi:
-	rsync \
-		--archive \
-		--verbose \
-		--delete \
-		etc/NetworkManager/ pi@glowing-hat.local:glowing-hat/etc/NetworkManager/
+	for HAT in ${HATS}; do \
+		rsync \
+			--archive \
+			--verbose \
+			--delete \
+			etc/NetworkManager/ pi@$${HAT}.local:glowing-hat/etc/NetworkManager/ ;\
+	done
 
 push-to:
 	rsync \
