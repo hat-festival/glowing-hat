@@ -8,8 +8,8 @@
   --r-main-color: var(--colour-green-pale);
 
   --r-code-font: var(--font-code);
-  --r-heading-font: var(--font-heading);
-  --r-main-font: var(--font-main);
+  --r-heading-font: var(--font-primary);
+  --r-main-font: var(--font-primary);
 
   --r-heading-font-weight: 600;
   --r-heading2-size: 3.5rem;
@@ -36,7 +36,7 @@ code,
 
 .reveal {
   background-image: var(--logomark);
-  background-position: bottom 1rem right 1rem;
+  background-position: bottom right;
   background-repeat: no-repeat;
-  background-size: 2rem;
+  background-size: 5rem;
 }
