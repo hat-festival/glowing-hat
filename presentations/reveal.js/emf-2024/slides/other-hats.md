@@ -5,6 +5,6 @@
 
 Notes:
 
-A Hat is just an array of pixels, which means it's isomorphic to lots of other NeoPixel things
+A Hat is just an array of pixels - the fact that it's wrapped around a hat is kind of incidental, which means it's isomorphic to lots of other NeoPixel things
 
 Behold, a hat!
