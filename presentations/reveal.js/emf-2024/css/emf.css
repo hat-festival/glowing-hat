@@ -14,5 +14,6 @@
   --font-heading: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-main: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --logomark: url(https://www.emfcamp.org/static/images/brand/2024/logomark-2024.svg);
+  --logotext: url(https://www.emfcamp.org/static/images/brand/2024/emf2024-logo-text-light.svg);
+  --logomark: url(https://www.emfcamp.org/static/images/brand/2024/emf2024-logo-light.svg);
 }

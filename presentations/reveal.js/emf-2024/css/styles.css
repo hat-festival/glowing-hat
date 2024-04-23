@@ -36,7 +36,7 @@ code,
 
 .reveal {
   background-image: var(--logomark);
-  background-position: bottom 1rem right 1rem;
+  background-position: bottom right;
   background-repeat: no-repeat;
-  background-size: 2rem;
+  background-size: 5rem;
 }
