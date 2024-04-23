@@ -1,5 +1,5 @@
 .coverage
-Makefile
+./Makefile
 .vscode/
 .DS_Store
 tmp/
@@ -8,4 +8,3 @@ TODO.md
 SYSTEM.md
 htmlcov/
 etc/NetworkManager/system-connections/*connection
-presentations/NOTES.md
