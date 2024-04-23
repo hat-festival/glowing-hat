@@ -1,24 +1,42 @@
-@import"https://fonts.googleapis.com/css2?family=Titan One";
-@import"https://fonts.googleapis.com/css2?family=Quicksand";
+@import "emf.css";
+@import "https://fonts.googleapis.com/css2?family=Anonymous Pro";
 
 :root {
-    --pale-green: rgb(175, 201, 68);
-    --mid-green: rgb(82, 131, 41);
-    --dark-green: rgb(33, 48, 24);
-    --yellow: rgb(249, 226, 0);
-    --orange: rgb(246, 127, 2);
-    --pink: rgb(245, 80, 137);
-    --blue: rgb(46, 173, 217);
+  --r-background-color: var(--colour-green-dark);
+  --r-heading-color: var(--colour-yellow);
+  --r-link-color: var(--colour-pink);
+  --r-main-color: var(--colour-green-pale);
 
-    --r-background-color: var(--dark-green);
-    --r-heading-color: var(--yellow);
-    --r-main-color: var(--pale-green);
-    --r-link-color: var(--pink);
+  --r-code-font: var(--font-code);
+  --r-heading-font: var(--font-heading);
+  --r-main-font: var(--font-main);
 
-    --r-heading-font: "Titan One";
-    --r-main-font: "Quicksand";
+  --r-heading-font-weight: 600;
+  --r-heading2-size: 3.5rem;
 }
 
 hr {
-    border-color: var(--orange);
+  border-color: var(--colour-orange);
+}
+
+img {
+  border: 0.2rem solid var(--colour-orange);
+  height: 50vh;
+}
+
+code,
+.hljs-number {
+  color: var(--colour-blue);
+}
+
+.hljs-attr,
+.hljs-string {
+  color: var(--colour-pink);
+}
+
+.reveal {
+  background-image: var(--logomark);
+  background-position: bottom 1rem right 1rem;
+  background-repeat: no-repeat;
+  background-size: 2rem;
 }
