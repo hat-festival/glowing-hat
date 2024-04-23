@@ -48,7 +48,6 @@ push-wifi:
 
 push-to:
 	rsync \
-		--dry-run \
 		--archive \
 		--verbose \
 		--exclude tmp \
@@ -63,8 +62,8 @@ push-to:
 		. pi@${HAT}.local:${PROJECT}/ || true
 
 push-code:
-	for name in ${HATS}; do \
-		HAT=$${name} make push-to; \
+	for HAT in ${HATS}; do \
+		HAT=$${HAT} make push-to; \
 	done
 
 push-cube:
