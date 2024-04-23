@@ -1,5 +1,4 @@
 @import "https://fonts.googleapis.com/css2?family=Raleway";
-@import "https://fonts.googleapis.com/css2?family=Open Sans";
 
 :root {
   --colour-blue: rgb(46, 173, 217);
@@ -11,8 +10,7 @@
   --colour-yellow: rgb(249, 226, 0);
 
   --font-code: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --font-heading: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-main: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-primary: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --logotext: url(https://www.emfcamp.org/static/images/brand/2024/emf2024-logo-text-light.svg);
   --logomark: url(https://www.emfcamp.org/static/images/brand/2024/emf2024-logo-light.svg);
