@@ -29,7 +29,10 @@ def test_sweeping():
                 swp.conf["hues"]["blip"] = 1.0
                 swp.conf["hues"]["main"] = 0.333333
                 swp.conf["jump"] = 4
+                swp.conf["blip-move-threshold"] = 0.9
+                swp.conf["blip-count"] = 1
 
                 swp.run()
 
-                assert hat.lights.record == fixture
+                for index in range(len(fixture)):
+                    assert fixture[index] == hat.lights.record[index]

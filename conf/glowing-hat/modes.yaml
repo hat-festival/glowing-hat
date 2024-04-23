@@ -1,3 +1,11 @@
+sweeper:
+  blip-move-threshold: 0.9
+  hues:
+    blip: 1.0
+    main: 0.333333
+  jump: 4
+  blip-count: 4
+
 breather:
   scale-factor: 0.6
   step: 3
@@ -42,10 +50,3 @@ roller:
   length-multiplier: 3
   roll-sorter-at: 7
   rotate-amount: 2
-
-sweeper:
-  blip-move-threshold: 0.9
-  hues:
-    blip: 1.0
-    main: 0.333333
-  jump: 4
