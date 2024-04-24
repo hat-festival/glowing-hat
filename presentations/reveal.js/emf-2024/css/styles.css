@@ -24,6 +24,10 @@ img {
   height: 50vh;
 }
 
+.spacer {
+  height: 50vh;
+}
+
 code,
 .hljs-number {
   color: var(--colour-blue);
@@ -35,8 +39,8 @@ code,
 }
 
 .reveal {
-  background-image: var(--logomark);
-  background-position: bottom right;
+  background-image: var(--logotext);
+  background-position: bottom left;
   background-repeat: no-repeat;
-  background-size: 5rem;
+  background-size: 15rem;
 }
