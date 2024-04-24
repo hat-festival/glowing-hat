@@ -15,3 +15,10 @@ def test_merging():
     with patch.object(platform, "node", return_value="test-hat"):
         hc = HatConf(conf_root="tests/fixtures/conf/with-overrides")
         assert hc == {"lights": 50, "data-pin": 22, "random-hue": {"distance": 0.3}}
+
+
+def test_defaulting():
+    """Test it takes a default name."""
+    with patch.object(platform, "node", return_value="unknown-hat"):
+        hc = HatConf(conf_root="tests/fixtures/conf/with-default")
+        assert hc == {"lights": 50, "data-pin": 22, "random-hue": {"distance": 0.3}}
