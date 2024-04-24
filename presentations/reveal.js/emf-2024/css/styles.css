@@ -24,6 +24,10 @@ img {
   height: 50vh;
 }
 
+.spacer {
+  height: 50vh;
+}
+
 code,
 .hljs-number {
   color: var(--colour-blue);
