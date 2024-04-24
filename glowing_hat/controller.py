@@ -72,7 +72,8 @@ class Controller:
         self.oled.update()
         logging.info("resetting hat")
 
-        service = next(Path("etc", "systemd").glob("*")).parts[-1].split(".")[0]
+        # service = next(Path("etc", "systemd").glob("*")).parts[-1].split(".")[0]
+        service = "manager"
         os.system(f"/usr/bin/sudo service {service} restart")  # noqa: S605
 
     def reboot(self):
