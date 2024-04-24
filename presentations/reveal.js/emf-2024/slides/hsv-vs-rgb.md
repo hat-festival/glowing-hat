@@ -12,14 +12,14 @@
   "x": -0.01828410689170183,
   "y": 0.21729957805907174,
   "z": 0.7158931082981715,
-  "hue": 0.43,
-  "saturation": 1.0,
-  "value": 0.5,
   "angles": {
     "x": 73.11504937908333,
     "y": 358.53696809142565,
     "z": 94.80967471203176
   },
+  "hue": 0.43,
+  "saturation": 1.0,
+  "value": 0.5,
 }
 ```
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -31,3 +31,5 @@ The NeoPixels present themselves as a Python list, where you can just assign an 
 So for the 2024 edition, I've turned to the HSV model, which is so much smoother. Each pixel gets some more metadata -click- and we adjust the hue, saturation and value fields when preparing to light the hat. A pixel never knows what its RGB triple is - that's essentially an artefact that gets calculated as late as possible, at the moment we actually send data to the real LEDs.
 
 Doing it this way also enables us to easily do gamma-correction, and adjust the brightness of the hat - we just apply a brightness factor to the value as we calculate the RGB.
+
+EXPLAIN THE HUE MODEL!!!

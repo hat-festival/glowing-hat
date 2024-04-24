@@ -1,7 +1,7 @@
 ## When all you have is a hat
 
-![photo of other hats]()
-![photo of other string at camp]()
+![photo of other hats](https://placebear.com/200/300)
+![photo of other string at camp](https://placebear.com/200/301)
 
 Notes:
 
