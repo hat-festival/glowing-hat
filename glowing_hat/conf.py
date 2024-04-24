@@ -16,13 +16,12 @@ class HatConf(UserDict):
             Path(self.conf_root, "conf.yaml").read_text(encoding="UTF-8")
         )
 
-        with contextlib.suppress(FileNotFoundError):
-            self.per_hat_data = yaml.safe_load(
-                Path(self.conf_root, platform.node(), "conf.yaml").read_text(
-                    encoding="UTF-8"
-                )
-            )
+        conf_path = Path(self.conf_root, platform.node(), "conf.yaml")
+        if not conf_path.exists():
+            conf_path = Path(self.conf_root, "glowing-hat", "conf.yaml")
 
+        with contextlib.suppress(FileNotFoundError):
+            self.per_hat_data = yaml.safe_load(conf_path.read_text(encoding="UTF-8"))
             self.data.update(self.per_hat_data)
 
         with contextlib.suppress(FileNotFoundError):
