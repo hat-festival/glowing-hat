@@ -7,9 +7,9 @@
 
 :root {
   --r-background-color: var(--colour-green-dark);
-  --r-heading-color: var(--colour-yellow);
-  --r-link-color: var(--colour-pink);
-  --r-main-color: var(--colour-green-pale);
+  --r-heading-color: var(--colour-orange);
+  --r-link-color: var(--colour-yellow);
+  --r-main-color: var(--colour-green-mid);
 
   --r-code-font: "Comic Shanns";
   --r-heading-font: var(--font-primary);
@@ -21,11 +21,11 @@
 
 
 hr {
-  border-color: var(--colour-orange);
+  border-color: var(--colour-green-mid);
 }
 
 img {
-  border: 0.2rem solid var(--colour-orange);
+  border: 0.2rem solid var(--colour-pink);
   height: 30vh;
 }
 
