@@ -33,6 +33,14 @@ img {
   height: 50vh;
 }
 
+.hljs {
+  background-color: transparent
+}
+
+.reveal pre {
+  box-shadow: none;
+}
+
 code,
 .hljs-number {
   color: var(--colour-blue);

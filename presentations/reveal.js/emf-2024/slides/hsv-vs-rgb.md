@@ -4,7 +4,7 @@
 >>> lights = neopixel.NeoPixel(board.D21, 100)
 >>> lights[0] = (255, 0, 255)
 ```
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment fade-right" data-fragment-index="1" -->
 
 ```python
 {
@@ -17,12 +17,18 @@
     "y": 358.53696809142565,
     "z": 94.80967471203176
   },
+```
+<!-- .element: class="fragment fade-right" data-fragment-index="2" -->
+```python
   "hue": 0.43,
   "saturation": 1.0,
   "value": 0.5,
+```
+<!-- .element: class="fragment" data-fragment-index="3" -->
+```python
 }
 ```
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment fade-right" data-fragment-index="2" -->
 
 Notes:
 

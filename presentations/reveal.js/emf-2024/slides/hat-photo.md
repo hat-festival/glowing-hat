@@ -1,6 +1,6 @@
 <!-- .element: data-background-video="emf-2024/videos/hat.mp4" data-background-video-loop="loop" -->
 
-![photo of controller](emf-2024/photos/controller.jpg) <!-- .element: class="fragment" data-fragment-index="1" -->
+![photo of controller](emf-2024/photos/controller.jpg) <!-- .element: class="fragment fade-right" data-fragment-index="1" -->
 
 Notes:
 
