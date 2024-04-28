@@ -1,6 +1,5 @@
 import os
 from multiprocessing import Process
-from pathlib import Path
 from time import sleep
 
 from glowing_hat.boot_sequence import boot_hat
@@ -72,7 +71,6 @@ class Controller:
         self.oled.update()
         logging.info("resetting hat")
 
-        # service = next(Path("etc", "systemd").glob("*")).parts[-1].split(".")[0]
         service = "manager"
         os.system(f"/usr/bin/sudo service {service} restart")  # noqa: S605
 
