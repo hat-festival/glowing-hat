@@ -1,4 +1,4 @@
-# Travelling through HatSpace
+# Exploring HatSpace
 
 <hr>
 
