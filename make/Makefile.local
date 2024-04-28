@@ -77,3 +77,8 @@ push-lightstring:
 
 push-panel:
 	HAT=panel make push-to
+
+clean:
+	@rm -fr $$(find . -name __pycache__)
+	@rm -fr $$(find . -name .pytest_cache)
+	@sudo rm -fr $$(find . -name .ruff_cache)
