@@ -10,7 +10,7 @@ COPY ./ /opt/${PROJECT}
 COPY docker-config/bashrc /root/.bashrc
 
 RUN python -m pip install --upgrade pip
-RUN python -m pip install --ignore-installed -r requirements-dev.txt
+RUN python -m pip install --ignore-installed -r dev-requirements.txt
 
 COPY ./docker-config/entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint

@@ -69,7 +69,7 @@ render:
 	python render_renderers.py
 
 freeze:
-	python -m pip freeze > requirements-dev.txt
+	python -m pip freeze > dev-requirements.txt
 
 analyse:
 	@python analysis/find_bright_spots.py
