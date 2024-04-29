@@ -6,4 +6,4 @@ https://sam.pikesley.org
 
 Notes:
 
-Hello
+Hello EMF. Are we having a good time?
