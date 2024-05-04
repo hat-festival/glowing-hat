@@ -1,6 +1,6 @@
 lights: 27
 
-data-pin: 18
+data-pin: 12
 
 brightness:
   max: 1.0

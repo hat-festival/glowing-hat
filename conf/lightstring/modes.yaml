@@ -1,15 +1,13 @@
-address:
+rainbow:
+  axis: x
+  length-multiplier: 4
+  pause-time: 0.02
 
 clock:
   hues:
     hours: 0.666666
     minutes: 0.333333
     seconds: 1.0
-
-rainbow:
-  axis: x
-  length-multiplier: 4
-  pause-time: 0.02
 
 breather:
   scale-factor: 0.6
@@ -30,3 +28,5 @@ pulsator:
   steps:
     max: 255
     min: 48
+
+address:

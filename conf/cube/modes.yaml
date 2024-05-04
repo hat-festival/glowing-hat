@@ -1,12 +1,12 @@
-# equaliser:
-#   decay:
-#     amount: 0.02
-#     interval: 0.02
-#   rotation: 2
-#   scale-factor: 0.5
-#   y:
-#     default: 0.4
-#     max: 1.0
+equaliser:
+  decay:
+    amount: 0.02
+    interval: 0.02
+  rotation: 2
+  scale-factor: 0.5
+  y:
+    default: 0.4
+    max: 1.0
 
 # rainbow:
 #   axis: x
