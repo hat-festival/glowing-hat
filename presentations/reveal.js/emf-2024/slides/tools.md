@@ -13,4 +13,4 @@
 
 Notes:
 
-It's all made with a load of stuff you can mostly buy off eBay. The white hat was originally supposed to be a prototype, because I have a much nicer smoked acrylic hard-hat that I was going to use, but by the time I'd stuck everything together it was too late.
+It's all made with a load of stuff you can mostly buy off eBay. The white hat was originally supposed to be a prototype, because I have a much nicer smoked acrylic hard-hat that I had intended to use, but by the time I'd stuck everything together it was too late, and the prototype had made it into production.

@@ -16,7 +16,7 @@
   --r-main-font: var(--font-primary);
 
   --r-heading-font-weight: 600;
-  --r-heading2-size: 3.5rem;
+  --r-heading2-size: 4rem;
 }
 
 
@@ -25,12 +25,12 @@ hr {
 }
 
 img {
-  border: 0.2rem solid var(--colour-pink);
+  border: 0.2rem solid var(--colour-green-mid);
   height: 30vh;
 }
 
 .spacer {
-  height: 50vh;
+  height: 40vh;
 }
 
 .hljs {
@@ -55,5 +55,5 @@ code,
   background-image: var(--logotext);
   background-position: bottom left;
   background-repeat: no-repeat;
-  background-size: 15rem;
+  background-size: 25rem;
 }
