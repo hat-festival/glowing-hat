@@ -128,131 +128,131 @@ lights:
   y: 0
   z: 0
 - index: 32
-  x: 32
-  y: 0
-  z: 1
-- index: 33
   x: 31
   y: 0
   z: 1
-- index: 34
+- index: 33
   x: 30
   y: 0
   z: 1
-- index: 35
+- index: 34
   x: 29
   y: 0
   z: 1
-- index: 36
+- index: 35
   x: 28
   y: 0
   z: 1
-- index: 37
+- index: 36
   x: 27
   y: 0
   z: 1
-- index: 38
+- index: 37
   x: 26
   y: 0
   z: 1
-- index: 39
+- index: 38
   x: 25
   y: 0
   z: 1
-- index: 40
+- index: 39
   x: 24
   y: 0
   z: 1
-- index: 41
+- index: 40
   x: 23
   y: 0
   z: 1
-- index: 42
+- index: 41
   x: 22
   y: 0
   z: 1
-- index: 43
+- index: 42
   x: 21
   y: 0
   z: 1
-- index: 44
+- index: 43
   x: 20
   y: 0
   z: 1
-- index: 45
+- index: 44
   x: 19
   y: 0
   z: 1
-- index: 46
+- index: 45
   x: 18
   y: 0
   z: 1
-- index: 47
+- index: 46
   x: 17
   y: 0
   z: 1
-- index: 48
+- index: 47
   x: 16
   y: 0
   z: 1
-- index: 49
+- index: 48
   x: 15
   y: 0
   z: 1
-- index: 50
+- index: 49
   x: 14
   y: 0
   z: 1
-- index: 51
+- index: 50
   x: 13
   y: 0
   z: 1
-- index: 52
+- index: 51
   x: 12
   y: 0
   z: 1
-- index: 53
+- index: 52
   x: 11
   y: 0
   z: 1
-- index: 54
+- index: 53
   x: 10
   y: 0
   z: 1
-- index: 55
+- index: 54
   x: 9
   y: 0
   z: 1
-- index: 56
+- index: 55
   x: 8
   y: 0
   z: 1
-- index: 57
+- index: 56
   x: 7
   y: 0
   z: 1
-- index: 58
+- index: 57
   x: 6
   y: 0
   z: 1
-- index: 59
+- index: 58
   x: 5
   y: 0
   z: 1
-- index: 60
+- index: 59
   x: 4
   y: 0
   z: 1
-- index: 61
+- index: 60
   x: 3
   y: 0
   z: 1
-- index: 62
+- index: 61
   x: 2
   y: 0
   z: 1
-- index: 63
+- index: 62
   x: 1
+  y: 0
+  z: 1
+- index: 63
+  x: 0
   y: 0
   z: 1
 - index: 64
@@ -384,131 +384,131 @@ lights:
   y: 0
   z: 2
 - index: 96
-  x: 32
-  y: 0
-  z: 3
-- index: 97
   x: 31
   y: 0
   z: 3
-- index: 98
+- index: 97
   x: 30
   y: 0
   z: 3
-- index: 99
+- index: 98
   x: 29
   y: 0
   z: 3
-- index: 100
+- index: 99
   x: 28
   y: 0
   z: 3
-- index: 101
+- index: 100
   x: 27
   y: 0
   z: 3
-- index: 102
+- index: 101
   x: 26
   y: 0
   z: 3
-- index: 103
+- index: 102
   x: 25
   y: 0
   z: 3
-- index: 104
+- index: 103
   x: 24
   y: 0
   z: 3
-- index: 105
+- index: 104
   x: 23
   y: 0
   z: 3
-- index: 106
+- index: 105
   x: 22
   y: 0
   z: 3
-- index: 107
+- index: 106
   x: 21
   y: 0
   z: 3
-- index: 108
+- index: 107
   x: 20
   y: 0
   z: 3
-- index: 109
+- index: 108
   x: 19
   y: 0
   z: 3
-- index: 110
+- index: 109
   x: 18
   y: 0
   z: 3
-- index: 111
+- index: 110
   x: 17
   y: 0
   z: 3
-- index: 112
+- index: 111
   x: 16
   y: 0
   z: 3
-- index: 113
+- index: 112
   x: 15
   y: 0
   z: 3
-- index: 114
+- index: 113
   x: 14
   y: 0
   z: 3
-- index: 115
+- index: 114
   x: 13
   y: 0
   z: 3
-- index: 116
+- index: 115
   x: 12
   y: 0
   z: 3
-- index: 117
+- index: 116
   x: 11
   y: 0
   z: 3
-- index: 118
+- index: 117
   x: 10
   y: 0
   z: 3
-- index: 119
+- index: 118
   x: 9
   y: 0
   z: 3
-- index: 120
+- index: 119
   x: 8
   y: 0
   z: 3
-- index: 121
+- index: 120
   x: 7
   y: 0
   z: 3
-- index: 122
+- index: 121
   x: 6
   y: 0
   z: 3
-- index: 123
+- index: 122
   x: 5
   y: 0
   z: 3
-- index: 124
+- index: 123
   x: 4
   y: 0
   z: 3
-- index: 125
+- index: 124
   x: 3
   y: 0
   z: 3
-- index: 126
+- index: 125
   x: 2
   y: 0
   z: 3
-- index: 127
+- index: 126
   x: 1
+  y: 0
+  z: 3
+- index: 127
+  x: 0
   y: 0
   z: 3
 - index: 128
@@ -640,131 +640,131 @@ lights:
   y: 0
   z: 4
 - index: 160
-  x: 32
-  y: 0
-  z: 5
-- index: 161
   x: 31
   y: 0
   z: 5
-- index: 162
+- index: 161
   x: 30
   y: 0
   z: 5
-- index: 163
+- index: 162
   x: 29
   y: 0
   z: 5
-- index: 164
+- index: 163
   x: 28
   y: 0
   z: 5
-- index: 165
+- index: 164
   x: 27
   y: 0
   z: 5
-- index: 166
+- index: 165
   x: 26
   y: 0
   z: 5
-- index: 167
+- index: 166
   x: 25
   y: 0
   z: 5
-- index: 168
+- index: 167
   x: 24
   y: 0
   z: 5
-- index: 169
+- index: 168
   x: 23
   y: 0
   z: 5
-- index: 170
+- index: 169
   x: 22
   y: 0
   z: 5
-- index: 171
+- index: 170
   x: 21
   y: 0
   z: 5
-- index: 172
+- index: 171
   x: 20
   y: 0
   z: 5
-- index: 173
+- index: 172
   x: 19
   y: 0
   z: 5
-- index: 174
+- index: 173
   x: 18
   y: 0
   z: 5
-- index: 175
+- index: 174
   x: 17
   y: 0
   z: 5
-- index: 176
+- index: 175
   x: 16
   y: 0
   z: 5
-- index: 177
+- index: 176
   x: 15
   y: 0
   z: 5
-- index: 178
+- index: 177
   x: 14
   y: 0
   z: 5
-- index: 179
+- index: 178
   x: 13
   y: 0
   z: 5
-- index: 180
+- index: 179
   x: 12
   y: 0
   z: 5
-- index: 181
+- index: 180
   x: 11
   y: 0
   z: 5
-- index: 182
+- index: 181
   x: 10
   y: 0
   z: 5
-- index: 183
+- index: 182
   x: 9
   y: 0
   z: 5
-- index: 184
+- index: 183
   x: 8
   y: 0
   z: 5
-- index: 185
+- index: 184
   x: 7
   y: 0
   z: 5
-- index: 186
+- index: 185
   x: 6
   y: 0
   z: 5
-- index: 187
+- index: 186
   x: 5
   y: 0
   z: 5
-- index: 188
+- index: 187
   x: 4
   y: 0
   z: 5
-- index: 189
+- index: 188
   x: 3
   y: 0
   z: 5
-- index: 190
+- index: 189
   x: 2
   y: 0
   z: 5
-- index: 191
+- index: 190
   x: 1
+  y: 0
+  z: 5
+- index: 191
+  x: 0
   y: 0
   z: 5
 - index: 192
@@ -896,131 +896,131 @@ lights:
   y: 0
   z: 6
 - index: 224
-  x: 32
-  y: 0
-  z: 7
-- index: 225
   x: 31
   y: 0
   z: 7
-- index: 226
+- index: 225
   x: 30
   y: 0
   z: 7
-- index: 227
+- index: 226
   x: 29
   y: 0
   z: 7
-- index: 228
+- index: 227
   x: 28
   y: 0
   z: 7
-- index: 229
+- index: 228
   x: 27
   y: 0
   z: 7
-- index: 230
+- index: 229
   x: 26
   y: 0
   z: 7
-- index: 231
+- index: 230
   x: 25
   y: 0
   z: 7
-- index: 232
+- index: 231
   x: 24
   y: 0
   z: 7
-- index: 233
+- index: 232
   x: 23
   y: 0
   z: 7
-- index: 234
+- index: 233
   x: 22
   y: 0
   z: 7
-- index: 235
+- index: 234
   x: 21
   y: 0
   z: 7
-- index: 236
+- index: 235
   x: 20
   y: 0
   z: 7
-- index: 237
+- index: 236
   x: 19
   y: 0
   z: 7
-- index: 238
+- index: 237
   x: 18
   y: 0
   z: 7
-- index: 239
+- index: 238
   x: 17
   y: 0
   z: 7
-- index: 240
+- index: 239
   x: 16
   y: 0
   z: 7
-- index: 241
+- index: 240
   x: 15
   y: 0
   z: 7
-- index: 242
+- index: 241
   x: 14
   y: 0
   z: 7
-- index: 243
+- index: 242
   x: 13
   y: 0
   z: 7
-- index: 244
+- index: 243
   x: 12
   y: 0
   z: 7
-- index: 245
+- index: 244
   x: 11
   y: 0
   z: 7
-- index: 246
+- index: 245
   x: 10
   y: 0
   z: 7
-- index: 247
+- index: 246
   x: 9
   y: 0
   z: 7
-- index: 248
+- index: 247
   x: 8
   y: 0
   z: 7
-- index: 249
+- index: 248
   x: 7
   y: 0
   z: 7
-- index: 250
+- index: 249
   x: 6
   y: 0
   z: 7
-- index: 251
+- index: 250
   x: 5
   y: 0
   z: 7
-- index: 252
+- index: 251
   x: 4
   y: 0
   z: 7
-- index: 253
+- index: 252
   x: 3
   y: 0
   z: 7
-- index: 254
+- index: 253
   x: 2
   y: 0
   z: 7
-- index: 255
+- index: 254
   x: 1
+  y: 0
+  z: 7
+- index: 255
+  x: 0
   y: 0
   z: 7
 

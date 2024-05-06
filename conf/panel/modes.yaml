@@ -1,31 +1,26 @@
-equaliser:
-  decay:
-    amount: 0.02
-    interval: 0.02
-  rotation: 2
-  scale-factor: 0.5
-  y:
-    default: 0.4
-    max: 1.0
+# equaliser:
+#   decay:
+#     amount: 0.02
+#     interval: 0.02
+#   rotation: 2
+#   scale-factor: 0.5
+#   y:
+#     default: 0.4
+#     max: 1.0
 
-rainbow:
-  axis: x
-  length-multiplier: 2
-  pause-time: 0.02
-
-breather:
-  scale-factor: 0.6
-  step: 1
-  pause-time: 0
-  movement-axis: x
+# TODO: why does this only move in `y`?
+# rainbow:
+#   axis: x
+#   length-multiplier: 2
+#   pause-time: 0.02
 
 larsen:
   axes:
-    movement: z
-  head-width: 0.15
+    movement: x
+  head-width: 0.1
   hue: 1.0
-  jump: 1
-  tail-proportion: 1.0
+  jump: 8
+  tail-proportion: 0.5
 
 pulsator:
   hue-seconds-per-rotation: 5
