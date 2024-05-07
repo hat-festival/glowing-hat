@@ -1,3 +1,13 @@
+words:
+  delay: 0.02
+  hue-change-speed: 10
+  string: sinclair
+
+rainbow:
+  axis: x
+  length-multiplier: 2
+  pause-time: 0.0
+
 larsen:
   axes:
     movement: x
@@ -15,12 +25,6 @@ equaliser:
   y:
     default: 0.4
     max: 1.0
-
-# TODO: why does this only move in `y`?
-# rainbow:
-#   axis: x
-#   length-multiplier: 2
-#   pause-time: 0.02
 
 pulsator:
   hue-seconds-per-rotation: 5

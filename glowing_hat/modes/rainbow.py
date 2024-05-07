@@ -12,14 +12,15 @@ class Rainbow(Mode):
         self.hues_length = len(self.hat) * self.conf["length-multiplier"]
         self.hues = deque([(x / self.hues_length) for x in range(self.hues_length)])
         self.hat.sort(self.conf["axis"])
+        self.hat.apply_value(1.0)
 
     def run(self):
         """Do the stuff."""
         self.configure()
 
         while True:
-            for pixel in self.hat.pixels:
-                pixel["hue"] = self.hues[pixel["index"]]
+            for index, pixel in enumerate(self.hat.pixels):
+                pixel["hue"] = self.hues[index]
 
             self.hat.light_up()
             sleep(self.conf["pause-time"])

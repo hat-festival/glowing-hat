@@ -36,3 +36,5 @@ sudo wpa_cli -i wlan0 reconfigure
 ```
 
 https://forums.raspberrypi.com/viewtopic.php?t=360175
+
+TODO: this is all bollocks now, update (and update the hotspot password)
