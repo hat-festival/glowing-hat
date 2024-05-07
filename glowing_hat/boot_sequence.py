@@ -13,7 +13,7 @@ def boot_hat(custodian, oled, hat):
 
     if "LOGLEVEL" not in os.environ:
         hue_source = TimeBasedHueSource(seconds_per_rotation=5)
-        for i in range(10, 3, -1):
+        for i in range(10, 3, -2):
             hue = hue_source.hue()
             colour_from_hue(hue)
             populate_hat(hat, hue=hue, value=i / 10)
