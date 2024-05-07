@@ -1,3 +1,8 @@
+words:
+  delay: 0.02
+  hue-change-speed: 10
+  string: sinclair
+
 larsen:
   axes:
     movement: x
