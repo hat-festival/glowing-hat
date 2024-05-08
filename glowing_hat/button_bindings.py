@@ -30,6 +30,14 @@ def controller_bindings(controller):
             controller.show_ip()
             off()
 
+        @buttonshim.on_release(buttonshim.BUTTON_E)
+        def button_e_release_handler(_, __):
+            """Handle button E release."""
+            logging.debug("button E released")
+            blue()
+            controller.next_string()
+            off()
+
         @buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=1)
         def button_e_hold_handler(_):
             """Handle button E hold."""

@@ -1,7 +1,6 @@
 words:
-  delay: 0.02
+  delay: 0.01
   hue-change-speed: 10
-  string: sinclair
 
 rainbow:
   axis: x
