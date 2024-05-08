@@ -12,3 +12,7 @@ class TimeBasedHueSource:
         """Get a hue based on the time."""
         now = time.time()
         return (now % self.seconds_per_rotation) / self.seconds_per_rotation
+
+    def inverse_hue(self):
+        """Get the inverse hue."""
+        return (self.hue() + 0.5) % 1

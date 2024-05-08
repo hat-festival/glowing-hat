@@ -69,3 +69,11 @@ def test_fractional_per():
 
     with patch.object(time, "time", return_value=2.500000):
         assert tbhs.hue() == 0.0
+
+
+def test_inverse():
+    """Test it gets the inverse hue."""
+    tbhs = TimeBasedHueSource(seconds_per_rotation=2)
+    with patch.object(time, "time", return_value=0.500000):
+        assert tbhs.hue() == 0.25  # noqa: PLR2004
+        assert tbhs.inverse_hue() == 0.75  # noqa: PLR2004
