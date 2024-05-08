@@ -9,6 +9,7 @@ from glowing_hat.custodian import Custodian
 from glowing_hat.hat import Hat
 from glowing_hat.modes_list import load_modes, modes
 from glowing_hat.oled import Oled
+from glowing_hat.strings_list import load_strings
 from glowing_hat.tools.logger import logging
 
 
@@ -25,6 +26,9 @@ class Controller:
         self.modes = modes
         load_modes(self.custodian)
         self.custodian.next("mode")
+
+        load_strings(self.custodian)
+        self.custodian.next("string")
 
         self.hat = Hat()
         self.oled = Oled(self.custodian)
@@ -54,6 +58,13 @@ class Controller:
         """Bump to next mode."""
         self.custodian.next("mode")
         logging.info("`mode` is now `%s`", self.custodian.get("mode"))
+
+        self.restart_hat()
+
+    def next_string(self):
+        """Bump to next string."""
+        self.custodian.next("string")
+        logging.info("`string` is now `%s`", self.custodian.get("string"))
 
         self.restart_hat()
 
