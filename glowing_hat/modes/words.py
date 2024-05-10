@@ -1,9 +1,9 @@
-from collections import deque
 from pathlib import Path
 from time import sleep
 
 import yaml
 
+from glowing_hat.arrangements.word_streamer import WordStreamer
 from glowing_hat.custodian import Custodian
 from glowing_hat.hue_sources.time_based_hue_source import TimeBasedHueSource
 from glowing_hat.mode import Mode
@@ -12,49 +12,39 @@ from glowing_hat.mode import Mode
 class Words(Mode):
     """Write some words."""
 
+    # TODO: get the pikesley_ebooks toots
     def configure(self):
         """Configure."""
         self.hat.off()
         self.custodian = Custodian(conf=self.conf, namespace="hat")
-        string = self.custodian.get("string")
-        self.words = yaml.safe_load(
-            Path("conf", "panel", "strings", f"{string}.yaml").read_text(
-                encoding="utf-8"
-            )
+        self.strings = yaml.safe_load(
+            Path("conf", "panel", "strings.yaml").read_text(encoding="utf-8")
         )
-        self.words = list(map(deque, self.words))
-
+        self.word_streamer = WordStreamer(self.strings[self.custodian.get("string")])
         self.hue_source = TimeBasedHueSource(self.conf["hue-change-speed"])
-        self.hat.sort_plain()
+        self.hat.sort("x")
 
     def run(self):
         """Do stuff."""
         self.configure()
 
-        first_run = True
         while True:
-            flipped = False
-            self.hat.apply_hue(self.hue_source.hue())
-            for index, row in enumerate(self.words):
-                offset = 32 * index
+            for frame in self.word_streamer:
                 for i in range(32):
-                    row_index = i
-                    if flipped:
-                        row_index = 31 - row_index
+                    for j in range(8):
+                        val_hue = (1, self.hue_source.hue())
+                        if frame[i][j] == 0:
+                            val_hue = (
+                                self.conf["inverse-value"],
+                                self.hue_source.inverse_hue(),
+                            )
 
-                    val_hue = (1, self.hue_source.hue())
-                    if row[row_index] == 0:
-                        val_hue = (0.3, self.hue_source.inverse_hue())
+                        self.hat.pixels[j + (i * 8)]["value"] = frame[i][j]
 
-                    pixel = self.hat.pixels[i + offset]
-                    pixel["value"], pixel["hue"] = val_hue
+                        pixel = self.hat.pixels[j + (i * 8)]
+                        pixel["value"], pixel["hue"] = val_hue
 
-                flipped = not flipped
-                row.rotate(-1)
+                self.hat.light_up()
+                sleep(self.conf["delay"])
 
-            self.hat.light_up()
-            sleep(self.conf["delay"])
-
-            if first_run:
-                sleep(0.5)
-            first_run = False
+            self.word_streamer.reset()

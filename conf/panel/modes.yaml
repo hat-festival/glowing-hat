@@ -1,6 +1,7 @@
 words:
   delay: 0.01
   hue-change-speed: 10
+  inverse-value: 0.3
 
 rainbow:
   axis: x
