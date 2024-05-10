@@ -73,8 +73,12 @@ class WordIterator:
 
 def one_char_as_bits(character):
     """Turn character into bitstrings."""
-    # TODO: trap unfound chars
-    return [list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[character]]
+    try:
+        char = characters[character]
+    except KeyError:
+        char = characters[" "]
+
+    return [list(map(int, list(f"{x:#010b}"[2:]))) for x in char]
 
 
 def as_bits(string):

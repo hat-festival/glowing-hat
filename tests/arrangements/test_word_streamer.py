@@ -20,6 +20,20 @@ def test_as_bits():
     ]
 
 
+def test_bad_character():
+    """Test it handles an unknown character."""
+    assert as_bits("¡") == [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+    ]
+
+
 def test_string_as_bits():
     """Test it turns some characters into columns of bits."""
     assert as_bits("ab") == [
