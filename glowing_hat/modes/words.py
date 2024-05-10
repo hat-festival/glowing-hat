@@ -20,7 +20,11 @@ class Words(Mode):
         self.strings = yaml.safe_load(
             Path("conf", "panel", "strings.yaml").read_text(encoding="utf-8")
         )
-        self.word_streamer = WordStreamer(self.strings[self.custodian.get("string")])
+
+        key = self.custodian.get("string")
+        content = self.custodian.get("toot") if key == "toot" else self.strings[key]
+        self.word_streamer = WordStreamer(content)
+
         self.hue_source = TimeBasedHueSource(self.conf["hue-change-speed"])
         self.hat.sort("x")
 
