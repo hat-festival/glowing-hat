@@ -10,6 +10,7 @@ from glowing_hat.mode import Mode
 from glowing_hat.shitpost_language_model import ShitPostLanguageModel
 from glowing_hat.tools.logger import logging
 
+
 class Words(Mode):
     """Write some words."""
 
