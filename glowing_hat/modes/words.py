@@ -34,21 +34,25 @@ class Words(Mode):
 
         while True:
             for frame in self.word_streamer:
-                for i in range(32):
-                    for j in range(8):
-                        val_hue = (1, self.hue_source.hue())
-                        if frame[i][j] == 0:
-                            val_hue = (
-                                self.conf["inverse-value"],
-                                self.hue_source.inverse_hue(),
-                            )
-
-                        self.hat.pixels[j + (i * 8)]["value"] = frame[i][j]
-
-                        pixel = self.hat.pixels[j + (i * 8)]
-                        pixel["value"], pixel["hue"] = val_hue
+                self.render_frame(frame)
 
                 self.hat.light_up()
                 sleep(self.conf["delay"])
 
             self.word_streamer.reset()
+
+    def render_frame(self, frame):
+        """Render one frame."""
+        for i in range(32):
+            for j in range(8):
+                val_hue = (1, self.hue_source.hue())
+                if frame[i][j] == 0:
+                    val_hue = (
+                        self.conf["inverse-value"],
+                        self.hue_source.inverse_hue(),
+                    )
+
+                self.hat.pixels[j + (i * 8)]["value"] = frame[i][j]
+
+                pixel = self.hat.pixels[j + (i * 8)]
+                pixel["value"], pixel["hue"] = val_hue
