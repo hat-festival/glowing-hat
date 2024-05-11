@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import yaml
+from anyascii import anyascii
 
 characters = yaml.safe_load(
     Path("conf", "panel", "characters.yaml").read_text(encoding="utf-8")
@@ -73,12 +74,9 @@ class WordIterator:
 
 def one_char_as_bits(character):
     """Turn character into bitstrings."""
-    try:
-        char = characters[character]
-    except KeyError:
-        char = characters[" "]
-
-    return [list(map(int, list(f"{x:#010b}"[2:]))) for x in char]
+    return [
+        list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[anyascii(character)]
+    ]
 
 
 def as_bits(string):
