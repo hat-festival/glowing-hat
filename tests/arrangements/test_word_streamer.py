@@ -1,10 +1,5 @@
 from glowing_hat.arrangements.word_streamer import WordIterator, as_bits
 
-# def test_constructor():
-#     """Test it gets the data."""
-#     ws = WordStreamer()
-#     assert ws.width == 4
-
 
 def test_as_bits():
     """Test it turns a character into columns of bits."""
