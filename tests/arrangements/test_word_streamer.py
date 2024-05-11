@@ -1,9 +1,9 @@
-from glowing_hat.arrangements.word_streamer import WordIterator, WordStreamer, as_bits
+from glowing_hat.arrangements.word_streamer import WordIterator, WordStreamer, to_bits
 
 
 def test_as_bits():
     """Test it turns a character into columns of bits."""
-    assert as_bits("a") == [
+    assert to_bits("a") == [
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0, 0],
         [0, 0, 1, 0, 1, 0, 1, 0],
@@ -17,7 +17,7 @@ def test_as_bits():
 
 def test_bad_character():
     """Test it handles an unknown character."""
-    assert as_bits("¡") == [
+    assert to_bits("¡") == [
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -31,7 +31,7 @@ def test_bad_character():
 
 def test_string_as_bits():
     """Test it turns some characters into columns of bits."""
-    assert as_bits("ab") == [
+    assert to_bits("ab") == [
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0, 0],
         [0, 0, 1, 0, 1, 0, 1, 0],

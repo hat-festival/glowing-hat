@@ -31,7 +31,7 @@ class WordStreamer:
         if self.counter == 0:
             self.substring = next(self.word_iterator)
 
-        data = as_bits(self.substring)
+        data = to_bits(self.substring)
         chunk = data[self.counter : self.counter + 32]
         self.counter += 1
 
@@ -72,26 +72,27 @@ class WordIterator:
         return frame
 
 
-def one_char_as_bits(character):
+def char_to_bits(character):
     """Turn character into bitstrings."""
     return [
         list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[anyascii(character)]
     ]
 
 
-def as_bits(string):
+def to_bits(string):
     """Turn string into bitstrings."""
-    rack = [[], [], [], [], [], [], [], []]
+    rack = [[] for _ in range(8)]
 
     for char in string:
-        bits = one_char_as_bits(char)
+        bits = char_to_bits(char)
         for index, bitstring in enumerate(bits):
             rack[index] += bitstring
 
-    lines = []
-    for index in range(len(rack[0])):
-        lines.append([])
-        for row in rack:
-            lines[-1].append(row[index])
+    return [[row[index] for row in rack] for index in range(len(string * 8))]
 
-    return lines
+    # for index in range(len(rack[0])):
+    # lines.append([])
+    # for row in rack:
+    #     lines[-1].append(row[index])
+
+    # return [[row[index] for row in rack] for index in range(len(rack[0]))]
