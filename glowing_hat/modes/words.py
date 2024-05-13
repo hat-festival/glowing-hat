@@ -27,10 +27,10 @@ class Words(Mode):
 
         self.splm = None
         if key == "splm":
-            logging.debug("We are shitposting")
+            logging.debug("we are shitposting")
             self.splm = ShitPostLanguageModel()
             content = self.splm.generate()
-            logging.debug("Content is `%s`", content)
+            logging.debug("content is `%s`", content)
             self.word_streamer = WordStreamer(content)
 
         else:

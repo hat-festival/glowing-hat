@@ -74,8 +74,10 @@ class WordIterator:
 
 def char_to_bits(character):
     """Turn character into bitstrings."""
+    if character not in ["©"]:
+        character = anyascii(character)
     return [
-        list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[anyascii(character)]
+        list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[character]
     ]
 
 
@@ -89,10 +91,3 @@ def to_bits(string):
             rack[index] += bitstring
 
     return [[row[index] for row in rack] for index in range(len(string * 8))]
-
-    # for index in range(len(rack[0])):
-    # lines.append([])
-    # for row in rack:
-    #     lines[-1].append(row[index])
-
-    # return [[row[index] for row in rack] for index in range(len(rack[0]))]
