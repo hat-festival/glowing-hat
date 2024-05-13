@@ -2,4 +2,4 @@
 
 Notes:
 
-My name is Sam. I made this hat for EMF 2022 and I found myself answering so many questions about it that I basically started writing this lightning talk in my head. So now I get to tell you about it
+My name is Sam. I made this hat for EMF 2022 and I found myself answering so many questions about it that I basically started writing this lightning talk in my head. So now here I am to tell you about it.
