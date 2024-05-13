@@ -1,3 +1,4 @@
+anyascii==0.3.2
 asttokens==2.4.1
 certifi==2024.2.2
 charset-normalizer==3.3.2

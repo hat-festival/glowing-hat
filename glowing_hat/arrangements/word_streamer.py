@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import yaml
+from anyascii import anyascii
 
 characters = yaml.safe_load(
     Path("conf", "panel", "characters.yaml").read_text(encoding="utf-8")
@@ -30,7 +31,7 @@ class WordStreamer:
         if self.counter == 0:
             self.substring = next(self.word_iterator)
 
-        data = as_bits(self.substring)
+        data = to_bits(self.substring)
         chunk = data[self.counter : self.counter + 32]
         self.counter += 1
 
@@ -71,29 +72,22 @@ class WordIterator:
         return frame
 
 
-def one_char_as_bits(character):
+def char_to_bits(character):
     """Turn character into bitstrings."""
-    try:
-        char = characters[character]
-    except KeyError:
-        char = characters[" "]
+    if character not in ["©"]:
+        character = anyascii(character)
+    return [
+        list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[character]
+    ]
 
-    return [list(map(int, list(f"{x:#010b}"[2:]))) for x in char]
 
-
-def as_bits(string):
+def to_bits(string):
     """Turn string into bitstrings."""
-    rack = [[], [], [], [], [], [], [], []]
+    rack = [[] for _ in range(8)]
 
     for char in string:
-        bits = one_char_as_bits(char)
+        bits = char_to_bits(char)
         for index, bitstring in enumerate(bits):
             rack[index] += bitstring
 
-    lines = []
-    for index in range(len(rack[0])):
-        lines.append([])
-        for row in rack:
-            lines[-1].append(row[index])
-
-    return lines
+    return [[row[index] for row in rack] for index in range(len(string * 8))]
