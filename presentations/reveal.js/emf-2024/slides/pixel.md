@@ -16,4 +16,5 @@
 
 Notes:
 
-So each pixel is represented by nice metadata like this.
+So each pixel is represented by nice metadata like this. We can also work out the angle of each pixel in each of the x, y and z planes, using some half-remembered trigonometry.
+
