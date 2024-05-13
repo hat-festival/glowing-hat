@@ -1,6 +1,6 @@
 Adafruit-Blinka==8.39.1
 adafruit-circuitpython-busdevice==5.2.9
-adafruit-circuitpython-connectionmanager==2.0.0
+adafruit-circuitpython-connectionmanager==3.0.0
 adafruit-circuitpython-framebuf==1.6.5
 adafruit-circuitpython-neopixel==6.3.11
 adafruit-circuitpython-pixelbuf==2.0.4
