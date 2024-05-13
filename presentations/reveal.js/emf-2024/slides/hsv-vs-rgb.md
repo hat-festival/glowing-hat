@@ -36,6 +36,6 @@ The NeoPixels present themselves as a Python list, where you can just assign an 
 
 So for the 2024 edition, I've turned to the HSV model, which is so much smoother - the hue is just a circle with red at 0.0, green at 1/3 and blue at 2/3, with all the other colours in between, and the python `colorsys` module knows how to translate between the different models.
 
-Each pixel gets some more metadata -click- and we adjust the hue, saturation and value fields when preparing to light the hat. A pixel never knows what its RGB triple is - that's essentially an artefact that gets calculated as late as possible, at the moment we actually send data to the real LEDs.
+-click- Each pixel gets some more metadata -click- and we adjust the hue, saturation and value fields when preparing to light the hat. A pixel never knows what its RGB triple is - that's essentially an artefact that gets calculated as late as possible, at the moment we actually send data to the real LEDs.
 
 Doing it this way also enables us to easily do gamma-correction, which is something I've long pretended to understand, and adjust the brightness of the hat - we just apply a brightness factor to the value as we calculate the RGB.

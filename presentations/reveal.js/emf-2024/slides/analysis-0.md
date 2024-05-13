@@ -8,4 +8,4 @@ Now we run the photos through OpenCV, to find the bright spots. Each photo shoul
 
 So after this, we get a little bit of JSON like this for each photo -click-
 
-Now we take all these little JSON objects and run them through another script to do some transformations and generate this YAML
+Now we take all these little JSON objects and run them through another script to do some transformations...
