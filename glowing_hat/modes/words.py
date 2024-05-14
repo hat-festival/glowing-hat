@@ -28,8 +28,8 @@ class Words(Mode):
         self.splm = None
         if key == "splm":
             logging.debug("we are shitposting")
-            self.splm = ShitPostLanguageModel()
-            content = self.splm.generate()
+            self.splm = ShitPostLanguageModel(corpus=self.conf["corpus"])
+            content = self.splm.generate(sentences=self.conf["sentences-per-batch"])
             logging.debug("content is `%s`", content)
             self.word_streamer = WordStreamer(content)
 
@@ -52,8 +52,8 @@ class Words(Mode):
                 sleep(self.conf["delay"])
 
             if self.splm:
-                content = self.splm.generate()
-                logging.debug("Content is `%s`", content)
+                content = self.splm.generate(sentences=self.conf["sentences-per-batch"])
+                logging.debug("content is `%s`", content)
                 self.word_streamer = WordStreamer(content)
             else:
                 self.word_streamer.reset()
