@@ -1,7 +1,9 @@
 ## Modes
 
-![gif of hat doing something?](https://placebear.com/200/300)
+![The hat, working for the first time](/emf-2024/videos/first-hat.gif)
 
 Notes:
 
-So we can light up parts of the hat based on position, which was very exciting the first time I got it to work, but gets less interesting very quickly.
+This is a gif of the first time I got the hat working after partially mapping the lights, which was very exciting. Like, I thought I'd done it all correctly, but to see it actually doing this was mind-blowing.
+
+So now we need some interesting ways to light up the hat. I initially had lots of elaborate ideas, but few of them looked like I had imagined them once they were translated to the hat, often because the resolution is hilariously low. It did however generate a few gems, and it's easy and fun to iterate on ideas.

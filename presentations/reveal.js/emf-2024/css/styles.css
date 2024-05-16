@@ -16,7 +16,7 @@
   --r-main-font: var(--font-primary);
 
   --r-heading-font-weight: 600;
-  --r-heading2-size: 4rem;
+  --r-heading2-size: 1.4rem;
 }
 
 
@@ -25,8 +25,8 @@ hr {
 }
 
 img {
-  border: 0.2rem solid var(--colour-green-mid);
-  height: 30vh;
+  border: 0.1rem solid var(--colour-green-mid);
+  height: 40vh;
 }
 
 .spacer {
@@ -38,6 +38,7 @@ img {
 }
 
 .reveal pre {
+  padding-left: 5rem;
   box-shadow: none;
 }
 
@@ -55,5 +56,5 @@ code,
   background-image: var(--logotext);
   background-position: bottom left;
   background-repeat: no-repeat;
-  background-size: 25rem;
+  background-size: 8rem;
 }
