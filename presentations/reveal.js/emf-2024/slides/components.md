@@ -1,7 +1,7 @@
 ## Components
 
 - Hard-hat off eBay
-- 2 strings of ws2812b NeoPixels
+- 2 strings of WS2812 NeoPixels
 - Raspberry Pi Zero 2
     - With a button-shim
     - And an Oled display
