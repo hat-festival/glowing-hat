@@ -76,9 +76,13 @@ def char_to_bits(character):
     """Turn character into bitstrings."""
     if character not in ["©"]:
         character = anyascii(character)
-    return [
-        list(map(int, list(f"{x:#010b}"[2:]))) for x in characters[character]
-    ]
+
+    try:
+        character = characters[character]
+    except KeyError:
+        character = characters[" "]
+
+    return [list(map(int, list(f"{x:#010b}"[2:]))) for x in character]
 
 
 def to_bits(string):
