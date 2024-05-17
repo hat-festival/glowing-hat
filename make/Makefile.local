@@ -49,7 +49,7 @@ push-wifi:
 			--archive \
 			--verbose \
 			--delete \
-			etc/NetworkManager/ pi@$${HAT}.local:glowing-hat/etc/NetworkManager/ ;\
+			etc/NetworkManager/ pi@$${HAT}:glowing-hat/etc/NetworkManager/ ;\
 	done
 
 push-to:
@@ -65,7 +65,7 @@ push-to:
 		--exclude htmlcov \
 		--exclude presentations \
 		--exclude Makefile \
-		. pi@${HAT}.local:${PROJECT}/ || true
+		. pi@${HAT}:${PROJECT}/ || true
 
 push-code:
 	for HAT in ${HATS}; do \
@@ -73,16 +73,16 @@ push-code:
 	done
 
 push-cube:
-	HAT=cube make push-to
+	HAT=cube.local make push-to
 
 push-hat:
-	HAT=glowing-hat make push-to
+	HAT=glowing-hat.local make push-to
 
 push-lightstring:
-	HAT=lightstring make push-to
+	HAT=lightstring.local make push-to
 
 push-panel:
-	HAT=panel make push-to
+	HAT=panel.local make push-to
 
 clean:
 	@rm -fr $$(find . -name __pycache__)
