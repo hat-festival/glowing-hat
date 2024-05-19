@@ -25,7 +25,7 @@ for line in lines:
             if "Notes" in slide_line:
                 collect = True
 
-        notes.append("---")
+        # notes.append("---")
 
 template = Path(pres_root, "notes.template").read_text(encoding="utf-8")
 pres = template.replace("CONTENT_HERE", markdown.markdown("\n\n".join(notes)))

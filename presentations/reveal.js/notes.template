@@ -12,11 +12,13 @@
             width: 88%;
             background-color: black;
             color: white;
+            text-transform: uppercase;
         }
 
         h1, h2, h3 {
             color: darkgrey;
             font-size: 2rem;
+            text-align: right;
         }
 
         marquee {
