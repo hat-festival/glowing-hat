@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            height: 100vh;
+            line-height: 1.2;
+            margin: 1em auto;
+            overflow: hidden;
+            width: 88%;
+            background-color: black;
+            color: white;
+        }
+
+        h1, h2, h3 {
+            color: darkgrey;
+            font-size: 2rem;
+        }
+
+        marquee {
+            max-height: 92vh;
+            font-size: 4em;
+            height: 50vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <marquee direction="up" scrollamount="SCROLL_AMOUNT" loop="1">
+        CONTENT_HERE
+        </marquee>
+    </div>
+</body>
+
+<script>
+    // Get the prompter element
+    let prompter = document.querySelector('marquee');
+
+    // Maintain the state of the player
+    let state = 'start';
+
+    /**
+     * Control the prompter speed and scrolling
+     * @param  {Event} event The event object
+     */
+    function controlPrompter(event) {
+        if (event.code && event.code !== 'Space') return;
+        state = state === 'start' ? 'stop' : 'start';
+        prompter[state]();
+    }
+
+    // Listen for keyup and click events
+    document.addEventListener('keyup', controlPrompter);
+    prompter.addEventListener('click', controlPrompter);
+</script>
+
+</html>

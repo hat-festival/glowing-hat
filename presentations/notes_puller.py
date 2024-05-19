@@ -1,4 +1,8 @@
-from pathlib import Path 
+from pathlib import Path
+
+import markdown
+
+SCROLL_AMOUNT = 4
 
 pres_root = "presentations/reveal.js"
 
@@ -16,12 +20,14 @@ for line in lines:
         collect = False
 
         for slide_line in slide_text:
-            if collect:
-                if slide_line:
-                    notes.append(slide_line)
+            if collect and slide_line:
+                notes.append(slide_line)
             if "Notes" in slide_line:
                 collect = True
 
         notes.append("---")
 
-Path(pres_root, "emf-2024", "notes.md").write_text("\n\n".join(notes), encoding="utf-8")
+template = Path(pres_root, "notes.template").read_text(encoding="utf-8")
+pres = template.replace("CONTENT_HERE", markdown.markdown("\n\n".join(notes)))
+pres = pres.replace("SCROLL_AMOUNT", str(SCROLL_AMOUNT))
+Path(pres_root, "notes.html").write_text(pres, encoding="utf-8")
