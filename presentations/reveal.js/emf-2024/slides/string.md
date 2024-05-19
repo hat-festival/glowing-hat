@@ -1,11 +1,8 @@
-<!-- .element: data-background-video="emf-2024/videos/cube.mp4" data-background-video-loop="loop" -->
-
 ## When all you have is a hat...
 
-<div class="spacer">
+![picture of lightstring](https://placebear.com/201/301)
 
 Notes:
 
-And the string of LEDs attached to our tent over at Hat Village
+And the string of LEDs attached to our tent over at Hat Village.
 
-Behold, a hat!

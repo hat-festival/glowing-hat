@@ -1,8 +1,6 @@
-<!-- .element: data-background-video="emf-2024/videos/panel.mp4" data-background-video-loop="loop" -->
-
 ## When all you have is a hat...
 
-<div class="spacer">
+![picture of cube:bit](https://placebear.com/201/300)
 
 Notes:
 

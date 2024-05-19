@@ -16,7 +16,7 @@
   --r-main-font: var(--font-primary);
 
   --r-heading-font-weight: 600;
-  --r-heading2-size: 1.4rem;
+  --r-heading2-size: 3rem;
 }
 
 
@@ -34,12 +34,12 @@ img {
 }
 
 .hljs {
-  background-color: transparent
+  /* background-color: transparent */
 }
 
 .reveal pre {
-  padding-left: 5rem;
-  box-shadow: none;
+  /* margin-inline: 10rem; */
+  /* box-shadow: none; */
 }
 
 code,
@@ -56,5 +56,5 @@ code,
   background-image: var(--logotext);
   background-position: bottom left;
   background-repeat: no-repeat;
-  background-size: 8rem;
+  background-size: 15rem;
 }
