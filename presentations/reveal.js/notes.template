@@ -23,6 +23,7 @@
             max-height: 92vh;
             font-size: 4em;
             height: 50vh;
+            margin-block: 20%;
         }
     </style>
 </head>

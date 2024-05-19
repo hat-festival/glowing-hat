@@ -2,7 +2,7 @@ from pathlib import Path
 
 import markdown
 
-SCROLL_AMOUNT = 4
+SCROLL_AMOUNT = 5
 
 pres_root = "presentations/reveal.js"
 
