@@ -1,16 +1,16 @@
 include make/Makefile.common
 
-# HATS = \
-# 	glowing-hat.local \
-# 	lightstring.local \
-# 	cube.local \
-# 	panel.local \
-
 HATS = \
-		192.168.68.125 \
-		192.168.68.134 \
-		192.168.68.135 \
-		192.168.68.136
+	glowing-hat.local \
+	lightstring.local \
+	cube.local \
+	panel.local \
+
+# HATS = \
+# 		192.168.68.125 \
+# 		192.168.68.134 \
+# 		192.168.68.135 \
+# 		192.168.68.136
 
 ID = hatvillage/${PROJECT}
 
