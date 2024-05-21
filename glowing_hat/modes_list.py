@@ -4,6 +4,7 @@ from glowing_hat.modes.binary_clock import Clock
 from glowing_hat.modes.breather import Breather
 from glowing_hat.modes.crawler import Crawler
 from glowing_hat.modes.equaliser import Equaliser
+from glowing_hat.modes.invaders import Invaders
 from glowing_hat.modes.larsen import Larsen
 from glowing_hat.modes.pulsator import Pulsator
 from glowing_hat.modes.rainbow import Rainbow
@@ -17,6 +18,7 @@ lookups = {
     "clock": Clock,
     "crawler": Crawler,
     "equaliser": Equaliser,
+    "invaders": Invaders,
     "larsen": Larsen,
     "pulsator": Pulsator,
     "rainbow": Rainbow,
