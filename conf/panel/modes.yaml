@@ -1,8 +1,13 @@
 invaders:
-  interval: 0.4
-  iterations: 20
+  interval:
+    low: 0.001
+    high: 0.4
+    steps: 200
+  invader-count: 4
   inverse-value: 0.3
   hue-change-speed: 20
+  gap: 4
+  hue-gap: 0.23
 
 words:
   delay: 0.01
@@ -11,18 +16,18 @@ words:
   sentences-per-batch: 10
   corpus: tweets.txt
 
-rainbow:
-  axis: x
-  length-multiplier: 2
-  pause-time: 0.0
+# rainbow:
+#   axis: x
+#   length-multiplier: 2
+#   pause-time: 0.0
 
-larsen:
-  axes:
-    movement: x
-  head-width: 0.1
-  hue: 1.0
-  jump: 8
-  tail-proportion: 0.5
+# larsen:
+#   axes:
+#     movement: x
+#   head-width: 0.1
+#   hue: 1.0
+#   jump: 8
+#   tail-proportion: 0.5
 
 equaliser:
   decay:
@@ -34,8 +39,8 @@ equaliser:
     default: 0.4
     max: 1.0
 
-pulsator:
-  hue-seconds-per-rotation: 5
-  steps:
-    max: 255
-    min: 48
+# pulsator:
+#   hue-seconds-per-rotation: 5
+#   steps:
+#     max: 255
+#     min: 48
