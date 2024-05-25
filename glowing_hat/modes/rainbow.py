@@ -3,7 +3,6 @@ from time import sleep
 
 from glowing_hat.mode import Mode
 
-
 class Rainbow(Mode):
     """Colours sliding."""
 
