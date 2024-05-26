@@ -4,4 +4,4 @@ data-pin: 12
 
 brightness:
   max: 1.0
-  default: 0.2
+  default: 1.0
