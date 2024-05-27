@@ -17,15 +17,17 @@
 
         h1, h2, h3 {
             color: darkgrey;
-            font-size: 2rem;
+            font-size: 1rem;
             text-align: right;
+            margin-block: 0;
         }
 
         marquee {
-            max-height: 92vh;
+            max-height: 92vh; 
             font-size: 4em;
-            height: 50vh;
-            margin-block: 20%;
+            height: 80vh;
+            margin-block: auto;
+            /* background-color: red; */
         }
     </style>
 </head>
