@@ -30,4 +30,4 @@ So for the 2024 edition, I'm using the HSV model, which is so much smoother - th
 
 Each pixel gets some more metadata and we adjust the hue, saturation and value fields when preparing to light the hat. A pixel never knows what its RGB triple is - that's essentially an artefact that gets calculated as late as possible, at the moment we actually send data to the real LEDs.
 
-Doing it this way also enables us to easily do gamma-correction, which is something I've long pretended to understand, and adjust the brightness of the hat - we just apply a brightness factor to the 'value' field as we calculate the RGB. The 2022 edition had no brightness control, which led to me blinding people in the bar. 
+Doing it this way also enables us to easily do gamma-correction, which is something I've long pretended to understand, and adjust the brightness of the hat - we just apply a brightness factor to the 'value' field as we calculate the RGB. The 2022 edition had no brightness control, which led to me blinding people in the bar. If that was you, I apologise.
