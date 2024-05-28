@@ -1,9 +1,7 @@
-<!-- .element: data-background-video="emf-2024/videos/cube.mp4" data-background-video-loop="loop" -->
-
 ## When all you have is a hat...
 
-<div class="spacer">
+![photo of cube](/emf-2024/photos/cube.jpg)
 
 Notes:
 
-One of these little cube:bit things
+One of these little cube:bit things.

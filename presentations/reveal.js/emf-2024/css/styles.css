@@ -1,31 +1,45 @@
 @import "emf.css";
-@import "https://fonts.googleapis.com/css2?family=Anonymous Pro";
+
+@font-face {
+  font-family: "Comic Shanns";
+  src: url("../fonts/comic-shanns.ttf") format("truetype");
+}
 
 :root {
   --r-background-color: var(--colour-green-dark);
-  --r-heading-color: var(--colour-yellow);
-  --r-link-color: var(--colour-pink);
+  --r-heading-color: var(--colour-orange);
+  --r-link-color: var(--colour-yellow);
   --r-main-color: var(--colour-green-pale);
 
-  --r-code-font: var(--font-code);
+  --r-code-font: "Comic Shanns";
   --r-heading-font: var(--font-primary);
   --r-main-font: var(--font-primary);
 
   --r-heading-font-weight: 600;
-  --r-heading2-size: 3.5rem;
+  --r-heading2-size: 3rem;
 }
 
+
 hr {
-  border-color: var(--colour-orange);
+  border-color: var(--colour-green-mid);
 }
 
 img {
-  border: 0.2rem solid var(--colour-orange);
-  height: 50vh;
+  border: 0.1rem solid var(--colour-green-mid);
+  height: 40vh;
 }
 
 .spacer {
-  height: 50vh;
+  height: 40vh;
+}
+
+.hljs {
+  /* background-color: transparent */
+}
+
+.reveal pre {
+  /* margin-inline: 10rem; */
+  /* box-shadow: none; */
 }
 
 code,

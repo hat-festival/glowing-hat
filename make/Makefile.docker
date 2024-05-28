@@ -73,3 +73,6 @@ freeze:
 
 analyse:
 	@python analysis/find_bright_spots.py
+
+notes:
+	python presentations/notes_puller.py
