@@ -1,6 +1,6 @@
 ## When all you have is a hat...
 
-![picture of cube:bit](https://placebear.com/201/300)
+![photo of panel](/emf-2024/photos/panel.jpg)
 
 Notes:
 

@@ -1,8 +1,8 @@
 ## When all you have is a hat...
 
-![picture of lightstring](https://placebear.com/201/301)
+![photo of lightstring](/emf-2024/photos/lightstring.jpg)
 
 Notes:
 
-And the string of LEDs attached to our tent over at Hat Village.
+And this string of LEDs, which is currently attached to our tent over at Hat Village.
 
