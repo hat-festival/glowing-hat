@@ -1,5 +1,4 @@
 import concurrent.futures
-import time
 
 import board
 import keypad
@@ -18,8 +17,7 @@ class TempoPool:
         """Construct."""
         self.parent = parent
 
-        self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=3)
+        self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         self.tempo = Tempo(self.parent)
         self.pool.submit(self.parent.reduce)  # TODO rename this?
-        self.pool.submit(self.tempo.pulse)
         self.pool.submit(self.tempo.get_taps)

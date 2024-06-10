@@ -1,3 +1,20 @@
+tapper:
+  base-value: 0.7
+  decay:
+    amount: 0.02
+    interval: 0.02
+
+roller:
+  brightness:
+    default: 0.7
+    max: 1.0
+  decay:
+    amount: 0.02
+    interval: 0.02
+  length-multiplier: 3
+  roll-sorter-at: 7
+  rotate-amount: 2
+
 equaliser:
   decay:
     amount: 0.02
@@ -39,14 +56,3 @@ pulsator:
   steps:
     max: 255
     min: 48
-
-roller:
-  brightness:
-    default: 0.7
-    max: 1.0
-  decay:
-    amount: 0.02
-    interval: 0.02
-  length-multiplier: 3
-  roll-sorter-at: 7
-  rotate-amount: 2

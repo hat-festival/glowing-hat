@@ -2,7 +2,7 @@ from collections import deque
 from time import sleep
 
 from glowing_hat.arrangements.circle import Circle
-from glowing_hat.fft.fft_pool import FFTPool
+from glowing_hat.tempo.tempo_pool import TempoPool
 from glowing_hat.mode import Mode
 
 
@@ -16,7 +16,7 @@ class Roller(Mode):
         self.circle = Circle("x", "z")
 
         self.brightness_factor = self.conf["brightness"]["default"]
-        self.fft_pool = FFTPool(self)
+        self.tempo_pool = TempoPool(self)
 
     def run(self):
         """Do the work."""

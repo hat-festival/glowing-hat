@@ -1,6 +1,7 @@
 lights: 100
 
 data-pin: 21
+tempo-pin: 26
 
 fourier:
   device-index: 0
