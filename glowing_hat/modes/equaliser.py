@@ -1,7 +1,7 @@
 from time import sleep
 
-from glowing_hat.fft.fft_pool import FFTPool
 from glowing_hat.mode import Mode
+from glowing_hat.tempo.tempo_pool import TempoPool
 
 
 class Equaliser(Mode):
@@ -10,7 +10,7 @@ class Equaliser(Mode):
     def configure(self):
         """Configure ourself."""
         self.active_y = self.conf["y"]["default"]
-        self.fft_pool = FFTPool(self)
+        self.tempo_pool = TempoPool(self)
 
     def run(self):
         """Do the work."""

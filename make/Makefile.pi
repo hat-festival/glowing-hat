@@ -68,7 +68,7 @@ network-manager:
 load-sorts:
 	@LOGLEVEL=debug python sorts_loader.py
 
-foreground: stop
+foreground: #stop
 	sudo LOGLEVEL=debug python manager.py
 
 build-valkey:

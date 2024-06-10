@@ -1,3 +1,13 @@
+equaliser:
+  decay:
+    amount: 0.02
+    interval: 0.02
+  rotation: 2
+  scale-factor: 0.5
+  y:
+    default: 0.4
+    max: 1.0
+
 sweeper:
   blip-move-threshold: 0.9
   hues:
@@ -15,16 +25,6 @@ breather:
 crawler:
   max-jump: 2
   cube-size: 10 # for 1x1 sort set
-
-equaliser:
-  decay:
-    amount: 0.02
-    interval: 0.02
-  rotation: 2
-  scale-factor: 0.5
-  y:
-    default: 0.4
-    max: 1.0
 
 larsen:
   axes:
