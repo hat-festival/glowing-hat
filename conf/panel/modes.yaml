@@ -1,3 +1,10 @@
+words:
+  delay: 0.01
+  hue-change-speed: 10
+  inverse-value: 0.3
+  sentences-per-batch: 10
+  corpus: tweets.txt
+
 invaders:
   interval:
     low: 0.001
@@ -8,13 +15,6 @@ invaders:
   hue-change-speed: 20
   gap: 4
   hue-gap: 0.23
-
-words:
-  delay: 0.01
-  hue-change-speed: 10
-  inverse-value: 0.3
-  sentences-per-batch: 10
-  corpus: tweets.txt
 
 # rainbow:
 #   axis: x

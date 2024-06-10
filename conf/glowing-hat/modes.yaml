@@ -1,3 +1,30 @@
+tapper:
+  base-value: 0.7
+  decay:
+    amount: 0.02
+    interval: 0.02
+
+roller:
+  brightness:
+    default: 0.7
+    max: 1.0
+  decay:
+    amount: 0.02
+    interval: 0.02
+  length-multiplier: 3
+  roll-sorter-at: 7
+  rotate-amount: 2
+
+equaliser:
+  decay:
+    amount: 0.02
+    interval: 0.02
+  rotation: 2
+  scale-factor: 0.5
+  y:
+    default: 0.4
+    max: 1.0
+
 sweeper:
   blip-move-threshold: 0.9
   hues:
@@ -16,16 +43,6 @@ crawler:
   max-jump: 2
   cube-size: 10 # for 1x1 sort set
 
-equaliser:
-  decay:
-    amount: 0.02
-    interval: 0.02
-  rotation: 2
-  scale-factor: 0.5
-  y:
-    default: 0.4
-    max: 1.0
-
 larsen:
   axes:
     movement: x
@@ -39,14 +56,3 @@ pulsator:
   steps:
     max: 255
     min: 48
-
-roller:
-  brightness:
-    default: 0.7
-    max: 1.0
-  decay:
-    amount: 0.02
-    interval: 0.02
-  length-multiplier: 3
-  roll-sorter-at: 7
-  rotate-amount: 2

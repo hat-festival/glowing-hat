@@ -10,6 +10,7 @@ from glowing_hat.modes.pulsator import Pulsator
 from glowing_hat.modes.rainbow import Rainbow
 from glowing_hat.modes.roller import Roller
 from glowing_hat.modes.sweeper import Sweeper
+from glowing_hat.modes.tapper import Tapper
 from glowing_hat.modes.words import Words
 
 lookups = {
@@ -24,6 +25,7 @@ lookups = {
     "rainbow": Rainbow,
     "roller": Roller,
     "sweeper": Sweeper,
+    "tapper": Tapper,
     "words": Words,
 }
 
