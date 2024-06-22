@@ -1,7 +1,13 @@
 lights: 100
 
-data-pin: 21
-tempo-pin: 26
+# accel:
+#   white: 2 # phys 3
+#   yellow: 3 # phys 5
+
+data-pin: 21 # phys 40
+tempo-pins:
+  low: 26 # phys 37
+  high: 19 # phys 35
 
 fourier:
   device-index: 0

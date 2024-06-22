@@ -1,4 +1,25 @@
+tilter:
+  hue-seconds-per-rotation: 10
+  unlit-lights: 25
+  base-value: 0.7
+  decay:
+    amount: 0.02
+    interval: 0.02
+
 tapper:
+  base-value: 0.7
+  hues:
+    low: 1.0
+    high: 0.5
+  decay:
+    amount: 0.02
+    interval: 0.01
+
+pulsator:
+  hue-seconds-per-rotation: 5
+  steps:
+    max: 255
+    min: 48
   base-value: 0.7
   decay:
     amount: 0.02
@@ -50,9 +71,3 @@ larsen:
   hue: 1.0
   jump: 2
   tail-proportion: 1.0
-
-pulsator:
-  hue-seconds-per-rotation: 5
-  steps:
-    max: 255
-    min: 48
