@@ -2,9 +2,11 @@ from collections import deque
 from math import pi, sin
 from operator import itemgetter
 from random import randint
+from time import sleep
 
 from glowing_hat.hue_sources.time_based_hue_source import TimeBasedHueSource
 from glowing_hat.mode import Mode
+from glowing_hat.tempo.tempo_pool import TempoPool
 
 
 class Pulsator(Mode):
@@ -16,6 +18,9 @@ class Pulsator(Mode):
             seconds_per_rotation=self.conf["hue-seconds-per-rotation"]
         )
         self.throbbers = [Throbber(self.conf["steps"]) for _ in range(len(self.hat))]
+        self.value_multiplier = self.conf["base-value"]
+        self.saturation = 1.0
+        self.tempo_pool = TempoPool(self)
 
     def run(self):
         """Do the stuff."""
@@ -23,10 +28,27 @@ class Pulsator(Mode):
 
         while True:
             hue = self.hue_source.hue()
+            self.hat.apply_saturation(self.saturation)
             self.hat.apply_hue(hue)
-            self.hat.apply_values([throbber.next() for throbber in self.throbbers])
+            self.hat.apply_values(
+                [throbber.next() * self.value_multiplier for throbber in self.throbbers]
+            )
 
             self.hat.light_up()
+
+    def trigger(self):
+        """Spike the saturation."""
+        self.value_multiplier = 1.0
+        self.saturation = 0.0
+
+    def reduce(self):
+        """Constantly resaturating."""
+        while True:
+            if self.value_multiplier > self.conf["base-value"]:
+                self.value_multiplier -= self.conf["decay"]["amount"]
+            if self.saturation < 1.0:
+                self.saturation += self.conf["decay"]["amount"]
+            sleep(self.conf["decay"]["interval"])
 
 
 class Throbber:

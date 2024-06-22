@@ -1,4 +1,3 @@
-# TODO conf all this
 import time
 
 import board
@@ -13,16 +12,33 @@ class Tempo:
     def __init__(self, owner):
         """Construct."""
         self.owner = owner
-        self.keys = keypad.Keys(
-            (getattr(board, f"D{conf['tempo-pin']}"),),
+        self.key_low = keypad.Keys(
+            (getattr(board, f"D{conf['tempo-pins']['low']}"),),
+            value_when_pressed=False,
+            pull=True,
+        )
+        self.key_high = keypad.Keys(
+            (getattr(board, f"D{conf['tempo-pins']['high']}"),),
             value_when_pressed=False,
             pull=True,
         )
 
+        try:
+            self.method_high = self.owner.trigger_low
+            self.method_low = self.owner.trigger_high
+
+        except AttributeError:
+            self.method_low = self.method_high = self.owner.trigger
+
     def get_taps(self):
         """Collect taps."""
         while True:
-            event = self.keys.events.get()
-            if event and event.pressed:
-                self.owner.trigger()
+            event_low = self.key_low.events.get()
+            if event_low and event_low.pressed:
+                self.method_low()
+
+            event_high = self.key_high.events.get()
+            if event_high and event_high.pressed:
+                self.method_high()
+
             time.sleep(0.1)

@@ -2,8 +2,8 @@ from collections import deque
 from time import sleep
 
 from glowing_hat.arrangements.circle import Circle
-from glowing_hat.tempo.tempo_pool import TempoPool
 from glowing_hat.mode import Mode
+from glowing_hat.tempo.tempo_pool import TempoPool
 
 
 class Roller(Mode):
