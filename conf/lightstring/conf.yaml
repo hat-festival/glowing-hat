@@ -3,5 +3,9 @@ data-pin: 12
 grb: True
 
 brightness:
-  max: 1.0
-  default: 0.9
+  max: 0.7
+  default: 0.5
+
+tempo-pins:
+  low: 26 # phys 37
+  high: 19 # phys 35

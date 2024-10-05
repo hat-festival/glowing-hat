@@ -9,6 +9,7 @@ from glowing_hat.modes.larsen import Larsen
 from glowing_hat.modes.pulsator import Pulsator
 from glowing_hat.modes.rainbow import Rainbow
 from glowing_hat.modes.roller import Roller
+from glowing_hat.modes.solid import Solid
 from glowing_hat.modes.sweeper import Sweeper
 from glowing_hat.modes.tapper import Tapper
 from glowing_hat.modes.tilter import Tilter
@@ -25,6 +26,7 @@ lookups = {
     "pulsator": Pulsator,
     "rainbow": Rainbow,
     "roller": Roller,
+    "solid": Solid,
     "sweeper": Sweeper,
     "tapper": Tapper,
     "tilter": Tilter,
