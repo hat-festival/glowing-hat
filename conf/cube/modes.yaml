@@ -1,8 +1,12 @@
 pulsator:
-  hue-seconds-per-rotation: 5
+  hue-seconds-per-rotation: 50
   steps:
     max: 4096
     min: 1024
+  base-value: 0.7
+  decay:
+    amount: 0.02
+    interval: 0.02
 
 equaliser:
   decay:

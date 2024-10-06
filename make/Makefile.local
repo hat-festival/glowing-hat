@@ -5,6 +5,7 @@ HATS = \
 	lightstring.local \
 	cube.local \
 	panel.local \
+	square.local \
 
 # HATS = \
 # 		192.168.68.125 \
@@ -83,6 +84,9 @@ push-lightstring:
 
 push-panel:
 	HAT=panel.local make push-to
+
+push-square:
+	HAT=square.local make push-to
 
 clean:
 	@rm -fr $$(find . -name __pycache__)

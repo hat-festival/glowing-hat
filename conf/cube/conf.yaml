@@ -5,3 +5,7 @@ data-pin: 12
 brightness:
   max: 1.0
   default: 1.0
+
+tempo-pins:
+  low: 26 # phys 37
+  high: 19 # phys 35

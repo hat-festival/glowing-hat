@@ -3,12 +3,6 @@ rainbow:
   length-multiplier: 4
   pause-time: 0.02
 
-clock:
-  hues:
-    hours: 0.666666
-    minutes: 0.333333
-    seconds: 1.0
-
 breather:
   scale-factor: 0.6
   step: 1
@@ -19,6 +13,22 @@ breather:
     high: 0.4
     steps: 20
 
+pulsator:
+  hue-seconds-per-rotation: 5
+  steps:
+    max: 4096
+    min: 1024
+  base-value: 0.7
+  decay:
+    amount: 0.02
+    interval: 0.02
+
+clock:
+  hues:
+    hours: 0.666666
+    minutes: 0.333333
+    seconds: 1.0
+
 larsen:
   axes:
     movement: x
@@ -27,10 +37,5 @@ larsen:
   jump: 1
   tail-proportion: 1.0
 
-pulsator:
-  hue-seconds-per-rotation: 5
-  steps:
-    max: 255
-    min: 48
 
 address:

@@ -1,0 +1,27 @@
+solid:
+  hue-seconds-per-rotation: 50
+
+equaliser:
+  decay:
+    amount: 0.02
+    interval: 0.02
+  rotation: 2
+  scale-factor: 0.5
+  y:
+    default: 0.4
+    max: 1.0
+
+rainbow:
+  axis: x
+  length-multiplier: 2
+  pause-time: 0.0
+
+pulsator:
+  hue-seconds-per-rotation: 5
+  steps:
+    max: 4096
+    min: 1024
+  base-value: 0.7
+  decay:
+    amount: 0.02
+    interval: 0.02
